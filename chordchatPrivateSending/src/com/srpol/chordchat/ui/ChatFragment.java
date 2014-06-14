@@ -288,7 +288,7 @@ public class ChatFragment extends Fragment {
 				((TextView) convertView.findViewById(R.id.message_view_sender_name))
 				.setText("[Public]");
 			}
-			if (message.getOwner() == MessageOwner.STRANGER && message.getMessageType().equals("Public")) {
+			else if (message.getOwner() == MessageOwner.STRANGER && message.getMessageType().equals("Public")) {
 				((TextView) convertView.findViewById(R.id.message_view_sender_name))
 				.setText("[Public] \r\n" + message.getUserName() + ":");
 			}
