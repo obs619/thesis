@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <drawable name="holo_blue_selected">#FF2D7B97</drawable>
+	<drawable name="red">#FFFF4444</drawable>
+	<drawable name="green">#FF99CC00</drawable>
+	<drawable name="coral">#FFFF8080</drawable>
+	<drawable name="gold">#FFFFCC00</drawable>
+	
+	
+</resources>

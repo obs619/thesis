@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App name -->
+    <string name="chord_chat_app_name">Chord Chat</string>
+    <string name="chord_chat_action_bar">ChordChat</string>
+
+    <!-- Chat frame -->
+	<string name="connect_to_wifi">Not Connected</string>
+	<string name="connected_to_wifi">Connected</string>
+
+    <!-- Drawer frame -->
+    <string name="channels_title">CHANNELS</string>
+    <string name="user_name_default">Enter user name</string>
+    <string name="add_channel">Add channel</string>
+    <string name="channel_name_hint">Channel name</string>
+
+    <!-- Descriptions -->
+    <string name="desc_user_photo">Photo of the user</string>
+    <string name="desc_delete_icon">Delete icon</string>
+    <string name="desc_stranger_message">Stranger message</string>
+    <string name="desc_your_message">Your message</string>
+    <string name="desc_send_button_image">Send button image</string>
+
+    <!-- Hints -->
+    <string name="hint_message">Message</string>
+    <string name="hint_sender_name">Name:</string>
+    <string name="hint_message_type">[Public]</string>
+    
+    <!-- Other -->
+    <string name="drawer_open">Drawer open</string>
+    <string name="drawer_close">Drawer close</string>
+    <string name="channel_name_fragment_connect">Connect</string>
+    <string name="channel_name_fragment_enter_channel_name">Enter the channel name</string>
+
+</resources>
