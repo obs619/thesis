@@ -26,12 +26,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -104,6 +102,14 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		INTENT_FILTER.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
 	}
 
+	/**
+	 * @param interface type:
+	 * 		- SchordManager.INTERFACE_TYPE_...
+	 * @return connection type name:
+	 * 		- Wi-Fi (no Internet involved)
+	 * 		- Wi-Fi Direct
+	 * 		- Mobile AP
+	 */
 	private String getInterfaceName(int interfaceType) {
         if (SchordManager.INTERFACE_TYPE_WIFI == interfaceType)
             return "Wi-Fi";
@@ -111,28 +117,33 @@ public class MainActivity extends Activity implements OnAddChannelListener {
             return "Mobile AP";
         else if (SchordManager.INTERFACE_TYPE_WIFI_P2P == interfaceType)
             return "Wi-Fi Direct";
-
+        
+        // Connection type is unknown
         return "UNKNOWN";
     }
 	
 	private final BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			
 			mChatChord.startChord();
 			
+			// Show interface type in toast
 			Toast.makeText(getApplicationContext(), "ChatChord interfaceType is: " + getInterfaceName(ChatChord.interfaceType), Toast.LENGTH_LONG).show();
+			
 			if (ChatChord.result != 0) {
+				// Chord successfully connected
 				mSendMessageView.setEnabled(false);
 				mWifiDisabled.setVisibility(View.VISIBLE);
 				mWifiEnabled.setVisibility(View.INVISIBLE);
 			} else {
+				// Chord failed to connect
 				mWifiEnabled.setVisibility(View.VISIBLE);
 				mWifiDisabled.setVisibility(View.INVISIBLE);
 			}
 			
-			/*
+			/* Obsolete result types:
+			
 			if (ChordManager.ERROR_INVALID_STATE == ChatChord.result) {
 				Toast.makeText(getApplicationContext(),"Invalid state!", Toast.LENGTH_LONG).show();
 	        } else if (ChordManager.ERROR_INVALID_INTERFACE == ChatChord.result) {
@@ -151,6 +162,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 
+		// Initialize layout
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.main_layout);
 		mDrawerFrame = (RelativeLayout) findViewById(R.id.drawer);
 		mChannelsListView = (ListView) findViewById(R.id.channels);
@@ -178,8 +190,8 @@ public class MainActivity extends Activity implements OnAddChannelListener {
         
 		map = new HashMap<String, String>();
 		
+		// Initialize Chord
 		Schord chord = new Schord();
-		
 		try {
 			chord.initialize(this);
 		} catch (SsdkUnsupportedException e) {
@@ -194,6 +206,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		initChatChord();
 		initPublicChannel();
 		
+		// Initialize Chord Manager
 		mChordManager = new SchordManager(this);
 	}
 
@@ -258,6 +271,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 
 				@Override
 				public void onClick(View v) {
+					// mDeleteView is clicked
 					final ChatFragment fragment = mFragments.remove(mChannels.remove(mPosition));
 					fragment.leaveChannel();
 					notifyDataSetChanged();
@@ -407,27 +421,31 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 	}
 
 	public void onClick(View v) {
+		// send_button is clicked
 		switch (v.getId()) {
-		case R.id.send_button:
-			final String text = mInputMessageView.getText().toString();
-			String sendTo = "Public";
-			for (Map.Entry<String, String> entry : map.entrySet()) 
-			{     
-				if(spinnerUsernames.getSelectedItem().toString().equals(entry.getValue()))
-				{
-					sendTo = entry.getKey(); 
-					break;
+			case R.id.send_button:
+				final String text = mInputMessageView.getText().toString();
+				
+				// Initialize receiver as Public
+				String sendTo = "Public";
+				
+				// Check if spinner has specific node selected as receiver
+				for (Map.Entry<String, String> entry : map.entrySet()) {     
+					if(spinnerUsernames.getSelectedItem().toString().equals(entry.getValue())) {
+						sendTo = entry.getKey(); 
+						break;
+					}
 				}
-			}
-			
-			if (!text.isEmpty()) {
-				mInputMessageView.setText("");
-				ChatMessage message = ChatMessage.obtain(text, mUserName, MessageOwner.YOU, sendTo);
-				mFragments.get(mCurrentChannelName).addMessage(message, sendTo);
-			}
-			break;
-		default:
-			throw new IllegalArgumentException(Integer.toString(v.getId()));
+				
+				// Check if there is a message
+				if (!text.isEmpty()) {
+					mInputMessageView.setText("");
+					ChatMessage message = ChatMessage.obtain(text, mUserName, MessageOwner.YOU, sendTo);
+					mFragments.get(mCurrentChannelName).addMessage(message, sendTo);
+				}
+				break;
+			default:
+				throw new IllegalArgumentException(Integer.toString(v.getId()));
 		}
 	}
 

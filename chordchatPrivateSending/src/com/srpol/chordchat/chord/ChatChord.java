@@ -14,15 +14,9 @@ package com.srpol.chordchat.chord;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.samsung.android.sdk.SsdkUnsupportedException;
-import com.samsung.android.sdk.chord.Schord;
 import com.samsung.android.sdk.chord.SchordChannel;
 import com.samsung.android.sdk.chord.SchordManager;
-import com.srpol.chordchat.ui.ChatFragment;
-import com.srpol.chordchat.ui.MainActivity;
 
 /**
  * Contains general methods related to the communication over Chord. Intitializes {@link ChordManager} and handles
