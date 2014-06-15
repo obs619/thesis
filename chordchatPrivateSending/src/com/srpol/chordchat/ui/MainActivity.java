@@ -109,6 +109,14 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		INTENT_FILTER.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
 	}
 
+	 /**
+	  * @param interface type:
+	  * 		- SchordManager.INTERFACE_TYPE_...
+	  * @return connection type name:
+	  * 		- Wi-Fi (no Internet involved)
+	  * 		- Wi-Fi Direct
+	  * 		- Mobile AP
+	  */
 	private String getInterfaceName(int interfaceType) {
         if (SchordManager.INTERFACE_TYPE_WIFI == interfaceType)
             return "Wi-Fi";
@@ -117,6 +125,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
         else if (SchordManager.INTERFACE_TYPE_WIFI_P2P == interfaceType)
             return "Wi-Fi Direct";
 
+     // Connection type is unknown
         return "UNKNOWN";
     }
 	
@@ -127,15 +136,21 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 			
 			mChatChord.startChord();
 			
+			// Show interface type in toast
 			Toast.makeText(getApplicationContext(), "ChatChord interfaceType is: " + getInterfaceName(ChatChord.interfaceType), Toast.LENGTH_LONG).show();
+			
 			if (ChatChord.result != 0) {
+				// Chord successfully connected
 				mSendMessageView.setEnabled(false);
 				mWifiDisabled.setVisibility(View.VISIBLE);
 				mWifiEnabled.setVisibility(View.INVISIBLE);
 			} else {
+				// Chord failed to connect
 				mWifiEnabled.setVisibility(View.VISIBLE);
 				mWifiDisabled.setVisibility(View.INVISIBLE);
 			}
+			
+			/* Obsolete result types:
 			
 			/*
 			if (ChordManager.ERROR_INVALID_STATE == ChatChord.result) {
@@ -156,6 +171,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 		
+		// Initialize layout
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.main_layout);
 		mDrawerFrame = (RelativeLayout) findViewById(R.id.drawer);
 		mChannelsListView = (ListView) findViewById(R.id.channels);
@@ -186,6 +202,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
         
 		map = new HashMap<String, String>();
 		
+		// Initialize Chord
 		Schord chord = new Schord();
 		
 		try {
@@ -202,6 +219,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		initChatChord();
 		initPublicChannel();
 		
+		// Initialize Chord Manager
 		mChordManager = new SchordManager(this);
 		mScreenTypeView.setText("Screen Type: " + SplashActivity.screenType);
 		
@@ -270,6 +288,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 
 				@Override
 				public void onClick(View v) {
+					// mDeleteView is clicked
 					final ChatFragment fragment = mFragments.remove(mChannels.remove(mPosition));
 					fragment.leaveChannel();
 					notifyDataSetChanged();
@@ -422,7 +441,11 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		switch (v.getId()) {
 		case R.id.send_button:
 			final String text = mInputMessageView.getText().toString();
+			
+			// Initialize receiver as Public
 			String sendTo = "Public";
+			
+			// Check if spinner has specific node selected as receiver
 			for (Map.Entry<String, String> entry : map.entrySet()) 
 			{     
 				if(spinnerUsernames.getSelectedItem().toString().equals(entry.getValue()))
@@ -432,6 +455,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 				}
 			}
 			
+			// Check if there is a message
 			if (!text.isEmpty()) {
 				mInputMessageView.setText("");
 				ChatMessage message = ChatMessage.obtain(text, mUserName, MessageOwner.YOU, sendTo);
