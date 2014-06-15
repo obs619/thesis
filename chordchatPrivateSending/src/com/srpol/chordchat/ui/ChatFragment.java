@@ -58,17 +58,18 @@ public class ChatFragment extends Fragment {
 		
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
-			onNodeCallbackCommon(true, ChatChord.interfaceType, fromNode);
+				onNodeCallbackCommon(true, ChatChord.interfaceType, fromNode);
 		}
 		
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
-			onNodeCallbackCommon(false, ChatChord.interfaceType, fromNode);
-		};
+				onNodeCallbackCommon(false, ChatChord.interfaceType, fromNode);
+		}
 		
 	};
 
 	private void onNodeCallbackCommon(boolean isJoin, int interfaceType, String fromNode) {
+		Log.e("onNodeJ", fromNode);
         if (isJoin) {
             if (MainActivity.map.containsKey(fromNode)) {
             	Log.e("ChatFragment", "already added node:" + fromNode);

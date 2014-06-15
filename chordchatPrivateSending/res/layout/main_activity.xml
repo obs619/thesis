@@ -43,17 +43,7 @@
 	            android:layout_below="@+id/wifi_enabled"
 	            android:background="@drawable/coral"
 	            android:gravity="center"
-	            android:text="Screen Type: Public" >
-	        </TextView>
-	        
-	        <TextView
-	            android:id="@+id/screen_username"
-	            android:layout_width="match_parent"
-	            android:layout_height="30dp"
-	            android:layout_below="@+id/screen_type"
-	            android:background="@drawable/gold"
-	            android:gravity="center"
-	            android:text="Username: Oliver" >
+	            android:text="Screen Type: -" >
 	        </TextView>
        
         <RelativeLayout

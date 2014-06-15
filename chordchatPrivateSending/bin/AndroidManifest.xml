@@ -18,15 +18,17 @@
         android:label="@string/chord_chat_app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.srpol.chordchat.ui.MainActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait" >
+            android:name="com.srpol.chordchat.ui.SplashActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+    	<activity android:name="com.srpol.chordchat.ui.MainActivity" />
     </application>
+    
 
 </manifest>
