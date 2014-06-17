@@ -146,19 +146,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 				mWifiDisabled.setVisibility(View.INVISIBLE);
 			}
 			
-			/* Obsolete result types:
 			
-			/*
-			if (ChordManager.ERROR_INVALID_STATE == ChatChord.result) {
-				Toast.makeText(getApplicationContext(),"Invalid state!", Toast.LENGTH_LONG).show();
-	        } else if (ChordManager.ERROR_INVALID_INTERFACE == ChatChord.result) {
-	        	Toast.makeText(getApplicationContext(), "Invalid connection!", Toast.LENGTH_LONG).show();
-	        } else if (ChordManager.ERROR_INVALID_PARAM == ChatChord.result) {
-	        	Toast.makeText(getApplicationContext(), "Invalid argument!", Toast.LENGTH_LONG).show();
-	        } else if (ChordManager.ERROR_FAILED == ChatChord.result) {
-	        	Toast.makeText(getApplicationContext(), "Fail to start! - internal error ", Toast.LENGTH_LONG).show();
-	        }
-			*/
 		}
 	};
 
@@ -218,9 +206,8 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		// Initialize Chord Manager
 		mChordManager = new SchordManager(this);
 		mScreenTypeView.setText("Screen Type: " + SplashActivity.screenType);
+	
 		
-		if(SplashActivity.screenType == "Public")
-			mInputContainer.setVisibility(View.GONE);
 	}
 
 	private void restoreSavedState(Bundle savedInstanceState) {
@@ -440,7 +427,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 			
 			// Initialize receiver as Public
 			String sendTo = "Public";
-			
+			/*
 			// Check if spinner has specific node selected as receiver
 			for (Map.Entry<String, String> entry : map.entrySet()) 
 			{     
@@ -450,6 +437,20 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 					break;
 				}
 			}
+			*/
+			for(String username : MainActivity.listUsernames) {
+				if(username != "Public") {
+					String[] parts = username.split(":");
+					String nodeName = parts[0];
+					String aliasName = parts[1];
+					if(spinnerUsernames.getSelectedItem().toString().contains(nodeName)) {
+						sendTo = nodeName;
+						break;
+					}
+				}	
+			}
+			
+			
 			
 			// Check if there is a message
 			if (!text.isEmpty()) {
@@ -457,6 +458,14 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 				ChatMessage message = ChatMessage.obtain(text, mUserName, MessageOwner.YOU, sendTo);
 				mFragments.get(mCurrentChannelName).addMessage(message, sendTo);
 			}
+			break;
+		case R.id.notify_button:
+			if(SplashActivity.screenType == "Private")
+				mFragments.get(mCurrentChannelName)
+				.sendDetailsMessage(currUserNodeName + ":" + mUserNameView.getText().toString());
+			else
+				mInputContainer.setVisibility(View.GONE);
+			
 			break;
 		default:
 			throw new IllegalArgumentException(Integer.toString(v.getId()));

@@ -54,16 +54,34 @@ public class ChatFragment extends Fragment {
 				final ChatMessage receivedMessage = ChatMessage.obtainChatMessage(arg3[0]);
 				handleMessage(receivedMessage);
 			}
+			
+			if ("user_details".equals(arg2)) {
+				boolean exist = false;
+				for(String username : MainActivity.listUsernames) {
+					if(username.equals(new String(arg3[0])))
+						exist = true;
+				}
+				if(!exist) {
+					MainActivity.listUsernames.add(new String(arg3[0]));
+					MainActivity.dataAdapter.notifyDataSetChanged();
+				}
+			}
 		}
 		
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
-				onNodeCallbackCommon(true, ChatChord.interfaceType, fromNode);
+				//onNodeCallbackCommon(true, ChatChord.interfaceType, fromNode);
 		}
 		
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
-				onNodeCallbackCommon(false, ChatChord.interfaceType, fromNode);
+			for(String username : MainActivity.listUsernames) {
+				if(username.contains(fromNode)) {
+					MainActivity.listUsernames.remove(username);
+		        	MainActivity.dataAdapter.notifyDataSetChanged();
+				}	
+			}
+				//onNodeCallbackCommon(false, ChatChord.interfaceType, fromNode);
 		}
 		
 	};
@@ -213,6 +231,12 @@ public class ChatFragment extends Fragment {
 	private void sendPrivateMessage(ChatMessage message, String userToSend) {
 		mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  message.getBytes() });
 	}
+	
+	public void sendDetailsMessage(String message) {
+		byte[][] payload = new byte[1][];
+        payload[0] = message.getBytes();
+		mChannel.sendDataToAll("user_details", payload);
+	}
 
 	/**
 	 * Handles messages received on the channel.
@@ -294,8 +318,18 @@ public class ChatFragment extends Fragment {
 				.setText("[Public] \r\n" + message.getUserName() + ":");
 			}
 			else if (message.getOwner() == MessageOwner.YOU && !message.getMessageType().equals("Public")) {
-				((TextView) convertView.findViewById(R.id.message_view_sender_name))
-				.setText("[Private] \r\n to:" + message.getMessageType());
+				for(String username : MainActivity.listUsernames) {
+					if(username != "Public") {
+						String[] parts = username.split(":");
+						String nodeName = parts[0];
+						String aliasName = parts[1];
+						if(message.getMessageType().equals(nodeName)) {
+							((TextView) convertView.findViewById(R.id.message_view_sender_name))
+							.setText("[Private] \r\n to:" + aliasName);
+							break;
+						}
+					}	
+				}
 			}
 			else if (message.getOwner() == MessageOwner.STRANGER) {
 				((TextView) convertView.findViewById(R.id.message_view_sender_name))
