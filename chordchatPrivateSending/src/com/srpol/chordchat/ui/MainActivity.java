@@ -99,7 +99,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 	public static String currUserNodeName = "";
 	
 	private TextView mScreenTypeView;
-	private RelativeLayout mInputContainer;
+	public static RelativeLayout mInputContainer;
 	
 	static {
 		INTENT_FILTER.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
@@ -206,7 +206,8 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		// Initialize Chord Manager
 		mChordManager = new SchordManager(this);
 		mScreenTypeView.setText("Screen Type: " + SplashActivity.screenType);
-	
+	//	if(SplashActivity.screenType == "Public");
+		//	mInputContainer.setVisibility(View.GONE);
 		
 	}
 

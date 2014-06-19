@@ -70,6 +70,10 @@ public class ChatFragment extends Fragment {
 		
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
+			if(SplashActivity.screenType == "Private")
+				sendDetailsMessage(MainActivity.currUserNodeName+ ":" + MainActivity.mUserNameView.getText().toString());
+			else
+				MainActivity.mInputContainer.setVisibility(View.GONE);
 				//onNodeCallbackCommon(true, ChatChord.interfaceType, fromNode);
 		}
 		
