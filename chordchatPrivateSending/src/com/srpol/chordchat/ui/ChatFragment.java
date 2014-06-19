@@ -178,8 +178,7 @@ public class ChatFragment extends Fragment {
 	 *            message to add
 	 */
 	public void addMessage(ChatMessage message, String sendTo) {
-		
-		if(sendTo.equals("Public") || sendTo.equals(MainActivity.currUserNodeName) || message.getOwner() == MessageOwner.YOU)
+	//	if(sendTo.equals("Public") || sendTo.equals(MainActivity.currUserNodeName) || message.getOwner() == MessageOwner.YOU)
 			mMessagesAdapter.addMessage(message);
 		
 		ChatMessage chatMesssageToSend = ChatMessage.obtain(message);

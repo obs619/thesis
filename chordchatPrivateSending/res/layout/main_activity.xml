@@ -56,7 +56,7 @@
                 android:id="@+id/send_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/notify_button"
+                android:layout_alignParentRight="true"
                 android:contentDescription="@string/desc_send_button_image"
                 android:onClick="onClick"
                 android:src="@android:drawable/ic_menu_send" />
@@ -77,14 +77,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/input_textview" />
-
-            <Button
-                android:id="@+id/notify_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:onClick="onClick"
-                android:text="Notify" />
 
         </RelativeLayout>
     </RelativeLayout>

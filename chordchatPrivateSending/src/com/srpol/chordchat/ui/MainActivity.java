@@ -452,21 +452,12 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 			}
 			
 			
-			
 			// Check if there is a message
 			if (!text.isEmpty()) {
 				mInputMessageView.setText("");
 				ChatMessage message = ChatMessage.obtain(text, mUserName, MessageOwner.YOU, sendTo);
 				mFragments.get(mCurrentChannelName).addMessage(message, sendTo);
 			}
-			break;
-		case R.id.notify_button:
-			if(SplashActivity.screenType == "Private")
-				mFragments.get(mCurrentChannelName)
-				.sendDetailsMessage(currUserNodeName + ":" + mUserNameView.getText().toString());
-			else
-				mInputContainer.setVisibility(View.GONE);
-			
 			break;
 		default:
 			throw new IllegalArgumentException(Integer.toString(v.getId()));
