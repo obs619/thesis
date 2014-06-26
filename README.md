@@ -1,4 +1,4 @@
-chatapp
+thesis
 =======
 
-Main chat application would be here
+all thesis related codes will be here
