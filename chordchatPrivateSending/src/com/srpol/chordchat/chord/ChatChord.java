@@ -27,6 +27,7 @@ public abstract class ChatChord {
 	private final SchordManager mChordManager;
 	public static int result = -1;
 	public static int interfaceType = -1; 
+	
 	private final SchordManager.StatusListener mChordManagerListener = new SchordManager.StatusListener() {
 		
 		@Override
@@ -40,7 +41,6 @@ public abstract class ChatChord {
 			// TODO Auto-generated method stub
 			
 		}
-		
 
 	};
 
@@ -52,6 +52,10 @@ public abstract class ChatChord {
 		mChordManager.stop();
 	}
 
+	/**
+	 * ChordManager checks the available interface types which are wifi, mobile ap or wifi p2p
+	 * interfaceType gets the first available interface
+	 */
 	public void startChord() {
 		
 		List<Integer> infList =mChordManager.getAvailableInterfaceTypes();
@@ -64,11 +68,6 @@ public abstract class ChatChord {
 			interfaceType = -1;
 			result = -1;
 		}
-		
-		/*
-		if (result != SchordManager.ERROR_NONE) {
-			onChordStartFailed(result);
-		}*/
 	}
 
 	/**

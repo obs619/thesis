@@ -21,6 +21,7 @@ public class SplashActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		
+		//pop alertdialog which asks user to choose between private/public
 		AlertDialog.Builder builder=new AlertDialog.Builder(this)
 		.setTitle("Choose screen type")
 		.setItems(screen_type_list, new DialogInterface.OnClickListener() {
@@ -30,7 +31,6 @@ public class SplashActivity extends Activity{
 				screenType = screen_type_list[which].toString();
 				
 				Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
-				//mainIntent.putExtra("screen_type", screenType);
                 startActivity(mainIntent);
                 finish();
 			}

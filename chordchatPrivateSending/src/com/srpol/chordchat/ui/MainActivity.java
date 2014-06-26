@@ -90,7 +90,6 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 
 	private static final IntentFilter INTENT_FILTER = new IntentFilter();
 
-	private SchordManager mChordManager;
 	
 	public static Map<String, String> map;
 	public static Spinner spinnerUsernames;
@@ -203,12 +202,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		initChatChord();
 		initPublicChannel();
 		
-		// Initialize Chord Manager
-		mChordManager = new SchordManager(this);
 		mScreenTypeView.setText("Screen Type: " + SplashActivity.screenType);
-	//	if(SplashActivity.screenType == "Public");
-		//	mInputContainer.setVisibility(View.GONE);
-		
 	}
 
 	private void restoreSavedState(Bundle savedInstanceState) {
@@ -221,6 +215,9 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		}
 	}
 
+	/**
+	 * initializes ChatChord and joins the default channel
+	 */
 	private void initChatChord() {
 		mChatChord = new ChatChord(this) {
 
@@ -257,6 +254,9 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		};
 	}
 
+	/**
+	 * creates the adapter for the list of channels in the navigation drawer
+	 */
 	private void initChannelsList() {
 		mChannelsAdapter = new ArrayAdapter<String>(this, R.layout.channel_list_view_item, R.id.channel_name, mChannels) {
 
@@ -359,6 +359,9 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 
+	/**
+	 * stores the username into the sharedpreference
+	 */
 	private void initUserName() {
 		final SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.CHAT_PREFERENCES,
 				Context.MODE_PRIVATE);
@@ -428,17 +431,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 			
 			// Initialize receiver as Public
 			String sendTo = "Public";
-			/*
-			// Check if spinner has specific node selected as receiver
-			for (Map.Entry<String, String> entry : map.entrySet()) 
-			{     
-				if(spinnerUsernames.getSelectedItem().toString().equals(entry.getValue()))
-				{
-					sendTo = entry.getKey(); 
-					break;
-				}
-			}
-			*/
+
 			for(String username : MainActivity.listUsernames) {
 				if(username != "Public") {
 					String[] parts = username.split(":");

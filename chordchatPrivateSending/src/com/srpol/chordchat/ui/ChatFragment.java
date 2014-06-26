@@ -55,6 +55,7 @@ public class ChatFragment extends Fragment {
 				handleMessage(receivedMessage);
 			}
 			
+			// adds the nodename + alias username of the node that joined to the spinner
 			if ("user_details".equals(arg2)) {
 				boolean exist = false;
 				for(String username : MainActivity.listUsernames) {
@@ -74,7 +75,6 @@ public class ChatFragment extends Fragment {
 				sendDetailsMessage(MainActivity.currUserNodeName+ ":" + MainActivity.mUserNameView.getText().toString());
 			else
 				MainActivity.mInputContainer.setVisibility(View.GONE);
-				//onNodeCallbackCommon(true, ChatChord.interfaceType, fromNode);
 		}
 		
 		@Override
@@ -85,37 +85,9 @@ public class ChatFragment extends Fragment {
 		        	MainActivity.dataAdapter.notifyDataSetChanged();
 				}	
 			}
-				//onNodeCallbackCommon(false, ChatChord.interfaceType, fromNode);
 		}
 		
 	};
-
-	private void onNodeCallbackCommon(boolean isJoin, int interfaceType, String fromNode) {
-		Log.e("onNodeJ", fromNode);
-        if (isJoin) {
-            if (MainActivity.map.containsKey(fromNode)) {
-            	Log.e("ChatFragment", "already added node:" + fromNode);
-            } else {
-
-				MainActivity.map.put(fromNode, fromNode);
-				
-				boolean exist = false;
-				for(String username : MainActivity.listUsernames) {
-					if(username.equals(fromNode))
-						exist = true;
-				}
-				if(!exist) {
-					MainActivity.listUsernames.add(fromNode);
-					MainActivity.dataAdapter.notifyDataSetChanged();
-				}
-            }
-        } else {
-        	MainActivity.listUsernames.remove(fromNode);
-        	MainActivity.dataAdapter.notifyDataSetChanged();
-        	MainActivity.map.remove(fromNode);
-        }
-
-    }
 	
 	// Empty constructor required by Android.
 	public ChatFragment() {
@@ -178,8 +150,7 @@ public class ChatFragment extends Fragment {
 	 *            message to add
 	 */
 	public void addMessage(ChatMessage message, String sendTo) {
-	//	if(sendTo.equals("Public") || sendTo.equals(MainActivity.currUserNodeName) || message.getOwner() == MessageOwner.YOU)
-			mMessagesAdapter.addMessage(message);
+		mMessagesAdapter.addMessage(message);
 		
 		ChatMessage chatMesssageToSend = ChatMessage.obtain(message);
 		chatMesssageToSend.changeOwner();
@@ -231,10 +202,25 @@ public class ChatFragment extends Fragment {
 		mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] { message.getBytes() });
 	}
 	
+	
+	/**
+	 * Sends private message over the channel.
+	 * 
+	 * @param message
+	 *            message to be sent
+	 * @param userToSend
+	 * 			  nodename of the user which the message will be sent
+	 */
 	private void sendPrivateMessage(ChatMessage message, String userToSend) {
 		mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  message.getBytes() });
 	}
 	
+	/**
+	 * Sends the current device's node name and alias user name over the channel.
+	 * 
+	 * @param message
+	 *            includes the node name + alias user name
+	 */
 	public void sendDetailsMessage(String message) {
 		byte[][] payload = new byte[1][];
         payload[0] = message.getBytes();
@@ -309,8 +295,6 @@ public class ChatFragment extends Fragment {
 			convertView = View.inflate(mContext, layoutId, null);
 
 			((TextView) convertView.findViewById(R.id.message_view_message)).setText(message.getMessage());
-			
-			Log.e("MessageType", message.getMessageType()+ message.getUserName());
 			
 			if (message.getOwner() == MessageOwner.YOU && message.getMessageType().equals("Public")) {
 				((TextView) convertView.findViewById(R.id.message_view_sender_name))
