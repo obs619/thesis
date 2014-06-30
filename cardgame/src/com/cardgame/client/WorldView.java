@@ -29,6 +29,11 @@ public class WorldView {
 	}
 	public void onDeltaReceived(Delta delta)
 	{
+		applyDelta(delta);
+	}
+
+	private void applyDelta(Delta delta) {
+		// TODO apply changes to WorldView; update UI accordingly
 		
 	}
 }

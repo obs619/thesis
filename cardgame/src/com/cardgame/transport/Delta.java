@@ -1,14 +1,23 @@
 package com.cardgame.transport;
 
 public class Delta {
-	public static final int DELTA_CARD_DRAWN=0;
-	public static final int DELTA_CARD_PLAYED=1;
-	public static final int DELTA_CHANGE_TURN=2;
-	public static final int DELTA_GAME_OVER=3;
+	/**
+	 * A delta containing all information about current state of game world. Sent on start of game or if a player desyncs.
+	 */
+	public static final int DELTA_WORLDVIEW=0;
+	public static final int DELTA_CARD_DRAWN=1;
+	public static final int DELTA_CARD_PLAYED=2;
+	public static final int DELTA_CHANGE_TURN=3;
 	/**
 	 * A delta sent to a specific player to inform it of which cards are allowed to be played. One of these should be sent to all players after every turn(?)
 	 */
 	public static final int DELTA_PLAYABLE_CARDS=4;
+	/**
+	 * A delta sent when the host has reshuffled the cards in the deck/discard pile.
+	 */
+	public static final int DELTA_DECK_RESHUFFLED=5;
+	public static final int DELTA_GAME_OVER=6;
+
 	
 	private int type;
 	private String details;
