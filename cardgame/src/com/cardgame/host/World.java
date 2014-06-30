@@ -1,6 +1,10 @@
 package com.cardgame.host;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.cardgame.transport.Delta;
+import com.cardgame.transport.Event;
 
 /**
  * This class will handle game logic and pass messages to clients informing them of changes in game state.
@@ -11,6 +15,12 @@ public class World {
 	private Area rootArea;
 	private List<User>players;
 	private List<User>spectators;
+	
+	
+	
+	
+	
+	
 	public World(List<User>players, List<User> spectators)
 	{
 		this.players=players;
@@ -36,14 +46,38 @@ public class World {
 	 * 
 	 * @param event
 	 */
-	private void onEventReceived(String event)
+	private void onEventReceived(Event event)
 	{
-		sendDelta();
+		applyEvent(event);
+		//sendDelta();
 	}
+	private void applyEvent(Event event) {
+		//TODO: do some mumbo jumbo to the host's representation of the game world
+		List<User>players;
+		players=new ArrayList<User>();
+		players.addAll(this.players);
+		players.remove(event.getSenderName());
+		for(User p:players )
+		{
+		Delta delta=buildDelta(event);
+		sendDelta(delta);
+		}
+	}
+
+	/**
+	 * Builds a delta based on an event(for now, one delta for all. will formulate unique delta per player later on if necessary)
+	 * @param event
+	 * @return
+	 */
+	private Delta buildDelta(Event event) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * Broadcasts a message to all clients informing them of a change in world state. If the change was caused by a player action, there is no need to send a delta to the player responsible.
 	 */
-	private void sendDelta()
+	private void sendDelta(Delta delta)
 	{
 		
 	}

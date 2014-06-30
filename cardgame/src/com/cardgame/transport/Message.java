@@ -9,7 +9,7 @@
  * of the license agreement you entered into with Samsung Electronics.
  ********************************************************************************
  */
-package com.cardgame.model;
+package com.cardgame.transport;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

@@ -50,8 +50,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardgame.chord.ChatChord;
-import com.cardgame.model.Message;
-import com.cardgame.model.Message.MessageOwner;
+import com.cardgame.transport.Message;
+import com.cardgame.transport.Message.MessageOwner;
 import com.cardgame.ui.ChannelNameDialog.OnAddChannelListener;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
