@@ -29,8 +29,8 @@ import android.widget.TextView;
 import com.cardgame.chord.ChatChord;
 import com.cardgame.chord.IChordChannelListenerAdapter;
 import com.cardgame.collection.FixedArrayList;
-import com.cardgame.transport.Message;
-import com.cardgame.transport.Message.MessageOwner;
+import com.cardgame.transport.ChordMessage;
+import com.cardgame.transport.ChordMessage.MessageOwner;
 import com.samsung.android.sdk.chord.SchordChannel;
 import com.srpol.chordchat.R;
 
@@ -51,7 +51,7 @@ public class ChatFragment extends Fragment {
 		public void onDataReceived(String arg0, String arg1, String arg2,
 				byte[][] arg3) {
 			if (PAYLOAD_TYPE.equals(arg2)) {
-				final Message receivedMessage = Message.obtainChatMessage(arg3[0]);
+				final ChordMessage receivedMessage = ChordMessage.obtainChatMessage(arg3[0]);
 				handleMessage(receivedMessage);
 			}
 			
@@ -111,7 +111,7 @@ public class ChatFragment extends Fragment {
 
 		// Restore the saved messages.
 		if (savedInstanceState != null) {
-			mMessagesAdapter.addMessages((List<Message>) savedInstanceState.getSerializable(MESSAGES_KEY));
+			mMessagesAdapter.addMessages((List<ChordMessage>) savedInstanceState.getSerializable(MESSAGES_KEY));
 		}
 	}
 
@@ -150,10 +150,10 @@ public class ChatFragment extends Fragment {
 	 * @param message
 	 *            message to add
 	 */
-	public void addMessage(Message message, String sendTo) {
+	public void addMessage(ChordMessage message, String sendTo) {
 		mMessagesAdapter.addMessage(message);
 		
-		Message chatMesssageToSend = Message.obtain(message);
+		ChordMessage chatMesssageToSend = ChordMessage.obtain(message);
 		chatMesssageToSend.changeOwner();
 
 		if(sendTo.equals("Public"))
@@ -199,7 +199,7 @@ public class ChatFragment extends Fragment {
 	 * @param message
 	 *            message to be sent
 	 */
-	private void sendMessage(Message message) {
+	private void sendMessage(ChordMessage message) {
 		mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] { message.getBytes() });
 	}
 	
@@ -212,7 +212,7 @@ public class ChatFragment extends Fragment {
 	 * @param userToSend
 	 * 			  nodename of the user which the message will be sent
 	 */
-	private void sendPrivateMessage(Message message, String userToSend) {
+	private void sendPrivateMessage(ChordMessage message, String userToSend) {
 		mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  message.getBytes() });
 	}
 	
@@ -234,7 +234,7 @@ public class ChatFragment extends Fragment {
 	 * @param message
 	 *            message to be handled
 	 */
-	private void handleMessage(Message message) {
+	private void handleMessage(ChordMessage message) {
 		mMessagesAdapter.addMessage(message);
 	}
 
@@ -243,7 +243,7 @@ public class ChatFragment extends Fragment {
 	 */
 	private static class MessageAdapter extends BaseAdapter {
 
-		private final List<Message> mMessages;
+		private final List<ChordMessage> mMessages;
 		private final Context mContext;
 
 		MessageAdapter(Context context, int elementsLimit) {
@@ -257,15 +257,15 @@ public class ChatFragment extends Fragment {
 		 * first element.
 		 * 
 		 * @param message
-		 *            {@link Message}
+		 *            {@link ChordMessage}
 		 */
-		void addMessage(Message message) {
+		void addMessage(ChordMessage message) {
 			mMessages.add(message);
 			notifyDataSetChanged();
 		}
 
-		void addMessages(List<Message> messages) {
-			for (Message message : messages) {
+		void addMessages(List<ChordMessage> messages) {
+			for (ChordMessage message : messages) {
 				mMessages.add(message);
 			}
 			notifyDataSetChanged();
@@ -277,7 +277,7 @@ public class ChatFragment extends Fragment {
 		}
 
 		@Override
-		public Message getItem(int position) {
+		public ChordMessage getItem(int position) {
 			return mMessages.get(position);
 		}
 
@@ -288,7 +288,7 @@ public class ChatFragment extends Fragment {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			final Message message = getItem(position);
+			final ChordMessage message = getItem(position);
 			
 			//int layoutId = message.getOwner() == MessageOwner.YOU ? R.layout.message_view
 			//		: R.layout.stranger_message_view;

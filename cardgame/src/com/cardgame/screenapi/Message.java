@@ -1,17 +1,25 @@
 package com.cardgame.screenapi;
 
-public class Message {
+import com.cardgame.transport.ChordMessage.MessageOwner;
+
+public abstract class Message {
 	/**Username of sending screen
 	 * 
 	 */
-	private String sender;
+	//private String sender;
 	/**
 	 * Message type
 	 */
-	private String type;
+	protected String mMessageType;
 	/**Message contents
 	 * 
 	 */
-	private String payload;
+	protected String mMessage;
+	/**
+	 * Not sure if recipient or sender
+	 */
+	protected String mUserName;
+	//private MessageOwner mOwner;
+	
 	
 }

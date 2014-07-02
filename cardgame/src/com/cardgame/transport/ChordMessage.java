@@ -21,17 +21,17 @@ import java.io.Serializable;
 /**
  * Holder for chat message. Consists of message and owner variable.
  */
-public class Message implements Serializable {
+public class ChordMessage extends com.cardgame.screenapi.Message implements Serializable {
 
 	private static final long serialVersionUID = 20130219L;
 
-	private final String mMessage;
-	private final String mUserName;
+	//private final String mMessage;
+	//private final String mUserName;
 	private MessageOwner mOwner;
-	private String mMessageType;
+	//private String mMessageType;
 	
 	
-	private Message(String message, String userName, MessageOwner owner, String messageType) {
+	private ChordMessage(String message, String userName, MessageOwner owner, String messageType) {
 		mMessage = message;
 		mUserName = userName;
 		mOwner = owner;
@@ -43,20 +43,20 @@ public class Message implements Serializable {
 	 * 
 	 * @param message
 	 * @param owner
-	 * @return {@link Message} instance
+	 * @return {@link ChordMessage} instance
 	 */
-	public static Message obtain(String message, String userName, MessageOwner owner, String messageType) {
-		return new Message(message, userName, owner, messageType);
+	public static ChordMessage obtain(String message, String userName, MessageOwner owner, String messageType) {
+		return new ChordMessage(message, userName, owner, messageType);
 	}
 
 	/**
 	 * Copy constructor for a chat message.
 	 * 
 	 * @param chatMessage
-	 * @return new {@link Message} instance.
+	 * @return new {@link ChordMessage} instance.
 	 */
-	public static Message obtain(Message chatMessage) {
-		return new Message(chatMessage.mMessage, chatMessage.mUserName, chatMessage.mOwner, chatMessage.mMessageType);
+	public static ChordMessage obtain(ChordMessage chatMessage) {
+		return new ChordMessage(chatMessage.mMessage, chatMessage.mUserName, chatMessage.mOwner, chatMessage.mMessageType);
 	}
 
 	public String getMessage() {
@@ -83,7 +83,7 @@ public class Message implements Serializable {
 	}
 
 	/**
-	 * Returns {@link Message} in the form of byte array.
+	 * Returns {@link ChordMessage} in the form of byte array.
 	 */
 	public byte[] getBytes() {
 		final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -100,20 +100,20 @@ public class Message implements Serializable {
 	}
 
 	/**
-	 * Recreates {@link Message} from the byte array.
+	 * Recreates {@link ChordMessage} from the byte array.
 	 * 
 	 * @param data
-	 *            byte array representing {@link Message}
+	 *            byte array representing {@link ChordMessage}
 	 * @return
 	 */
-	public static Message obtainChatMessage(byte[] data) {
+	public static ChordMessage obtainChatMessage(byte[] data) {
 		final ByteArrayInputStream in = new ByteArrayInputStream(data);
 		final ObjectInputStream is;
-		Message message = null;
+		ChordMessage message = null;
 
 		try {
 			is = new ObjectInputStream(in);
-			message = (Message) is.readObject();
+			message = (ChordMessage) is.readObject();
 		} catch (Exception e) {
 			e.printStackTrace();
 			//throw new RuntimeException(e);
