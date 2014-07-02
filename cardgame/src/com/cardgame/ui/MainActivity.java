@@ -50,8 +50,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardgame.chord.ChatChord;
-import com.cardgame.transport.Message;
-import com.cardgame.transport.Message.MessageOwner;
+import com.cardgame.transport.ChordMessage;
+import com.cardgame.transport.ChordMessage.MessageOwner;
 import com.cardgame.ui.ChannelNameDialog.OnAddChannelListener;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -448,7 +448,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 			// Check if there is a message
 			if (!text.isEmpty()) {
 				mInputMessageView.setText("");
-				Message message = Message.obtain(text, mUserName, MessageOwner.YOU, sendTo);
+				ChordMessage message = ChordMessage.obtain(text, mUserName, MessageOwner.YOU, sendTo);
 				mFragments.get(mCurrentChannelName).addMessage(message, sendTo);
 			}
 			break;
