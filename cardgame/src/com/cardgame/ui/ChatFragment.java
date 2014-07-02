@@ -71,6 +71,7 @@ public class ChatFragment extends Fragment {
 		
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
+			//TODO integrate with game-layer stuff
 			if(SplashActivity.screenType == "Private")
 				sendDetailsMessage(MainActivity.currUserNodeName+ ":" + MainActivity.mUserNameView.getText().toString());
 			else
