@@ -1,4 +1,7 @@
-package com.cardgame.screenapi;
+package com.cardgame.screenapi.chordimpl;
+
+import com.cardgame.screenapi.Message;
+import com.cardgame.screenapi.TransportInterface;
 
 
 public class ChordTransportImpl implements TransportInterface {

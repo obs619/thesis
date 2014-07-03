@@ -29,8 +29,8 @@ import android.widget.TextView;
 import com.cardgame.chord.ChatChord;
 import com.cardgame.chord.IChordChannelListenerAdapter;
 import com.cardgame.collection.FixedArrayList;
-import com.cardgame.transport.ChordMessage;
-import com.cardgame.transport.ChordMessage.MessageOwner;
+import com.cardgame.screenapi.chordimpl.ChordMessage;
+import com.cardgame.screenapi.chordimpl.ChordMessage.MessageOwner;
 import com.samsung.android.sdk.chord.SchordChannel;
 import com.srpol.chordchat.R;
 

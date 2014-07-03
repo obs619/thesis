@@ -1,6 +1,6 @@
 package com.cardgame.screenapi;
 
-import com.cardgame.transport.ChordMessage.MessageOwner;
+import com.cardgame.screenapi.chordimpl.ChordMessage.MessageOwner;
 
 public abstract class Message {
 	/**Username of sending screen

@@ -12,7 +12,7 @@ import com.cardgame.gameengine.transport.GameTransportManager;
  * @author Andrew
  * 
  */
-public class World {
+public class World /*extends Screen*/{
 	private Area rootArea;
 	private List<User>players;
 	private List<User>spectators;
@@ -53,6 +53,7 @@ public class World {
 	 */
 	private void onEventReceived(Event event)
 	{
+		//screen.triggerEvent(event)
 		applyEvent(event);
 		broadcastDelta(event);
 	}

@@ -3,7 +3,13 @@ package com.cardgame.screenapi;
 public class Screen {
 	private String name;
 	private boolean isShared;
+	private EventManager eventManager;//could remove this field, make EventManager a singleton, call EventManager.getInstance()
 
+	
+	public Screen()
+	{
+		eventManager=EventManager.getInstance();
+	}
 	public boolean isShared() {
 		return isShared;
 	}
@@ -23,5 +29,10 @@ public class Screen {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void triggerEvent(Event e)
+	{
+		eventManager.sendEvent(e);
 	}
 }
