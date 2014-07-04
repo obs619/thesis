@@ -6,6 +6,6 @@ package com.cardgame.screenapi;
  *
  */
 public interface EventHandler {
-	public void handleMessage(Message m);
+	public void handleEvent(Event e);
 
 }

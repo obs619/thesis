@@ -33,6 +33,11 @@ public class Screen {
 	
 	public void triggerEvent(Event e)
 	{
+		applyEvent(e);//apply event to yourself (if it affects you?)
 		eventManager.sendEvent(e);
+	}
+	public void applyEvent(Event e)
+	{
+		eventManager.applyEvent(e);
 	}
 }

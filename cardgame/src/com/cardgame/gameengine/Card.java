@@ -1,6 +1,8 @@
-package com.cardgame.gameengine.host;
+package com.cardgame.gameengine;
 
 import java.util.List;
+
+import com.cardgame.screenapi.Screen;
 
 public class Card {
 	private int number;
@@ -12,11 +14,11 @@ public class Card {
 	/**
 	 * Players (private screens) which can see this card's face.
 	 */
-	private List<User> permittedPlayers;
+	private List<Screen> permittedPlayers;
 	/**
 	 * Spectators (public screens) which can see this card's face.
 	 */
-	private List<User> permittedSpectators;
+	private List<Screen> permittedSpectators;
 
 	
 	public Card (int number, int suit){
@@ -35,17 +37,17 @@ public class Card {
 	public void setSuit(int suit) {
 		this.suit = suit;
 	}
-	public List<User> getPermittedPlayers() {
+	public List<Screen> getPermittedPlayers() {
 		return permittedPlayers;
 	}
-	public void setPermittedPlayers(List<User> permittedPlayers) {
+	public void setPermittedPlayers(List<Screen> permittedPlayers) {
 		this.permittedPlayers = permittedPlayers;
 	}
 	
-	public void addPermittedPlayer(User p){
+	public void addPermittedPlayer(Screen p){
 		permittedPlayers.add(p);
 	}
-	public void removePermittedPlayer(User p){
+	public void removePermittedPlayer(Screen p){
 		permittedPlayers.remove(p);
 	}
 }

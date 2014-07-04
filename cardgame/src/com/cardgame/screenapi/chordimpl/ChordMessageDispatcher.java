@@ -1,12 +1,32 @@
 package com.cardgame.screenapi.chordimpl;
 
+import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.Message;
+import com.cardgame.screenapi.TransportInterface;
 
 public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDispatcher{
-
+	
+	private TransportInterface transportInterface=new ChordTransportInterface();
 	@Override
 	public void sendMessage(Message m) {
-		// TODO Auto-generated method stub
+		String recipient=m.getRecipient();
+		if(recipient.equals(Event.ALL_SCREENS))
+		{
+			transportInterface.sendToAll(m);
+		}
+		else if(recipient.equals(Event.SHARED_SCREENS))
+		{
+			//TODO: for each shared screen in list, send the message
+		}
+		else if(recipient.equals(Event.PERSONAL_SCREENS))
+		{
+			
+		}
+		else
+		{
+		
+			transportInterface.send(recipient,m);
+		}
 		
 	}
 

@@ -34,5 +34,9 @@ public class EventManager {
 	{
 		this.eventHandler=h;
 	}
+	public void applyEvent(Event e)
+	{
+		eventHandler.handleEvent(e);
+	}
 	
 }

@@ -20,6 +20,9 @@ public abstract class Message {
 	 */
 	protected String mUserName;
 	//private MessageOwner mOwner;
-	
+	public String getRecipient()
+	{
+		return mUserName;
+	}
 	
 }
