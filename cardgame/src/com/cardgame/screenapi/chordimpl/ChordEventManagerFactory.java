@@ -7,8 +7,8 @@ public class ChordEventManagerFactory implements EventManagerFactory {
 
 	@Override
 	public EventManager createEventManager() {
-		// TODO Auto-generated method stub
-		return null;
+	
+		return new EventManager(new ChordMessageBuilder(),new ChordMessageDispatcher());
 	}
 
 }
