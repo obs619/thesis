@@ -27,6 +27,7 @@ public class CardGameEventHandler implements EventHandler{
 		switch(e.getType())
 		{
 		case CardGameEvent.CARD_DRAWN:
+			//update local world accordingly
 			break;
 		case CardGameEvent.CARD_PLAYED:
 			break;

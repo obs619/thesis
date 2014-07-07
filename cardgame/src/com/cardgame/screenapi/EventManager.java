@@ -30,6 +30,11 @@ public class EventManager {
 		Message m=messageBuilder.buildMessage(e);
 		messageDispatcher.sendMessage(m);
 	}
+	public void unpackEvent(Message m)
+	{
+		Event e=messageBuilder.unpackEvent(m);
+		applyEvent(e);
+	}
 	public void setEventHandler(EventHandler h)
 	{
 		this.eventHandler=h;

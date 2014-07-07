@@ -6,7 +6,13 @@ import com.cardgame.screenapi.TransportInterface;
 
 public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDispatcher{
 	
+	
 	private TransportInterface transportInterface=new ChordTransportInterface();
+	public ChordMessageDispatcher(ChordTransportInterface transportInterface)
+	{
+		setTransportInterface(transportInterface);
+	}
+	
 	@Override
 	public void sendMessage(Message m) {
 		String recipient=m.getRecipient();
@@ -28,6 +34,16 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDis
 			transportInterface.send(recipient,m);
 		}
 		
+	}
+	@Override
+	public void receiveMessage(Message m)
+	{
+		
+	}
+	@Override
+	public void setTransportInterface(TransportInterface transportInterface) {
+		// TODO Auto-generated method stub
+		this.transportInterface=transportInterface;
 	}
 
 }

@@ -12,4 +12,11 @@ public class ChordMessageBuilder implements MessageBuilder {
 		return null;
 	}
 
+	@Override
+	public Event unpackEvent(Message m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
 }
