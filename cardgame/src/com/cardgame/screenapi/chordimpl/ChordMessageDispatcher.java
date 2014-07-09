@@ -1,6 +1,7 @@
 package com.cardgame.screenapi.chordimpl;
 
 import com.cardgame.screenapi.Event;
+import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.TransportInterface;
 
@@ -8,7 +9,7 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDis
 	
 	
 	private TransportInterface transportInterface=new ChordTransportInterface();
-
+	private EventManager eventManager;
 	public ChordMessageDispatcher(ChordTransportInterface transportInterface)
 	{
 		setTransportInterface(transportInterface);
@@ -39,12 +40,18 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDis
 	@Override
 	public void receiveMessage(Message m)
 	{
-		
+		eventManager.unpackEvent(m);
 	}
 	@Override
 	public void setTransportInterface(TransportInterface transportInterface) {
 		// TODO Auto-generated method stub
 		this.transportInterface=transportInterface;
+	}
+
+	@Override
+	public void setEventManager(EventManager eventManager) {
+		// TODO Auto-generated method stub
+		this.eventManager=eventManager;
 	}
 
 }
