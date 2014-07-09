@@ -9,7 +9,7 @@
  * of the license agreement you entered into with Samsung Electronics.
  ********************************************************************************
  */
-package com.cardgame.ui;
+package com.cardgame.uiOLD;
 
 import android.app.DialogFragment;
 import android.os.Bundle;

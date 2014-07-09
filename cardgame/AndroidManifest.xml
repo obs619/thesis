@@ -18,7 +18,7 @@
         android:label="@string/chord_chat_app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.cardgame.ui.SplashActivity"
+            android:name="com.cardgame.uiOLD.SplashActivity"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         
-    	<activity android:name="com.cardgame.ui.MainActivity" />
+    	<activity android:name="com.cardgame.uiOLD.MainActivity" />
     </application>
     
 

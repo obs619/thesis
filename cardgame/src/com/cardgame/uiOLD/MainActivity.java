@@ -9,7 +9,7 @@
  * of the license agreement you entered into with Samsung Electronics.
  ********************************************************************************
  */
-package com.cardgame.ui;
+package com.cardgame.uiOLD;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +52,7 @@ import android.widget.Toast;
 import com.cardgame.chord.ChatChord;
 import com.cardgame.screenapi.chordimpl.ChordMessage;
 import com.cardgame.screenapi.chordimpl.ChordMessage.MessageOwner;
-import com.cardgame.ui.ChannelNameDialog.OnAddChannelListener;
+import com.cardgame.uiOLD.ChannelNameDialog.OnAddChannelListener;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.samsung.android.sdk.SsdkUnsupportedException;

@@ -6,8 +6,8 @@ import com.cardgame.chord.IChordChannelListenerAdapter;
 import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.MessageDispatcher;
 import com.cardgame.screenapi.TransportInterface;
-import com.cardgame.ui.MainActivity;
-import com.cardgame.ui.SplashActivity;
+import com.cardgame.uiOLD.MainActivity;
+import com.cardgame.uiOLD.SplashActivity;
 import com.samsung.android.sdk.chord.SchordChannel;
 
 

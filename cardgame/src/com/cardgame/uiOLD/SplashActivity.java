@@ -1,4 +1,4 @@
-package com.cardgame.ui;
+package com.cardgame.uiOLD;
 
 import com.srpol.chordchat.R;
 

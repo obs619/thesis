@@ -8,6 +8,7 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDis
 	
 	
 	private TransportInterface transportInterface=new ChordTransportInterface();
+
 	public ChordMessageDispatcher(ChordTransportInterface transportInterface)
 	{
 		setTransportInterface(transportInterface);
