@@ -30,6 +30,8 @@ public class CardGameEventHandler implements EventHandler{
 			//update local world accordingly
 			break;
 		case CardGameEvent.CARD_PLAYED:
+			String cardName=e.getPayload();
+			//update card position
 			break;
 		}
 	}

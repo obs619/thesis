@@ -27,14 +27,14 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 
 	//private final String mMessage;
 	//private final String mUserName;
-	private MessageOwner mOwner;
+	//private MessageOwner mOwner;
 	//private String mMessageType;
 	
 	
-	private ChordMessage(String message, String userName, MessageOwner owner, String messageType) {
+	ChordMessage(String message, String recipients, String source, int messageType) {
 		mMessage = message;
-		mUserName = userName;
-		mOwner = owner;
+		mRecipients = recipients;
+		//mOwner = owner;
 		mMessageType = messageType;
 	}
 
@@ -45,8 +45,8 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 	 * @param owner
 	 * @return {@link ChordMessage} instance
 	 */
-	public static ChordMessage obtain(String message, String userName, MessageOwner owner, String messageType) {
-		return new ChordMessage(message, userName, owner, messageType);
+	public static ChordMessage obtain(String message, String userName, String source, int messageType) {
+		return new ChordMessage(message, userName, source, messageType);
 	}
 
 	/**
@@ -56,31 +56,29 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 	 * @return new {@link ChordMessage} instance.
 	 */
 	public static ChordMessage obtain(ChordMessage chatMessage) {
-		return new ChordMessage(chatMessage.mMessage, chatMessage.mUserName, chatMessage.mOwner, chatMessage.mMessageType);
+		return new ChordMessage(chatMessage.mMessage, chatMessage.mRecipients, chatMessage.getSource(), chatMessage.mMessageType);
 	}
 
 	public String getMessage() {
 		return mMessage;
 	}
 
-	public MessageOwner getOwner() {
-		return mOwner;
-	}
+	
 
 	public String getUserName() {
-		return mUserName;
+		return mRecipients;
 	}
 	
-	public String getMessageType() {
+	public int getMessageType() {
 		return mMessageType;
 	}
 
 	/**
 	 * Swaps the owner of the message.
 	 */
-	public void changeOwner() {
+	/*public void changeOwner() {
 		mOwner = mOwner == MessageOwner.YOU ? MessageOwner.STRANGER : MessageOwner.YOU;
-	}
+	}*/
 
 	/**
 	 * Returns {@link ChordMessage} in the form of byte array.
@@ -124,7 +122,7 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 
 	@Override
 	public String toString() {
-		return "ChatMessage [mMessage=" + mMessage + ", mUserName=" + mUserName + ", mOwner=" + mOwner + "]";
+		return "ChatMessage [mMessage=" + mMessage + ", mUserName=" + mRecipients + ", mOwner=" + getSource() + "]";
 	}
 
 	/**

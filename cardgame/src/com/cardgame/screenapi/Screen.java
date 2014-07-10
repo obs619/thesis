@@ -40,4 +40,12 @@ public class Screen {
 	{
 		eventManager.applyEvent(e);
 	}
+	public void open()
+	{
+		//make screen visible to other screens (auto-connect)
+	}
+	public void close()
+	{
+		//hide screen fromother screens
+	}
 }

@@ -9,7 +9,7 @@ public abstract class Message {
 	/**
 	 * Message type
 	 */
-	protected String mMessageType;
+	protected int mMessageType;
 	
 	/**Message contents
 	 * 
@@ -19,11 +19,26 @@ public abstract class Message {
 	/**
 	 * Not sure if recipient or sender
 	 */
-	protected String mUserName;
+	protected String mRecipients;
+	private String mSource;
 	
 	//private MessageOwner mOwner;
 	public String getRecipient()
 	{
-		return mUserName;
+		return mRecipients;
 	}
+
+	public String getSource() {
+		return mSource;
+	}
+
+	public String getContents()
+	{
+		return mMessage;
+	}
+	public int getType()
+	{
+		return mMessageType;
+	}
+	
 }

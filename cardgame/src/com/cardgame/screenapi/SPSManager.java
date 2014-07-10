@@ -5,13 +5,13 @@ package com.cardgame.screenapi;
 public class SPSManager {
 	private Screen screen;
 	private EventManager eventManager;
-	private NetworkInitializer networkInitializer; 
+	private NetworkManager networkInitializer; 
 
 	/**
 	 * Select which implementation you want (Chord in this case)
 	 */
 	public void setNetworkInitializer() {
-		this.networkInitializer = NetworkInitializer.getInstance();
+		this.networkInitializer = NetworkManager.getInstance();
 	}
 	
 	// getters and setters
@@ -31,7 +31,7 @@ public class SPSManager {
 		this.eventManager = EventManager.getInstance();
 	}
 
-	public NetworkInitializer getNetworkInitializer() {
+	public NetworkManager getNetworkInitializer() {
 		return networkInitializer;
 	}
 

@@ -9,13 +9,13 @@ public class ChordMessageBuilder implements MessageBuilder {
 	@Override
 	public Message buildMessage(Event e) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ChordMessage(e.getPayload(),e.getRecipient(),e.getSource(),e.getType());
 	}
 
 	@Override
 	public Event unpackEvent(Message m) {
 		// TODO Auto-generated method stub
-		return null;
+		return new Event(m.getSource(),m.getRecipient(),m.getType(),m.getContents());
 	}
 	
 

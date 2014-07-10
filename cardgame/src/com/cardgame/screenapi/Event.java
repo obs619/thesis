@@ -12,8 +12,8 @@ public class Event {//can developer subclass using reflection?
 	public static final String ALL_SCREENS="all";
 	public static final String LOCAL_SCREEN="onlyme";
 	
-	String source;//or Screen
-	String recipient;//who does this event affect?
+	private String source;//or Screen
+	private String recipient;//who does this event affect?
 	private int type;
 	private String payload;
 	/**
@@ -50,6 +50,18 @@ public class Event {//can developer subclass using reflection?
 	}
 	public void setPayload(String payload) {
 		this.payload = payload;
+	}
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}
+	public String getRecipient() {
+		return recipient;
+	}
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
 	}
 	
 
