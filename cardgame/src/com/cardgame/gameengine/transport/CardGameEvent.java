@@ -38,7 +38,7 @@ public class CardGameEvent extends Event {
 	 * A delta sent when the host has reshuffled the cards in the deck/discard pile. Not needed for Monkey Monkey
 	 */
 	public static final int DECK_RESHUFFLED=8;
-
+	public static final int START_GAME=9;
 	
 	
 	/*private int type;

@@ -10,7 +10,11 @@ import com.cardgame.uiOLD.MainActivity;
 import com.cardgame.uiOLD.SplashActivity;
 import com.samsung.android.sdk.chord.SchordChannel;
 
-
+/**
+ * Calls/is called by Chord to send and receive messages
+ * @author Andrew
+ *
+ */
 public class ChordTransportInterface implements TransportInterface {
 
 	private MessageDispatcher messageDispatcher;

@@ -28,11 +28,7 @@ public class World {
 		//send a message to the server containing the event type and event details (e.g. for DRAW_CARD: name of card drawn)
 		
 	}
-	//Where are methods actually applied? Shouldn't the API handle this?
-	public void applyEvent(CardGameEvent e)
-	{
-		
-	}
+
 	
 	
 	

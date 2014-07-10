@@ -1,9 +1,19 @@
 package com.cardgame.screenapi;
 
+import java.util.List;
+
 
 
 public class SPSManager {
+	/**
+	 * screen of this device
+	 */
 	private Screen screen;
+	
+	private List<String>sharedScreens;
+	private List<String>personalScreens;
+	//TODO: set or initialize these lists
+	
 	private EventManager eventManager;
 	private NetworkManager networkInitializer; 
 
@@ -34,7 +44,22 @@ public class SPSManager {
 	public NetworkManager getNetworkInitializer() {
 		return networkInitializer;
 	}
-
+	public void addSharedScreen(String screenName)
+	{
+		sharedScreens.add(screenName);
+	}
+	public void addPersonalScreen(String screenName)
+	{
+		personalScreens.add(screenName);
+	}
+	public void removeSharedScreen(String screenName)
+	{
+		sharedScreens.remove(screenName);
+	}
+	public void removePersonalScreen(String screenName)
+	{
+		personalScreens.remove(screenName);
+	}
 
 	
 }

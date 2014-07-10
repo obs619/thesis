@@ -100,5 +100,10 @@ public class HostWorld extends World{
 			hand.addCard(drawFromDeck());
 		}
 	}
-
+	public void startGame()
+	{
+		
+		triggerEvent(CardGameEvent.START_GAME,"1");//this will already be applied on this device thanks to the contents of Screen.triggerEvent()
+		
+	}
 }
