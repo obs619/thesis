@@ -23,7 +23,10 @@ public class ChordTransportInterface implements TransportInterface {
 	
 	private SchordChannel mChannel;
 	public static String channelName = "DEFAULT_CHANNEL";
-	
+	public ChordTransportInterface()
+	{
+		joinChannel();
+	}
 	public void joinChannel() {
 		//Joins to the channel with the specified name.
 		 mChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);
