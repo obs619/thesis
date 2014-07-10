@@ -8,7 +8,7 @@ public class ChordEventManagerFactory implements EventManagerFactory {
 	@Override
 	public EventManager createEventManager() {
 	
-		return new EventManager(new ChordMessageBuilder(),new ChordMessageDispatcher());
+		return new EventManager(new ChordMessageBuilder(),new ChordMessageDispatcher(new ChordTransportInterface()));
 	}
 
 }

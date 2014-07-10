@@ -1,12 +1,15 @@
 package com.cardgame.screenapi;
 
-import android.app.Application;
 
-public class SPSApplication extends Application {
+
+public class SPSManager {
 	private Screen screen;
 	private EventManager eventManager;
 	private NetworkInitializer networkInitializer; 
-	
+
+	/**
+	 * Select which implementation you want (Chord in this case)
+	 */
 	public void setNetworkInitializer() {
 		this.networkInitializer = NetworkInitializer.getInstance();
 	}
@@ -24,13 +27,14 @@ public class SPSApplication extends Application {
 		return eventManager;
 	}
 
-	public void setEventManager(EventManager eventManager) {
-		this.eventManager = eventManager;
+	public void setEventManager() {
+		this.eventManager = EventManager.getInstance();
 	}
 
 	public NetworkInitializer getNetworkInitializer() {
 		return networkInitializer;
 	}
+
 
 	
 }
