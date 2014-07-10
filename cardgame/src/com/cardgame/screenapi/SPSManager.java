@@ -2,6 +2,8 @@ package com.cardgame.screenapi;
 
 import java.util.List;
 
+import android.content.Context;
+
 
 
 public class SPSManager {
@@ -17,6 +19,12 @@ public class SPSManager {
 	private EventManager eventManager;
 	private NetworkManager networkInitializer; 
 
+	private static Context mContext;
+	
+	public SPSManager(Context mContext) {
+		this.mContext = mContext;
+	}
+	
 	/**
 	 * Select which implementation you want (Chord in this case)
 	 */
@@ -31,6 +39,10 @@ public class SPSManager {
 
 	public void setScreen(Screen screen) {
 		this.screen = screen;
+	}
+	
+	public static Context getContext() {
+		return mContext;
 	}
 
 	public EventManager getEventManager() {
