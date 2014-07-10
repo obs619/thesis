@@ -29,40 +29,29 @@ public class Event {//can developer subclass using reflection?
 	}
 	public Event(String source, String recipient, int type, String payload)
 	{
-		
+		this.source=source;
+		this.recipient=recipient;
+		this.type=type;
+		this.payload=payload;
 	}
 	
-	/**
-	 * Create a message and send it to the particular recipients
-	 */
-	public void sendMessage()
-	{
-		
-	}
+
 	public int getType() {
 		return type;
 	}
-	public void setType(int type) {
-		this.type = type;
-	}
+
 	public String getPayload() {
 		return payload;
 	}
-	public void setPayload(String payload) {
-		this.payload = payload;
-	}
+	
 	public String getSource() {
 		return source;
 	}
-	public void setSource(String source) {
-		this.source = source;
-	}
+
 	public String getRecipient() {
 		return recipient;
 	}
-	public void setRecipient(String recipient) {
-		this.recipient = recipient;
-	}
+	
 	
 
 }
