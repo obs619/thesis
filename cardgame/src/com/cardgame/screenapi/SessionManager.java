@@ -1,16 +1,21 @@
 package com.cardgame.screenapi;
 
 import java.util.List;
+import java.util.Map;
 
 public class SessionManager {
 	private String sessionID;//auto-generate
 	private String sessionKey;//auto-generate?
 	private boolean isOpen=true;
 	
-	private List<String>sharedScreens;
+	private List<String>sharedScreens;//<name, sessionID>
 	private List<String>personalScreens;
 	//TODO: set or initialize these lists
 	
+	public void requestToJoin()
+	{
+		
+	}
 	public void joinSession(String sessionID)
 	{
 		this.sessionID=sessionID;

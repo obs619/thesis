@@ -33,10 +33,10 @@ public class Screen {
 	
 	public void triggerEvent(Event e)
 	{
-		applyEvent(e);//apply event to yourself (if it affects you?)
+		onEventReceived(e);//apply event to yourself (if it affects you?)
 		eventManager.sendEvent(e);
 	}
-	public void applyEvent(Event e)
+	public void onEventReceived(Event e)
 	{
 		eventManager.applyEvent(e);
 	}

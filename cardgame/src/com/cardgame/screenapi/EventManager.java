@@ -9,11 +9,12 @@ public class EventManager {
 	MessageDispatcher messageDispatcher;
 	EventHandler eventHandler;
 	static EventManagerFactory factory;
+	static final EventManager instance=factory.createEventManager();
 	//TODO optional global event queue
 	//TODO optional shared hash table w/ distributed mutex
 	public static EventManager getInstance()
 	{
-		return factory.createEventManager();
+		return instance;//factory.createEventManager();
 	}
 	
 	public static void setDefaultFactory(EventManagerFactory factory)

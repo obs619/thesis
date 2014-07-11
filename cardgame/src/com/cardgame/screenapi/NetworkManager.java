@@ -4,11 +4,12 @@ public class NetworkManager {
 	
 	private static NetworkManager networkInitializer = null;
 	static NetworkManagerFactory factory;
+	static final NetworkManager instance=factory.createNetworkManager();
 	//TODO optional global event queue
 	//TODO optional shared hash table w/ distributed mutex
 	public static NetworkManager getInstance()
 	{
-		return factory.createNetworkManager();
+		return instance;
 	}
 	
 	public static void setDefaultFactory(NetworkManagerFactory factory)
