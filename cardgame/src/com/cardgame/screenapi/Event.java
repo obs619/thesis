@@ -12,8 +12,11 @@ public class Event {//can developer subclass using reflection?
 	public static final String R_ALL_SCREENS="all";
 	public static final String R_LOCAL_SCREEN="onlyme";
 	
-	public static final int TYPE_SESSIONID=0;
-	public static final int TYPE_SCREEN_TYPE_CHANGED=1;
+	public static final int T_SCREEN_TYPE_CHANGED=0;
+	public static final int T_JOIN_SESSION=1;
+	public static final int T_LOCK_SESSION=2;
+	public static final int T_UNLOCK_SESSION=3;
+	public static final int T_LEAVE_SESSION=4;
 	
 	private String source;//or Screen
 	private String recipient;//who does this event affect?

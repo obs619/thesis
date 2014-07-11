@@ -4,6 +4,7 @@ import java.util.List;
 
 public class SessionManager {
 	private String sessionID;//auto-generate
+	private String sessionKey;//auto-generate?
 	private boolean isOpen=true;
 	
 	private List<String>sharedScreens;
@@ -13,16 +14,30 @@ public class SessionManager {
 	public void joinSession(String sessionID)
 	{
 		this.sessionID=sessionID;
-		//TODO broadcast new sessionID (?)
+		broadcastSessionID();
 		//
+	}
+	/**Called on receive of the message...
+	 * 
+	 * @param screenName
+	 */
+	public void onScreenJoined(String screenName)
+	{
+		//TODO: refine parameters?
+		//add screen to list of either shared or private screens
+		//send message to screen containing the session key
 	}
 	public void createSession()
 	{
-		//generate new sessionID and broadcast to other devices
+		//generate new sessionID/key and broadcast to other devices
 	}
 	public void leaveSession()
 	{
 		//leave this session. similar to Screen.close()?
+	}
+	private void broadcastSessionID()
+	{
+		//TODO broadcast new sessionID
 	}
 	/**
 	 * allow other devices to join this session
@@ -31,7 +46,10 @@ public class SessionManager {
 	{
 		isOpen=true;
 	}
-	public void closeSession()
+	/**prevent other devices from joining this session
+	 * 
+	 */
+	public void lockSession()
 	{
 		isOpen=false;
 	}
