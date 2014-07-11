@@ -7,7 +7,7 @@ public class SessionManager {
 	private String sessionID;//auto-generate
 	private String sessionKey;//auto-generate?
 	private boolean isOpen=true;
-	
+	private List<String>availableSessions;
 	private List<String>sharedScreens;//<name, sessionID>
 	private List<String>personalScreens;
 	//TODO: set or initialize these lists
@@ -77,5 +77,13 @@ public class SessionManager {
 	public void removePersonalScreen(String screenName)
 	{
 		personalScreens.remove(screenName);
+	}
+	public void removeAvailableSession(String sessionID)
+	{
+		availableSessions.remove(sessionID);
+	}
+	public void addAvailableSession(String sessionID)
+	{
+		availableSessions.add(sessionID);
 	}
 }
