@@ -12,6 +12,6 @@ public interface Screen2 {
 	public String getName();
 
 	public void setName(String name);
-	public void onEventReceived(Event e);
+	//public void onEventReceived(Event e);
 
 }

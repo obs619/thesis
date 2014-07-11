@@ -33,8 +33,8 @@ public class Screen {
 	
 	public void triggerEvent(Event e)
 	{
-		onEventReceived(e);//apply event to yourself (if it affects you?)
-		eventManager.sendEvent(e);
+		
+		eventManager.triggerEvent(e);
 	}
 	public void onEventReceived(Event e)
 	{
