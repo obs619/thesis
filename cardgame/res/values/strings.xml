@@ -32,5 +32,12 @@
     <string name="drawer_close">Drawer close</string>
     <string name="channel_name_fragment_connect">Connect</string>
     <string name="channel_name_fragment_enter_channel_name">Enter the channel name</string>
+    <string name="personal">Personal</string>
+    <string name="shared">Shared</string>
+    <string name="play">Play</string>
+    <string name="pass">Pass</string>
+    <string name="myhand">My Hand</string>
+    <string name="passto">Pass to</string>
+    <string name="table">Table</string>
 
 </resources>
