@@ -18,15 +18,15 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDis
 	@Override
 	public void sendMessage(Message m) {
 		String recipient=m.getRecipient();
-		if(recipient.equals(Event.ALL_SCREENS))
+		if(recipient.equals(Event.R_ALL_SCREENS))
 		{
 			transportInterface.sendToAll(m);
 		}
-		else if(recipient.equals(Event.SHARED_SCREENS))
+		else if(recipient.equals(Event.R_SHARED_SCREENS))
 		{
 			//TODO: for each shared screen in list, send the message
 		}
-		else if(recipient.equals(Event.PERSONAL_SCREENS))
+		else if(recipient.equals(Event.R_PERSONAL_SCREENS))
 		{
 			
 		}

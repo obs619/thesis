@@ -23,7 +23,7 @@ public class World {
 	public void triggerEvent(int eventType, String eventDetails)
 	{
 		//TODO: get username
-		CardGameEvent e=new CardGameEvent(screen.getName(),Event.ALL_SCREENS,eventType, eventDetails);
+		CardGameEvent e=new CardGameEvent(screen.getName(),Event.R_ALL_SCREENS,eventType, eventDetails);
 		screen.triggerEvent(e);
 		//send a message to the server containing the event type and event details (e.g. for DRAW_CARD: name of card drawn)
 		

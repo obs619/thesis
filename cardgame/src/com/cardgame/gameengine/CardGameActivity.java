@@ -25,7 +25,7 @@ public class CardGameActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
-		spsManager=new SPSManager();
+		spsManager=new SPSManager(null);
 		//On initialize, choose whether public or private screen
 		//if public screen and game has not started, show Start Game button
 		//if private screen and game has not started, display cards but do not display Play Card button

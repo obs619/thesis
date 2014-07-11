@@ -6,23 +6,24 @@ import android.content.Context;
 
 
 
-public class SPSManager {
+public class PPSManager {
 	/**
 	 * screen of this device
 	 */
 	private Screen screen;
 	
-	private List<String>sharedScreens;
-	private List<String>personalScreens;
-	//TODO: set or initialize these lists
+	
+
 	
 	private EventManager eventManager;
 	private NetworkManager networkInitializer; 
-
+	private SessionManager sessionManager;
 	private static Context mContext;
 	
-	public SPSManager(Context mContext) {
+	public PPSManager(Context mContext) {
 		this.mContext = mContext;
+		setNetworkInitializer();
+		setEventManager();
 	}
 	
 	/**
@@ -56,21 +57,14 @@ public class SPSManager {
 	public NetworkManager getNetworkInitializer() {
 		return networkInitializer;
 	}
-	public void addSharedScreen(String screenName)
-	{
-		sharedScreens.add(screenName);
+
+
+	public SessionManager getSessionManager() {
+		return sessionManager;
 	}
-	public void addPersonalScreen(String screenName)
-	{
-		personalScreens.add(screenName);
-	}
-	public void removeSharedScreen(String screenName)
-	{
-		sharedScreens.remove(screenName);
-	}
-	public void removePersonalScreen(String screenName)
-	{
-		personalScreens.remove(screenName);
+
+	public void setSessionManager(SessionManager sessionManager) {
+		this.sessionManager = sessionManager;
 	}
 
 	

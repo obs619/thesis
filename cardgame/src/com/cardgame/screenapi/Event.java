@@ -7,10 +7,13 @@ package com.cardgame.screenapi;
 public class Event {//can developer subclass using reflection?
 	
 	
-	public static final String SHARED_SCREENS="shared";
-	public static final String  PERSONAL_SCREENS="personal";
-	public static final String ALL_SCREENS="all";
-	public static final String LOCAL_SCREEN="onlyme";
+	public static final String R_SHARED_SCREENS="shared";
+	public static final String  R_PERSONAL_SCREENS="personal";
+	public static final String R_ALL_SCREENS="all";
+	public static final String R_LOCAL_SCREEN="onlyme";
+	
+	public static final int TYPE_SESSIONID=0;
+	public static final int TYPE_SCREEN_TYPE_CHANGED=1;
 	
 	private String source;//or Screen
 	private String recipient;//who does this event affect?

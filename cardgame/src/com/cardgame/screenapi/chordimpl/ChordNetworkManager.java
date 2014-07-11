@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.cardgame.chord.IChordChannelListenerAdapter;
 import com.cardgame.screenapi.NetworkManager;
-import com.cardgame.screenapi.SPSManager;
+import com.cardgame.screenapi.PPSManager;
 import com.samsung.android.sdk.SsdkUnsupportedException;
 import com.samsung.android.sdk.chord.Schord;
 import com.samsung.android.sdk.chord.SchordChannel;
@@ -49,7 +49,7 @@ public class ChordNetworkManager extends NetworkManager {
 		chord = new Schord();
 		
 		try {
-			chord.initialize(SPSManager.getContext());
+			chord.initialize(PPSManager.getContext());
 		} catch (SsdkUnsupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,7 +58,7 @@ public class ChordNetworkManager extends NetworkManager {
 	
 	public void initializeChordManager() {
 		// Initialize SchordManager
-		mChordManager = new SchordManager(SPSManager.getContext());
+		mChordManager = new SchordManager(PPSManager.getContext());
 		
 		//checks the available interface types which are wifi, mobile ap or wifi p2p
 		List<Integer> infList =mChordManager.getAvailableInterfaceTypes();
