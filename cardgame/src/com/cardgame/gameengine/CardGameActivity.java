@@ -3,7 +3,11 @@ package com.cardgame.gameengine;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.cardgame.gameengine.transport.CardGameEvent;
+import com.cardgame.screenapi.Event;
+import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.Screen;
 import com.cardgame.uiOLD.SplashActivity;
 import com.google.common.collect.Maps;
 import com.samsung.android.sdk.SsdkUnsupportedException;
@@ -19,8 +23,10 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class CardGameActivity extends Activity {
-	PPSManager spsManager;
+public class CardGameActivity extends Activity implements Screen {
+	PPSManager spsManager;//should really be instantiated in application, not activity
+	String name;
+	boolean isPublic;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -31,6 +37,37 @@ public class CardGameActivity extends Activity {
 		//if public screen and game has not started, show Start Game button
 		//if private screen and game has not started, display cards but do not display Play Card button
 		//if public screen and game has started, display cards that have been played <--consider late-joining public screens
+		
+	}
+	
+	public void playCard(String cardName)
+	{
+		Event e=new Event(this.getName(),Event.R_ALL_SCREENS,CardGameEvent.CARD_PLAYED,cardName);
+		EventManager.getInstance().triggerEvent(e);//this will already be applied on this device thanks to the contents of Screen.triggerEvent()
+		
+	}
+	@Override
+	public boolean isShared() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void setAsShared() {
+		isPublic=true;
+		
+	}
+	@Override
+	public void setAsPersonal() {
+		isPublic=false;
+		
+	}
+	@Override
+	public String getName() {
+		return name;
+	}
+	@Override
+	public void setName(String name) {
+		this.name=name;
 		
 	}
 

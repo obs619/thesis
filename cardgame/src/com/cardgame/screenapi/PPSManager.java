@@ -7,14 +7,7 @@ import android.content.Context;
 
 
 public class PPSManager {
-	/**
-	 * screen of this device
-	 */
-	private Screen screen;
-	
-	
 
-	
 	private EventManager eventManager;
 	private NetworkManager networkInitializer; 
 	private SessionManager sessionManager;
@@ -33,14 +26,6 @@ public class PPSManager {
 		this.networkInitializer = NetworkManager.getInstance();
 	}
 	
-	// getters and setters
-	public Screen getScreen() {
-		return screen;
-	}
-
-	public void setScreen(Screen screen) {
-		this.screen = screen;
-	}
 	
 	public static Context getContext() {
 		return mContext;
