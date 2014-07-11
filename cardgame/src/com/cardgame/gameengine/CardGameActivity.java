@@ -3,7 +3,7 @@ package com.cardgame.gameengine;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.cardgame.screenapi.SPSManager;
+import com.cardgame.screenapi.PPSManager;
 import com.cardgame.uiOLD.SplashActivity;
 import com.google.common.collect.Maps;
 import com.samsung.android.sdk.SsdkUnsupportedException;
@@ -20,12 +20,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class CardGameActivity extends Activity {
-	SPSManager spsManager;
+	PPSManager spsManager;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
-		spsManager=new SPSManager(null);
+		spsManager=new PPSManager(null);
+		
 		//On initialize, choose whether public or private screen
 		//if public screen and game has not started, show Start Game button
 		//if private screen and game has not started, display cards but do not display Play Card button
