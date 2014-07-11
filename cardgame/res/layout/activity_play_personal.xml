@@ -13,7 +13,6 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/txtMyHand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -23,7 +22,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ListView
-            android:id="@+id/listCards"
+            android:id="@+id/listPersonalCards"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:choiceMode="singleChoice" >
@@ -38,45 +37,67 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical" >
 
+        <TextView
+            android:id="@+id/txtPersonalError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_red_dark"
+            android:text="@string/error"
+            android:visibility="gone" />
+
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2" >
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:weightSum="2" >
 
 	        <Button
-	            android:id="@+id/button1"
+	            android:id="@+id/btnPersonalPlay"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:text="@string/play"
-	            style="?android:attr/buttonStyle" />
+	            style="?android:attr/buttonStyle"
+	            android:onClick="" />
 	
 	        <Button
-	            android:id="@+id/button2"
+	            android:id="@+id/btnPersonalPass"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:text="@string/pass"
-	            style="?android:attr/buttonStyle" />
+	            style="?android:attr/buttonStyle"
+	            android:onClick="" />
 	    </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layoutPersonalPassTo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
 
             <TextView
-                android:id="@+id/txtPassTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/passto" />
 
             <Spinner
-                android:id="@+id/spinRecipient"
+                android:id="@+id/spinPersonalRecipient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
+       <Button
+           android:id="@+id/btnPersonalDone"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+            android:visibility="gone"
+           android:text="@string/done"
+           style="?android:attr/buttonStyle"
+           android:onClick="" />
 
     </LinearLayout>
 

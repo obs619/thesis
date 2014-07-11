@@ -7,17 +7,19 @@
     android:gravity="center" >
 
     <Button
-        android:id="@+id/btnPersonal"
+        android:id="@+id/btnLobbyPersonal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
-        android:text="@string/personal" />
+        android:text="@string/personal"
+        android:onClick="selectAsPersonal" />
 
     <Button
-        android:id="@+id/btnShared"
+        android:id="@+id/btnLobbyShared"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
-        android:text="@string/shared" />
+        android:text="@string/shared"
+        android:onClick="selectAsShared" />
 
 </LinearLayout>

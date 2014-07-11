@@ -39,5 +39,7 @@
     <string name="myhand">My Hand</string>
     <string name="passto">Pass to</string>
     <string name="table">Table</string>
+    <string name="done">Done</string>
+    <string name="error">Errors will be displayed here.</string>
 
 </resources>
