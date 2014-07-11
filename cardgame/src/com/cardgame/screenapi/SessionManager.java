@@ -8,8 +8,8 @@ public class SessionManager {
 	private String sessionKey;//auto-generate?
 	private boolean isOpen=true;
 	private List<String>availableSessions;
-	private List<String>sharedScreens;//<name, sessionID>
-	private List<String>personalScreens;
+	private List<String>publicScreenList;//<name, sessionID>
+	private List<String>privateScreenList;
 	//TODO: set or initialize these lists
 	
 	public void requestToJoin()
@@ -58,25 +58,25 @@ public class SessionManager {
 	{
 		isOpen=false;
 	}
-	public boolean sessionIsOpen()
+	public boolean IsSessionOpen()
 	{
 		return isOpen;
 	}
-	public void addSharedScreen(String screenName)
+	public void addPublicScreen(String screenName)
 	{
-		sharedScreens.add(screenName);
+		publicScreenList.add(screenName);
 	}
-	public void addPersonalScreen(String screenName)
+	public void addPrivateScreen(String screenName)
 	{
-		personalScreens.add(screenName);
+		privateScreenList.add(screenName);
 	}
-	public void removeSharedScreen(String screenName)
+	public void removePublicScreen(String screenName)
 	{
-		sharedScreens.remove(screenName);
+		publicScreenList.remove(screenName);
 	}
-	public void removePersonalScreen(String screenName)
+	public void removePrivateScreen(String screenName)
 	{
-		personalScreens.remove(screenName);
+		privateScreenList.remove(screenName);
 	}
 	public void removeAvailableSession(String sessionID)
 	{
