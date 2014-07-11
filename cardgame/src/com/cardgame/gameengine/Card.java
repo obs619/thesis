@@ -50,4 +50,21 @@ public class Card {
 	public void removePermittedPlayer(Screen p){
 		permittedPlayers.remove(p);
 	}
+	
+	public String getSuitAsString() {
+		String sSuit = null;
+		switch (this.suit) {
+			case 4:	sSuit = "Diamonds"; break;
+			case 3:	sSuit = "Hearts"; break;
+			case 2:	sSuit = "Spades"; break;
+			case 1:	sSuit = "Clubs"; break;
+			default: sSuit = "Unknown";
+		}
+		return sSuit;
+	}
+	
+	@Override
+	public String toString() {
+		return this.number + " of " + getSuitAsString();
+	}
 }

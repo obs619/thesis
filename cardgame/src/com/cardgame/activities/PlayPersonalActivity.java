@@ -41,8 +41,19 @@ public class PlayPersonalActivity extends Activity {
 		btnDone = (Button) findViewById(R.id.btnPersonalDone);
 		
 		// TODO send and receive join game message
+		
 		// TODO receive cards
+		// ArrayList<Card> lstCards = <received cards>
+		
 		// TODO populate listview with cards
+		//try {
+		//	ArrayAdapter<Card> cardAdapter = new ArrayAdapter<Card>(this, R.layout.list_item, lstCards);
+		//	lstCards.setAdapter(cardAdapter);
+		//}
+		//catch(Exception ex) {
+		//	ArrayAdapter<String> cardAdapter = new ArrayAdapter<String>(this, R.layout.list_item, new String[] {"No cards received."});
+		//	lstCards.setAdapter(cardAdapter);
+		//}
 		
 		// TODO receive list of players
 		// TODO populate spinner with players
