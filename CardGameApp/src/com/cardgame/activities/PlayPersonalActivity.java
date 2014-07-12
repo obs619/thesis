@@ -8,6 +8,9 @@ import java.util.List;
 import com.cardgame.R;
 import com.cardgame.adapters.HandAdapter;
 import com.cardgame.gameengine.Card;
+import com.cardgame.gameengine.transport.CardGameEvent;
+import com.cardgame.screenapi.Event;
+import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.Screen;
 
@@ -27,47 +30,55 @@ import android.widget.TextView;
  *		selected.
  */
 
-public class PlayPersonalActivity extends Activity implements Screen{
+public class PlayPersonalActivity extends Activity implements Screen {
 	
+	// UI variables
 	private ListView listCards;
 	private TextView txtError;
-	private Button btnPlay;
-	private Button btnPass;
+	//private Button btnPlay;
+	//private Button btnPass;
 	private LinearLayout layoutPassTo;
 	private Spinner spinRecipient;
 	private Button btnDone;
 	
+	// Adapter variables
+	private HandAdapter handAdapter;
+	
+	// Cards variables
 	private List<Card> deckCards;
 	private List<Card> handCards;
 	
-	private HandAdapter handAdapter;
-	
-	PPSManager spsManager;
-	
-	boolean isPublic;
+	// Shared/Personal screen variables
+	private PPSManager spsManager;
+	private boolean isPublic;
+	private String name;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_personal);
 		
+		// Link UI variables to UI
 		listCards = (ListView) findViewById(R.id.listPersonalCards);
 		txtError = (TextView) findViewById(R.id.txtPersonalError);
-		btnPlay = (Button) findViewById(R.id.btnPersonalPlay);
-		btnPass = (Button) findViewById(R.id.btnPersonalPass);
+		//btnPlay = (Button) findViewById(R.id.btnPersonalPlay);
+		//btnPass = (Button) findViewById(R.id.btnPersonalPass);
 		layoutPassTo = (LinearLayout) findViewById(R.id.layoutPersonalPassTo);
 		spinRecipient = (Spinner) findViewById(R.id.spinPersonalRecipient);
 		btnDone = (Button) findViewById(R.id.btnPersonalDone);
 		
+		// Initialize SPS variables
+		isPublic = false;
+		name = null;
+		spsManager = new PPSManager(this);
+		
 		// TODO send and receive join game message
 		
-		spsManager=new PPSManager(this);
-
 		deckCards = new ArrayList<Card>(); 
 		handCards = new ArrayList<Card>(); 
 		
+		// Initialize adapters
 		handAdapter = new HandAdapter(this);
-		
 		listCards.setAdapter(handAdapter);
 		
 		initializeDeck();
@@ -128,8 +139,17 @@ public class PlayPersonalActivity extends Activity implements Screen{
 	}
 	
 	public void clickDone(View v) {
+		String recipient;
+		String cardName;
 		// TODO check if a recipient is selected
 		// TODO send card to selected recipient
+		
+		//not sure if these all go here or if they go in clickPlay() and clickPass()
+		Event e=new Event(getName(),recipient,CardGameEvent.CARD_PLAYED,cardName);
+		EventManager.getInstance().applyEvent(e);
+		
+		Event e2=new Event(getName(),recipient,CardGameEvent.TURN_OVER,"");
+		EventManager.getInstance().applyEvent(e2);
 		
 		// TODO check if a reply was received, if true
 		txtError.setVisibility(View.GONE);
@@ -143,30 +163,27 @@ public class PlayPersonalActivity extends Activity implements Screen{
 
 	@Override
 	public boolean isShared() {
-		// TODO Auto-generated method stub
-		return false;
+		return isPublic;
 	}
 
 	@Override
 	public void setAsShared() {
-		isPublic=true;
+		isPublic = true;
 	}
 
 	@Override
 	public void setAsPersonal() {
-		isPublic=false;
+		isPublic = false;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public void setName(String name) {
-		// TODO Auto-generated method stub
-		
+		this.name = name;
 	}
 	
 }

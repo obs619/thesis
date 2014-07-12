@@ -21,6 +21,7 @@ public class Event {//can developer subclass using reflection?
 	private String source;//or Screen
 	private String recipient;//who does this event affect?
 	private int type;
+	private boolean isAPIEvent;
 	private String payload;
 	/**
 	 * 
@@ -39,6 +40,15 @@ public class Event {//can developer subclass using reflection?
 		this.recipient=recipient;
 		this.type=type;
 		this.payload=payload;
+		this.isAPIEvent=false;
+	}
+	public Event(String source, String recipient, int type, String payload, boolean isAPIEvent)
+	{
+		this.source=source;
+		this.recipient=recipient;
+		this.type=type;
+		this.payload=payload;
+		this.isAPIEvent=isAPIEvent;
 	}
 	
 
