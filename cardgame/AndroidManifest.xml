@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.srpol.chordchat"
+    package="com.cardgame"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -18,7 +18,7 @@
         android:label="@string/chord_chat_app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.cardgame.uiOLD.SplashActivity"
+            android:name="com.cardgame.LobbbyActivity"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +27,8 @@
             </intent-filter>
         </activity>
         
-    	<activity android:name="com.cardgame.uiOLD.MainActivity" />
+    	<activity android:name="com.cardgame.uiOLD.PlayPersonalActivity" />
+    	<activity android:name="com.cardgame.uiOLD.PlaySharedActivity" />
     </application>
     
 

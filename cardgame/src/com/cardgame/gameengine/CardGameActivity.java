@@ -8,7 +8,7 @@ import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.Screen;
-import com.srpol.chordchat.R;
+import com.cardgame.R;
 
 public class CardGameActivity extends Activity implements Screen {
 	PPSManager spsManager;//should really be instantiated in application, not activity
