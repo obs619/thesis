@@ -62,7 +62,7 @@ public class PlayPersonalActivity extends Activity implements Screen{
 		// TODO send and receive join game message
 		
 		spsManager=new PPSManager(this);
-		
+
 		deckCards = new ArrayList<Card>(); 
 		handCards = new ArrayList<Card>(); 
 		
