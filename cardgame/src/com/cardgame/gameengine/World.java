@@ -3,6 +3,7 @@ package com.cardgame.gameengine;
 
 import com.cardgame.gameengine.transport.CardGameEvent;
 import com.cardgame.screenapi.Event;
+import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.Screen;
 
 /**
@@ -24,7 +25,7 @@ public class World {
 	{
 		//TODO: get username
 		CardGameEvent e=new CardGameEvent(screen.getName(),Event.R_ALL_SCREENS,eventType, eventDetails);
-		screen.triggerEvent(e);
+		EventManager.getInstance().triggerEvent(e);
 		//send a message to the server containing the event type and event details (e.g. for DRAW_CARD: name of card drawn)
 		
 	}

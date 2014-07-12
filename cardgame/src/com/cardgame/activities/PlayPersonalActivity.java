@@ -1,6 +1,7 @@
 package com.cardgame.activities;
 
-import android.R;
+//import android.R;
+import com.srpol.chordchat.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
