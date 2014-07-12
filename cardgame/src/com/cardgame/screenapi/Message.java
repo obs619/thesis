@@ -16,11 +16,9 @@ public abstract class Message {
 	 */
 	protected String mMessage;
 	
-	/**
-	 * Not sure if recipient or sender
-	 */
+	protected String sessionID;
 	protected String mRecipients;
-	private String mSource;
+	protected String mSource;
 	
 	//private MessageOwner mOwner;
 	public String getRecipient()

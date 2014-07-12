@@ -34,7 +34,7 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 	ChordMessage(String message, String recipients, String source, int messageType) {
 		mMessage = message;
 		mRecipients = recipients;
-		//mOwner = owner;
+		mSource=source;
 		mMessageType = messageType;
 	}
 
