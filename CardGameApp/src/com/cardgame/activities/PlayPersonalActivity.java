@@ -1,7 +1,16 @@
 package com.cardgame.activities;
 
 //import android.R;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import com.cardgame.R;
+import com.cardgame.adapters.HandAdapter;
+import com.cardgame.gameengine.Card;
+import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.Screen;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +27,7 @@ import android.widget.TextView;
  *		selected.
  */
 
-public class PlayPersonalActivity extends Activity {
+public class PlayPersonalActivity extends Activity implements Screen{
 	
 	private ListView listCards;
 	private TextView txtError;
@@ -27,6 +36,15 @@ public class PlayPersonalActivity extends Activity {
 	private LinearLayout layoutPassTo;
 	private Spinner spinRecipient;
 	private Button btnDone;
+	
+	private List<Card> deckCards;
+	private List<Card> handCards;
+	
+	private HandAdapter handAdapter;
+	
+	PPSManager spsManager;
+	
+	boolean isPublic;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,27 +61,52 @@ public class PlayPersonalActivity extends Activity {
 		
 		// TODO send and receive join game message
 		
-		// TODO receive cards
-		// ArrayList<Card> lstCards = <received cards>
+		spsManager=new PPSManager(this);
 		
-		// TODO populate listview with cards
-		//try {
-		//	ArrayAdapter<Card> cardAdapter = new ArrayAdapter<Card>(this, R.layout.list_item, lstCards);
-		//	lstCards.setAdapter(cardAdapter);
-		//}
-		//catch(Exception ex) {
-		//	ArrayAdapter<String> cardAdapter = new ArrayAdapter<String>(this, R.layout.list_item, new String[] {"No cards received."});
-		//	lstCards.setAdapter(cardAdapter);
-		//}
+		deckCards = new ArrayList<Card>(); 
+		handCards = new ArrayList<Card>(); 
+		
+		handAdapter = new HandAdapter(this);
+		
+		listCards.setAdapter(handAdapter);
+		
+		initializeDeck();
+		initializeHand();
+		
 		
 		// TODO receive list of players
 		// TODO populate spinner with players
+	}
+	
+	private void initializeDeck() {
+		for (int i = 1; i <= 13; i++) {
+			for (int j = 1; j <= 4; j++) {
+				deckCards.add(new Card(i, j));
+		    }
+		}
+		// shuffle deck
+		Collections.shuffle(deckCards);
+	}
+	
+	private void initializeHand() {
+		for(int i = 0; i <= 4; i++) {
+			handCards.add(deckCards.get(i));
+		}
+		handAdapter.addCards(handCards);
 	}
 	
 	public void clickPlay(View v) {
 		// TODO check if a card is selected, if true
 		// TODO send the selected card
 		
+	    List<Card> cardsToPlay = new ArrayList<Card>();
+	    for( int i = 0; i < handAdapter.getCount(); i++ ){
+	        Card item = (Card) handAdapter.getItem(i);
+	        if(item.isSelected())
+	        	cardsToPlay.add(item);
+	    }
+	    
+	    
 		// TODO if did NOT receive a reply
 		txtError.setText("ERROR: ");
 		txtError.setVisibility(View.VISIBLE);
@@ -96,6 +139,34 @@ public class PlayPersonalActivity extends Activity {
 		// TODO else
 		txtError.setText("ERROR: ");
 		txtError.setVisibility(View.VISIBLE);
+	}
+
+	@Override
+	public boolean isShared() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setAsShared() {
+		isPublic=true;
+	}
+
+	@Override
+	public void setAsPersonal() {
+		isPublic=false;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setName(String name) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

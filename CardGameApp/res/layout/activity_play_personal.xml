@@ -60,7 +60,7 @@
 	            android:layout_weight="1"
 	            android:text="@string/play"
 	            style="?android:attr/buttonStyle"
-	            android:onClick="" />
+	            android:onClick="clickPlay" />
 	
 	        <Button
 	            android:id="@+id/btnPersonalPass"
@@ -69,7 +69,7 @@
 	            android:layout_weight="1"
 	            android:text="@string/pass"
 	            style="?android:attr/buttonStyle"
-	            android:onClick="" />
+	            android:onClick="clickPass" />
 	    </LinearLayout>
 
         <LinearLayout
@@ -97,7 +97,7 @@
             android:visibility="gone"
            android:text="@string/done"
            style="?android:attr/buttonStyle"
-           android:onClick="" />
+           android:onClick="clickDone" />
 
     </LinearLayout>
 

@@ -11,6 +11,9 @@ public class Card {
 	public static final int HEARTS=3;
 	public static final int SPADES=2;
 	public static final int CLUBS=1;
+	
+	private boolean selected = false;
+	
 	/**
 	 * Players (private screens) which can see this card's face.
 	 */
@@ -33,6 +36,12 @@ public class Card {
 	}
 	public int getSuit() {
 		return suit;
+	}
+	public boolean isSelected() {
+		return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
 	}
 	public void setSuit(int suit) {
 		this.suit = suit;
