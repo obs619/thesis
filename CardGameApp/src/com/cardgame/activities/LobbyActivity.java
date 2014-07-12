@@ -4,22 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.cardgame.R;
 
-
 public class LobbyActivity extends Activity {
-	
-	private Button btnPersonal;
-	private Button btnShared;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lobby);
-		btnPersonal = (Button) findViewById(R.id.btnLobbyPersonal);
-		btnShared = (Button) findViewById(R.id.btnLobbyShared);
 	}
 	
 	public void selectAsPersonal(View v) {
