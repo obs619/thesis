@@ -1,7 +1,5 @@
 package com.cardgame.screenapi;
 
-import java.util.List;
-
 import android.content.Context;
 
 

@@ -2,9 +2,6 @@ package com.cardgame.screenapi.chordimpl;
 
 import java.util.List;
 
-import android.util.Log;
-
-import com.cardgame.chord.IChordChannelListenerAdapter;
 import com.cardgame.screenapi.NetworkManager;
 import com.cardgame.screenapi.PPSManager;
 import com.samsung.android.sdk.SsdkUnsupportedException;

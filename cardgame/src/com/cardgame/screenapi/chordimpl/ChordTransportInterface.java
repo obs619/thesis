@@ -1,14 +1,11 @@
 package com.cardgame.screenapi.chordimpl;
 
 import android.util.Log;
-import android.view.View;
 
 import com.cardgame.chord.IChordChannelListenerAdapter;
 import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.MessageDispatcher;
 import com.cardgame.screenapi.TransportInterface;
-import com.cardgame.uiOLD.MainActivity;
-import com.cardgame.uiOLD.SplashActivity;
 import com.samsung.android.sdk.chord.SchordChannel;
 
 /**

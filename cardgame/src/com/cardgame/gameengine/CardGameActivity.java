@@ -1,27 +1,14 @@
 package com.cardgame.gameengine;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import android.app.Activity;
+import android.os.Bundle;
 
 import com.cardgame.gameengine.transport.CardGameEvent;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.Screen;
-import com.cardgame.uiOLD.SplashActivity;
-import com.google.common.collect.Maps;
-import com.samsung.android.sdk.SsdkUnsupportedException;
-import com.samsung.android.sdk.chord.Schord;
 import com.srpol.chordchat.R;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 public class CardGameActivity extends Activity implements Screen {
 	PPSManager spsManager;//should really be instantiated in application, not activity

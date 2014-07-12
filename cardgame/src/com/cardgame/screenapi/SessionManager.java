@@ -1,7 +1,6 @@
 package com.cardgame.screenapi;
 
 import java.util.List;
-import java.util.Map;
 
 public class SessionManager {
 	private String sessionID;//auto-generate
