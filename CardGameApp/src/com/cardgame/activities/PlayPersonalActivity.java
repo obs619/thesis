@@ -8,6 +8,9 @@ import java.util.List;
 import com.cardgame.R;
 import com.cardgame.adapters.HandAdapter;
 import com.cardgame.gameengine.Card;
+import com.cardgame.gameengine.transport.CardGameEvent;
+import com.cardgame.screenapi.Event;
+import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.Screen;
 
@@ -128,8 +131,17 @@ public class PlayPersonalActivity extends Activity implements Screen{
 	}
 	
 	public void clickDone(View v) {
+		String recipient;
+		String cardName;
 		// TODO check if a recipient is selected
 		// TODO send card to selected recipient
+		
+		//not sure if these all go here or if they go in clickPlay() and clickPass()
+		Event e=new Event(getName(),recipient,CardGameEvent.CARD_PLAYED,cardName);
+		EventManager.getInstance().applyEvent(e);
+		
+		Event e2=new Event(getName(),recipient,CardGameEvent.TURN_OVER,"");
+		EventManager.getInstance().applyEvent(e2);
 		
 		// TODO check if a reply was received, if true
 		txtError.setVisibility(View.GONE);
