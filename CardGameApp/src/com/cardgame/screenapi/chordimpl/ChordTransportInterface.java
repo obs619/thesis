@@ -3,6 +3,9 @@ package com.cardgame.screenapi.chordimpl;
 import android.util.Log;
 
 import com.cardgame.chord.IChordChannelListenerAdapter;
+import com.cardgame.gameengine.transport.CardGameEvent;
+import com.cardgame.screenapi.Event;
+import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.MessageDispatcher;
 import com.cardgame.screenapi.TransportInterface;
@@ -45,7 +48,11 @@ public class ChordTransportInterface implements TransportInterface {
 		
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
-
+			Event e=new Event(ChordNetworkManager.getChordManager().getName()
+					,Event.R_ALL_SCREENS
+					,CardGameEvent.USER_OWNNODE
+					,ChordNetworkManager.getChordManager().getName());
+			EventManager.getInstance().sendEvent(e);
 		}
 		
 		@Override
