@@ -17,7 +17,7 @@ public class Event {//can developer subclass using reflection?
 	public static final int T_LOCK_SESSION=2;
 	public static final int T_UNLOCK_SESSION=3;
 	public static final int T_LEAVE_SESSION=4;
-	
+	public static final int USER_OWNNODE=10;
 	private String source;//or Screen
 	private String recipient;//who does this event affect?
 	private int type;
