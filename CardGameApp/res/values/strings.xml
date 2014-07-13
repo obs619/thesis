@@ -7,8 +7,8 @@
     
     <string name="personal">Personal</string>
     <string name="shared">Shared</string>
-    <string name="play">Play</string>
-    <string name="pass">Pass</string>
+    <string name="play">Play Card</string>
+    <string name="pass">Pass Card</string>
     <string name="myhand">My Hand</string>
     <string name="passto">Pass to</string>
     <string name="table">Table</string>
