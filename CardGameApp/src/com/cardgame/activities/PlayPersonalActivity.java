@@ -13,8 +13,6 @@ import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.Screen;
-import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
-import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -73,7 +71,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		isPublic = false;
 		name = null;
 		spsManager = new PPSManager(this);
-
+		
 		// TODO send and receive join game message
 		
 		deckCards = new ArrayList<Card>(); 
@@ -86,8 +84,6 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		initializeDeck();
 		initializeHand();
 		
-		ChordNetworkManager cnm = new ChordNetworkManager();
-		ChordTransportInterface cti = new ChordTransportInterface();
 		
 		// TODO receive list of players
 		// TODO populate spinner with players
