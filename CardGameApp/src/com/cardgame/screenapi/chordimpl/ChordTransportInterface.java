@@ -50,9 +50,9 @@ public class ChordTransportInterface implements TransportInterface {
 		public void onNodeJoined(String fromNode, String fromChannel) {
 			Event e=new Event(ChordNetworkManager.getChordManager().getName()
 					,Event.R_ALL_SCREENS
-					,CardGameEvent.USER_OWNNODE
+					,Event.USER_OWNNODE
 					,ChordNetworkManager.getChordManager().getName());
-			EventManager.getInstance().sendEvent(e);
+			EventManager.getInstance().triggerEvent(e);
 		}
 		
 		@Override

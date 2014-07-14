@@ -1,5 +1,7 @@
 package com.cardgame.screenapi;
 
+import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
+
 import android.content.Context;
 
 
@@ -12,7 +14,7 @@ public class PPSManager {
 	private static Context mContext;
 	
 	public PPSManager(Context mContext) {
-		this.mContext = mContext;
+		PPSManager.mContext = mContext;
 		setNetworkInitializer();
 		setEventManager();
 	}

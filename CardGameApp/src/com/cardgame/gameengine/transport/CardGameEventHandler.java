@@ -1,6 +1,8 @@
 package com.cardgame.gameengine.transport;
 
 
+import android.util.Log;
+
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.EventHandler;
@@ -24,6 +26,8 @@ public class CardGameEventHandler implements EventHandler{
 
 	@Override
 	public void handleEvent(Event e) {
+
+		Log.e("CardGameEvent", e.getType() + "");
 		switch(e.getType())
 		{
 		case CardGameEvent.CARD_DRAWN:
