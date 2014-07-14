@@ -40,8 +40,6 @@ public class CardGameEvent extends Event {
 	public static final int DECK_RESHUFFLED=8;
 	public static final int START_GAME=9;
 	
-	
-	
 	/*private int type;
 	private String sender;
 	private String details;
