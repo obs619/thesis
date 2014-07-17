@@ -1,5 +1,7 @@
 package com.cardgame.screenapi;
 
+import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
+
 public class NetworkManager {
 	
 	private static NetworkManager networkInitializer = null;

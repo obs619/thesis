@@ -49,7 +49,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	private List<Card> handCards;
 	
 	// Shared/Personal screen variables
-	//private PPSManager spsManager;
+	private PPSManager spsManager;
 	private boolean isPublic;
 	private String name;
 	
@@ -70,7 +70,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		// Initialize SPS variables
 		isPublic = false;
 		name = null;
-		//spsManager = new PPSManager(this);
+		spsManager = new PPSManager(this);
 		
 		// TODO send and receive join game message
 		
