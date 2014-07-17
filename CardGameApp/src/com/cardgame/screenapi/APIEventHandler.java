@@ -1,9 +1,12 @@
 package com.cardgame.screenapi;
 
+import android.util.Log;
+
 public class APIEventHandler implements EventHandler {
 //for now, assume that these events were received, not sent
 	@Override
 	public void handleEvent(Event e) {
+		Log.e("APIEventHandler", e.getType() + "");
 		switch(e.getType())
 		{
 		case Event.T_SCREEN_TYPE_CHANGED:
