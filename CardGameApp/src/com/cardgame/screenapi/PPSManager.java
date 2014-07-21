@@ -18,8 +18,8 @@ public class PPSManager {
 	public PPSManager(Context mContext) {
 		PPSManager.mContext = mContext;
 
-		EventManager.setDefaultFactory(new ChordEventManagerFactory());
 		NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
+		EventManager.setDefaultFactory(new ChordEventManagerFactory());
 		
 		setNetworkInitializer();
 		setEventManager();

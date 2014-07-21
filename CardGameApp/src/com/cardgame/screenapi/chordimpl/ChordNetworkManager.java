@@ -19,8 +19,6 @@ public class ChordNetworkManager extends NetworkManager {
 
 	public Schord chord;
 	public static SchordManager mChordManager;
-	public SchordChannel channel;
-	
 	
 	public ChordNetworkManager() {
 		initializeChord();
@@ -31,7 +29,7 @@ public class ChordNetworkManager extends NetworkManager {
 		
 		@Override
 		public void onStarted(String nodeName, int reason) {
-			// TODO Auto-generated method stub
+			ChordTransportInterface.joinChannel();
 			
 		}
 
@@ -61,13 +59,13 @@ public class ChordNetworkManager extends NetworkManager {
 		
 		//checks the available interface types which are wifi, mobile ap or wifi p2p
 		List<Integer> infList =mChordManager.getAvailableInterfaceTypes();
-		Log.e("inflist", infList.get(0) + "");
 		//starts the chordmanager with first detected available interface type
 		try {
 			mChordManager.start(infList.get(0), mChordManagerListener);
+			Log.e("START CORD", "start cord");
 		}catch(Exception e){
 			Log.e("FAIL START CORD", "fail start cord");
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 	

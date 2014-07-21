@@ -17,16 +17,19 @@ import com.samsung.android.sdk.chord.SchordChannel;
  */
 public class ChordTransportInterface implements TransportInterface {
 
-	private MessageDispatcher messageDispatcher;
+	private static MessageDispatcher messageDispatcher;
 	private static final String PAYLOAD_TYPE = "CHORD_SPS";
 	
-	private SchordChannel mChannel;
-	public static String channelName = "DEFAULT_CHANNEL";
+	public static SchordChannel mChannel;
+	
+	public static String channelName = "defaultchannel";
+	
 	public ChordTransportInterface()
 	{
-		joinChannel();
+		//joinChannel();
 	}
-	public void joinChannel() {
+	
+	public static void joinChannel() {
 		//Joins to the channel with the specified name.
 		try {
 			mChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);			 
@@ -40,7 +43,7 @@ public class ChordTransportInterface implements TransportInterface {
 			 Log.e("CHANNEL ERROR", "Failed to join channel");
 	}
 	
-	private final SchordChannel.StatusListener mChordChannelListener = new IChordChannelListenerAdapter() {
+	private final static SchordChannel.StatusListener mChordChannelListener = new IChordChannelListenerAdapter() {
 		
 		@Override
 		public void onDataReceived(String fromNode, String fromChannel, String payloadType,
@@ -59,7 +62,7 @@ public class ChordTransportInterface implements TransportInterface {
 					,Event.R_ALL_SCREENS
 					,Event.USER_OWNNODE
 					,ChordNetworkManager.getChordManager().getName());
-			EventManager.getInstance().triggerEvent(e);
+			EventManager.getInstance().sendEvent(e);
 		}
 		
 		@Override
@@ -94,8 +97,7 @@ public class ChordTransportInterface implements TransportInterface {
 	}
 
 
-	@Override
-	public void onMessageReceived(Message receivedMessage) {
+	public static void onMessageReceived(Message receivedMessage) {
 		messageDispatcher.receiveMessage(receivedMessage);
 		
 	}
