@@ -11,17 +11,23 @@ import com.cardgame.gameengine.Card;
 import com.cardgame.gameengine.transport.CardGameEvent;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventManager;
+import com.cardgame.screenapi.NetworkManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.Screen;
+import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
+import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
+import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author Sharmaine
@@ -40,6 +46,8 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	private LinearLayout layoutPassTo;
 	private Spinner spinRecipient;
 	private Button btnDone;
+	
+	private TextView txtMyHand;
 	
 	// Adapter variables
 	private HandAdapter handAdapter;
@@ -67,13 +75,16 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		spinRecipient = (Spinner) findViewById(R.id.spinPersonalRecipient);
 		btnDone = (Button) findViewById(R.id.btnPersonalDone);
 		
+		txtMyHand = (TextView) findViewById(R.id.myHand);
+		
 		// Initialize SPS variables
 		isPublic = false;
-		name = null;
+		
+		
 		spsManager = new PPSManager(this);
 		
-		// TODO send and receive join game message
-		
+		name = ChordNetworkManager.mChordManager.getName();
+		txtMyHand.setText(name);
 		deckCards = new ArrayList<Card>(); 
 		handCards = new ArrayList<Card>(); 
 		

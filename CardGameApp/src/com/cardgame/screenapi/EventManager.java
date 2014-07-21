@@ -1,4 +1,9 @@
 package com.cardgame.screenapi;
+
+import android.util.Log;
+
+import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
+
 /**
  * Builds and sends a message from an event
  * @author Andrew
@@ -8,13 +13,13 @@ public class EventManager {
 	MessageBuilder messageBuilder;
 	MessageDispatcher messageDispatcher;
 	EventHandler eventHandler;
-	static EventManagerFactory factory;
-	static final EventManager instance=factory.createEventManager();
+	public static EventManagerFactory factory;
+	public static EventManager instance;
 	//TODO optional global event queue
 	//TODO optional shared hash table w/ distributed mutex
 	public static EventManager getInstance()
 	{
-		return instance;//factory.createEventManager();
+		return factory.createEventManager();
 	}
 	
 	public static void setDefaultFactory(EventManagerFactory factory)

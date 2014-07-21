@@ -14,6 +14,7 @@ package com.srpol.chordchat.chord;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.samsung.android.sdk.chord.SchordChannel;
 import com.samsung.android.sdk.chord.SchordManager;
@@ -64,9 +65,11 @@ public abstract class ChatChord {
 			interfaceType = infList.get(0);
 			mChordManager.start(interfaceType, mChordManagerListener);
 			result = 0;
+			Log.e("start chord","succes");
 		}catch(Exception e){
 			interfaceType = -1;
 			result = -1;
+			Log.e("start chord","fail");
 		}
 	}
 

@@ -28,7 +28,13 @@ public class ChordTransportInterface implements TransportInterface {
 	}
 	public void joinChannel() {
 		//Joins to the channel with the specified name.
-		 mChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);
+		try {
+			mChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);			 
+			Log.e("ChordTransport", "successful");
+		}catch(Exception e) {
+			Log.e("ChordTransport", "not succesful");
+			e.printStackTrace();
+		}
 		 
 		 if(mChannel == null)
 			 Log.e("CHANNEL ERROR", "Failed to join channel");
@@ -47,6 +53,8 @@ public class ChordTransportInterface implements TransportInterface {
 		
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
+			Log.e("JOINED", fromNode);
+			
 			Event e=new Event(ChordNetworkManager.getChordManager().getName()
 					,Event.R_ALL_SCREENS
 					,Event.USER_OWNNODE
@@ -56,7 +64,7 @@ public class ChordTransportInterface implements TransportInterface {
 		
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
-
+			Log.e("left", fromNode);
 		}
 		
 	};

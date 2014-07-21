@@ -1,8 +1,10 @@
 package com.cardgame.screenapi;
 
+import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
 
 import android.content.Context;
+import android.util.Log;
 
 
 
@@ -15,14 +17,20 @@ public class PPSManager {
 	
 	public PPSManager(Context mContext) {
 		PPSManager.mContext = mContext;
+
+		EventManager.setDefaultFactory(new ChordEventManagerFactory());
+		NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
+		
 		setNetworkInitializer();
 		setEventManager();
+		
 	}
 	
 	/**
 	 * Select which implementation you want (Chord in this case)
 	 */
 	public void setNetworkInitializer() {
+		
 		this.networkInitializer = NetworkManager.getInstance();
 	}
 	
