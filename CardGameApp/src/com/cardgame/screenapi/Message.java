@@ -19,6 +19,7 @@ public abstract class Message {
 	protected String sessionID;
 	protected String mRecipients;
 	protected String mSource;
+	protected boolean isAPIEvent;
 	
 	//private MessageOwner mOwner;
 	public String getRecipient()
@@ -37,6 +38,14 @@ public abstract class Message {
 	public int getType()
 	{
 		return mMessageType;
+	}
+	public void setAPIEvent(boolean isAPIEvent)
+	{
+		this.isAPIEvent=isAPIEvent;
+	}
+	public boolean isAPIEvent()
+	{
+		return isAPIEvent;
 	}
 	
 }

@@ -8,14 +8,15 @@ public class ChordMessageBuilder implements MessageBuilder {
 
 	@Override
 	public Message buildMessage(Event e) {
-		// TODO Auto-generated method stub
-		return new ChordMessage(e.getPayload(),e.getRecipient(),e.getSource(),e.getType());
+		// TODO pass whether is API event
+		
+		return new ChordMessage(e.getPayload(),e.getRecipient(),e.getSource(),e.getType(),e.isAPIEvent());
 	}
 
 	@Override
 	public Event unpackEvent(Message m) {
 		// TODO Auto-generated method stub
-		return new Event(m.getSource(),m.getRecipient(),m.getType(),m.getContents());
+		return new Event(m.getSource(),m.getRecipient(),m.getType(),m.getContents(),m.isAPIEvent());
 	}
 	
 

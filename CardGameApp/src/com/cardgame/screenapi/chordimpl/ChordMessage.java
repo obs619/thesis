@@ -37,6 +37,13 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 		mSource=source;
 		mMessageType = messageType;
 	}
+	ChordMessage(String message, String recipients, String source, int messageType, boolean isAPIEvent) {
+		mMessage = message;
+		mRecipients = recipients;
+		mSource=source;
+		mMessageType = messageType;
+		this.isAPIEvent=isAPIEvent;
+	}
 
 	/**
 	 * Returns a new chat message instance.
