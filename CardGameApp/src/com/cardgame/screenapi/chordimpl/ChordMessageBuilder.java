@@ -1,5 +1,7 @@
 package com.cardgame.screenapi.chordimpl;
 
+import android.util.Log;
+
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.MessageBuilder;
