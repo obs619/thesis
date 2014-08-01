@@ -40,6 +40,7 @@ public class EventManager {
 	public void sendEvent(Event e)
 	{
 		Message m=messageBuilder.buildMessage(e);
+		Log.e("After return",m.getRecipient());
 		messageDispatcher.sendMessage(m);
 	}
 	public void unpackEvent(Message m)
