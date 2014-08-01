@@ -44,7 +44,7 @@ public static final int T_JOIN_NETWORK=5;
 		this.recipient=recipient;
 		this.type=type;
 		this.payload=payload;
-		this.isAPIEvent=false;
+		this.setAPIEvent(false);
 	}
 	public Event(String source, String recipient, int type, String payload, boolean isAPIEvent)
 	{
@@ -52,7 +52,7 @@ public static final int T_JOIN_NETWORK=5;
 		this.recipient=recipient;
 		this.type=type;
 		this.payload=payload;
-		this.isAPIEvent=isAPIEvent;
+		this.setAPIEvent(isAPIEvent);
 	}
 	
 
@@ -70,6 +70,12 @@ public static final int T_JOIN_NETWORK=5;
 
 	public String getRecipient() {
 		return recipient;
+	}
+	public boolean isAPIEvent() {
+		return isAPIEvent;
+	}
+	public void setAPIEvent(boolean isAPIEvent) {
+		this.isAPIEvent = isAPIEvent;
 	}
 	
 	

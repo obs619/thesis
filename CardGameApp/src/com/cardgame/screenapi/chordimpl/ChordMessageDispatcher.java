@@ -40,12 +40,13 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDis
 	@Override
 	public void receiveMessage(Message m)
 	{
-		eventManager.unpackEvent(m);
+		EventManager.getInstance().unpackEvent(m);
 	}
 	@Override
 	public void setTransportInterface(TransportInterface transportInterface) {
 		// TODO Auto-generated method stub
 		this.transportInterface=transportInterface;
+		transportInterface.setMessageDispatcher(this);
 	}
 
 	@Override

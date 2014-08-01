@@ -61,7 +61,7 @@ public class ChordTransportInterface implements TransportInterface {
 			Event e=new Event(ChordNetworkManager.getChordManager().getName()
 					,Event.R_ALL_SCREENS
 					,Event.USER_OWNNODE
-					,ChordNetworkManager.getChordManager().getName());
+					,ChordNetworkManager.getChordManager().getName(),true);
 			EventManager.getInstance().sendEvent(e);
 		}
 		
@@ -106,6 +106,7 @@ public class ChordTransportInterface implements TransportInterface {
 	@Override
 	public void setMessageDispatcher(MessageDispatcher dispatcher) {
 		this.messageDispatcher=dispatcher;
+		//dispatcher.setTransportInterface(this);
 		
 	}
 	

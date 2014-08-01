@@ -1,6 +1,9 @@
 package com.cardgame.screenapi;
 
+import com.cardgame.activities.PlayPersonalActivity;
+
 import android.util.Log;
+import android.widget.Toast;
 
 public class APIEventHandler implements EventHandler {
 //for now, assume that these events were received, not sent
@@ -25,6 +28,7 @@ public class APIEventHandler implements EventHandler {
 			//TODO check message data for node sessionID
 			break;
 		case Event.USER_OWNNODE:
+			Log.e("PASOK", "pasok");
 			break;
 		default:
 			break;

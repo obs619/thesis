@@ -13,6 +13,7 @@ public class EventManager {
 	MessageBuilder messageBuilder;
 	MessageDispatcher messageDispatcher;
 	EventHandler eventHandler;
+	APIEventHandler apiEventHandler=new APIEventHandler();
 	public static EventManagerFactory factory;
 	public static EventManager instance;
 	//TODO optional global event queue
@@ -54,7 +55,10 @@ public class EventManager {
 	}
 	public void applyEvent(Event e)
 	{
-		eventHandler.handleEvent(e);
+		if(e.isAPIEvent())
+			apiEventHandler.handleEvent(e);
+		else
+			eventHandler.handleEvent(e);
 	}
 	
 }

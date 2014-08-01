@@ -9,6 +9,7 @@ import com.cardgame.R;
 import com.cardgame.adapters.HandAdapter;
 import com.cardgame.gameengine.Card;
 import com.cardgame.gameengine.transport.CardGameEvent;
+import com.cardgame.gameengine.transport.CardGameEventHandler;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.NetworkManager;
@@ -82,6 +83,8 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		
 		
 		spsManager = new PPSManager(this);
+		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
+		
 		
 		name = ChordNetworkManager.mChordManager.getName();
 		txtMyHand.setText(name);
