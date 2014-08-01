@@ -20,7 +20,9 @@ public class EventManager {
 	//TODO optional shared hash table w/ distributed mutex
 	public static EventManager getInstance()
 	{
-		return factory.createEventManager();
+		if (instance==null)
+			instance= factory.createEventManager();
+		return instance;
 	}
 
 	
