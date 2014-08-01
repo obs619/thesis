@@ -6,16 +6,15 @@ import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
 
 public class NetworkManager {
 	
-	private static NetworkManager networkInitializer = null;
+	private static NetworkManager instance = null;
 	static NetworkManagerFactory factory;
-	static NetworkManager instance;
 	//TODO optional global event queue
 	//TODO optional shared hash table w/ distributed mutex
 	public static NetworkManager getInstance()
 	{
-		if(networkInitializer==null)
-			networkInitializer= factory.createNetworkManager();
-		return networkInitializer;
+		if(instance==null)
+			instance= factory.createNetworkManager();
+		return instance;
 	}
 	
 	public static void setDefaultFactory(NetworkManagerFactory factory)

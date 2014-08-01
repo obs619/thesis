@@ -27,7 +27,7 @@ public class CardGameEventHandler implements EventHandler{
 	@Override
 	public void handleEvent(Event e) {
 
-		Log.e("CardGameEvent", e.getType() + "");
+		Log.e("Handling CardGameEvent", "Type: "+e.getType() + "");
 		switch(e.getType())
 		{
 		case CardGameEvent.CARD_DRAWN:
