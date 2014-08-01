@@ -15,7 +15,7 @@ public class EventManager {
 	static EventHandler eventHandler;
 	static APIEventHandler apiEventHandler=new APIEventHandler();
 	public static EventManagerFactory factory;
-	public static EventManager instance;
+	public static EventManager instance=null;
 	//TODO optional global event queue
 	//TODO optional shared hash table w/ distributed mutex
 	public static EventManager getInstance()

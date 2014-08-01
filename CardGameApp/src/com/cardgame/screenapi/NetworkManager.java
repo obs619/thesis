@@ -13,7 +13,9 @@ public class NetworkManager {
 	//TODO optional shared hash table w/ distributed mutex
 	public static NetworkManager getInstance()
 	{
-		return factory.createNetworkManager();
+		if(networkInitializer==null)
+			networkInitializer= factory.createNetworkManager();
+		return networkInitializer;
 	}
 	
 	public static void setDefaultFactory(NetworkManagerFactory factory)
