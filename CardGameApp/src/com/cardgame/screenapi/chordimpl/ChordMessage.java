@@ -18,6 +18,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import android.util.Log;
+
 /**
  * Holder for chat message. Consists of message and owner variable.
  */
@@ -43,6 +45,7 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 		mSource=source;
 		mMessageType = messageType;
 		this.isAPIEvent=isAPIEvent;
+		Log.d("API Event:",""+this.isAPIEvent);
 	}
 
 	/**
