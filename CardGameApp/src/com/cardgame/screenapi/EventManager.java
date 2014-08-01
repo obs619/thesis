@@ -12,8 +12,8 @@ import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
 public class EventManager {
 	MessageBuilder messageBuilder;
 	MessageDispatcher messageDispatcher;
-	EventHandler eventHandler;
-	APIEventHandler apiEventHandler=new APIEventHandler();
+	static EventHandler eventHandler;
+	static APIEventHandler apiEventHandler=new APIEventHandler();
 	public static EventManagerFactory factory;
 	public static EventManager instance;
 	//TODO optional global event queue
@@ -22,16 +22,18 @@ public class EventManager {
 	{
 		return factory.createEventManager();
 	}
+
 	
 	public static void setDefaultFactory(EventManagerFactory factory)
 	{
 		EventManager.factory=factory;
 	}
 	
-	public EventManager(MessageBuilder messageBuilder, MessageDispatcher messageDispatcher)
+	public EventManager(MessageBuilder messageBuilder, MessageDispatcher messageDispatcher/*, EventHandler eventHandler*/) //temporary fix
 	{
 		this.messageBuilder=messageBuilder;
 		this.messageDispatcher=messageDispatcher;
+		//this.eventHandler=eventHandler;
 	}
 	public void sendEvent(Event e)
 	{
@@ -43,9 +45,9 @@ public class EventManager {
 		Event e=messageBuilder.unpackEvent(m);
 		applyEvent(e);
 	}
-	public void setEventHandler(EventHandler h)
+	public static void setEventHandler(EventHandler h)
 	{
-		this.eventHandler=h;
+		eventHandler=h;
 	}
 	public void triggerEvent(Event e)
 	{

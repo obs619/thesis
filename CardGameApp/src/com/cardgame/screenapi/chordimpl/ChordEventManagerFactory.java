@@ -5,6 +5,7 @@ import com.cardgame.screenapi.EventManagerFactory;
 
 public class ChordEventManagerFactory implements EventManagerFactory {
 
+
 	@Override
 	public EventManager createEventManager() {
 	

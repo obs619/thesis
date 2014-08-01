@@ -18,7 +18,7 @@ import com.samsung.android.sdk.chord.SchordChannel;
 public class ChordTransportInterface implements TransportInterface {
 
 	private static MessageDispatcher messageDispatcher;
-	private static final String PAYLOAD_TYPE = "CHORD_SPS";
+	private static final String PAYLOAD_TYPE = "CHORD_SPS"; //
 	
 	public static SchordChannel mChannel;
 	
