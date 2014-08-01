@@ -16,6 +16,7 @@ public class ChordMessageBuilder implements MessageBuilder {
 	@Override
 	public Event unpackEvent(Message m) {
 		// TODO Auto-generated method stub
+		Log.i("Is received message an API EVENT:",""+m.isAPIEvent());
 		return new Event(m.getSource(),m.getRecipient(),m.getType(),m.getContents(),m.isAPIEvent());
 	}
 	
