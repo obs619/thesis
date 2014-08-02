@@ -9,7 +9,15 @@ public class SessionManager {
 	private List<String>availableSessions;
 	private List<String>publicScreenList;//<name, sessionID>
 	private List<String>privateScreenList;
+	private static SessionManager instance;
 	//TODO: set or initialize these lists
+	
+	public static SessionManager getInstance()
+	{
+		if(instance==null)
+			instance=new SessionManager();
+		return instance;
+	}
 	
 	public void requestToJoin()
 	{
