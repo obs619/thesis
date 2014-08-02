@@ -126,6 +126,8 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 			e.printStackTrace();
 			//throw new RuntimeException(e);
 		}
+		
+		Log.e("obtain", message.mSource + "");
 		return message;
 	}
 

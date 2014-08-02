@@ -1,6 +1,8 @@
 package com.cardgame.screenapi;
 
-public abstract class Message {
+import java.io.Serializable;
+
+public abstract class Message implements Serializable{
 	/**Username of sending screen
 	 * 
 	 */
