@@ -11,7 +11,7 @@ public class ChordMessageBuilder implements MessageBuilder {
 	@Override
 	public Message buildMessage(Event e) {
 		// TODO pass whether is API event
-		
+		Log.e("return new chord message",""+e.getPayload() + "" + e.getSource());
 		return new ChordMessage(e.getPayload(),e.getRecipient(),e.getSource(),e.getType(),e.isAPIEvent());
 	}
 

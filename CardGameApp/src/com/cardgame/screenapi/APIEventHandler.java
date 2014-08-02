@@ -29,6 +29,7 @@ public class APIEventHandler implements EventHandler {
 			break;
 		case Event.USER_OWNNODE:
 			Log.e("PASOK", "pasok");
+			
 			break;
 		default:
 			break;

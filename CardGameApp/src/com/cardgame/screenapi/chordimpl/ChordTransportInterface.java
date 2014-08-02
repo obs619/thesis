@@ -50,6 +50,7 @@ public class ChordTransportInterface implements TransportInterface {
 				byte[][] payload) {
 			if (PAYLOAD_TYPE.equals(payloadType)) {
 				final ChordMessage receivedMessage = ChordMessage.obtainChatMessage(payload[0]);
+				Log.e("ChordReciv", receivedMessage.isAPIEvent()+ ":" + receivedMessage.getMessage());
 				onMessageReceived(receivedMessage);
 			}
 		}

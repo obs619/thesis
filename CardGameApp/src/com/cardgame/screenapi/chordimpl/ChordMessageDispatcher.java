@@ -8,7 +8,7 @@ import com.cardgame.screenapi.TransportInterface;
 public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDispatcher{
 	
 	
-	private TransportInterface transportInterface=new ChordTransportInterface();
+	private TransportInterface transportInterface;
 	private EventManager eventManager;
 	public ChordMessageDispatcher(ChordTransportInterface transportInterface)
 	{
