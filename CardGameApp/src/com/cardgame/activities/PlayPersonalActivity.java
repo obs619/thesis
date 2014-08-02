@@ -15,6 +15,7 @@ import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.NetworkManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.Screen;
+import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
@@ -23,6 +24,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -62,6 +64,9 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	private boolean isPublic;
 	private String name;
 	
+	public static List<String> listNodes;
+	public static ArrayAdapter<String> dataAdapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,10 +86,8 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		// Initialize SPS variables
 		isPublic = false;
 		
-		
 		spsManager = new PPSManager(this);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
-		
 		
 		name = ChordNetworkManager.mChordManager.getName();
 		txtMyHand.setText(name);
@@ -94,6 +97,18 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		// Initialize adapters
 		handAdapter = new HandAdapter(this);
 		listCards.setAdapter(handAdapter);
+		
+
+		listNodes = new ArrayList<String>();
+		listNodes.addAll(SessionManager.getInstance().getPrivateScreenList());
+		
+		for(String name: SessionManager.getInstance().getPrivateScreenList())
+			Log.e("listnodes", name);
+		
+		dataAdapter = new ArrayAdapter<String>
+        (this, android.R.layout.simple_list_item_1, listNodes);
+		
+		spinRecipient.setAdapter(dataAdapter);
 		
 		initializeDeck();
 		initializeHand();

@@ -1,15 +1,16 @@
 package com.cardgame.screenapi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SessionManager {
 	private String sessionID;//auto-generate
 	private String sessionKey;//auto-generate?
 	private boolean isOpen=true;
-	private static List<String>availableSessions;
-	private static List<String>publicScreenList;//<name, sessionID>
-	private static List<String>privateScreenList;
-	private static SessionManager instance;
+	private static List<String>availableSessions = new ArrayList<String>();
+	private static List<String>publicScreenList = new ArrayList<String>();//<name, sessionID>
+	private static List<String>privateScreenList = new ArrayList<String>();
+	private static SessionManager instance = null;
 	//TODO: set or initialize these lists
 	
 	public static SessionManager getInstance()

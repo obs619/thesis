@@ -2,6 +2,7 @@ package com.cardgame.screenapi.chordimpl;
 
 import android.util.Log;
 
+import com.cardgame.activities.PlayPersonalActivity;
 import com.cardgame.chord.IChordChannelListenerAdapter;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventManager;
@@ -50,7 +51,9 @@ public class ChordTransportInterface implements TransportInterface {
 				byte[][] payload) {
 			if (PAYLOAD_TYPE.equals(payloadType)) {
 				final ChordMessage receivedMessage = ChordMessage.obtainChatMessage(payload[0]);
-				Log.e("ChordReciv", receivedMessage.isAPIEvent()+ ":" + receivedMessage.getMessage());
+
+				PlayPersonalActivity.listNodes.add(receivedMessage.getSource());
+				PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
 				onMessageReceived(receivedMessage);
 			}
 		}
