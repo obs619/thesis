@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,16 +45,15 @@ public class HandAdapter extends BaseAdapter{
 			removeCard(c);
 		}
 	}*/
-	public void removeCard(int suit, int number){
-		for(Card c: mCards)
-		{
-			if(c.getSuit()==suit&&c.getNumber()==number)
-			{
-				mCards.remove(c);
-				notifyDataSetChanged();
+	public void removeCard(Card card) {
+		List<Card> toRemove = new ArrayList<Card>();
+		for(Card mycard: mCards) {
+			if(mycard.toString().equals(card.toString())) {
+				toRemove.add(mycard);
 			}
-			
 		}
+		mCards.removeAll(toRemove);
+		notifyDataSetChanged();
 	}
 	
 	@Override

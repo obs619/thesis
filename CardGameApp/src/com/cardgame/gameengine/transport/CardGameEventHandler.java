@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.cardgame.activities.PlayPersonalActivity;
 import com.cardgame.activities.PlaySharedActivity;
+import com.cardgame.gameengine.Card;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.EventHandler;
@@ -24,7 +25,10 @@ public class CardGameEventHandler implements EventHandler{
 	private Screen screen;
 	
 
-
+	public CardGameEventHandler(Screen screen)
+	{
+		setScreen(screen);
+	}
 
 	@Override
 	public void handleEvent(Event e) {
@@ -45,8 +49,10 @@ public class CardGameEventHandler implements EventHandler{
 			}
 			else
 			{
+				Log.e("suit and number", suit + ":" + number);
+				Card card = new Card(number, suit);
 				//if(screen.getName()==e.getSource())//this may not work yet, as screen name!=source; source is generated string
-				((PlayPersonalActivity)screen).removeCard(suit,number);
+				((PlayPersonalActivity)screen).removeCard(card);
 			//TODO: if local device (private screen), remove card from UI 
 			}
 			
