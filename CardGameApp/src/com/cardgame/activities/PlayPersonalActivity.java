@@ -149,7 +149,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	    for(Card c: cardsToPlay)
 	    {
 	    	Event e=new Event(getName(),Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,c.getSuit()+","+c.getNumber());
-			EventManager.getInstance().applyEvent(e);
+			EventManager.getInstance().triggerEvent(e);
 	    }
 	    if(false)
 	    {
