@@ -197,7 +197,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		txtError.setText("ERROR: ");
 		txtError.setVisibility(View.VISIBLE);
 	}
-	
+
 	@Override
 	protected void onPause() {
 		ChordNetworkManager.getChordManager().stop();
@@ -208,6 +208,16 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	protected void onResume() {
 		ChordNetworkManager.initializeChordManager();
 		super.onResume();
+	}
+
+	public void removeCard(int suit, int number)
+	{
+		//if(c.getSuit()==suit&&c.getNumber()==number)
+			//handCards.remove(c);
+		handAdapter.removeCard(suit, number);//handAdapter's removeCard method is practically identical to this one
+		
+		//may need to search the list for this to work properly.
+
 	}
 
 	@Override
