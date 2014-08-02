@@ -10,6 +10,7 @@ public class SessionManager {
 	private static List<String>availableSessions = new ArrayList<String>();
 	private static List<String>publicScreenList = new ArrayList<String>();//<name, sessionID>
 	private static List<String>privateScreenList = new ArrayList<String>();
+	private Map<String,String>deviceNameIDMap=new HashMap<String,String>();
 	private static SessionManager instance = null;
 	//TODO: set or initialize these lists
 	
