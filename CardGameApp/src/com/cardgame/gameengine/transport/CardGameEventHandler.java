@@ -44,7 +44,7 @@ public class CardGameEventHandler implements EventHandler{
 			int number=Integer.parseInt(e.getPayload().split(",")[1]);
 			if(screen.isShared())
 			{
-				((PlaySharedActivity)screen).addCard(suit, number);
+				((PlaySharedActivity)screen).addCard(new Card(suit, number));
 				//TODO if message was received on public screen, add card to UI
 			}
 			else

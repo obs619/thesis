@@ -1,6 +1,8 @@
 package com.cardgame.activities;
 
 import com.cardgame.R;
+import com.cardgame.adapters.HandAdapter;
+import com.cardgame.gameengine.Card;
 import com.cardgame.screenapi.Screen;
 
 import android.app.Activity;
@@ -20,6 +22,8 @@ public class PlaySharedActivity extends Activity implements Screen {
 	private boolean isPublic;
 	private String name;
 	
+	private HandAdapter handAdapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,6 +32,9 @@ public class PlaySharedActivity extends Activity implements Screen {
 		listCards = (ListView) findViewById(R.id.listSharedCardsPlayed);
 		isPublic = false;
 		name = null;
+		
+		handAdapter = new HandAdapter(this);
+		listCards.setAdapter(handAdapter);
 	}
 	
 	/** On update, call this function, feel free to edit
@@ -63,9 +70,10 @@ public class PlaySharedActivity extends Activity implements Screen {
 		this.name = name;
 	}
 	
-	public void addCard(int suit, int number)
+	public void addCard(Card c)
 	{
-		//TODO add card to listview/display
+		
+		handAdapter.addCard(c);
 	}
 	
 }
