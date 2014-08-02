@@ -57,7 +57,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	
 	// Cards variables
 	private List<Card> deckCards;
-	private List<Card> handCards;
+//	private List<Card> handCards;
 	
 	// Shared/Personal screen variables
 	private PPSManager spsManager;
@@ -92,7 +92,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		name = ChordNetworkManager.mChordManager.getName();
 		txtMyHand.setText(name);
 		deckCards = new ArrayList<Card>(); 
-		handCards = new ArrayList<Card>(); 
+	//	handCards = new ArrayList<Card>(); 
 		
 		// Initialize adapters
 		handAdapter = new HandAdapter(this);
@@ -129,6 +129,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	}
 	
 	private void initializeHand() {
+		List<Card>handCards=new ArrayList<Card>();
 		for(int i = 0; i <= 4; i++) {
 			handCards.add(deckCards.get(i));
 		}
@@ -196,15 +197,27 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		txtError.setText("ERROR: ");
 		txtError.setVisibility(View.VISIBLE);
 	}
+
+	@Override
+	protected void onPause() {
+		ChordNetworkManager.getChordManager().stop();
+		super.onPause();
+	}
+	
+	@Override
+	protected void onResume() {
+		ChordNetworkManager.initializeChordManager();
+		super.onResume();
+	}
+
 	public void removeCard(int suit, int number)
 	{
-		for(Card c: handCards)
-		{
-			//if(c.getSuit()==suit&&c.getNumber()==number)
-				//handCards.remove(c);
-			handAdapter.removeCard(suit, number);//handAdapter's removeCard method is practically identical to this one
-		}
+		//if(c.getSuit()==suit&&c.getNumber()==number)
+			//handCards.remove(c);
+		handAdapter.removeCard(suit, number);//handAdapter's removeCard method is practically identical to this one
+		
 		//may need to search the list for this to work properly.
+
 	}
 
 	@Override

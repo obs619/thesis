@@ -72,6 +72,12 @@ public class ChordTransportInterface implements TransportInterface {
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
 			Log.e("left", fromNode);
+			for(String username :PlayPersonalActivity.listNodes) {
+				if(username.contains(fromNode)) {
+					PlayPersonalActivity.listNodes.remove(username);
+					PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
+				}	
+			}
 		}
 		
 	};
