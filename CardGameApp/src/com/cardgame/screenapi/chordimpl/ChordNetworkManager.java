@@ -22,10 +22,12 @@ public class ChordNetworkManager extends NetworkManager {
 	
 	public ChordNetworkManager() {
 		initializeChord();
+
+		mChordManager = new SchordManager(PPSManager.getContext());
 		initializeChordManager();
 	}
 	
-	private final SchordManager.StatusListener mChordManagerListener = new SchordManager.StatusListener() {
+	private final static SchordManager.StatusListener mChordManagerListener = new SchordManager.StatusListener() {
 		
 		@Override
 		public void onStarted(String nodeName, int reason) {
@@ -53,9 +55,8 @@ public class ChordNetworkManager extends NetworkManager {
 		}
 	}
 	
-	public void initializeChordManager() {
+	public static void initializeChordManager() {
 		// Initialize SchordManager
-		mChordManager = new SchordManager(PPSManager.getContext());
 		
 		//checks the available interface types which are wifi, mobile ap or wifi p2p
 		List<Integer> infList =mChordManager.getAvailableInterfaceTypes();
