@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.cardgame.activities.PlayPersonalActivity;
 import com.cardgame.activities.PlaySharedActivity;
+import com.cardgame.gameengine.Card;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.EventHandler;
@@ -40,7 +41,7 @@ public class CardGameEventHandler implements EventHandler{
 			int number=Integer.parseInt(e.getPayload().split(",")[1]);
 			if(screen.isShared())
 			{
-				((PlaySharedActivity)screen).addCard(suit, number);
+				((PlaySharedActivity)screen).addCard(new Card(suit, number));
 				//TODO if message was received on public screen, add card to UI
 			}
 			else
