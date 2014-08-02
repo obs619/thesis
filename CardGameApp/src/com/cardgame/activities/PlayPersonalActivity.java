@@ -87,7 +87,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		isPublic = false;
 		
 		spsManager = new PPSManager(this);
-		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
+		EventManager.getInstance().setEventHandler(new CardGameEventHandler(this));
 		
 		name = ChordNetworkManager.mChordManager.getName();
 		txtMyHand.setText(name);
@@ -143,9 +143,13 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	    List<Card> cardsToPlay = new ArrayList<Card>();
 	    for( int i = 0; i < handAdapter.getCount(); i++ ){
 	        Card item = (Card) handAdapter.getItem(i);
+	        Log.e("cardstoplay", item.isSelected() + "" + item.toString());
 	        if(item.isSelected())
 	        	cardsToPlay.add(item);
 	    }
+	    
+	    
+	    
 	    for(Card c: cardsToPlay)
 	    {
 	    	Event e=new Event(getName(),Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,c.getSuit()+","+c.getNumber());
@@ -210,11 +214,11 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		super.onResume();
 	}
 
-	public void removeCard(int suit, int number)
+	public void removeCard(Card card)
 	{
 		//if(c.getSuit()==suit&&c.getNumber()==number)
 			//handCards.remove(c);
-		handAdapter.removeCard(suit, number);//handAdapter's removeCard method is practically identical to this one
+		handAdapter.removeCard(card);//handAdapter's removeCard method is practically identical to this one
 		
 		//may need to search the list for this to work properly.
 

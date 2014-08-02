@@ -60,11 +60,17 @@ public class EventManager {
 	}
 	public void applyEvent(Event e)
 	{
-		if(e.isAPIEvent())
+		Log.e("applyevent","applying event...");
+		if(e.isAPIEvent()) {
+			Log.e("applyapi", e.isAPIEvent() + e.getPayload());
 			
 			apiEventHandler.handleEvent(e);
-		else
+		}
+		else {
+			Log.e("apply", e.isAPIEvent() + e.getPayload());
 			eventHandler.handleEvent(e);
+		}
+			
 	}
 	
 }

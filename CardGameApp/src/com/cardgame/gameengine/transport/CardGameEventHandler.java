@@ -25,7 +25,10 @@ public class CardGameEventHandler implements EventHandler{
 	private Screen screen;
 	
 
-
+	public CardGameEventHandler(Screen screen)
+	{
+		setScreen(screen);
+	}
 
 	@Override
 	public void handleEvent(Event e) {
@@ -41,13 +44,13 @@ public class CardGameEventHandler implements EventHandler{
 			int number=Integer.parseInt(e.getPayload().split(",")[1]);
 			if(screen.isShared())
 			{
-				((PlaySharedActivity)screen).addCard(new Card(suit, number));
+				((PlaySharedActivity)screen).addCard(new Card(number, suit));
 				//TODO if message was received on public screen, add card to UI
 			}
 			else
 			{
 				//if(screen.getName()==e.getSource())//this may not work yet, as screen name!=source; source is generated string
-				((PlayPersonalActivity)screen).removeCard(suit,number);
+				((PlayPersonalActivity)screen).removeCard(new Card(number, suit));
 			//TODO: if local device (private screen), remove card from UI 
 			}
 			
