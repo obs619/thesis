@@ -34,7 +34,12 @@ public class CardGameEventHandler implements EventHandler{
 			//update local world accordingly
 			break;
 		case CardGameEvent.CARD_PLAYED:
-			String cardName=e.getPayload();
+			int suit=Integer.parseInt(e.getPayload().split(",")[0]);
+			int number=Integer.parseInt(e.getPayload().split(",")[1]);
+			//TODO: if local device (private screen), remove card from UI 
+			
+			
+			//TODO if message was received on public screen, add card to UI
 			//update card position
 			break;
 		}

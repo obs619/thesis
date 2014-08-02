@@ -145,8 +145,13 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	        if(item.isSelected())
 	        	cardsToPlay.add(item);
 	    }
-	    
-	    
+	    for(Card c: cardsToPlay)
+	    {
+	    	Event e=new Event(getName(),Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,c.getSuit()+","+c.getNumber());
+			EventManager.getInstance().applyEvent(e);
+	    }
+	    if(false)
+	    {
 		// TODO if did NOT receive a reply
 		txtError.setText("ERROR: ");
 		txtError.setVisibility(View.VISIBLE);
@@ -154,6 +159,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		// TODO if did NOT select a card
 		txtError.setText("Please select a card");
 		txtError.setVisibility(View.VISIBLE);
+	    }
 	}
 	
 	public void clickPass(View v) {
@@ -162,23 +168,24 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		layoutPassTo.setVisibility(View.VISIBLE);
 		btnDone.setVisibility(View.VISIBLE);
 		
+		if(false)
+		{
 		// TODO else
 		txtError.setText("Please select a card");
 		txtError.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	public void clickDone(View v) {
-		String recipient = null;
-		String cardName = null;
+		
 		// TODO check if a recipient is selected
 		// TODO send card to selected recipient
 		
 		//not sure if these all go here or if they go in clickPlay() and clickPass()
-		Event e=new Event(getName(),recipient,CardGameEvent.CARD_PLAYED,cardName);
-		EventManager.getInstance().applyEvent(e);
 		
-		Event e2=new Event(getName(),recipient,CardGameEvent.TURN_OVER,"");
-		EventManager.getInstance().applyEvent(e2);
+		
+		/*Event e2=new Event(getName(),recipient,CardGameEvent.TURN_OVER,"");
+		EventManager.getInstance().applyEvent(e2);*/
 		
 		// TODO check if a reply was received, if true
 		txtError.setVisibility(View.GONE);
