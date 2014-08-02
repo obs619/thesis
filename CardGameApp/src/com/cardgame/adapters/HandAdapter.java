@@ -37,6 +37,24 @@ public class HandAdapter extends BaseAdapter{
 		}
 		notifyDataSetChanged();
 	}
+	/*public void removeCards(List<Card>cards)
+	{
+		for(Card c: cards)
+		{
+			removeCard(c);
+		}
+	}*/
+	public void removeCard(int suit, int number){
+		for(Card c: mCards)
+		{
+			if(c.getSuit()==suit&&c.getNumber()==number)
+			{
+				mCards.remove(c);
+				notifyDataSetChanged();
+			}
+			
+		}
+	}
 	
 	@Override
 	public int getCount() {

@@ -3,9 +3,12 @@ package com.cardgame.gameengine.transport;
 
 import android.util.Log;
 
+import com.cardgame.activities.PlayPersonalActivity;
+import com.cardgame.activities.PlaySharedActivity;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.EventHandler;
+import com.cardgame.screenapi.Screen;
 import com.cardgame.screenapi.TransportInterface;
 import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 
@@ -17,11 +20,10 @@ import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 public class CardGameEventHandler implements EventHandler{
 	TransportInterface transportInterface=new ChordTransportInterface();//TODO pass the ChordTransportImpl so that game does not know that it's dealing with a ChordTransportIMpl specifically
 
-	public void sendEvent(CardGameEvent event)
-	{
-		//TODO:convert event to screenapi.Message
-	}
 	
+	private Screen screen;
+	
+
 
 
 	@Override
@@ -36,12 +38,34 @@ public class CardGameEventHandler implements EventHandler{
 		case CardGameEvent.CARD_PLAYED:
 			int suit=Integer.parseInt(e.getPayload().split(",")[0]);
 			int number=Integer.parseInt(e.getPayload().split(",")[1]);
+			if(screen.isShared())
+			{
+				((PlaySharedActivity)screen).addCard(suit, number);
+				//TODO if message was received on public screen, add card to UI
+			}
+			else
+			{
+				if(screen.getName()==e.getSource())//this may not work yet, as screen name!=source; source is generated string
+				((PlayPersonalActivity)screen).removeCard(suit,number);
 			//TODO: if local device (private screen), remove card from UI 
+			}
 			
 			
-			//TODO if message was received on public screen, add card to UI
-			//update card position
+
+
 			break;
 		}
+	}
+
+
+
+	public Screen getScreen() {
+		return screen;
+	}
+
+
+
+	public void setScreen(Screen screen) {
+		this.screen = screen;
 	}
 }
