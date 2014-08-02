@@ -63,4 +63,9 @@ public class PlaySharedActivity extends Activity implements Screen {
 		this.name = name;
 	}
 	
+	public void addCard(int suit, int number)
+	{
+		//TODO add card to listview/display
+	}
+	
 }
