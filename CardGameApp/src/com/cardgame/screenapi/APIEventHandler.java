@@ -30,6 +30,8 @@ public class APIEventHandler implements EventHandler {
 		case Event.USER_OWNNODE:
 			Log.e("PASOK", "pasok");
 			SessionManager.getInstance().addPrivateScreen(e.getSource());//temporary
+			//TODO if necessary: pass your own name back to the other nodes?
+			//EventManager.getInstance().triggerEvent(e)
 			break;
 		default:
 			break;
