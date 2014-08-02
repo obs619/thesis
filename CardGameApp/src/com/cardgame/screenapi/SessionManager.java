@@ -6,9 +6,9 @@ public class SessionManager {
 	private String sessionID;//auto-generate
 	private String sessionKey;//auto-generate?
 	private boolean isOpen=true;
-	private List<String>availableSessions;
-	private List<String>publicScreenList;//<name, sessionID>
-	private List<String>privateScreenList;
+	private static List<String>availableSessions;
+	private static List<String>publicScreenList;//<name, sessionID>
+	private static List<String>privateScreenList;
 	private static SessionManager instance;
 	//TODO: set or initialize these lists
 	
@@ -71,19 +71,19 @@ public class SessionManager {
 	}
 	public void addPublicScreen(String screenName)
 	{
-		publicScreenList.add(screenName);
+		getPublicScreenList().add(screenName);
 	}
 	public void addPrivateScreen(String screenName)
 	{
-		privateScreenList.add(screenName);
+		getPrivateScreenList().add(screenName);
 	}
 	public void removePublicScreen(String screenName)
 	{
-		publicScreenList.remove(screenName);
+		getPublicScreenList().remove(screenName);
 	}
 	public void removePrivateScreen(String screenName)
 	{
-		privateScreenList.remove(screenName);
+		getPrivateScreenList().remove(screenName);
 	}
 	public void removeAvailableSession(String sessionID)
 	{
@@ -92,5 +92,21 @@ public class SessionManager {
 	public void addAvailableSession(String sessionID)
 	{
 		availableSessions.add(sessionID);
+	}
+
+	public List<String> getPublicScreenList() {
+		return publicScreenList;
+	}
+
+	public void setPublicScreenList(List<String> publicScreenList) {
+		this.publicScreenList = publicScreenList;
+	}
+
+	public List<String> getPrivateScreenList() {
+		return privateScreenList;
+	}
+
+	public void setPrivateScreenList(List<String> privateScreenList) {
+		this.privateScreenList = privateScreenList;
 	}
 }

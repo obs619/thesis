@@ -29,7 +29,7 @@ public class APIEventHandler implements EventHandler {
 			break;
 		case Event.USER_OWNNODE:
 			Log.e("PASOK", "pasok");
-			
+			SessionManager.getInstance().addPrivateScreen(e.getSource());//temporary
 			break;
 		default:
 			break;
