@@ -200,8 +200,8 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	{
 		for(Card c: handCards)
 		{
-			if(c.getSuit()==suit&&c.getNumber()==number)
-				handCards.remove(c);
+			//if(c.getSuit()==suit&&c.getNumber()==number)
+				//handCards.remove(c);
 			handAdapter.removeCard(suit, number);//handAdapter's removeCard method is practically identical to this one
 		}
 		//may need to search the list for this to work properly.

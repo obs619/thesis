@@ -45,7 +45,7 @@ public class CardGameEventHandler implements EventHandler{
 			}
 			else
 			{
-				if(screen.getName()==e.getSource())//this may not work yet, as screen name!=source; source is generated string
+				//if(screen.getName()==e.getSource())//this may not work yet, as screen name!=source; source is generated string
 				((PlayPersonalActivity)screen).removeCard(suit,number);
 			//TODO: if local device (private screen), remove card from UI 
 			}
