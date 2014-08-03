@@ -11,6 +11,7 @@ import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.EventHandler;
 import com.cardgame.screenapi.Screen;
 import com.cardgame.screenapi.TransportInterface;
+import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 
 /**
@@ -33,7 +34,7 @@ public class CardGameEventHandler implements EventHandler{
 	@Override
 	public void handleEvent(Event e) {
 
-		Log.e("Handling CardGameEvent", "Type: "+e.getType() + "");
+		Log.e("Handling CardGameEvent", "Type: "+e.getType() + "Source:" + e.getSource());
 		switch(e.getType())
 		{
 		case CardGameEvent.CARD_DRAWN:
@@ -49,14 +50,19 @@ public class CardGameEventHandler implements EventHandler{
 			}
 			else
 			{
-				//if(screen.getName()==e.getSource())//this may not work yet, as screen name!=source; source is generated string
-				((PlayPersonalActivity)screen).removeCard(new Card(number, suit));
+				//if(((PlayPersonalActivity)screen).getName()==e.getSource())//this may not work yet, as screen name!=source; source is generated string
+					((PlayPersonalActivity)screen).removeCard(new Card(number, suit));
 			//TODO: if local device (private screen), remove card from UI 
 			}
-			
-			
-
-
+			break;
+		case CardGameEvent.TURN_OVER:
+				Log.e("card game event turn over", "Chordname: "+ChordNetworkManager.mChordManager.getName() + "Source:" + e.getSource());
+				int suit2=Integer.parseInt(e.getPayload().split(",")[0]);
+				int number2=Integer.parseInt(e.getPayload().split(",")[1]);
+				if(e.getSource() == ChordNetworkManager.mChordManager.getName())
+					((PlayPersonalActivity)screen).removeCard(new Card(number2, suit2));
+				else 
+					((PlayPersonalActivity)screen).addCard(new Card(number2, suit2));
 			break;
 		}
 	}

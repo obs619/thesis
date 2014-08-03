@@ -32,7 +32,6 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDis
 		}
 		else
 		{
-		
 			transportInterface.send(recipient,m);
 		}
 		

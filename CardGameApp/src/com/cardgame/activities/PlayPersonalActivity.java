@@ -88,7 +88,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		
 		spsManager = new PPSManager(this);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler(this));
-		
+
 		name = ChordNetworkManager.mChordManager.getName();
 		txtMyHand.setText(name);
 		deckCards = new ArrayList<Card>(); 
@@ -109,6 +109,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
         (this, android.R.layout.simple_list_item_1, listNodes);
 		
 		spinRecipient.setAdapter(dataAdapter);
+		dataAdapter.notifyDataSetChanged();
 		
 		initializeDeck();
 		initializeHand();
@@ -148,11 +149,9 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	        	cardsToPlay.add(item);
 	    }
 	    
-	    
-	    
 	    for(Card c: cardsToPlay)
 	    {
-	    	Event e=new Event(getName(),Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,c.getSuit()+","+c.getNumber());
+	    	Event e=new Event(ChordNetworkManager.mChordManager.getName(),Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,c.getSuit()+","+c.getNumber());
 			EventManager.getInstance().triggerEvent(e);
 	    }
 	    if(false)
@@ -188,18 +187,30 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		
 		//not sure if these all go here or if they go in clickPlay() and clickPass()
 		
-		
-		/*Event e2=new Event(getName(),recipient,CardGameEvent.TURN_OVER,"");
-		EventManager.getInstance().applyEvent(e2);*/
+		List<Card> cardsToPlay = new ArrayList<Card>();
+	    for( int i = 0; i < handAdapter.getCount(); i++ ){
+	        Card item = (Card) handAdapter.getItem(i);
+	        Log.e("cardstoplay", item.isSelected() + "" + item.toString());
+	        if(item.isSelected())
+	        	cardsToPlay.add(item);
+	    }
+	    
+	    for(Card c: cardsToPlay)
+	    {
+	    	Event e2=new Event(ChordNetworkManager.mChordManager.getName(),spinRecipient.getSelectedItem().toString(),CardGameEvent.TURN_OVER,c.getSuit()+","+c.getNumber());
+			EventManager.getInstance().triggerEvent(e2);
+	    }
+	
 		
 		// TODO check if a reply was received, if true
-		txtError.setVisibility(View.GONE);
+	    txtError.setVisibility(View.GONE);
 		layoutPassTo.setVisibility(View.GONE);
 		btnDone.setVisibility(View.GONE);
-		
+		/*
 		// TODO else
 		txtError.setText("ERROR: ");
 		txtError.setVisibility(View.VISIBLE);
+		*/
 	}
 
 	@Override
@@ -214,14 +225,12 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		super.onResume();
 	}
 
-	public void removeCard(Card card)
-	{
-		//if(c.getSuit()==suit&&c.getNumber()==number)
-			//handCards.remove(c);
-		handAdapter.removeCard(card);//handAdapter's removeCard method is practically identical to this one
-		
-		//may need to search the list for this to work properly.
-
+	public void removeCard(Card card) {
+		handAdapter.removeCard(card);
+	}
+	
+	public void addCard(Card c) {
+		handAdapter.addCard(c);
 	}
 
 	@Override
@@ -246,7 +255,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 
 	@Override
 	public void setName(String name) {
-		this.name = name;
+		this.name = ChordNetworkManager.mChordManager.getName();
 	}
 	
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cardgame.R;
+import com.cardgame.screenapi.PPSManager;
 
 public class LobbyActivity extends Activity {
 	

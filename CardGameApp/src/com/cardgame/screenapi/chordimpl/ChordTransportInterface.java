@@ -52,8 +52,8 @@ public class ChordTransportInterface implements TransportInterface {
 			if (PAYLOAD_TYPE.equals(payloadType)) {
 				final ChordMessage receivedMessage = ChordMessage.obtainChatMessage(payload[0]);
 
-				PlayPersonalActivity.listNodes.add(receivedMessage.getSource());
-				PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
+			//	PlayPersonalActivity.listNodes.add(receivedMessage.getSource());
+			//	PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
 				onMessageReceived(receivedMessage);
 			}
 		}

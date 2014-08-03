@@ -40,7 +40,6 @@ public class EventManager {
 	public void sendEvent(Event e)
 	{
 		Message m=messageBuilder.buildMessage(e);
-		Log.e("After return",m.getRecipient());
 		messageDispatcher.sendMessage(m);
 	}
 	public void unpackEvent(Message m)
@@ -62,11 +61,11 @@ public class EventManager {
 	{
 		Log.e("applyevent","applying event...");
 		if(e.isAPIEvent()) {
-			Log.e("applyapi", e.isAPIEvent() + e.getPayload());
+			Log.e("apply apievent", e.isAPIEvent() + e.getPayload());
 			apiEventHandler.handleEvent(e);
 		}
 		else {
-			Log.e("apply", e.isAPIEvent() + e.getPayload());
+			Log.e("apply not apievent", e.isAPIEvent() + e.getPayload());
 			eventHandler.handleEvent(e);
 		}
 			
