@@ -57,7 +57,6 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	
 	// Cards variables
 	private List<Card> deckCards;
-//	private List<Card> handCards;
 	
 	// Shared/Personal screen variables
 	private PPSManager spsManager;
@@ -86,13 +85,12 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		// Initialize SPS variables
 		isPublic = false;
 		
-		spsManager = new PPSManager(this);
+		spsManager = new PPSManager(this, true);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler(this));
 
 		name = ChordNetworkManager.mChordManager.getName();
 		txtMyHand.setText(name);
 		deckCards = new ArrayList<Card>(); 
-	//	handCards = new ArrayList<Card>(); 
 		
 		// Initialize adapters
 		handAdapter = new HandAdapter(this);
@@ -113,10 +111,6 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		
 		initializeDeck();
 		initializeHand();
-		
-		
-		// TODO receive list of players
-		// TODO populate spinner with players
 	}
 	
 	private void initializeDeck() {
@@ -144,7 +138,6 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	    List<Card> cardsToPlay = new ArrayList<Card>();
 	    for( int i = 0; i < handAdapter.getCount(); i++ ){
 	        Card item = (Card) handAdapter.getItem(i);
-	        Log.e("cardstoplay", item.isSelected() + "" + item.toString());
 	        if(item.isSelected())
 	        	cardsToPlay.add(item);
 	    }
@@ -167,52 +160,52 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	}
 	
 	public void clickPass(View v) {
-		// TODO check if a card is selected, if true
 		txtError.setVisibility(View.GONE);
 		layoutPassTo.setVisibility(View.VISIBLE);
 		btnDone.setVisibility(View.VISIBLE);
-		
-		if(false)
-		{
-		// TODO else
-		txtError.setText("Please select a card");
-		txtError.setVisibility(View.VISIBLE);
-		}
 	}
 	
 	public void clickDone(View v) {
 		
-		// TODO check if a recipient is selected
-		// TODO send card to selected recipient
-		
-		//not sure if these all go here or if they go in clickPlay() and clickPass()
-		
 		List<Card> cardsToPlay = new ArrayList<Card>();
 	    for( int i = 0; i < handAdapter.getCount(); i++ ){
 	        Card item = (Card) handAdapter.getItem(i);
-	        Log.e("cardstoplay", item.isSelected() + "" + item.toString());
 	        if(item.isSelected())
 	        	cardsToPlay.add(item);
 	    }
 	    
-	    for(Card c: cardsToPlay)
-	    {
-	    	Event e2=new Event(ChordNetworkManager.mChordManager.getName(),spinRecipient.getSelectedItem().toString(),CardGameEvent.TURN_OVER,c.getSuit()+","+c.getNumber());
-			EventManager.getInstance().triggerEvent(e2);
+	    if(cardsToPlay.size() > 0) {
+	    	for(Card c: cardsToPlay)
+		    {
+		    	Event e2=new Event(ChordNetworkManager.mChordManager.getName(),spinRecipient.getSelectedItem().toString(),CardGameEvent.TURN_OVER,c.getSuit()+","+c.getNumber());
+				EventManager.getInstance().triggerEvent(e2);
+		    }
+	    	
+	    	txtError.setVisibility(View.GONE);
+			layoutPassTo.setVisibility(View.GONE);
+			btnDone.setVisibility(View.GONE);
 	    }
-	
-		
-		// TODO check if a reply was received, if true
-	    txtError.setVisibility(View.GONE);
-		layoutPassTo.setVisibility(View.GONE);
-		btnDone.setVisibility(View.GONE);
-		/*
-		// TODO else
-		txtError.setText("ERROR: ");
-		txtError.setVisibility(View.VISIBLE);
-		*/
+	    else {
+	    	txtError.setText("ERROR: ");
+			txtError.setVisibility(View.VISIBLE);
+	    }
+	    
 	}
 
+	public void clickPersonal(View v) {
+		String nodes = "";
+		for(String node: SessionManager.getInstance().getPrivateScreenList())
+			nodes += node + ",";
+		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
+	}
+	
+	public void clickShared(View v) {
+		String nodes = "";
+		for(String node: SessionManager.getInstance().getPublicScreenList())
+			nodes += node + ",";
+		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
+	}
+	
 	@Override
 	protected void onPause() {
 		ChordNetworkManager.getChordManager().stop();

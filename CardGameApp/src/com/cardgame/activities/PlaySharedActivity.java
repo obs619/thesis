@@ -36,10 +36,10 @@ public class PlaySharedActivity extends Activity implements Screen {
 		setContentView(R.layout.activity_play_shared);
 		
 		listCards = (ListView) findViewById(R.id.listSharedCardsPlayed);
-		isPublic = false;
+		isPublic = true;
 		name = null;
 		
-		spsManager = new PPSManager(this);
+		spsManager = new PPSManager(this, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler(this));
 		
 		handAdapter = new HandAdapter(this);

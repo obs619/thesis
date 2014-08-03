@@ -1,8 +1,11 @@
 package com.cardgame.screenapi.chordimpl;
 
+import android.util.Log;
+
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.Message;
+import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.TransportInterface;
 
 public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDispatcher{
@@ -24,11 +27,14 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDis
 		}
 		else if(recipient.equals(Event.R_SHARED_SCREENS))
 		{
-			//TODO: for each shared screen in list, send the message
+			for(String node: SessionManager.getInstance().getPublicScreenList())
+				transportInterface.send(node,m);
 		}
 		else if(recipient.equals(Event.R_PERSONAL_SCREENS))
 		{
-			
+			Log.e("personal screens", SessionManager.getInstance().getPrivateScreenList().size()+ "");
+			for(String node: SessionManager.getInstance().getPrivateScreenList())
+				transportInterface.send(node,m);
 		}
 		else
 		{

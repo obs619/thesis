@@ -8,6 +8,7 @@ import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.MessageDispatcher;
+import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.TransportInterface;
 import com.samsung.android.sdk.chord.SchordChannel;
 
@@ -51,9 +52,6 @@ public class ChordTransportInterface implements TransportInterface {
 				byte[][] payload) {
 			if (PAYLOAD_TYPE.equals(payloadType)) {
 				final ChordMessage receivedMessage = ChordMessage.obtainChatMessage(payload[0]);
-
-			//	PlayPersonalActivity.listNodes.add(receivedMessage.getSource());
-			//	PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
 				onMessageReceived(receivedMessage);
 			}
 		}
@@ -61,22 +59,45 @@ public class ChordTransportInterface implements TransportInterface {
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
 			Log.e("JOINED", fromNode);
+			if(SessionManager.getInstance().isPersonal()) {
+				Event e=new Event(ChordNetworkManager.getChordManager().getName()
+						,Event.R_ALL_SCREENS
+						,Event.USER_PERSONAL
+						,ChordNetworkManager.getChordManager().getName(),true);
+				EventManager.getInstance().sendEvent(e);
+				
+				Event e1=new Event(ChordNetworkManager.getChordManager().getName()
+						,Event.R_ALL_SCREENS
+						,30
+						,ChordNetworkManager.getChordManager().getName(),false);
+				EventManager.getInstance().sendEvent(e1);
+			}
+			else {
+				Event e=new Event(ChordNetworkManager.getChordManager().getName()
+						,Event.R_ALL_SCREENS
+						,Event.USER_SHARED
+						,ChordNetworkManager.getChordManager().getName(),true);
+				EventManager.getInstance().sendEvent(e);
+				
+				Event e1=new Event(fromNode
+						,Event.R_ALL_SCREENS
+						,31
+						,ChordNetworkManager.getChordManager().getName(),false);
+				EventManager.getInstance().sendEvent(e1);
+			}
 			
-			Event e=new Event(ChordNetworkManager.getChordManager().getName()
-					,Event.R_ALL_SCREENS
-					,Event.USER_OWNNODE
-					,ChordNetworkManager.getChordManager().getName(),true);
-			EventManager.getInstance().sendEvent(e);
 		}
 		
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
 			Log.e("left", fromNode);
-			for(String username :PlayPersonalActivity.listNodes) {
-				if(username.contains(fromNode)) {
-					PlayPersonalActivity.listNodes.remove(username);
-					PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
-				}	
+			if(SessionManager.getInstance().isPersonal()) {
+				Log.e("personal onnodeleft", "d");
+				SessionManager.getInstance().removePrivateScreen(fromNode);
+			}
+			else {
+				Log.e("shared onnodeleft", "d");
+				SessionManager.getInstance().removePublicScreen(fromNode);
 			}
 		}
 		

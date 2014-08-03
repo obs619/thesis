@@ -14,6 +14,8 @@ public class SessionManager {
 	private static List<String>privateScreenList = new ArrayList<String>();
 	private Map<String,String>deviceNameIDMap=new HashMap<String,String>();
 	private static SessionManager instance = null;
+	//private static boolean ready = false;
+	private static boolean isPersonal = false;
 	//TODO: set or initialize these lists
 	
 	public static SessionManager getInstance()
@@ -113,4 +115,13 @@ public class SessionManager {
 	public void setPrivateScreenList(List<String> privateScreenList) {
 		this.privateScreenList = privateScreenList;
 	}
+	
+	public boolean isPersonal() {
+		return isPersonal;
+	}
+	
+	public void setScreenType(boolean screenType) {
+		this.isPersonal = screenType;
+	}
+	
 }

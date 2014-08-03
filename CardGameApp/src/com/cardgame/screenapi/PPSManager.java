@@ -15,11 +15,14 @@ public class PPSManager {
 	private SessionManager sessionManager;
 	private static Context mContext;
 	
-	public PPSManager(Context mContext) {
+	public PPSManager(Context mContext, boolean isPersonal) {
 		PPSManager.mContext = mContext;
 
 		NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
 		EventManager.setDefaultFactory(new ChordEventManagerFactory());
+		
+		//SessionManager.getInstance().setReady(true);
+		SessionManager.getInstance().setScreenType(isPersonal);
 		
 		setNetworkInitializer();
 		setEventManager();

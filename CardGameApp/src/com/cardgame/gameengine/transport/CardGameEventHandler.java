@@ -43,26 +43,36 @@ public class CardGameEventHandler implements EventHandler{
 		case CardGameEvent.CARD_PLAYED:
 			int suit=Integer.parseInt(e.getPayload().split(",")[0]);
 			int number=Integer.parseInt(e.getPayload().split(",")[1]);
-			if(screen.isShared())
-			{
+			Log.e("is screen shared", screen.isShared() + ":" );
+			if(screen.isShared()) {
 				((PlaySharedActivity)screen).addCard(new Card(number, suit));
-				//TODO if message was received on public screen, add card to UI
 			}
-			else
-			{
-				//if(((PlayPersonalActivity)screen).getName()==e.getSource())//this may not work yet, as screen name!=source; source is generated string
-					((PlayPersonalActivity)screen).removeCard(new Card(number, suit));
-			//TODO: if local device (private screen), remove card from UI 
+			else {
+				((PlayPersonalActivity)screen).removeCard(new Card(number, suit));
 			}
 			break;
 		case CardGameEvent.TURN_OVER:
-				Log.e("card game event turn over", "Chordname: "+ChordNetworkManager.mChordManager.getName() + "Source:" + e.getSource());
-				int suit2=Integer.parseInt(e.getPayload().split(",")[0]);
-				int number2=Integer.parseInt(e.getPayload().split(",")[1]);
-				if(e.getSource() == ChordNetworkManager.mChordManager.getName())
-					((PlayPersonalActivity)screen).removeCard(new Card(number2, suit2));
-				else 
-					((PlayPersonalActivity)screen).addCard(new Card(number2, suit2));
+			Log.e("card game event turn over", "Chordname: "+ChordNetworkManager.mChordManager.getName() + "Source:" + e.getSource());
+			int suit2=Integer.parseInt(e.getPayload().split(",")[0]);
+			int number2=Integer.parseInt(e.getPayload().split(",")[1]);
+			if(e.getSource() == ChordNetworkManager.mChordManager.getName()) {
+				((PlayPersonalActivity)screen).removeCard(new Card(number2, suit2));
+			}
+			else {
+				((PlayPersonalActivity)screen).addCard(new Card(number2, suit2));
+			}
+				
+			break;
+		case 30:
+			Log.e("pasok 30 enter personal","pasok 30");
+			if(!screen.isShared()) {
+				PlayPersonalActivity.listNodes.add(e.getSource());
+				PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
+			}
+			
+			break;
+		case 31:
+			Log.e("pasok 31 enter shared","pasok 31");
 			break;
 		}
 	}
