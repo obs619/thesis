@@ -170,6 +170,8 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		List<Card> cardsToPlay = new ArrayList<Card>();
 	    for( int i = 0; i < handAdapter.getCount(); i++ ){
 	        Card item = (Card) handAdapter.getItem(i);
+	        
+	        Log.e("showlog", item.isSelected()+" :" + item.toString());
 	        if(item.isSelected())
 	        	cardsToPlay.add(item);
 	    }

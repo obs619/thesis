@@ -91,6 +91,20 @@ public class HandAdapter extends BaseAdapter{
 		viewHolder.cardName.setText(mCards.get(position).toString());
 		viewHolder.cardCB.setChecked(false);
 		
+		viewHolder.cardCB.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (viewHolder.cardCB.isChecked()) {
+					mCards.get(position).setSelected(true);
+				}
+			    else {
+			    	mCards.get(position).setSelected(false);
+			    }
+			}
+			
+		});
+		/*
 	    convertView.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -106,7 +120,7 @@ public class HandAdapter extends BaseAdapter{
 			    }
 			}
 		});
-	    
+	    */
 		return convertView;
 	}
 

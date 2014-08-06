@@ -90,15 +90,14 @@ public class ChordTransportInterface implements TransportInterface {
 		
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
-			Log.e("left", fromNode);
 			if(SessionManager.getInstance().isPersonal()) {
-				Log.e("personal onnodeleft", "d");
-				SessionManager.getInstance().removePrivateScreen(fromNode);
+				Log.e("PERSONAL", "LEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
 			}
 			else {
-				Log.e("shared onnodeleft", "d");
-				SessionManager.getInstance().removePublicScreen(fromNode);
+				Log.e("SHARED", "LEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
 			}
+			SessionManager.getInstance().clearPublicScreenList();
+			SessionManager.getInstance().clearPrivateScreenList();
 		}
 		
 	};

@@ -111,6 +111,14 @@ public class SessionManager {
 	public List<String> getPrivateScreenList() {
 		return privateScreenList;
 	}
+	
+	public void clearPrivateScreenList(){
+		privateScreenList.clear();
+	}
+	
+	public void clearPublicScreenList(){
+		publicScreenList.clear();
+	}
 
 	public void setPrivateScreenList(List<String> privateScreenList) {
 		this.privateScreenList = privateScreenList;
