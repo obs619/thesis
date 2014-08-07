@@ -41,25 +41,21 @@ public class CardGameEventHandler implements EventHandler{
 			//update local world accordingly
 			break;
 		case CardGameEvent.CARD_PLAYED:
-			int suit=Integer.parseInt(e.getPayload().split(",")[0]);
-			int number=Integer.parseInt(e.getPayload().split(",")[1]);
 			Log.e("is screen shared", screen.isShared() + ":" );
 			if(screen.isShared()) {
-				((PlaySharedActivity)screen).addCard(new Card(number, suit));
+				((PlaySharedActivity)screen).addCard(((Card)e.getPayload()));
 			}
 			else {
-				((PlayPersonalActivity)screen).removeCard(new Card(number, suit));
+				((PlayPersonalActivity)screen).removeCard(((Card)e.getPayload()));
 			}
 			break;
 		case CardGameEvent.TURN_OVER:
 			Log.e("card game event turn over", "Chordname: "+ChordNetworkManager.mChordManager.getName() + "Source:" + e.getSource());
-			int suit2=Integer.parseInt(e.getPayload().split(",")[0]);
-			int number2=Integer.parseInt(e.getPayload().split(",")[1]);
 			if(e.getSource() == ChordNetworkManager.mChordManager.getName()) {
-				((PlayPersonalActivity)screen).removeCard(new Card(number2, suit2));
+				((PlayPersonalActivity)screen).removeCard(((Card)e.getPayload()));
 			}
 			else {
-				((PlayPersonalActivity)screen).addCard(new Card(number2, suit2));
+				((PlayPersonalActivity)screen).addCard(((Card)e.getPayload()));
 			}
 				
 			break;

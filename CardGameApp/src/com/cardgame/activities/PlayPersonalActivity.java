@@ -144,7 +144,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	    
 	    for(Card c: cardsToPlay)
 	    {
-	    	Event e=new Event(ChordNetworkManager.mChordManager.getName(),Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,c.getSuit()+","+c.getNumber());
+	    	Event e=new Event(ChordNetworkManager.mChordManager.getName(),Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,c);
 			EventManager.getInstance().triggerEvent(e);
 	    }
 	    if(false)
@@ -179,7 +179,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	    if(cardsToPlay.size() > 0) {
 	    	for(Card c: cardsToPlay)
 		    {
-		    	Event e2=new Event(ChordNetworkManager.mChordManager.getName(),spinRecipient.getSelectedItem().toString(),CardGameEvent.TURN_OVER,c.getSuit()+","+c.getNumber());
+		    	Event e2=new Event(ChordNetworkManager.mChordManager.getName(),spinRecipient.getSelectedItem().toString(),CardGameEvent.TURN_OVER,c);
 				EventManager.getInstance().triggerEvent(e2);
 		    }
 	    	

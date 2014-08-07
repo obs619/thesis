@@ -61,11 +61,11 @@ public class EventManager {
 	{
 		Log.e("applyevent","applying event...");
 		if(e.isAPIEvent()) {
-			Log.e("apply apievent", e.isAPIEvent() + e.getPayload());
+			Log.e("apply apievent", e.isAPIEvent() + e.getPayload().toString());
 			apiEventHandler.handleEvent(e);
 		}
 		else {
-			Log.e("apply not apievent", e.isAPIEvent() + e.getPayload());
+			Log.e("apply not apievent", e.isAPIEvent() + e.getPayload().toString());
 			eventHandler.handleEvent(e);
 		}
 			

@@ -33,14 +33,14 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 	//private String mMessageType;
 	
 	
-	ChordMessage(String message, String recipients, String source, int messageType) {
+	ChordMessage(Serializable message, String recipients, String source, int messageType) {
 		mMessage = message;
 		mRecipients = recipients;
 		mSource=source;
 		mMessageType = messageType;
 	}
-	ChordMessage(String message, String recipients, String source, int messageType, boolean isAPIEvent) {
-		mMessage = message;
+	ChordMessage(Serializable object, String recipients, String source, int messageType, boolean isAPIEvent) {
+		mMessage = object;
 		mRecipients = recipients;
 		mSource=source;
 		mMessageType = messageType;
@@ -68,7 +68,7 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 		return new ChordMessage(chatMessage.mMessage, chatMessage.mRecipients, chatMessage.getSource(), chatMessage.mMessageType);
 	}
 
-	public String getMessage() {
+	public Serializable getMessage() {
 		return mMessage;
 	}
 

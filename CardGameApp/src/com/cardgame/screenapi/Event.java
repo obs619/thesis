@@ -1,4 +1,7 @@
 package com.cardgame.screenapi;
+
+import java.io.Serializable;
+
 /**A change in application state. Can be global or local.
  * Global events will send messages
  * @author Andrew
@@ -29,7 +32,7 @@ public class Event {//can developer subclass using reflection?
 	private String recipient;//who does this event affect?
 	private int type;
 	private boolean isAPIEvent;
-	private String payload;
+	private Serializable payload;
 	/**
 	 * 
 	 * @param source name of device which triggered the event
@@ -41,7 +44,7 @@ public class Event {//can developer subclass using reflection?
 	{
 		
 	}
-	public Event(String source, String recipient, int type, String payload)
+	public Event(String source, String recipient, int type, Serializable payload)
 	{
 		this.source=source;
 		this.recipient=recipient;
@@ -49,7 +52,7 @@ public class Event {//can developer subclass using reflection?
 		this.payload=payload;
 		this.setAPIEvent(false);
 	}
-	public Event(String source, String recipient, int type, String payload, boolean isAPIEvent)
+	public Event(String source, String recipient, int type, Serializable payload, boolean isAPIEvent)
 	{
 		this.source=source;
 		this.recipient=recipient;
@@ -63,7 +66,7 @@ public class Event {//can developer subclass using reflection?
 		return type;
 	}
 
-	public String getPayload() {
+	public Serializable getPayload() {
 		return payload;
 	}
 	

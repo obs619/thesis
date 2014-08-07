@@ -16,7 +16,7 @@ public abstract class Message implements Serializable{
 	/**Message contents
 	 * 
 	 */
-	protected String mMessage;
+	protected Serializable mMessage;
 	
 	protected String sessionID;
 	protected String mRecipients;
@@ -33,7 +33,7 @@ public abstract class Message implements Serializable{
 		return mSource;
 	}
 
-	public String getContents()
+	public Serializable getContents()
 	{
 		return mMessage;
 	}

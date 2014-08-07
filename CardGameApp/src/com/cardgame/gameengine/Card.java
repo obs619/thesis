@@ -1,10 +1,11 @@
 package com.cardgame.gameengine;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.cardgame.screenapi.Screen;
 
-public class Card {
+public class Card implements Serializable{
 	private int number;
 	private int suit;
 	public static final int DIAMONDS=4;
