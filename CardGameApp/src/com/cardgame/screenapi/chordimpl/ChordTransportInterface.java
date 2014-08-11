@@ -62,26 +62,26 @@ public class ChordTransportInterface implements TransportInterface {
 			if(SessionManager.getInstance().isPersonal()) {
 				Event e=new Event(ChordNetworkManager.getChordManager().getName()
 						,Event.R_ALL_SCREENS
-						,Event.USER_PERSONAL
+						,Event.USER_JOIN_PRIVATE
 						,ChordNetworkManager.getChordManager().getName(),true);
 				EventManager.getInstance().sendEvent(e);
 				
 				Event e1=new Event(ChordNetworkManager.getChordManager().getName()
 						,Event.R_ALL_SCREENS
-						,30
+						,Event.USER_JOIN_PRIVATE
 						,ChordNetworkManager.getChordManager().getName(),false);
 				EventManager.getInstance().sendEvent(e1);
 			}
 			else {
 				Event e=new Event(ChordNetworkManager.getChordManager().getName()
 						,Event.R_ALL_SCREENS
-						,Event.USER_SHARED
+						,Event.USER_JOIN_PUBLIC
 						,ChordNetworkManager.getChordManager().getName(),true);
 				EventManager.getInstance().sendEvent(e);
 				
 				Event e1=new Event(fromNode
 						,Event.R_ALL_SCREENS
-						,31
+						,Event.USER_JOIN_PUBLIC
 						,ChordNetworkManager.getChordManager().getName(),false);
 				EventManager.getInstance().sendEvent(e1);
 			}
@@ -90,16 +90,13 @@ public class ChordTransportInterface implements TransportInterface {
 		
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
-			Event e=new Event(fromNode
-					,Event.R_LOCAL_SCREEN
-					,Event.USER_LEFT
-					,fromNode,false);
-			EventManager.getInstance().applyEvent(e);
-			
-			
-			
 			if(SessionManager.getInstance().getPrivateScreenList().contains(fromNode)) {
-				Log.e("PERSONAL", "LEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+				Event e=new Event(fromNode
+						,Event.R_LOCAL_SCREEN
+						,Event.USER_LEFT_PRIVATE
+						,fromNode,false);
+				EventManager.getInstance().applyEvent(e);
+				
 				Event e1=new Event(fromNode
 						,Event.R_LOCAL_SCREEN
 						,Event.USER_LEFT_PRIVATE
@@ -107,7 +104,12 @@ public class ChordTransportInterface implements TransportInterface {
 				EventManager.getInstance().applyEvent(e1);
 			}
 			else {
-				Log.e("SHARED", "LEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+				Event e=new Event(fromNode
+						,Event.R_LOCAL_SCREEN
+						,Event.USER_LEFT_PUBLIC
+						,fromNode,false);
+				EventManager.getInstance().applyEvent(e);
+				
 				Event e1=new Event(fromNode
 						,Event.R_LOCAL_SCREEN
 						,Event.USER_LEFT_PUBLIC

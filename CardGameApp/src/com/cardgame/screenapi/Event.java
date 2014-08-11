@@ -26,9 +26,8 @@ public class Event {//can developer subclass using reflection?
 	 */
 	public static final int T_SEND_CURRENT_STATE=6;	
 	public static final int USER_OWNNODE=10;
-	public static final int USER_PERSONAL=11;
-	public static final int USER_SHARED=12;
-	public static final int USER_LEFT=13;
+	public static final int USER_JOIN_PRIVATE=11;
+	public static final int USER_JOIN_PUBLIC=12;
 	public static final int USER_LEFT_PRIVATE=14;
 	public static final int USER_LEFT_PUBLIC=15;
 	

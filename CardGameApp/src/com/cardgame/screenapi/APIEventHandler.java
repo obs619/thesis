@@ -33,11 +33,11 @@ public class APIEventHandler implements EventHandler {
 			//TODO if necessary: pass your own name back to the other nodes?
 			//EventManager.getInstance().triggerEvent(e)
 			break;
-		case Event.USER_PERSONAL:
+		case Event.USER_JOIN_PRIVATE:
 			Log.e("PERSONAL API", "pasok");
 			SessionManager.getInstance().addPrivateScreen(e.getSource());
 			break;
-		case Event.USER_SHARED:
+		case Event.USER_JOIN_PUBLIC:
 			Log.e("SHARED API", "pasok");
 			SessionManager.getInstance().addPublicScreen(e.getSource());
 			break;

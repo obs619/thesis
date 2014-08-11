@@ -57,26 +57,29 @@ public class CardGameEventHandler implements EventHandler{
 			else {
 				((PlayPersonalActivity)screen).addCard(((Card)e.getPayload()));
 			}
-				
 			break;
-		case 30:
-			Log.e("pasok 30 enter personal","pasok 30");
+		case Event.USER_JOIN_PRIVATE:
+			Log.e("USER_JOIN_PRIVATE","pasok");
 			if(!screen.isShared()) {
 				PlayPersonalActivity.listNodes.add(e.getPayload().toString());
 				PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
 			}
-			
 			break;
-		case 31:
-			Log.e("pasok 31 enter shared","pasok 31");
+		case Event.USER_JOIN_PUBLIC:
+			Log.e("USER_JOIN_PUBLIC","pasok");
 			break;
-		case Event.USER_LEFT:
+		case Event.USER_LEFT_PRIVATE:
+			Log.e("USER_LEFT_PRIVATE","pasok");
 			if(!screen.isShared()) {
 				PlayPersonalActivity.listNodes.remove(e.getPayload().toString());
 				PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
 			}
 			break;
+		case Event.USER_LEFT_PUBLIC:
+			Log.e("USER_LEFT_PUBLIC","pasok");
+			break;
 		}
+		
 	}
 
 
