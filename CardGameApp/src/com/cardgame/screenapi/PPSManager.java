@@ -23,6 +23,8 @@ public class PPSManager {
 		
 		//SessionManager.getInstance().setReady(true);
 		SessionManager.getInstance().setScreenType(isPersonal);
+		SessionManager.getInstance().clearPrivateScreenList();
+		SessionManager.getInstance().clearPublicScreenList();
 		
 		setNetworkInitializer();
 		setEventManager();

@@ -225,6 +225,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	}
 	
 	public void addCard(Card c) {
+		c.setSelected(false);
 		handAdapter.addCard(c);
 	}
 

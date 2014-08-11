@@ -41,6 +41,18 @@ public class APIEventHandler implements EventHandler {
 			Log.e("SHARED API", "pasok");
 			SessionManager.getInstance().addPublicScreen(e.getSource());
 			break;
+		case Event.USER_LEFT_PRIVATE:
+			Log.e("user left private", "pasok");
+			for(String node : SessionManager.getInstance().getPrivateScreenList())
+				if(e.getPayload().toString().equals(node))
+					SessionManager.getInstance().removePrivateScreen(node);
+			break;
+		case Event.USER_LEFT_PUBLIC:
+			Log.e("user left public", "pasok");
+			for(String node : SessionManager.getInstance().getPublicScreenList())
+				if(e.getPayload().toString().equals(node))
+					SessionManager.getInstance().removePublicScreen(node);
+			break;
 		default:
 			break;
 		}
