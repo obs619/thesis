@@ -10,11 +10,6 @@ import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.TransportInterface;
 import com.samsung.android.sdk.chord.SchordChannel;
 
-/**
- * Calls/is called by Chord to send and receive messages
- * @author Andrew
- *
- */
 public class ChordTransportInterface implements TransportInterface {
 
 	private static MessageDispatcher messageDispatcher;

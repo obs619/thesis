@@ -10,11 +10,7 @@ import com.cardgame.screenapi.SessionManager;
 import com.samsung.android.sdk.SsdkUnsupportedException;
 import com.samsung.android.sdk.chord.Schord;
 import com.samsung.android.sdk.chord.SchordManager;
-/**
- * handles chord initialization, connection/disconnection, discovery, etc.
- * @author Andrew
- *
- */
+
 public class ChordNetworkManager extends NetworkManager {
 
 	public Schord chord;

@@ -15,6 +15,5 @@ public class ChordMessageBuilder implements MessageBuilder {
 	public Event unpackEvent(Message m) {
 		return new Event(m.getRecipient(),m.getType(),m.getContents(),m.isAPIEvent());
 	}
-	
 
 }

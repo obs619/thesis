@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
-
 public class SessionManager {
+	
 	private String sessionID;//auto-generate
 	private String sessionKey;//auto-generate?
 	private boolean isOpen=true;
@@ -15,15 +14,16 @@ public class SessionManager {
 	private static List<String>availableSessions = new ArrayList<String>();
 	private static List<String>publicScreenList = new ArrayList<String>();//<name, sessionID>
 	private static List<String>privateScreenList = new ArrayList<String>();
+	
 	private Map<String,String>deviceNameIDMap=new HashMap<String,String>();
+	
+	private static boolean isPersonal;
+	private static boolean sessionMode = true;
+	
+	private String chosenSession = "";
 	
 	private static SessionManager instance = null;
 
-	private static boolean isPersonal;
-	
-	private String chosenSession = "";
-	private static boolean sessionMode = true;
-	
 	public static SessionManager getInstance() {
 		if(instance==null) {
 			instance=new SessionManager();
@@ -177,7 +177,6 @@ public class SessionManager {
 				,Event.ADD_NEW_SESSION
 				,sessionID,false);
 		EventManager.getInstance().sendEvent(e1);
-		
 	}
 
 }

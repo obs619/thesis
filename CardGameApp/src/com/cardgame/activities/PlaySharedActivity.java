@@ -17,13 +17,6 @@ import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 
-/**
- * @author Sharmaine
- * 
- *		This is the game screen when the shared screen is
- *		selected.
- */
-
 public class PlaySharedActivity extends Activity implements Screen {
 	
 	private ListView listCards;
@@ -69,7 +62,6 @@ public class PlaySharedActivity extends Activity implements Screen {
 	}
 	
 	public void clickCheckSession(View v) {
-		
 		Toast.makeText(this, ChordTransportInterface.mChannel.getName(), Toast.LENGTH_LONG).show();
 	}
 	

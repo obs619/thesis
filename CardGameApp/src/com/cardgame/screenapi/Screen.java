@@ -2,8 +2,6 @@ package com.cardgame.screenapi;
 
 public interface Screen {
 	
-	
-	
 	public boolean isShared();
 
 	public void setAsShared();

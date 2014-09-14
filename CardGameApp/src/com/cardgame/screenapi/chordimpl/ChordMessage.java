@@ -8,8 +8,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import android.util.Log;
-
 public class ChordMessage extends com.cardgame.screenapi.Message implements Serializable {
 
 	private static final long serialVersionUID = 20130219L;

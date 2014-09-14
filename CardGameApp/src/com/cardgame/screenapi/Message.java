@@ -21,30 +21,28 @@ public abstract class Message implements Serializable{
 	
 	protected String sessionID;
 	protected String mRecipients;
-	protected String mSource;
 	protected boolean isAPIEvent;
+
+	public int getType() {
+		return mMessageType;
+	}
+	
+	public Serializable getContents() {
+		return mMessage;
+	}
 	
 	public String getRecipient(){
 		return mRecipients;
 	}
-
-	public String getSource() {
-		return mSource;
-	}
-
-	public Serializable getContents() {
-		return mMessage;
-	}
-	public int getType() {
-		return mMessageType;
+	
+	public boolean isAPIEvent() {
+		return isAPIEvent;
 	}
 	
 	public void setAPIEvent(boolean isAPIEvent) {
 		this.isAPIEvent=isAPIEvent;
 	}
 	
-	public boolean isAPIEvent() {
-		return isAPIEvent;
-	}
+
 	
 }

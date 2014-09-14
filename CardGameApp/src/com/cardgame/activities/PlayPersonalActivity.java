@@ -1,6 +1,5 @@
 package com.cardgame.activities;
 
-//import android.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,14 +28,6 @@ import com.cardgame.screenapi.Screen;
 import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
-
-/**
- * @author Sharmaine
- * 
- * 
- *		This is the game screen when the personal screen is
- *		selected.
- */
 
 public class PlayPersonalActivity extends Activity implements Screen {
 	
@@ -72,7 +63,6 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		layoutPassTo = (LinearLayout) findViewById(R.id.layoutPersonalPassTo);
 		spinRecipient = (Spinner) findViewById(R.id.spinPersonalRecipient);
 		btnDone = (Button) findViewById(R.id.btnPersonalDone);
-	
 		
 		// Initialize SPS variables
 		isPublic = false;
@@ -134,6 +124,15 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		handAdapter.addCards(handCards);
 	}
 	
+	public void removeCard(Card card) {
+		handAdapter.removeCard(card);
+	}
+	
+	public void addCard(Card c) {
+		c.setSelected(false);
+		handAdapter.addCard(c);
+	}
+	
 	public void clickPlay(View v) {
 		
 	    List<Card> cardsToPlay = new ArrayList<Card>();
@@ -168,10 +167,8 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	public void clickDone(View v) {
 		
 		List<Card> cardsToPlay = new ArrayList<Card>();
-	    for( int i = 0; i < handAdapter.getCount(); i++ ){
+	    for( int i = 0; i < handAdapter.getCount(); i++ ) {
 	        Card item = (Card) handAdapter.getItem(i);
-	        
-	        Log.e("showlog", item.isSelected()+" :" + item.toString());
 	        if(item.isSelected())
 	        	cardsToPlay.add(item);
 	    }
@@ -211,15 +208,6 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	
 	public void clickCheckSession(View v) {
 		Toast.makeText(this, ChordTransportInterface.mChannel.getName(), Toast.LENGTH_LONG).show();
-	}
-
-	public void removeCard(Card card) {
-		handAdapter.removeCard(card);
-	}
-	
-	public void addCard(Card c) {
-		c.setSelected(false);
-		handAdapter.addCard(c);
 	}
 
 	@Override

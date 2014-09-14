@@ -1,12 +1,5 @@
 package com.cardgame.screenapi;
 
-import android.util.Log;
-
-/**
- * Builds and sends a message from an event
- * @author Andrew
- *
- */
 public class EventManager {
 	
 	MessageBuilder messageBuilder;
@@ -16,45 +9,42 @@ public class EventManager {
 	public static EventManagerFactory factory;
 	public static EventManager instance=null;
 
-	public static EventManager getInstance()
-	{
+	public static EventManager getInstance() {
 		if (instance==null)
 			instance= factory.createEventManager();
 		return instance;
 	}
 
-	public static void setDefaultFactory(EventManagerFactory factory)
-	{
+	public static void setDefaultFactory(EventManagerFactory factory) {
 		EventManager.factory=factory;
 	}
 	
-	public EventManager(MessageBuilder messageBuilder, MessageDispatcher messageDispatcher/*, EventHandler eventHandler*/) //temporary fix
-	{
+	public EventManager(MessageBuilder messageBuilder, MessageDispatcher messageDispatcher) {
 		this.messageBuilder=messageBuilder;
 		this.messageDispatcher=messageDispatcher;
 	}
-	public void sendEvent(Event e)
-	{
+	
+	public void sendEvent(Event e) {
 		Message m=messageBuilder.buildMessage(e);
 		messageDispatcher.sendMessage(m);
 	}
-	public void unpackEvent(Message m)
-	{
+	
+	public void unpackEvent(Message m) {
 		Event e=messageBuilder.unpackEvent(m);
 		applyEvent(e);
 	}
-	public static void setEventHandler(EventHandler h)
-	{
+	
+	public static void setEventHandler(EventHandler h) {
 		eventHandler=h;
 	}
-	public void triggerEvent(Event e)
-	{
+	
+	public void triggerEvent(Event e) {
 		if(e.getRecipient()!=Event.R_LOCAL_SCREEN)
 			sendEvent(e);
 		applyEvent(e);//apply event to yourself (if it affects you?)
 	}
-	public void applyEvent(Event e)
-	{
+	
+	public void applyEvent(Event e) {
 		if(e.isAPIEvent()) {
 			apiEventHandler.handleEvent(e);
 		}

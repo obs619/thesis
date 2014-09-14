@@ -2,11 +2,6 @@ package com.cardgame.screenapi;
 
 import java.io.Serializable;
 
-/**A change in application state. Can be global or local.
- * Global events will send messages
- * @author Andrew
- *
- */
 public class Event {
 	
 	public static final String R_SHARED_SCREENS="shared";
