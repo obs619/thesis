@@ -1,8 +1,7 @@
-package com.cardgame.gameengine.transport;
+package com.cardgame.handlers;
 
 import android.util.Log;
 
-import com.cardgame.activities.PlayPersonalActivity;
 import com.cardgame.activities.SessionActivity;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventHandler;
@@ -14,7 +13,7 @@ public class SessionEventHandler implements EventHandler{
 		Log.e("Handling SessionEvent", "Type: "+e.getType() + "Source:" + e.getSource() + "Payload: " + e.getPayload().toString());
 		switch(e.getType())
 		{
-		case Event.NEW_CHANNEL_ADD:
+		case Event.ADD_NEW_SESSION:
 			SessionActivity.listChannels.add(e.getPayload().toString());
 			SessionActivity.channelsAdapter.notifyDataSetChanged();
 			break;

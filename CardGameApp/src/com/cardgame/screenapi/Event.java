@@ -7,11 +7,10 @@ import java.io.Serializable;
  * @author Andrew
  *
  */
-public class Event {//can developer subclass using reflection?
-	
+public class Event {
 	
 	public static final String R_SHARED_SCREENS="shared";
-	public static final String  R_PERSONAL_SCREENS="personal";
+	public static final String R_PERSONAL_SCREENS="personal";
 	public static final String R_ALL_SCREENS="all";
 	public static final String R_LOCAL_SCREEN="onlyme";
 	
@@ -21,44 +20,38 @@ public class Event {//can developer subclass using reflection?
 	public static final int T_UNLOCK_SESSION=3;
 	public static final int T_LEAVE_SESSION=4;
 	public static final int T_JOIN_NETWORK=5;
-	/**
-	 * used to send necessary info to a  screen which just joined a session
-	 */
+
 	public static final int T_SEND_CURRENT_STATE=6;	
-	public static final int USER_OWNNODE=10;
-	public static final int USER_JOIN_PRIVATE=11;
-	public static final int USER_JOIN_PUBLIC=12;
-	public static final int USER_LEFT_PRIVATE=14;
-	public static final int USER_LEFT_PUBLIC=15;
-	
-	public static final int NEW_CHANNEL_ADD=16;
+	public static final int USER_OWNNODE=7;
+	public static final int USER_JOIN_PRIVATE=8;
+	public static final int USER_JOIN_PUBLIC=9;
+	public static final int USER_LEFT_PRIVATE=10;
+	public static final int USER_LEFT_PUBLIC=11;
+	public static final int ADD_NEW_SESSION=12;
 	
 	private String source;//or Screen
 	private String recipient;//who does this event affect?
 	private int type;
 	private boolean isAPIEvent;
 	private Serializable payload;
+	
+	public Event() {}
+	
 	/**
-	 * 
 	 * @param source name of device which triggered the event
 	 * @param recipient name of device or group of devices to be notified of the event
 	 * @param type the type of event as specified by the developer
 	 * @param payload information about the event
 	 */
-	public Event()
-	{
-		
-	}
-	public Event(String source, String recipient, int type, Serializable payload)
-	{
+	public Event(String source, String recipient, int type, Serializable payload) {
 		this.source=source;
 		this.recipient=recipient;
 		this.type=type;
 		this.payload=payload;
 		this.setAPIEvent(false);
 	}
-	public Event(String source, String recipient, int type, Serializable payload, boolean isAPIEvent)
-	{
+	
+	public Event(String source, String recipient, int type, Serializable payload, boolean isAPIEvent) {
 		this.source=source;
 		this.recipient=recipient;
 		this.type=type;
@@ -66,7 +59,6 @@ public class Event {//can developer subclass using reflection?
 		this.setAPIEvent(isAPIEvent);
 	}
 	
-
 	public int getType() {
 		return type;
 	}
@@ -82,13 +74,13 @@ public class Event {//can developer subclass using reflection?
 	public String getRecipient() {
 		return recipient;
 	}
+	
 	public boolean isAPIEvent() {
 		return isAPIEvent;
 	}
+	
 	public void setAPIEvent(boolean isAPIEvent) {
 		this.isAPIEvent = isAPIEvent;
 	}
-	
-	
 
 }

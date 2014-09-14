@@ -1,13 +1,12 @@
-package com.cardgame.gameengine.transport;
+package com.cardgame.handlers;
 
 
 import android.util.Log;
 
 import com.cardgame.activities.PlayPersonalActivity;
 import com.cardgame.activities.PlaySharedActivity;
-import com.cardgame.gameengine.Card;
+import com.cardgame.objects.Card;
 import com.cardgame.screenapi.Event;
-import com.cardgame.screenapi.Message;
 import com.cardgame.screenapi.EventHandler;
 import com.cardgame.screenapi.Screen;
 import com.cardgame.screenapi.TransportInterface;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +13,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.cardgame.R;
-import com.cardgame.gameengine.Card;
+import com.cardgame.objects.Card;
 
 public class HandAdapter extends BaseAdapter{
 
@@ -38,13 +37,7 @@ public class HandAdapter extends BaseAdapter{
 		}
 		notifyDataSetChanged();
 	}
-	/*public void removeCards(List<Card>cards)
-	{
-		for(Card c: cards)
-		{
-			removeCard(c);
-		}
-	}*/
+
 	public void removeCard(Card card) {
 		List<Card> toRemove = new ArrayList<Card>();
 		for(Card mycard: mCards) {
@@ -104,23 +97,6 @@ public class HandAdapter extends BaseAdapter{
 			}
 			
 		});
-		/*
-	    convertView.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Log.e("convrt", "convr");
-				if (viewHolder.cardCB.isChecked()) {
-					mCards.get(position).setSelected(false);
-					viewHolder.cardCB.setChecked(false);
-				}
-			    else {
-			    	mCards.get(position).setSelected(true);
-			    	viewHolder.cardCB.setChecked(true);
-			    }
-			}
-		});
-	    */
 		return convertView;
 	}
 

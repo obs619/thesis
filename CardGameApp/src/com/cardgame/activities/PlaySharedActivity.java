@@ -1,21 +1,21 @@
 package com.cardgame.activities;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
+
 import com.cardgame.R;
 import com.cardgame.adapters.HandAdapter;
-import com.cardgame.gameengine.Card;
-import com.cardgame.gameengine.transport.CardGameEventHandler;
+import com.cardgame.handlers.CardGameEventHandler;
+import com.cardgame.objects.Card;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.Screen;
 import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.Toast;
 
 /**
  * @author Sharmaine

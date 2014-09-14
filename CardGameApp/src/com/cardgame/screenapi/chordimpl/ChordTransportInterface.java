@@ -2,8 +2,6 @@ package com.cardgame.screenapi.chordimpl;
 
 import android.util.Log;
 
-import com.cardgame.activities.PlayPersonalActivity;
-import com.cardgame.chord.IChordChannelListenerAdapter;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.Message;
@@ -20,29 +18,34 @@ import com.samsung.android.sdk.chord.SchordChannel;
 public class ChordTransportInterface implements TransportInterface {
 
 	private static MessageDispatcher messageDispatcher;
-	private static final String PAYLOAD_TYPE = "CHORD_SPS"; //
+	private static final String PAYLOAD_TYPE = "CHORD_SPS"; 
 	
 	public static SchordChannel mChannel;
 	
 	public static String channelName = "defaultchannel";
 	
-	public ChordTransportInterface()
-	{
-		//joinChannel();
-	}
+	public ChordTransportInterface() {}
 	
 	public static void joinDefaultChannel() {
-		//Joins to the channel with the specified name.
+
 		try {
-			mChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);			 
-			Log.e("ChordTransport", "successful");
+			mChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);		
 		}catch(Exception e) {
-			Log.e("ChordTransport", "not succesful");
 			e.printStackTrace();
 		}
 		 
 		 if(mChannel == null)
 			 Log.e("CHANNEL ERROR", "Failed to join channel");
+	}
+	
+	public static void joinCustomChannel() {
+		
+		try {
+			mChannel = ChordNetworkManager.getChordManager().joinChannel(SessionManager.getInstance().getChosenSession(), mChordChannelListener);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private final static SchordChannel.StatusListener mChordChannelListener = new IChordChannelListenerAdapter() {
@@ -90,6 +93,7 @@ public class ChordTransportInterface implements TransportInterface {
 		
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
+			Log.e("LEFT", fromNode);
 			if(SessionManager.getInstance().getPrivateScreenList().contains(fromNode)) {
 				Event e=new Event(fromNode
 						,Event.R_LOCAL_SCREEN
@@ -130,25 +134,13 @@ public class ChordTransportInterface implements TransportInterface {
 		mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
 	}
 
-
 	public static void onMessageReceived(Message receivedMessage) {
 		messageDispatcher.receiveMessage(receivedMessage);
-		
 	}
 	
 	@Override
 	public void setMessageDispatcher(MessageDispatcher dispatcher) {
 		this.messageDispatcher=dispatcher;
-	}
-	
-	public static void joinCustomChannel() {
-		try {
-			mChannel = ChordNetworkManager.getChordManager().joinChannel(SessionManager.getInstance().getChosenSession(), mChordChannelListener);
-			Log.e("Chord Trans", "successful");
-		}catch(Exception e) {
-			Log.e("Chord Trans", "not successful: " + e.getMessage());
-			e.printStackTrace();
-		}
 	}
 	
 }

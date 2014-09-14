@@ -1,4 +1,4 @@
-package com.cardgame.gameengine.transport;
+package com.cardgame.handlers;
 
 import com.cardgame.screenapi.Event;
 
@@ -13,7 +13,6 @@ public class CardGameEvent extends Event {
 	{
 		//certain events seem to have pre-determined recipients, we could define them here based on type
 	}
-	
 	
 	/**for Monkey Monkey, draw card from adjacent player
 	 * RECIPIENT: player on left; event must be triggered on remote screen before local screen
@@ -40,36 +39,4 @@ public class CardGameEvent extends Event {
 	public static final int DECK_RESHUFFLED=8;
 	public static final int START_GAME=9;
 	
-	/*private int type;
-	private String sender;
-	private String details;
-	
-	public CardGameEvent(String sender, int type, String details)
-	{
-		this.sender=sender;
-		this.type=type;
-		this.setDetails(details);
-		
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	public String getDetails() {
-		return details;
-	}
-
-	public void setDetails(String details) {
-		this.details = details;
-	}
-
-	public String getSenderName() {
-		// TODO Auto-generated method stub
-		return sender;
-	}*/
 }

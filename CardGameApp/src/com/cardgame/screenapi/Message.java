@@ -3,11 +3,12 @@ package com.cardgame.screenapi;
 import java.io.Serializable;
 
 public abstract class Message implements Serializable{
-	/**Username of sending screen
+	
+	/**
 	 * 
 	 */
-	//private String sender;
-	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Message type
 	 */
@@ -23,9 +24,7 @@ public abstract class Message implements Serializable{
 	protected String mSource;
 	protected boolean isAPIEvent;
 	
-	//private MessageOwner mOwner;
-	public String getRecipient()
-	{
+	public String getRecipient(){
 		return mRecipients;
 	}
 
@@ -33,20 +32,18 @@ public abstract class Message implements Serializable{
 		return mSource;
 	}
 
-	public Serializable getContents()
-	{
+	public Serializable getContents() {
 		return mMessage;
 	}
-	public int getType()
-	{
+	public int getType() {
 		return mMessageType;
 	}
-	public void setAPIEvent(boolean isAPIEvent)
-	{
+	
+	public void setAPIEvent(boolean isAPIEvent) {
 		this.isAPIEvent=isAPIEvent;
 	}
-	public boolean isAPIEvent()
-	{
+	
+	public boolean isAPIEvent() {
 		return isAPIEvent;
 	}
 	

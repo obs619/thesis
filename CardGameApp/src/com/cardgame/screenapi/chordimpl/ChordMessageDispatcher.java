@@ -10,17 +10,17 @@ import com.cardgame.screenapi.TransportInterface;
 
 public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDispatcher{
 	
-	
 	private TransportInterface transportInterface;
 	private EventManager eventManager;
-	public ChordMessageDispatcher(ChordTransportInterface transportInterface)
-	{
+	
+	public ChordMessageDispatcher(ChordTransportInterface transportInterface) {
 		setTransportInterface(transportInterface);
 	}
 	
 	@Override
 	public void sendMessage(Message m) {
 		String recipient=m.getRecipient();
+		
 		if(recipient.equals(Event.R_ALL_SCREENS))
 		{
 			transportInterface.sendToAll(m);
@@ -43,20 +43,18 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDis
 		
 	}
 	@Override
-	public void receiveMessage(Message m)
-	{
+	public void receiveMessage(Message m) {
 		EventManager.getInstance().unpackEvent(m);
 	}
+	
 	@Override
 	public void setTransportInterface(TransportInterface transportInterface) {
-		// TODO Auto-generated method stub
 		this.transportInterface=transportInterface;
 		transportInterface.setMessageDispatcher(this);
 	}
 
 	@Override
 	public void setEventManager(EventManager eventManager) {
-		// TODO Auto-generated method stub
 		this.eventManager=eventManager;
 	}
 

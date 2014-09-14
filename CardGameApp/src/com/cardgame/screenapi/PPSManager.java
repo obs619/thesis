@@ -1,12 +1,9 @@
 package com.cardgame.screenapi;
 
+import android.content.Context;
+
 import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
-
-import android.content.Context;
-import android.util.Log;
-
-
 
 public class PPSManager {
 
@@ -21,14 +18,12 @@ public class PPSManager {
 		NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
 		EventManager.setDefaultFactory(new ChordEventManagerFactory());
 		
-		//SessionManager.getInstance().setReady(true);
 		SessionManager.getInstance().setScreenType(isPersonal);
 		SessionManager.getInstance().clearPrivateScreenList();
 		SessionManager.getInstance().clearPublicScreenList();
 		
 		setNetworkInitializer();
 		setEventManager();
-		
 	}
 	
 	public PPSManager(Context mContext, boolean isPersonal, boolean sessionMode) {
@@ -37,7 +32,6 @@ public class PPSManager {
 		NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
 		EventManager.setDefaultFactory(new ChordEventManagerFactory());
 		
-		//SessionManager.getInstance().setReady(true);
 		SessionManager.getInstance().setScreenType(isPersonal);
 		SessionManager.getInstance().clearPrivateScreenList();
 		SessionManager.getInstance().clearPublicScreenList();
@@ -46,17 +40,14 @@ public class PPSManager {
 		
 		setNetworkInitializer();
 		setEventManager();
-		
 	}
 	
 	/**
 	 * Select which implementation you want (Chord in this case)
 	 */
 	public void setNetworkInitializer() {
-		
 		this.networkInitializer = NetworkManager.getInstance();
 	}
-	
 	
 	public static Context getContext() {
 		return mContext;
@@ -74,7 +65,6 @@ public class PPSManager {
 		return networkInitializer;
 	}
 
-
 	public SessionManager getSessionManager() {
 		return sessionManager;
 	}
@@ -83,5 +73,4 @@ public class PPSManager {
 		this.sessionManager = sessionManager;
 	}
 
-	
 }

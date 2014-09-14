@@ -1,21 +1,9 @@
-/*
- ********************************************************************************
- * Copyright (c) 2013 Samsung Electronics, Inc.
- * All rights reserved.
- *
- * This software is a confidential and proprietary information of Samsung
- * Electronics, Inc. ("Confidential Information"). You shall not disclose such
- * Confidential Information and shall use it only in accordance with the terms
- * of the license agreement you entered into with Samsung Electronics.
- ********************************************************************************
- */
-package com.cardgame.chord;
+
+package com.cardgame.screenapi.chordimpl;
 
 import com.samsung.android.sdk.chord.SchordChannel;
 
-/**
- * Adapter for the {@link IChordChannelListener}.
- */
+
 public class IChordChannelListenerAdapter implements SchordChannel.StatusListener {
 
 	@Override

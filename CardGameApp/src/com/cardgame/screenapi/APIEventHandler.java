@@ -1,15 +1,14 @@
 package com.cardgame.screenapi;
 
-import com.cardgame.activities.PlayPersonalActivity;
-
 import android.util.Log;
-import android.widget.Toast;
 
 public class APIEventHandler implements EventHandler {
-//for now, assume that these events were received, not sent
+	
 	@Override
 	public void handleEvent(Event e) {
+		
 		Log.e("APIEventHandler", e.getType() + "");
+		
 		switch(e.getType())
 		{
 		case Event.T_SCREEN_TYPE_CHANGED:
@@ -53,7 +52,7 @@ public class APIEventHandler implements EventHandler {
 				if(e.getPayload().toString().equals(node))
 					SessionManager.getInstance().removePublicScreen(node);
 			break;
-		case Event.NEW_CHANNEL_ADD:
+		case Event.ADD_NEW_SESSION:
 			Log.e("new channel added", e.getPayload().toString());
 			SessionManager.getInstance().addAvailableSession(e.getPayload().toString());
 			break;

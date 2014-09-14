@@ -3,20 +3,10 @@ package com.cardgame.activities;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cardgame.R;
-import com.cardgame.gameengine.transport.CardGameEventHandler;
-import com.cardgame.gameengine.transport.SessionEventHandler;
-import com.cardgame.screenapi.EventManager;
-import com.cardgame.screenapi.PPSManager;
-import com.cardgame.screenapi.SessionManager;
-import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
-import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TimingLogger;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -24,6 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.cardgame.R;
+import com.cardgame.handlers.SessionEventHandler;
+import com.cardgame.screenapi.EventManager;
+import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.SessionManager;
+import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 
 public class SessionActivity extends Activity{
 	

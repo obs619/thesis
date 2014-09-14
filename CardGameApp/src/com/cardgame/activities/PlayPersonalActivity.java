@@ -5,22 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.cardgame.R;
-import com.cardgame.adapters.HandAdapter;
-import com.cardgame.gameengine.Card;
-import com.cardgame.gameengine.transport.CardGameEvent;
-import com.cardgame.gameengine.transport.CardGameEventHandler;
-import com.cardgame.screenapi.Event;
-import com.cardgame.screenapi.EventManager;
-import com.cardgame.screenapi.NetworkManager;
-import com.cardgame.screenapi.PPSManager;
-import com.cardgame.screenapi.Screen;
-import com.cardgame.screenapi.SessionManager;
-import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
-import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
-import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
-import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,8 +17,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cardgame.R;
+import com.cardgame.adapters.HandAdapter;
+import com.cardgame.handlers.CardGameEvent;
+import com.cardgame.handlers.CardGameEventHandler;
+import com.cardgame.objects.Card;
+import com.cardgame.screenapi.Event;
+import com.cardgame.screenapi.EventManager;
+import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.Screen;
+import com.cardgame.screenapi.SessionManager;
+import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
+import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
+
 /**
  * @author Sharmaine
+ * 
  * 
  *		This is the game screen when the personal screen is
  *		selected.
@@ -45,13 +43,9 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	// UI variables
 	private ListView listCards;
 	private TextView txtError;
-	//private Button btnPlay;
-	//private Button btnPass;
 	private LinearLayout layoutPassTo;
 	private Spinner spinRecipient;
 	private Button btnDone;
-	
-	private Button btnMySession;
 	
 	// Adapter variables
 	private HandAdapter handAdapter;
@@ -75,13 +69,10 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		// Link UI variables to UI
 		listCards = (ListView) findViewById(R.id.listPersonalCards);
 		txtError = (TextView) findViewById(R.id.txtPersonalError);
-		//btnPlay = (Button) findViewById(R.id.btnPersonalPlay);
-		//btnPass = (Button) findViewById(R.id.btnPersonalPass);
 		layoutPassTo = (LinearLayout) findViewById(R.id.layoutPersonalPassTo);
 		spinRecipient = (Spinner) findViewById(R.id.spinPersonalRecipient);
 		btnDone = (Button) findViewById(R.id.btnPersonalDone);
-		
-		btnMySession = (Button) findViewById(R.id.btnCheckSessionPers);
+	
 		
 		// Initialize SPS variables
 		isPublic = false;

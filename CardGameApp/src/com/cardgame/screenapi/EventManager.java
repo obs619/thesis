@@ -2,22 +2,20 @@ package com.cardgame.screenapi;
 
 import android.util.Log;
 
-import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
-
 /**
  * Builds and sends a message from an event
  * @author Andrew
  *
  */
 public class EventManager {
+	
 	MessageBuilder messageBuilder;
 	MessageDispatcher messageDispatcher;
 	static EventHandler eventHandler;
 	static APIEventHandler apiEventHandler=new APIEventHandler();
 	public static EventManagerFactory factory;
 	public static EventManager instance=null;
-	//TODO optional global event queue
-	//TODO optional shared hash table w/ distributed mutex
+
 	public static EventManager getInstance()
 	{
 		if (instance==null)
@@ -25,7 +23,6 @@ public class EventManager {
 		return instance;
 	}
 
-	
 	public static void setDefaultFactory(EventManagerFactory factory)
 	{
 		EventManager.factory=factory;
@@ -35,7 +32,6 @@ public class EventManager {
 	{
 		this.messageBuilder=messageBuilder;
 		this.messageDispatcher=messageDispatcher;
-		//this.eventHandler=eventHandler;
 	}
 	public void sendEvent(Event e)
 	{
@@ -59,16 +55,12 @@ public class EventManager {
 	}
 	public void applyEvent(Event e)
 	{
-		Log.e("applyevent","applying event...");
 		if(e.isAPIEvent()) {
-			Log.e("apply apievent", e.isAPIEvent() + e.getPayload().toString());
 			apiEventHandler.handleEvent(e);
 		}
 		else {
-			Log.e("apply not apievent", e.isAPIEvent() + e.getPayload().toString());
 			eventHandler.handleEvent(e);
 		}
-			
 	}
 	
 }
