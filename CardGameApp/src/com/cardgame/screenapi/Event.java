@@ -20,16 +20,15 @@ public class Event {
 	public static final int T_UNLOCK_SESSION=3;
 	public static final int T_LEAVE_SESSION=4;
 	public static final int T_JOIN_NETWORK=5;
-
 	public static final int T_SEND_CURRENT_STATE=6;	
-	public static final int USER_OWNNODE=7;
-	public static final int USER_JOIN_PRIVATE=8;
-	public static final int USER_JOIN_PUBLIC=9;
-	public static final int USER_LEFT_PRIVATE=10;
-	public static final int USER_LEFT_PUBLIC=11;
-	public static final int ADD_NEW_SESSION=12;
 	
-	private String source;//or Screen
+	public static final int USER_JOIN_PRIVATE=7;
+	public static final int USER_JOIN_PUBLIC=8;
+	public static final int USER_LEFT_PRIVATE=9;
+	public static final int USER_LEFT_PUBLIC=10;
+	
+	public static final int ADD_NEW_SESSION=11;
+	
 	private String recipient;//who does this event affect?
 	private int type;
 	private boolean isAPIEvent;
@@ -43,16 +42,14 @@ public class Event {
 	 * @param type the type of event as specified by the developer
 	 * @param payload information about the event
 	 */
-	public Event(String source, String recipient, int type, Serializable payload) {
-		this.source=source;
+	public Event(String recipient, int type, Serializable payload) {
 		this.recipient=recipient;
 		this.type=type;
 		this.payload=payload;
 		this.setAPIEvent(false);
 	}
 	
-	public Event(String source, String recipient, int type, Serializable payload, boolean isAPIEvent) {
-		this.source=source;
+	public Event(String recipient, int type, Serializable payload, boolean isAPIEvent) {
 		this.recipient=recipient;
 		this.type=type;
 		this.payload=payload;
@@ -67,10 +64,6 @@ public class Event {
 		return payload;
 	}
 	
-	public String getSource() {
-		return source;
-	}
-
 	public String getRecipient() {
 		return recipient;
 	}

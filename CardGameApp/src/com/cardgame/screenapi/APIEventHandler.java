@@ -26,19 +26,13 @@ public class APIEventHandler implements EventHandler {
 		case Event.T_JOIN_NETWORK:
 			//TODO check message data for node sessionID
 			break;
-		case Event.USER_OWNNODE:
-			Log.e("PASOK", "pasok");
-			SessionManager.getInstance().addPrivateScreen(e.getSource());//temporary
-			//TODO if necessary: pass your own name back to the other nodes?
-			//EventManager.getInstance().triggerEvent(e)
-			break;
 		case Event.USER_JOIN_PRIVATE:
 			Log.e("PERSONAL API", "pasok");
-			SessionManager.getInstance().addPrivateScreen(e.getSource());
+			SessionManager.getInstance().addPrivateScreen(e.getPayload().toString());
 			break;
 		case Event.USER_JOIN_PUBLIC:
 			Log.e("SHARED API", "pasok");
-			SessionManager.getInstance().addPublicScreen(e.getSource());
+			SessionManager.getInstance().addPublicScreen(e.getPayload().toString());
 			break;
 		case Event.USER_LEFT_PRIVATE:
 			Log.e("user left private", "pasok");

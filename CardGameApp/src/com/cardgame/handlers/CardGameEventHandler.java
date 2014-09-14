@@ -18,12 +18,9 @@ import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
  * @author Andrew
  *
  */
-public class CardGameEventHandler implements EventHandler{
-	TransportInterface transportInterface=new ChordTransportInterface();//TODO pass the ChordTransportImpl so that game does not know that it's dealing with a ChordTransportIMpl specifically
-
+public class CardGameEventHandler implements EventHandler {
 	
 	private Screen screen;
-	
 
 	public CardGameEventHandler(Screen screen)
 	{
@@ -33,7 +30,7 @@ public class CardGameEventHandler implements EventHandler{
 	@Override
 	public void handleEvent(Event e) {
 
-		Log.e("Handling CardGameEvent", "Type: "+e.getType() + "Source:" + e.getSource());
+		Log.e("Handling CardGameEvent", "Type: "+e.getType() + "Recipient:" + e.getRecipient());
 		switch(e.getType())
 		{
 		case CardGameEvent.CARD_DRAWN:
@@ -49,13 +46,8 @@ public class CardGameEventHandler implements EventHandler{
 			}
 			break;
 		case CardGameEvent.TURN_OVER:
-			Log.e("card game event turn over", "Chordname: "+ChordNetworkManager.mChordManager.getName() + "Source:" + e.getSource());
-			if(e.getSource() == ChordNetworkManager.mChordManager.getName()) {
-				((PlayPersonalActivity)screen).removeCard(((Card)e.getPayload()));
-			}
-			else {
-				((PlayPersonalActivity)screen).addCard(((Card)e.getPayload()));
-			}
+			Log.e("card game event turn over", "turn over");
+			((PlayPersonalActivity)screen).addCard(((Card)e.getPayload()));
 			break;
 		case Event.USER_JOIN_PRIVATE:
 			Log.e("USER_JOIN_PRIVATE","pasok");
@@ -81,15 +73,12 @@ public class CardGameEventHandler implements EventHandler{
 		
 	}
 
-
-
 	public Screen getScreen() {
 		return screen;
 	}
 
-
-
 	public void setScreen(Screen screen) {
 		this.screen = screen;
 	}
+	
 }

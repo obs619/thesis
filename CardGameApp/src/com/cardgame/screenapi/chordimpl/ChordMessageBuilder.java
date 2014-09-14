@@ -8,12 +8,12 @@ public class ChordMessageBuilder implements MessageBuilder {
 
 	@Override
 	public Message buildMessage(Event e) {
-		return new ChordMessage(e.getPayload(),e.getRecipient(),e.getSource(),e.getType(),e.isAPIEvent());
+		return new ChordMessage(e.getPayload(),e.getRecipient(),e.getType(),e.isAPIEvent());
 	}
 
 	@Override
 	public Event unpackEvent(Message m) {
-		return new Event(m.getSource(),m.getRecipient(),m.getType(),m.getContents(),m.isAPIEvent());
+		return new Event(m.getRecipient(),m.getType(),m.getContents(),m.isAPIEvent());
 	}
 	
 

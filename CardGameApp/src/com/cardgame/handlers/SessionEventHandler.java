@@ -10,7 +10,7 @@ public class SessionEventHandler implements EventHandler{
 
 	@Override
 	public void handleEvent(Event e) {
-		Log.e("Handling SessionEvent", "Type: "+e.getType() + "Source:" + e.getSource() + "Payload: " + e.getPayload().toString());
+		Log.e("Handling SessionEvent", "Type: "+e.getType() + "Payload: " + e.getPayload().toString());
 		switch(e.getType())
 		{
 		case Event.ADD_NEW_SESSION:

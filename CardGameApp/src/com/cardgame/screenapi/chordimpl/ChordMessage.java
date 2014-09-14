@@ -14,27 +14,25 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 
 	private static final long serialVersionUID = 20130219L;
 
-	ChordMessage(Serializable message, String recipients, String source, int messageType) {
+	ChordMessage(Serializable message, String recipients, int messageType) {
 		mMessage = message;
 		mRecipients = recipients;
-		mSource=source;
 		mMessageType = messageType;
 	}
 	
-	ChordMessage(Serializable object, String recipients, String source, int messageType, boolean isAPIEvent) {
+	ChordMessage(Serializable object, String recipients, int messageType, boolean isAPIEvent) {
 		mMessage = object;
 		mRecipients = recipients;
-		mSource=source;
 		mMessageType = messageType;
 		this.isAPIEvent=isAPIEvent;
 	}
 
-	public static ChordMessage obtain(String message, String userName, String source, int messageType) {
-		return new ChordMessage(message, userName, source, messageType);
+	public static ChordMessage obtain(String message, String userName, int messageType) {
+		return new ChordMessage(message, userName, messageType);
 	}
 
-	public static ChordMessage obtain(ChordMessage chatMessage) {
-		return new ChordMessage(chatMessage.mMessage, chatMessage.mRecipients, chatMessage.getSource(), chatMessage.mMessageType);
+	public static ChordMessage obtain(ChordMessage chordMessage) {
+		return new ChordMessage(chordMessage.mMessage, chordMessage.mRecipients, chordMessage.mMessageType);
 	}
 
 	public Serializable getMessage() {
@@ -85,7 +83,6 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 			e.printStackTrace();
 		}
 		
-		Log.e("obtain", message.mSource + "");
 		return message;
 	}
 

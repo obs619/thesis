@@ -168,14 +168,12 @@ public class SessionManager {
 	public void sendNewSessionNotification(String sessionID) {
 		
 		addAvailableSession(sessionID);
-		Event e=new Event(ChordNetworkManager.getChordManager().getName()
-				,Event.R_ALL_SCREENS
+		Event e=new Event(Event.R_ALL_SCREENS
 				,Event.ADD_NEW_SESSION
 				,sessionID,true);
 		EventManager.getInstance().sendEvent(e);
 		
-		Event e1=new Event(ChordNetworkManager.getChordManager().getName()
-				,Event.R_ALL_SCREENS
+		Event e1=new Event(Event.R_ALL_SCREENS
 				,Event.ADD_NEW_SESSION
 				,sessionID,false);
 		EventManager.getInstance().sendEvent(e1);

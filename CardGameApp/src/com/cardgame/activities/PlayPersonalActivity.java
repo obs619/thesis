@@ -104,6 +104,18 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		initializeHand();
 	}
 	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		ChordNetworkManager.getChordManager().stop();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		ChordNetworkManager.initializeChordManager();
+	}
+	
 	private void initializeDeck() {
 		for (int i = 1; i <= 13; i++) {
 			for (int j = 1; j <= 4; j++) {
@@ -123,8 +135,6 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	}
 	
 	public void clickPlay(View v) {
-		// TODO check if a card is selected, if true
-		// TODO send the selected card
 		
 	    List<Card> cardsToPlay = new ArrayList<Card>();
 	    for( int i = 0; i < handAdapter.getCount(); i++ ){
@@ -133,21 +143,20 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	        	cardsToPlay.add(item);
 	    }
 	    
-	    for(Card c: cardsToPlay)
-	    {
-	    	Event e=new Event(ChordNetworkManager.mChordManager.getName(),Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,c);
-			EventManager.getInstance().triggerEvent(e);
+	    if(cardsToPlay.size() > 0) {
+	    	for(Card card: cardsToPlay)
+		    {
+		    	Event e=new Event(Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,card);
+				EventManager.getInstance().triggerEvent(e);
+		    }
+	    	
+	    	txtError.setVisibility(View.GONE);
 	    }
-	    if(false)
-	    {
-		// TODO if did NOT receive a reply
-		txtError.setText("ERROR: ");
-		txtError.setVisibility(View.VISIBLE);
-		
-		// TODO if did NOT select a card
-		txtError.setText("Please select a card");
-		txtError.setVisibility(View.VISIBLE);
+	    else {
+	    	txtError.setText("Please select card/s");
+			txtError.setVisibility(View.VISIBLE);
 	    }
+	    
 	}
 	
 	public void clickPass(View v) {
@@ -168,10 +177,11 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	    }
 	    
 	    if(cardsToPlay.size() > 0) {
-	    	for(Card c: cardsToPlay)
+	    	for(Card card: cardsToPlay)
 		    {
-		    	Event e2=new Event(ChordNetworkManager.mChordManager.getName(),spinRecipient.getSelectedItem().toString(),CardGameEvent.TURN_OVER,c);
-				EventManager.getInstance().triggerEvent(e2);
+	    		removeCard(card);
+		    	Event e2=new Event(spinRecipient.getSelectedItem().toString(), CardGameEvent.TURN_OVER, card);
+				EventManager.getInstance().sendEvent(e2);
 		    }
 	    	
 	    	txtError.setVisibility(View.GONE);
@@ -201,18 +211,6 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	
 	public void clickCheckSession(View v) {
 		Toast.makeText(this, ChordTransportInterface.mChannel.getName(), Toast.LENGTH_LONG).show();
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		ChordNetworkManager.getChordManager().stop();
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		ChordNetworkManager.initializeChordManager();
 	}
 
 	public void removeCard(Card card) {

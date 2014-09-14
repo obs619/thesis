@@ -3,15 +3,8 @@ package com.cardgame.handlers;
 import com.cardgame.screenapi.Event;
 
 public class CardGameEvent extends Event {
-	public CardGameEvent(String source, String recipient, int type,
-			String payload) {
-		super(source, recipient, type, payload);
-		
-	}
-	
-	public CardGameEvent(String source, int type, String payload)
-	{
-		//certain events seem to have pre-determined recipients, we could define them here based on type
+	public CardGameEvent(String recipient, int type, String payload) {
+		super(recipient, type, payload);
 	}
 	
 	/**for Monkey Monkey, draw card from adjacent player
