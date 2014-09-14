@@ -31,6 +31,24 @@ public class PPSManager {
 		
 	}
 	
+	public PPSManager(Context mContext, boolean isPersonal, boolean sessionMode) {
+		PPSManager.mContext = mContext;
+
+		NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
+		EventManager.setDefaultFactory(new ChordEventManagerFactory());
+		
+		//SessionManager.getInstance().setReady(true);
+		SessionManager.getInstance().setScreenType(isPersonal);
+		SessionManager.getInstance().clearPrivateScreenList();
+		SessionManager.getInstance().clearPublicScreenList();
+		
+		SessionManager.getInstance().setSessionMode(sessionMode);
+		
+		setNetworkInitializer();
+		setEventManager();
+		
+	}
+	
 	/**
 	 * Select which implementation you want (Chord in this case)
 	 */

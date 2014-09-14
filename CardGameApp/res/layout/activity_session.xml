@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btn_chk_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get session list" 
+        android:onClick="selectGetCurChannel" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content" >
+        
+        <EditText
+	        android:id="@+id/txt_channel_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:ems="7" />
+
+	    <Button
+	        android:id="@+id/button1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@+id/txt_channel_name"
+	        android:text="Create Session" 
+	        android:onClick="selectCreateChannel" />
+        
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/spinner_channel_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btn_proceed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Proceed Game" 
+        android:onClick="selectProceed" />
+    
+</LinearLayout>

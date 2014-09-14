@@ -31,6 +31,8 @@ public class Event {//can developer subclass using reflection?
 	public static final int USER_LEFT_PRIVATE=14;
 	public static final int USER_LEFT_PUBLIC=15;
 	
+	public static final int NEW_CHANNEL_ADD=16;
+	
 	private String source;//or Screen
 	private String recipient;//who does this event affect?
 	private int type;

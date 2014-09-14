@@ -7,11 +7,15 @@ import com.cardgame.gameengine.transport.CardGameEventHandler;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.Screen;
+import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
+import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * @author Sharmaine
@@ -39,7 +43,7 @@ public class PlaySharedActivity extends Activity implements Screen {
 		isPublic = true;
 		name = null;
 		
-		spsManager = new PPSManager(this, false);
+		spsManager = new PPSManager(this, false, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler(this));
 		
 		handAdapter = new HandAdapter(this);
@@ -50,16 +54,35 @@ public class PlaySharedActivity extends Activity implements Screen {
 		handAdapter.addCard(c);
 	}
 	
+	public void clickPersonal(View v) {
+		String nodes = "";
+		for(String node: SessionManager.getInstance().getPrivateScreenList())
+			nodes += node + ",";
+		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
+	}
+	
+	public void clickShared(View v) {
+		String nodes = "";
+		for(String node: SessionManager.getInstance().getPublicScreenList())
+			nodes += node + ",";
+		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
+	}
+	
+	public void clickCheckSession(View v) {
+		
+		Toast.makeText(this, ChordTransportInterface.mChannel.getName(), Toast.LENGTH_LONG).show();
+	}
+	
 	@Override
 	protected void onPause() {
-		ChordNetworkManager.getChordManager().stop();
 		super.onPause();
+		ChordNetworkManager.getChordManager().stop();
 	}
 	
 	@Override
 	protected void onResume() {
-		ChordNetworkManager.initializeChordManager();
 		super.onResume();
+		ChordNetworkManager.initializeChordManager();
 	}
 	
 	@Override

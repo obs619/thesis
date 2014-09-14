@@ -31,7 +31,7 @@ public class ChordTransportInterface implements TransportInterface {
 		//joinChannel();
 	}
 	
-	public static void joinChannel() {
+	public static void joinDefaultChannel() {
 		//Joins to the channel with the specified name.
 		try {
 			mChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);			 
@@ -121,26 +121,11 @@ public class ChordTransportInterface implements TransportInterface {
 		
 	};
 	
-	/**
-	 * Sends message over the channel.
-	 * 
-	 * @param message
-	 *            message to be sent
-	 */
 	@Override
 	public void sendToAll(Message message) {
 		mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
 	}
-	
-	
-	/**
-	 * Sends private message over the channel.
-	 * 
-	 * @param message
-	 *            message to be sent
-	 * @param userToSend
-	 * 			  nodename of the user which the message will be sent
-	 */
+
 	public void send(String userToSend,Message message) {
 		mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
 	}
@@ -150,13 +135,20 @@ public class ChordTransportInterface implements TransportInterface {
 		messageDispatcher.receiveMessage(receivedMessage);
 		
 	}
-
-
+	
 	@Override
 	public void setMessageDispatcher(MessageDispatcher dispatcher) {
 		this.messageDispatcher=dispatcher;
-		//dispatcher.setTransportInterface(this);
-		
+	}
+	
+	public static void joinCustomChannel() {
+		try {
+			mChannel = ChordNetworkManager.getChordManager().joinChannel(SessionManager.getInstance().getChosenSession(), mChordChannelListener);
+			Log.e("Chord Trans", "successful");
+		}catch(Exception e) {
+			Log.e("Chord Trans", "not successful: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 	
 }

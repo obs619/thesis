@@ -83,6 +83,7 @@ public abstract class ChatChord {
 		 return mChordManager.joinChannel(channelName, listener);
 	}
 
+
 	public void leaveChannel(String channelName) {
 		mChordManager.leaveChannel(channelName);
 	}

@@ -27,13 +27,14 @@
 	            style="?android:attr/buttonStyle"
 	            android:onClick="clickPersonal" />
 		    
-		    <TextView
-	            android:id="@+id/myHand"
+		    <Button
+	            android:id="@+id/btnCheckSessionPers"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_weight="1"
-	            android:text="@string/myhand"
-	            android:textAppearance="?android:attr/textAppearanceLarge" />
+	            android:layout_weight="1" 
+	            android:text="MySession?"
+	            style="?android:attr/buttonStyle"
+	            android:onClick="clickCheckSession" />
 	
 	        <Button
 	            android:id="@+id/btnSharedScreens"

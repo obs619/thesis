@@ -19,6 +19,7 @@ import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
+import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	private Spinner spinRecipient;
 	private Button btnDone;
 	
-	private TextView txtMyHand;
+	private Button btnMySession;
 	
 	// Adapter variables
 	private HandAdapter handAdapter;
@@ -80,16 +81,15 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		spinRecipient = (Spinner) findViewById(R.id.spinPersonalRecipient);
 		btnDone = (Button) findViewById(R.id.btnPersonalDone);
 		
-		txtMyHand = (TextView) findViewById(R.id.myHand);
+		btnMySession = (Button) findViewById(R.id.btnCheckSessionPers);
 		
 		// Initialize SPS variables
 		isPublic = false;
 		
-		spsManager = new PPSManager(this, true);
+		spsManager = new PPSManager(this, true, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler(this));
 
 		name = ChordNetworkManager.mChordManager.getName();
-		txtMyHand.setText(name);
 		deckCards = new ArrayList<Card>(); 
 		
 		// Initialize adapters
@@ -208,16 +208,20 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}
 	
+	public void clickCheckSession(View v) {
+		Toast.makeText(this, ChordTransportInterface.mChannel.getName(), Toast.LENGTH_LONG).show();
+	}
+	
 	@Override
 	protected void onPause() {
-		ChordNetworkManager.getChordManager().stop();
 		super.onPause();
+		ChordNetworkManager.getChordManager().stop();
 	}
 	
 	@Override
 	protected void onResume() {
-		ChordNetworkManager.initializeChordManager();
 		super.onResume();
+		ChordNetworkManager.initializeChordManager();
 	}
 
 	public void removeCard(Card card) {

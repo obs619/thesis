@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.cardgame.R;
 import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.SessionManager;
 
 public class LobbyActivity extends Activity {
 	
@@ -17,12 +18,14 @@ public class LobbyActivity extends Activity {
 	}
 	
 	public void selectAsPersonal(View v) {
-		Intent intent = new Intent(this, PlayPersonalActivity.class);
+		Intent intent = new Intent(this, SessionActivity.class);
+		SessionManager.getInstance().setScreenType(true);
 		startActivity(intent);
 	}
 	
 	public void selectAsShared(View v) {
-		Intent intent = new Intent(this, PlaySharedActivity.class);
+		Intent intent = new Intent(this, SessionActivity.class);
+		SessionManager.getInstance().setScreenType(false);
 		startActivity(intent);
 	}
 	

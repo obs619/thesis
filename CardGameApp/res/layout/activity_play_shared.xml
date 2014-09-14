@@ -3,6 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <LinearLayout
+       		android:id="@+id/layout1"
+		    android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:weightSum="3"
+		    >
+		    
+		    <Button
+	            android:id="@+id/btnPersonalScreens"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="PersonalS"
+	            style="?android:attr/buttonStyle"
+	            android:onClick="clickPersonal" />
+		    
+		    <Button
+	            android:id="@+id/btnCheckSessionPers"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1" 
+	            android:text="MySession?"
+	            style="?android:attr/buttonStyle"
+	            android:onClick="clickCheckSession" />
+	
+	        <Button
+	            android:id="@+id/btnSharedScreens"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="SharedS"
+	            style="?android:attr/buttonStyle"
+	            android:onClick="clickShared" />
+		    
+		</LinearLayout>
+    
     <TextView
         android:id="@+id/txtTable"
         android:layout_width="match_parent"
@@ -11,6 +48,7 @@
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:text="@string/table"
+        android:layout_below="@+id/layout1"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ListView

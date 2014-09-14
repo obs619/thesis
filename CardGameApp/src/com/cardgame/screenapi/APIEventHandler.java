@@ -53,6 +53,10 @@ public class APIEventHandler implements EventHandler {
 				if(e.getPayload().toString().equals(node))
 					SessionManager.getInstance().removePublicScreen(node);
 			break;
+		case Event.NEW_CHANNEL_ADD:
+			Log.e("new channel added", e.getPayload().toString());
+			SessionManager.getInstance().addAvailableSession(e.getPayload().toString());
+			break;
 		default:
 			break;
 		}

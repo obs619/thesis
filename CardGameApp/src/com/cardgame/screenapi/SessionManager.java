@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
+import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
+
 public class SessionManager {
 	private String sessionID;//auto-generate
 	private String sessionKey;//auto-generate?
@@ -15,13 +18,16 @@ public class SessionManager {
 	private Map<String,String>deviceNameIDMap=new HashMap<String,String>();
 	private static SessionManager instance = null;
 	//private static boolean ready = false;
-	private static boolean isPersonal = false;
+	private static boolean isPersonal;
 	//TODO: set or initialize these lists
+	private String chosenSession = "";
+	private static boolean sessionMode = true;
 	
 	public static SessionManager getInstance()
 	{
-		if(instance==null)
+		if(instance==null) {
 			instance=new SessionManager();
+		}
 		return instance;
 	}
 	
@@ -99,6 +105,23 @@ public class SessionManager {
 	{
 		availableSessions.add(sessionID);
 	}
+	
+	public void sendNewSessionNotification(String sessionID) {
+		
+		addAvailableSession(sessionID);
+		Event e=new Event(ChordNetworkManager.getChordManager().getName()
+				,Event.R_ALL_SCREENS
+				,Event.NEW_CHANNEL_ADD
+				,sessionID,true);
+		EventManager.getInstance().sendEvent(e);
+		
+		Event e1=new Event(ChordNetworkManager.getChordManager().getName()
+				,Event.R_ALL_SCREENS
+				,Event.NEW_CHANNEL_ADD
+				,sessionID,false);
+		EventManager.getInstance().sendEvent(e1);
+		
+	}
 
 	public List<String> getPublicScreenList() {
 		return publicScreenList;
@@ -110,6 +133,10 @@ public class SessionManager {
 
 	public List<String> getPrivateScreenList() {
 		return privateScreenList;
+	}
+	
+	public List<String> getAvailableSessionsList() {
+		return availableSessions;
 	}
 	
 	public void clearPrivateScreenList(){
@@ -130,6 +157,22 @@ public class SessionManager {
 	
 	public void setScreenType(boolean screenType) {
 		this.isPersonal = screenType;
+	}
+	
+	public boolean isSessionMode() {
+		return sessionMode;
+	}
+	
+	public void setSessionMode(boolean sessionMode) {
+		this.sessionMode = sessionMode;
+	}
+	
+	public String getChosenSession() {
+		return chosenSession;
+	}
+	
+	public void setChosenSession(String session) {
+		this.chosenSession = session;
 	}
 	
 }

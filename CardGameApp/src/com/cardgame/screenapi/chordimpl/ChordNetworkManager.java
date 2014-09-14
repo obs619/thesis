@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.cardgame.screenapi.NetworkManager;
 import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.SessionManager;
 import com.samsung.android.sdk.SsdkUnsupportedException;
 import com.samsung.android.sdk.chord.Schord;
 import com.samsung.android.sdk.chord.SchordChannel;
@@ -31,8 +32,10 @@ public class ChordNetworkManager extends NetworkManager {
 		
 		@Override
 		public void onStarted(String nodeName, int reason) {
-			ChordTransportInterface.joinChannel();
-			
+			if(SessionManager.getInstance().isSessionMode())
+				ChordTransportInterface.joinDefaultChannel();
+			else if(!SessionManager.getInstance().isSessionMode())
+				ChordTransportInterface.joinCustomChannel();
 		}
 
 		@Override
