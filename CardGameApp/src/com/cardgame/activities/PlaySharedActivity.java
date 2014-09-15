@@ -13,8 +13,6 @@ import com.cardgame.objects.Card;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.SessionManager;
-import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
-import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 
 public class PlaySharedActivity extends Activity {
 	

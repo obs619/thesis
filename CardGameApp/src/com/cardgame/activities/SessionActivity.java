@@ -20,7 +20,6 @@ import com.cardgame.handlers.SessionEventHandler;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.SessionManager;
-import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 
 public class SessionActivity extends Activity{
 	
