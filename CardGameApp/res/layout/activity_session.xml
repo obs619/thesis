@@ -12,10 +12,11 @@
 	        android:id="@+id/txt_channel_name"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
+	        android:hint="Session name"
 	        android:ems="7" />
 
 	    <Button
-	        android:id="@+id/btn_create_channel"
+	        android:id="@+id/btn_create_session"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_toRightOf="@+id/txt_channel_name"
@@ -43,6 +44,7 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:text="Lock Session" 
+	        style="?android:attr/buttonStyle"
 	        android:layout_weight="1"
 	        android:onClick="selectLock" />
 	    
@@ -51,6 +53,7 @@
 	        android:layout_width="0dp"
 	        android:layout_height="wrap_content"
 	        android:text="Unlock Session" 
+	        style="?android:attr/buttonStyle"
 	        android:layout_weight="1"
 	        android:onClick="selectUnlock" />
 	    
