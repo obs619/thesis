@@ -48,7 +48,6 @@ public class ChordNetworkManager extends NetworkManager {
 		try {
 			chord.initialize(PPSManager.getContext());
 		} catch (SsdkUnsupportedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

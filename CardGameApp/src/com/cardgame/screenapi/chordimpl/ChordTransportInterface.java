@@ -43,7 +43,7 @@ public class ChordTransportInterface implements TransportInterface {
 		
 	}
 	
-	private final static SchordChannel.StatusListener mChordChannelListener = new IChordChannelListenerAdapter() {
+	private final static SchordChannel.StatusListener mChordChannelListener = new ChordChannelListenerAdapter() {
 		
 		@Override
 		public void onDataReceived(String fromNode, String fromChannel, String payloadType,

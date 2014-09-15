@@ -32,7 +32,6 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDis
 		}
 		else if(recipient.equals(Event.R_PERSONAL_SCREENS))
 		{
-			Log.e("personal screens", SessionManager.getInstance().getPrivateScreenList().size()+ "");
 			for(String node: SessionManager.getInstance().getPrivateScreenList())
 				transportInterface.send(node,m);
 		}

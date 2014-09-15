@@ -1,10 +1,8 @@
-
 package com.cardgame.screenapi.chordimpl;
 
 import com.samsung.android.sdk.chord.SchordChannel;
 
-
-public class IChordChannelListenerAdapter implements SchordChannel.StatusListener {
+public class ChordChannelListenerAdapter implements SchordChannel.StatusListener {
 
 	@Override
 	public void onDataReceived(String fromNode, String fromChannel, String payloadType, byte[][] payload) {

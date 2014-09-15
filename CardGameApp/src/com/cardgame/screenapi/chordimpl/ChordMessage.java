@@ -1,4 +1,3 @@
-
 package com.cardgame.screenapi.chordimpl;
 
 import java.io.ByteArrayInputStream;
@@ -18,31 +17,11 @@ public class ChordMessage extends com.cardgame.screenapi.Message implements Seri
 		mMessageType = messageType;
 	}
 	
-	ChordMessage(Serializable object, String recipients, int messageType, boolean isAPIEvent) {
-		mMessage = object;
+	ChordMessage(Serializable message, String recipients, int messageType, boolean isAPIEvent) {
+		mMessage = message;
 		mRecipients = recipients;
 		mMessageType = messageType;
 		this.isAPIEvent=isAPIEvent;
-	}
-
-	public static ChordMessage obtain(String message, String userName, int messageType) {
-		return new ChordMessage(message, userName, messageType);
-	}
-
-	public static ChordMessage obtain(ChordMessage chordMessage) {
-		return new ChordMessage(chordMessage.mMessage, chordMessage.mRecipients, chordMessage.mMessageType);
-	}
-
-	public Serializable getMessage() {
-		return mMessage;
-	}
-
-	public String getUserName() {
-		return mRecipients;
-	}
-	
-	public int getMessageType() {
-		return mMessageType;
 	}
 
 	/**

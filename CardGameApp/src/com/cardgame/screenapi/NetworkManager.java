@@ -1,6 +1,5 @@
 package com.cardgame.screenapi;
 
-
 public class NetworkManager {
 	
 	private static NetworkManager instance = null;
