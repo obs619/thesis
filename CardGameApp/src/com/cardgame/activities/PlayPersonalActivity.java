@@ -89,13 +89,13 @@ public class PlayPersonalActivity extends Activity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		ChordNetworkManager.getChordManager().stop();
+		spsManager.stop();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		ChordNetworkManager.initializeChordManager();
+		spsManager.start();
 	}
 	
 	private void initializeDeck() {
@@ -209,7 +209,7 @@ public class PlayPersonalActivity extends Activity{
 	}
 	
 	public void clickCheckSession(View v) {
-		Toast.makeText(this, ChordTransportInterface.mChannel.getName(), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, spsManager.getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
 }

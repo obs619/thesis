@@ -37,6 +37,18 @@ public class PlaySharedActivity extends Activity {
 		listCards.setAdapter(handAdapter);
 	}
 	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		spsManager.stop();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		spsManager.start();
+	}
+	
 	public static void addCard(Card c) {
 		handAdapter.addCard(c);
 	}
@@ -56,19 +68,7 @@ public class PlaySharedActivity extends Activity {
 	}
 	
 	public void clickCheckSession(View v) {
-		Toast.makeText(this, ChordTransportInterface.mChannel.getName(), Toast.LENGTH_LONG).show();
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		ChordNetworkManager.getChordManager().stop();
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		ChordNetworkManager.initializeChordManager();
+		Toast.makeText(this, spsManager.getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
 }

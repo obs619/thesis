@@ -16,7 +16,6 @@ public class ChordTransportInterface implements TransportInterface {
 	private static final String PAYLOAD_TYPE = "CHORD_SPS"; 
 	
 	public static SchordChannel mChannel;
-	
 	public static String channelName = "defaultchannel";
 	
 	public ChordTransportInterface() {}
@@ -30,7 +29,7 @@ public class ChordTransportInterface implements TransportInterface {
 		}
 		 
 		 if(mChannel == null)
-			 Log.e("CHANNEL ERROR", "Failed to join channel");
+			 Log.e("CHANNEL ERROR", "Failed to join default channel");
 	}
 	
 	public static void joinCustomChannel() {
@@ -40,6 +39,9 @@ public class ChordTransportInterface implements TransportInterface {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	
+		 if(mChannel == null)
+			 Log.e("CHANNEL ERROR", "Failed to join custom channel");
 		
 	}
 	
@@ -117,17 +119,17 @@ public class ChordTransportInterface implements TransportInterface {
 		mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
 	}
 
-	public void send(String userToSend,Message message) {
-		mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
+	@Override
+	public void setMessageDispatcher(MessageDispatcher dispatcher) {
+		ChordTransportInterface.messageDispatcher=dispatcher;
 	}
-
+	
 	public static void onMessageReceived(Message receivedMessage) {
 		messageDispatcher.receiveMessage(receivedMessage);
 	}
 	
-	@Override
-	public void setMessageDispatcher(MessageDispatcher dispatcher) {
-		this.messageDispatcher=dispatcher;
+	public void send(String userToSend,Message message) {
+		mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
 	}
-	
+
 }

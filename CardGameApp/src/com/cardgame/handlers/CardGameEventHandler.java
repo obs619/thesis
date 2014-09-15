@@ -1,6 +1,5 @@
 package com.cardgame.handlers;
 
-
 import android.util.Log;
 
 import com.cardgame.activities.PlayPersonalActivity;
@@ -10,11 +9,6 @@ import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventHandler;
 import com.cardgame.screenapi.SessionManager;
 
-/**
- * Wraps deltas and events into messages that can be sent by the API layer. Also receives messages from the API layer and passes them to the World for processing.
- * @author Andrew
- *
- */
 public class CardGameEventHandler implements EventHandler {
 	
 	@Override

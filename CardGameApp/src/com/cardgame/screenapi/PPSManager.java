@@ -3,7 +3,9 @@ package com.cardgame.screenapi;
 import android.content.Context;
 
 import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
+import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
+import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 
 public class PPSManager {
 
@@ -11,20 +13,6 @@ public class PPSManager {
 	private NetworkManager networkInitializer; 
 	private SessionManager sessionManager;
 	private static Context mContext;
-	
-	public PPSManager(Context mContext, boolean isPersonal) {
-		PPSManager.mContext = mContext;
-
-		NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
-		EventManager.setDefaultFactory(new ChordEventManagerFactory());
-		
-		SessionManager.getInstance().setScreenType(isPersonal);
-		SessionManager.getInstance().clearPrivateScreenList();
-		SessionManager.getInstance().clearPublicScreenList();
-		
-		setNetworkInitializer();
-		setEventManager();
-	}
 	
 	public PPSManager(Context mContext, boolean isPersonal, boolean sessionMode) {
 		PPSManager.mContext = mContext;
@@ -40,6 +28,18 @@ public class PPSManager {
 		
 		setNetworkInitializer();
 		setEventManager();
+	}
+	
+	public void stop() {
+		ChordNetworkManager.getChordManager().stop();
+	}
+	
+	public void start() {
+		ChordNetworkManager.initializeChordManager();
+	}
+	
+	public String getCurrentSessionName() {
+		return ChordTransportInterface.mChannel.getName();
 	}
 	
 	/**

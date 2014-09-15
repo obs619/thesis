@@ -74,15 +74,14 @@ public class SessionActivity extends Activity{
 	
 	@Override
 	protected void onPause() {
-		ChordNetworkManager.getChordManager().stop();
 		super.onPause();
+		spsManager.stop();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-
-		ChordNetworkManager.initializeChordManager();
+		spsManager.start();
 		
 		if(SessionManager.getInstance().isPersonal())
 			spsManager = new PPSManager(this, true, true);
@@ -93,7 +92,6 @@ public class SessionActivity extends Activity{
 	}
 	
 	public void selectGetCurChannel(View v) {
-		//Toast.makeText(this, ChordTransportInterface.mChannel.getName(), Toast.LENGTH_LONG).show();
 		String nodes = "";
 		for(String node: SessionManager.getInstance().getAvailableSessionsList())
 			nodes += node + ",";

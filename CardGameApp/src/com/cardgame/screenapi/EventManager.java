@@ -34,14 +34,14 @@ public class EventManager {
 		applyEvent(e);
 	}
 	
-	public static void setEventHandler(EventHandler h) {
+	public void setEventHandler(EventHandler h) {
 		eventHandler=h;
 	}
 	
 	public void triggerEvent(Event e) {
 		if(e.getRecipient()!=Event.R_LOCAL_SCREEN)
 			sendEvent(e);
-		applyEvent(e);//apply event to yourself (if it affects you?)
+		applyEvent(e);//apply event to yourself (if it affects you)
 	}
 	
 	public void applyEvent(Event e) {

@@ -80,6 +80,7 @@ public class SessionManager {
 	public boolean IsSessionOpen() {
 		return isOpen;
 	}
+	
 	// add functions
 	public void addPublicScreen(String screenName){
 		publicScreenList.add(screenName);
