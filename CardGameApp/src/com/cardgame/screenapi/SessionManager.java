@@ -11,15 +11,14 @@ public class SessionManager {
 	private String sessionKey;//auto-generate?
 	private boolean isOpen=true;
 	
-	private static List<String>availableSessions = new ArrayList<String>();
-	private static List<String>publicScreenList = new ArrayList<String>();//<name, sessionID>
-	private static List<String>privateScreenList = new ArrayList<String>();
+	private List<String>availableSessions = new ArrayList<String>();
+	private List<String>publicScreenList = new ArrayList<String>();//<name, sessionID>
+	private List<String>privateScreenList = new ArrayList<String>();
 	
-	private Map<String,String>deviceNameIDMap=new HashMap<String,String>();
+	private Map<String,String> deviceNameIDMap = new HashMap<String,String>();
 	
-	private static boolean isPersonal;
-	private static boolean sessionMode = true;
-	
+	private boolean isPersonal;
+	private boolean sessionMode = true;
 	private String chosenSession = "";
 	
 	private static SessionManager instance = null;
