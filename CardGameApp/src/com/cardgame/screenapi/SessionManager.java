@@ -2,12 +2,10 @@ package com.cardgame.screenapi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
@@ -17,8 +15,6 @@ public class SessionManager {
 	private List<String> publicScreenList = new ArrayList<String>();//<name, sessionID>
 	private List<String> privateScreenList = new ArrayList<String>();
 	private Map<String,Boolean> availableSessions = new HashMap<String,Boolean>();
-	
-	private Map<String,String> deviceNameIDMap = new HashMap<String,String>();
 	
 	private boolean isPersonal;
 	private boolean sessionMode = true;
