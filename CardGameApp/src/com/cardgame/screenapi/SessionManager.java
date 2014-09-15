@@ -2,18 +2,21 @@ package com.cardgame.screenapi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import android.util.Log;
+import android.widget.Toast;
+
+import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 
 public class SessionManager {
 	
-	private String sessionID;//auto-generate
-	private String sessionKey;//auto-generate?
-	private boolean isOpen=true;
-	
-	private List<String>availableSessions = new ArrayList<String>();
-	private List<String>publicScreenList = new ArrayList<String>();//<name, sessionID>
-	private List<String>privateScreenList = new ArrayList<String>();
+	private List<String> publicScreenList = new ArrayList<String>();//<name, sessionID>
+	private List<String> privateScreenList = new ArrayList<String>();
+	private Map<String,Boolean> availableSessions = new HashMap<String,Boolean>();
 	
 	private Map<String,String> deviceNameIDMap = new HashMap<String,String>();
 	
@@ -30,56 +33,6 @@ public class SessionManager {
 		return instance;
 	}
 	
-	public void requestToJoin() {
-		
-	}
-	
-	public void joinSession(String sessionID) {
-		this.sessionID=sessionID;
-		broadcastSessionID();
-		
-	}
-	
-	/**Called on receive of the message...
-	 * 
-	 * @param screenName
-	 */
-	
-	public void onScreenJoined(String screenName) {
-		//TODO: refine parameters?
-		//add screen to list of either shared or private screens
-		//send message to screen containing the session key
-	}
-	
-	public void createSession() {
-		//generate new sessionID/key and broadcast to other devices
-	}
-	
-	public void leaveSession() {
-		//leave this session. similar to Screen.close()?
-	}
-	
-	private void broadcastSessionID() {
-		//TODO broadcast new sessionID
-	}
-	
-	/**
-	 * allow other devices to join this session
-	 */
-	public void openSession() {
-		isOpen=true;
-	}
-	/**prevent other devices from joining this session
-	 * 
-	 */
-	public void lockSession() {
-		isOpen=false;
-	}
-	
-	public boolean IsSessionOpen() {
-		return isOpen;
-	}
-	
 	// add functions
 	public void addPublicScreen(String screenName){
 		publicScreenList.add(screenName);
@@ -89,8 +42,8 @@ public class SessionManager {
 		privateScreenList.add(screenName);
 	}
 	
-	public void addAvailableSession(String sessionID){
-		availableSessions.add(sessionID);
+	public void addAvailableSession(String sessionID, Boolean isLock){
+		availableSessions.put(sessionID, isLock);
 	}
 	
 	//remove functions
@@ -115,7 +68,12 @@ public class SessionManager {
 		return privateScreenList;
 	}
 	
-	public List<String> getAvailableSessionsList() {
+	public Set<String> getAvailableSessionsSet() {
+		Set<String> keys = availableSessions.keySet();
+		return keys;
+	}
+	
+	public Map<String, Boolean> getAvailableSessionsMap() {
 		return availableSessions;
 	}
 	
@@ -148,8 +106,21 @@ public class SessionManager {
 		this.sessionMode = sessionMode;
 	}
 	
-	public void setChosenSession(String session) {
-		this.chosenSession = session;
+	public Boolean setChosenSession(String session) {
+		if(!isSessionLocked(session)) {
+    		Toast.makeText(PPSManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
+			this.chosenSession = session;
+			return true;
+		}
+		else {
+			Toast.makeText(PPSManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
+			this.chosenSession = "Default";
+			return false;
+		}
+	}
+	
+	public void setDefaultSession() {
+		this.chosenSession = "Default";
 	}
 	
 	//clear functions
@@ -165,18 +136,58 @@ public class SessionManager {
 		availableSessions.clear();
 	}
 	
-	public void sendNewSessionNotification(String sessionID) {
+	public String createSession(String sessionID) {
+		String deviceName = "[" + ChordNetworkManager.getChordManager().getName() + "]";
 		
-		addAvailableSession(sessionID);
+		addAvailableSession(sessionID + deviceName, false);
 		Event e=new Event(Event.R_ALL_SCREENS
 				,Event.ADD_NEW_SESSION
-				,sessionID,true);
+				,sessionID + deviceName,true);
 		EventManager.getInstance().sendEvent(e);
 		
 		Event e1=new Event(Event.R_ALL_SCREENS
 				,Event.ADD_NEW_SESSION
-				,sessionID,false);
+				,sessionID + deviceName,false);
 		EventManager.getInstance().sendEvent(e1);
+		
+		return sessionID + deviceName;
+	}
+	
+	public void lockSession(String sessionID) {
+		if(sessionID.contains(ChordNetworkManager.getChordManager().getName())) {
+			Event e=new Event(Event.R_ALL_SCREENS
+					,Event.LOCK_SESSION
+					,sessionID,true);
+			EventManager.getInstance().sendEvent(e);
+			
+			Toast.makeText(PPSManager.getContext(), "Successfuly locked " + sessionID, Toast.LENGTH_LONG).show();
+		}
+		else {
+			Toast.makeText(PPSManager.getContext(), "Cannot lock a session you did not create!", Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	public void unlockSession(String sessionID) {
+		if(sessionID.contains(ChordNetworkManager.getChordManager().getName())) {
+			Event e=new Event(Event.R_ALL_SCREENS
+					,Event.UNLOCK_SESSION
+					,sessionID,true);
+			EventManager.getInstance().sendEvent(e);
+			
+			Toast.makeText(PPSManager.getContext(), "Successfuly unlocked " + sessionID, Toast.LENGTH_LONG).show();
+		}
+		else {
+			Toast.makeText(PPSManager.getContext(), "Cannot unlock a session you did not create!", Toast.LENGTH_LONG).show();
+		}
 	}
 
+	public Boolean isSessionLocked(String sessionID) {
+		for (Map.Entry<String, Boolean> entry : availableSessions.entrySet()) {
+			if(entry.getKey().equalsIgnoreCase(sessionID)) {
+				return entry.getValue();
+			}	
+		}
+		return null;
+	}
+	
 }

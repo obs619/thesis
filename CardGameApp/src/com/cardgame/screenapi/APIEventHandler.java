@@ -1,5 +1,7 @@
 package com.cardgame.screenapi;
 
+import java.util.Map;
+
 import android.util.Log;
 
 public class APIEventHandler implements EventHandler {
@@ -11,21 +13,6 @@ public class APIEventHandler implements EventHandler {
 		
 		switch(e.getType())
 		{
-		case Event.T_SCREEN_TYPE_CHANGED:
-			break;
-
-		case Event.T_JOIN_SESSION:
-			//TODO add screen to list of private or public screens
-			break;
-		case Event.T_LOCK_SESSION:
-			break;
-		case Event.T_UNLOCK_SESSION:
-			break;
-		case Event.T_LEAVE_SESSION:
-			break;
-		case Event.T_JOIN_NETWORK:
-			//TODO check message data for node sessionID
-			break;
 		case Event.USER_JOIN_PRIVATE:
 			Log.e("PERSONAL API", "pasok");
 			SessionManager.getInstance().addPrivateScreen(e.getPayload().toString());
@@ -48,7 +35,24 @@ public class APIEventHandler implements EventHandler {
 			break;
 		case Event.ADD_NEW_SESSION:
 			Log.e("new channel added", e.getPayload().toString());
-			SessionManager.getInstance().addAvailableSession(e.getPayload().toString());
+			SessionManager.getInstance().addAvailableSession(e.getPayload().toString(), false);
+			break;
+		case Event.LOCK_SESSION:
+			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
+				if(e.getPayload().toString().equalsIgnoreCase(entry.getKey())) {
+					entry.setValue(true);
+				}	
+			}
+			// in case the device has its chosen session set as the "just locked session"
+			if(SessionManager.getInstance().getChosenSession().equalsIgnoreCase(e.getPayload().toString()))
+				SessionManager.getInstance().setDefaultSession();
+			break;
+		case Event.UNLOCK_SESSION:
+			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
+				if(e.getPayload().toString().equalsIgnoreCase(entry.getKey())) {
+					entry.setValue(false);
+				}	
+			}
 			break;
 		default:
 			break;

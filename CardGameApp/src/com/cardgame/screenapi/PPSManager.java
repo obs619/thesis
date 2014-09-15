@@ -42,6 +42,10 @@ public class PPSManager {
 		return ChordTransportInterface.mChannel.getName();
 	}
 	
+	public String getDeviceName() {
+		return ChordNetworkManager.getChordManager().getName();
+	}
+	
 	/**
 	 * Select which implementation you want (Chord in this case)
 	 */

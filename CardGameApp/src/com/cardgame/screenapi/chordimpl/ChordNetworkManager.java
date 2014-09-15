@@ -3,6 +3,7 @@ package com.cardgame.screenapi.chordimpl;
 import java.util.List;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cardgame.screenapi.NetworkManager;
 import com.cardgame.screenapi.PPSManager;
@@ -63,7 +64,8 @@ public class ChordNetworkManager extends NetworkManager {
 			Log.e("FAIL START CORD", "fail start cord");
 			e.printStackTrace();
 		}
-		
+
+
 	}
 	
 	public static SchordManager getChordManager() {

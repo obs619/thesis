@@ -4,13 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/btn_chk_channel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get session list" 
-        android:onClick="selectGetCurChannel" />
-
     <RelativeLayout
         android:layout_width="match_parent"
     	android:layout_height="wrap_content" >
@@ -22,25 +15,65 @@
 	        android:ems="7" />
 
 	    <Button
-	        android:id="@+id/button1"
+	        android:id="@+id/btn_create_channel"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_toRightOf="@+id/txt_channel_name"
 	        android:text="Create Session" 
-	        android:onClick="selectCreateChannel" />
+	        android:onClick="selectCreateSession" />
         
     </RelativeLayout>
-
-    <Spinner
+    
+	<Button
+        android:id="@+id/btn_chk_channel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refresh Session list" 
+        android:onClick="selectRefreshSessions" />
+   
+    
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" 
+	    android:weightSum="2">
+	    
+	    <Button
+	        android:id="@+id/btn_lock"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:text="Lock Session" 
+	        android:layout_weight="1"
+	        android:onClick="selectLock" />
+	    
+	    <Button
+	        android:id="@+id/btn_unlock"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:text="Unlock Session" 
+	        android:layout_weight="1"
+	        android:onClick="selectUnlock" />
+	    
+	</LinearLayout>
+	
+   	<com.cardgame.activities.CustomSpinner
         android:id="@+id/spinner_channel_list"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    
 
+    <TextView
+        android:id="@+id/txt_selected_session"
+        android:layout_width="wrap_content"
+        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:text="Chosen Session: " />
+    
     <Button
         android:id="@+id/btn_proceed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Proceed Game" 
+        android:text="Start Game" 
         android:onClick="selectProceed" />
     
 </LinearLayout>

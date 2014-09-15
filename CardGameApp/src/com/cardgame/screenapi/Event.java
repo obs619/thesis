@@ -16,8 +16,8 @@ public class Event {
 	
 	public static final int T_SCREEN_TYPE_CHANGED=104;
 	public static final int T_JOIN_SESSION=105;
-	public static final int T_LOCK_SESSION=106;
-	public static final int T_UNLOCK_SESSION=107;
+	public static final int LOCK_SESSION=106;
+	public static final int UNLOCK_SESSION=107;
 	public static final int T_LEAVE_SESSION=108;
 	public static final int T_JOIN_NETWORK=109;
 	public static final int T_SEND_CURRENT_STATE=110;	
