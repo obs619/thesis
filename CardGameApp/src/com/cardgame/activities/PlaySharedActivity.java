@@ -12,20 +12,16 @@ import com.cardgame.handlers.CardGameEventHandler;
 import com.cardgame.objects.Card;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
-import com.cardgame.screenapi.Screen;
 import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 
-public class PlaySharedActivity extends Activity implements Screen {
+public class PlaySharedActivity extends Activity {
 	
 	private ListView listCards;
-	private boolean isPublic;
-	private String name;
 	
-	private HandAdapter handAdapter;
+	private static HandAdapter handAdapter;
 	private PPSManager spsManager;
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +29,15 @@ public class PlaySharedActivity extends Activity implements Screen {
 		setContentView(R.layout.activity_play_shared);
 		
 		listCards = (ListView) findViewById(R.id.listSharedCardsPlayed);
-		isPublic = true;
-		name = null;
 		
 		spsManager = new PPSManager(this, false, false);
-		EventManager.getInstance().setEventHandler(new CardGameEventHandler(this));
+		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
 		
 		handAdapter = new HandAdapter(this);
 		listCards.setAdapter(handAdapter);
 	}
 	
-	public void addCard(Card c) {
+	public static void addCard(Card c) {
 		handAdapter.addCard(c);
 	}
 	
@@ -75,31 +69,6 @@ public class PlaySharedActivity extends Activity implements Screen {
 	protected void onResume() {
 		super.onResume();
 		ChordNetworkManager.initializeChordManager();
-	}
-	
-	@Override
-	public boolean isShared() {
-		return isPublic;
-	}
-	
-	@Override
-	public void setAsShared() {
-		isPublic = true;
-	}
-	
-	@Override
-	public void setAsPersonal() {
-		isPublic = false;
-	}
-	
-	@Override
-	public String getName() {
-		return name;
-	}
-	
-	@Override
-	public void setName(String name) {
-		this.name = ChordNetworkManager.mChordManager.getName();
 	}
 	
 }

@@ -24,12 +24,11 @@ import com.cardgame.objects.Card;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
-import com.cardgame.screenapi.Screen;
 import com.cardgame.screenapi.SessionManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
 
-public class PlayPersonalActivity extends Activity implements Screen {
+public class PlayPersonalActivity extends Activity{
 	
 	// UI variables
 	private ListView listCards;
@@ -39,15 +38,13 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	private Button btnDone;
 	
 	// Adapter variables
-	private HandAdapter handAdapter;
+	private static HandAdapter handAdapter;
 	
 	// Cards variables
 	private List<Card> deckCards;
 	
 	// Shared/Personal screen variables
 	private PPSManager spsManager;
-	private boolean isPublic;
-	private String name;
 	
 	public static List<String> listNodes;
 	public static ArrayAdapter<String> dataAdapter;
@@ -64,20 +61,15 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		spinRecipient = (Spinner) findViewById(R.id.spinPersonalRecipient);
 		btnDone = (Button) findViewById(R.id.btnPersonalDone);
 		
-		// Initialize SPS variables
-		isPublic = false;
-		
 		spsManager = new PPSManager(this, true, false);
-		EventManager.getInstance().setEventHandler(new CardGameEventHandler(this));
-
-		name = ChordNetworkManager.mChordManager.getName();
+		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
+		
 		deckCards = new ArrayList<Card>(); 
 		
 		// Initialize adapters
 		handAdapter = new HandAdapter(this);
 		listCards.setAdapter(handAdapter);
 		
-
 		listNodes = new ArrayList<String>();
 		listNodes.addAll(SessionManager.getInstance().getPrivateScreenList());
 		
@@ -124,11 +116,11 @@ public class PlayPersonalActivity extends Activity implements Screen {
 		handAdapter.addCards(handCards);
 	}
 	
-	public void removeCard(Card card) {
+	public static void removeCard(Card card) {
 		handAdapter.removeCard(card);
 	}
 	
-	public void addCard(Card c) {
+	public static void addCard(Card c) {
 		c.setSelected(false);
 		handAdapter.addCard(c);
 	}
@@ -141,18 +133,23 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	        if(item.isSelected())
 	        	cardsToPlay.add(item);
 	    }
-	    
-	    if(cardsToPlay.size() > 0) {
-	    	for(Card card: cardsToPlay)
-		    {
-		    	Event e=new Event(Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,card);
-				EventManager.getInstance().triggerEvent(e);
+	    if(SessionManager.getInstance().getPublicScreenList().size() > 0) {
+	    	if(cardsToPlay.size() > 0) {
+		    	for(Card card: cardsToPlay)
+			    {
+			    	Event e=new Event(Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,card);
+					EventManager.getInstance().triggerEvent(e);
+			    }
+		    	
+		    	txtError.setVisibility(View.GONE);
 		    }
-	    	
-	    	txtError.setVisibility(View.GONE);
+		    else {
+		    	txtError.setText("Please select card/s");
+				txtError.setVisibility(View.VISIBLE);
+		    }
 	    }
 	    else {
-	    	txtError.setText("Please select card/s");
+	    	txtError.setText("No active shared device!");
 			txtError.setVisibility(View.VISIBLE);
 	    }
 	    
@@ -172,21 +169,26 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	        if(item.isSelected())
 	        	cardsToPlay.add(item);
 	    }
-	    
-	    if(cardsToPlay.size() > 0) {
-	    	for(Card card: cardsToPlay)
-		    {
-	    		removeCard(card);
-		    	Event e2=new Event(spinRecipient.getSelectedItem().toString(), CardGameEvent.TURN_OVER, card);
-				EventManager.getInstance().sendEvent(e2);
+	    if(SessionManager.getInstance().getPrivateScreenList().size() > 0) {
+		    if(cardsToPlay.size() > 0) {
+		    	for(Card card: cardsToPlay)
+			    {
+		    		removeCard(card);
+			    	Event e2=new Event(spinRecipient.getSelectedItem().toString(), CardGameEvent.TURN_OVER, card);
+					EventManager.getInstance().sendEvent(e2);
+			    }
+		    	
+		    	txtError.setVisibility(View.GONE);
+				layoutPassTo.setVisibility(View.GONE);
+				btnDone.setVisibility(View.GONE);
 		    }
-	    	
-	    	txtError.setVisibility(View.GONE);
-			layoutPassTo.setVisibility(View.GONE);
-			btnDone.setVisibility(View.GONE);
+		    else {
+		    	txtError.setText("Please select card/s");
+				txtError.setVisibility(View.VISIBLE);
+		    }
 	    }
 	    else {
-	    	txtError.setText("ERROR: ");
+	    	txtError.setText("No active personal device!");
 			txtError.setVisibility(View.VISIBLE);
 	    }
 	    
@@ -208,31 +210,6 @@ public class PlayPersonalActivity extends Activity implements Screen {
 	
 	public void clickCheckSession(View v) {
 		Toast.makeText(this, ChordTransportInterface.mChannel.getName(), Toast.LENGTH_LONG).show();
-	}
-
-	@Override
-	public boolean isShared() {
-		return isPublic;
-	}
-
-	@Override
-	public void setAsShared() {
-		isPublic = true;
-	}
-
-	@Override
-	public void setAsPersonal() {
-		isPublic = false;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public void setName(String name) {
-		this.name = ChordNetworkManager.mChordManager.getName();
 	}
 	
 }

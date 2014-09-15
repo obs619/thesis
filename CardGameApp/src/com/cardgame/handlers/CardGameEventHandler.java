@@ -8,10 +8,7 @@ import com.cardgame.activities.PlaySharedActivity;
 import com.cardgame.objects.Card;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventHandler;
-import com.cardgame.screenapi.Screen;
-import com.cardgame.screenapi.TransportInterface;
-import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
-import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
+import com.cardgame.screenapi.SessionManager;
 
 /**
  * Wraps deltas and events into messages that can be sent by the API layer. Also receives messages from the API layer and passes them to the World for processing.
@@ -20,13 +17,6 @@ import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
  */
 public class CardGameEventHandler implements EventHandler {
 	
-	private Screen screen;
-
-	public CardGameEventHandler(Screen screen)
-	{
-		setScreen(screen);
-	}
-
 	@Override
 	public void handleEvent(Event e) {
 
@@ -37,21 +27,20 @@ public class CardGameEventHandler implements EventHandler {
 			//update local world accordingly
 			break;
 		case CardGameEvent.CARD_PLAYED:
-			Log.e("is screen shared", screen.isShared() + ":" );
-			if(screen.isShared()) {
-				((PlaySharedActivity)screen).addCard(((Card)e.getPayload()));
+			if(!SessionManager.getInstance().isPersonal()) {
+				PlaySharedActivity.addCard(((Card)e.getPayload()));
 			}
 			else {
-				((PlayPersonalActivity)screen).removeCard(((Card)e.getPayload()));
+				PlayPersonalActivity.removeCard(((Card)e.getPayload()));
 			}
 			break;
 		case CardGameEvent.TURN_OVER:
 			Log.e("card game event turn over", "turn over");
-			((PlayPersonalActivity)screen).addCard(((Card)e.getPayload()));
+			PlayPersonalActivity.addCard(((Card)e.getPayload()));
 			break;
 		case Event.USER_JOIN_PRIVATE:
 			Log.e("USER_JOIN_PRIVATE","pasok");
-			if(!screen.isShared()) {
+			if(SessionManager.getInstance().isPersonal()) {
 				PlayPersonalActivity.listNodes.add(e.getPayload().toString());
 				PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
 			}
@@ -61,7 +50,7 @@ public class CardGameEventHandler implements EventHandler {
 			break;
 		case Event.USER_LEFT_PRIVATE:
 			Log.e("USER_LEFT_PRIVATE","pasok");
-			if(!screen.isShared()) {
+			if(SessionManager.getInstance().isPersonal()) {
 				PlayPersonalActivity.listNodes.remove(e.getPayload().toString());
 				PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
 			}
@@ -71,14 +60,6 @@ public class CardGameEventHandler implements EventHandler {
 			break;
 		}
 		
-	}
-
-	public Screen getScreen() {
-		return screen;
-	}
-
-	public void setScreen(Screen screen) {
-		this.screen = screen;
 	}
 	
 }
