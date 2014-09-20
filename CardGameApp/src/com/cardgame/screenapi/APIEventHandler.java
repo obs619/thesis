@@ -1,5 +1,6 @@
 package com.cardgame.screenapi;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import android.util.Log;
@@ -23,15 +24,23 @@ public class APIEventHandler implements EventHandler {
 			break;
 		case Event.USER_LEFT_PRIVATE:
 			Log.e("user left private", "pasok");
-			for(String node : SessionManager.getInstance().getPrivateScreenList())
-				if(e.getPayload().toString().equals(node))
-					SessionManager.getInstance().removePrivateScreen(node);
+			Iterator<String> it = SessionManager.getInstance().getPrivateScreenList().iterator();
+			while(it.hasNext()){
+				String value = it.next();
+				if(value.equals(e.getPayload().toString())){
+					it.remove();
+				}
+			}
 			break;
 		case Event.USER_LEFT_PUBLIC:
 			Log.e("user left public", "pasok");
-			for(String node : SessionManager.getInstance().getPublicScreenList())
-				if(e.getPayload().toString().equals(node))
-					SessionManager.getInstance().removePublicScreen(node);
+			Iterator<String> it2 = SessionManager.getInstance().getPublicScreenList().iterator();
+			while(it2.hasNext()){
+				String value = it2.next();
+				if(value.equals(e.getPayload().toString())){
+					it2.remove();
+				}
+			}
 			break;
 		case Event.ADD_NEW_SESSION:
 			Log.e("new channel added", e.getPayload().toString());

@@ -2,6 +2,7 @@ package com.cardgame.screenapi;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -43,14 +44,6 @@ public class SessionManager {
 	}
 	
 	//remove functions
-	public void removePublicScreen(String screenName){
-		publicScreenList.remove(screenName);
-	}
-	
-	public void removePrivateScreen(String screenName){
-		privateScreenList.remove(screenName);
-	}
-	
 	public void removeAvailableSession(String sessionID){
 		availableSessions.remove(sessionID);
 	}
