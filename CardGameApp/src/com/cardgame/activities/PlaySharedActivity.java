@@ -71,7 +71,7 @@ public class PlaySharedActivity extends Activity {
 	}
 	
 	public void clickMonkey(View v) {
-		if(!monkeyCard.equals(null))
+		if(monkeyCard != null)
 			Toast.makeText(this, monkeyCard.toString(), Toast.LENGTH_LONG).show();
 		else
 			Toast.makeText(this, "No monkey card yet!", Toast.LENGTH_LONG).show();
