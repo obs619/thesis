@@ -11,13 +11,23 @@
 		    >
 		    
 		    <Button
-	            android:id="@+id/btnStart"
+	            android:id="@+id/btnStartGame"
 	            android:layout_width="0dp"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
 	            android:text="Start Game"
 	            style="?android:attr/buttonStyle"
 	            android:onClick="clickStart" />
+		    
+		    <TextView
+	            android:id="@+id/txtGameStarted"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:gravity="center"
+	            android:textSize="25sp"
+	            android:text="Game started!" 
+	            android:visibility="gone"/>
 		    
 	</LinearLayout>
     
@@ -31,13 +41,13 @@
 		    >
 		    
 		    <Button
-	            android:id="@+id/btnPersonalScreens"
+	            android:id="@+id/btnCheckMonkey"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:text="PersonalS"
+	            android:text="Check Monkey"
 	            style="?android:attr/buttonStyle"
-	            android:onClick="clickPersonal" />
+	            android:onClick="clickMonkey" />
 		    
 		    <Button
 	            android:id="@+id/btnCheckSessionPers"

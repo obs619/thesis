@@ -2,13 +2,18 @@ package com.cardgame.activities;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cardgame.R;
@@ -24,6 +29,8 @@ import com.cardgame.screenapi.SessionManager;
 public class PlaySharedActivity extends Activity {
 	
 	private ListView listCards;
+	private Button btnStartGame;
+	private TextView txtGameStarted;
 	
 	private static HandAdapter handAdapter;
 	private PPSManager spsManager;
@@ -36,6 +43,9 @@ public class PlaySharedActivity extends Activity {
 		setContentView(R.layout.activity_play_shared);
 		
 		listCards = (ListView) findViewById(R.id.listSharedCardsPlayed);
+		btnStartGame = (Button) findViewById(R.id.btnStartGame);
+		txtGameStarted = (TextView) findViewById(R.id.txtGameStarted);
+		
 		
 		spsManager = new PPSManager(this, false, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
@@ -60,11 +70,11 @@ public class PlaySharedActivity extends Activity {
 		handAdapter.addCard(c);
 	}
 	
-	public void clickPersonal(View v) {
-		String nodes = "";
-		for(String node: SessionManager.getInstance().getPrivateScreenList())
-			nodes += node + ",";
-		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
+	public void clickMonkey(View v) {
+		if(!monkeyCard.equals(null))
+			Toast.makeText(this, monkeyCard.toString(), Toast.LENGTH_LONG).show();
+		else
+			Toast.makeText(this, "No monkey card yet!", Toast.LENGTH_LONG).show();
 	}
 	
 	public void clickShared(View v) {
@@ -78,6 +88,7 @@ public class PlaySharedActivity extends Activity {
 		Toast.makeText(this, spsManager.getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
+	@SuppressLint("UseSparseArrays") 
 	public void clickStart(View v) {
 		//initialize cards
 		List<Card> deckCards = new ArrayList<Card>();
@@ -98,11 +109,21 @@ public class PlaySharedActivity extends Activity {
 		Log.e("Monkey Card", monkeyCard.toString());
 		
 		//get number of players
+		SessionManager.getInstance().getPrivateScreenList().add("test node");
 		int numPlayers = SessionManager.getInstance().getPrivateScreenList().size();
 		Log.e("Number of Players",SessionManager.getInstance().getPrivateScreenList().size() + "");
 		
 	    int totalCardsPerPlayer = deckCards.size() / numPlayers;
 		
+	    Map<Integer, String> playerMap = new HashMap<Integer, String>();
+	    
+	    for(int i = 0; i < numPlayers; i++)
+	    	playerMap.put(i, SessionManager.getInstance().getPrivateScreenList().get(i));
+	    
+	    for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
+	    	Log.e("Map Player", entry.getKey() + ":"  + entry.getValue());
+		}
+	    
 	    /* 
 	     * will work until 4 players maximum
 	     * if 2 players, 26 - 25
@@ -116,19 +137,37 @@ public class PlaySharedActivity extends Activity {
 		List<List<Card>> subCards = new ArrayList<List<Card>>();
 	    
 	    for (int i = 0; i < deckCards.size(); i+=totalCardsPerPlayer) {
-	    	subCards.add(new ArrayList<Card> (deckCards.subList(i, Math.min(deckCards.size(), i + totalCardsPerPlayer))));
+	    	subCards.add(new ArrayList<Card>(deckCards.subList(i, Math.min(deckCards.size(), i + totalCardsPerPlayer))));
 	    }
-	       
-	    for(int i = 0; i < numPlayers; i++) {
+	    
+	    //1 for test purposes in the case of 1 personal device, should be numPlayers
+	    for(int i = 0; i < 1; i++) {
 	    	for(int j = 0 ; j < subCards.get(i).size(); j++) {
-	    		Event e= new Event(Event.R_PERSONAL_SCREENS,CardGameEvent.DECK_DISTRIBUTE, subCards.get(i).get(j));
+	    		Event e= new Event(playerMap.get(i),CardGameEvent.DECK_DISTRIBUTE, subCards.get(i).get(j));
 				EventManager.getInstance().sendEvent(e);
 	    	}
 	    	
-	    	Log.e("Sub", "Sub:" + i + " = " + subCards.get(i).size() + "");
+	    	Event e= new Event(playerMap.get(i),CardGameEvent.PLAYER_NUM, i);
+			EventManager.getInstance().sendEvent(e);
+			
+			if(i != numPlayers - 1) {
+				Log.e("Adjacent", "1");
+				int nxtPlayer = i + 1;
+				Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, nxtPlayer + ":" + playerMap.get(i + 1));
+				EventManager.getInstance().sendEvent(e1);
+			}
+			else if(i == numPlayers - 1) {
+				Log.e("Adjacent", "2");
+				Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, 0 + ":" + playerMap.get(0));
+				EventManager.getInstance().sendEvent(e1);
+			}
+							
+	    	Log.e("Sub size", "Player: " + i + " = " + subCards.get(i).size() + "");
 	    }
-	    	
 	    
+	    
+	    btnStartGame.setVisibility(View.GONE);
+	    txtGameStarted.setVisibility(View.VISIBLE);
 	}
 	
 }

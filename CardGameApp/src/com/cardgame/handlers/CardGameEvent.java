@@ -32,5 +32,8 @@ public class CardGameEvent extends Event {
 	public static final int DECK_RESHUFFLED=8;
 	public static final int START_GAME=9;
 	public static final int DECK_DISTRIBUTE=10;
+	public static final int PLAYER_NUM=11;
+	public static final int ADJACENT_PLAYER=12;
+	
 	
 }

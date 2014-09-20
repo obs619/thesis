@@ -1,11 +1,11 @@
 package com.cardgame.activities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -34,6 +34,8 @@ public class PlayPersonalActivity extends Activity{
 	private LinearLayout layoutPassTo;
 	private Spinner spinRecipient;
 	private Button btnDone;
+	private TextView txtUserName;
+	public static TextView txtPlayerNum;
 	
 	// Adapter variables
 	private static HandAdapter handAdapter;
@@ -43,6 +45,9 @@ public class PlayPersonalActivity extends Activity{
 	
 	public static List<String> listNodes;
 	public static ArrayAdapter<String> dataAdapter;
+	
+	public static String playerToDrawFromNumber;
+	public static String playerToDrawFromName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,8 @@ public class PlayPersonalActivity extends Activity{
 		layoutPassTo = (LinearLayout) findViewById(R.id.layoutPersonalPassTo);
 		spinRecipient = (Spinner) findViewById(R.id.spinPersonalRecipient);
 		btnDone = (Button) findViewById(R.id.btnPersonalDone);
+		txtUserName = (TextView) findViewById(R.id.txtUserName);
+		txtPlayerNum = (TextView) findViewById(R.id.txtPlayerNum);
 		
 		spsManager = new PPSManager(this, true, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
@@ -74,6 +81,16 @@ public class PlayPersonalActivity extends Activity{
 		
 		spinRecipient.setAdapter(dataAdapter);
 		dataAdapter.notifyDataSetChanged();
+	
+		final Handler handler = new Handler();
+	    handler.postDelayed(new Runnable() {
+	        @Override
+	        public void run() {
+	        	txtUserName.setText("Username: " + spsManager.getDeviceName());
+	        }
+	    }, 500);
+		
+		
 	}
 	
 	@Override
@@ -132,6 +149,11 @@ public class PlayPersonalActivity extends Activity{
 	    }
 	    
 	}
+	
+	public void clickDraw(View v) {
+		Toast.makeText(this, playerToDrawFromNumber + " = " + playerToDrawFromName, Toast.LENGTH_LONG).show();
+	}
+	
 	
 	public void clickPass(View v) {
 		txtError.setVisibility(View.GONE);

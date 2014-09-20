@@ -21,21 +21,30 @@ public class CardGameEventHandler implements EventHandler {
 			//update local world accordingly
 			break;
 		case CardGameEvent.CARD_PLAYED:
-			if(!SessionManager.getInstance().isPersonal()) {
+			if(!SessionManager.getInstance().isPersonal())
 				PlaySharedActivity.addCard(((Card)e.getPayload()));
-			}
-			else {
+			else
 				PlayPersonalActivity.removeCard(((Card)e.getPayload()));
-			}
 			break;
 		case CardGameEvent.TURN_OVER:
 			Log.e("card game event turn over", "turn over");
 			PlayPersonalActivity.addCard(((Card)e.getPayload()));
 			break;
 		case CardGameEvent.DECK_DISTRIBUTE:
-			Log.e("card game event deck distrubute", "distrubute");
+			//Log.e("card game event deck distrubute", "distrubute");
 			PlayPersonalActivity.addCard(((Card)e.getPayload()));
 			break;
+		case CardGameEvent.PLAYER_NUM:
+			Log.e("card game event playernum", (Integer)e.getPayload() + "");
+			PlayPersonalActivity.txtPlayerNum.setText("Player Number: " + (Integer)e.getPayload());
+			break;
+		case CardGameEvent.ADJACENT_PLAYER:
+			String[] adjplay = e.getPayload().toString().split(":");
+			Log.e("card game event playernum", adjplay[0] + " with node value of " + adjplay[1]);
+			PlayPersonalActivity.playerToDrawFromNumber = adjplay[0];
+			PlayPersonalActivity.playerToDrawFromName = adjplay[1];
+			break;
+			
 		case Event.USER_JOIN_PRIVATE:
 			Log.e("USER_JOIN_PRIVATE","pasok");
 			if(SessionManager.getInstance().isPersonal()) {

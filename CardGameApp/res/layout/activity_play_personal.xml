@@ -11,7 +11,23 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:orientation="vertical" >
+        
+        <TextView
+	      	android:id="@+id/txtUserName"
+	      	android:layout_width="wrap_content"
+	      	android:layout_height="wrap_content"
+	      	android:textSize="20sp"
+	      	android:text="Username: "/>
+        
+        <TextView
+	      	android:id="@+id/txtPlayerNum"
+	      	android:layout_width="wrap_content"
+	      	android:layout_height="wrap_content"
+	      	android:textSize="20sp"
+	      	android:text="Player Number: "/>
+        
 		<LinearLayout
+		    android:id="@+id/lay1"
 		    android:layout_width="match_parent"
         	android:layout_height="wrap_content"
 		    android:orientation="horizontal"
@@ -94,9 +110,9 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:text="@string/pass"
+	            android:text="Draw Card"
 	            style="?android:attr/buttonStyle"
-	            android:onClick="clickPass" />
+	            android:onClick="clickDraw" />
 	    </LinearLayout>
 
         <LinearLayout
@@ -121,7 +137,7 @@
            android:id="@+id/btnPersonalDone"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-            android:visibility="gone"
+           android:visibility="gone"
            android:text="@string/done"
            style="?android:attr/buttonStyle"
            android:onClick="clickDone" />
