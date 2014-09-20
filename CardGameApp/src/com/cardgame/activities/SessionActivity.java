@@ -32,6 +32,7 @@ public class SessionActivity extends Activity{
 	
 	private EditText txtChannel;
 	private TextView txtSelectedSession;
+	private TextView txtScreenType;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +42,17 @@ public class SessionActivity extends Activity{
 		spinChannels = (Spinner) findViewById(R.id.spinner_channel_list);
 		txtChannel = (EditText) findViewById(R.id.txt_channel_name);
 		txtSelectedSession = (TextView) findViewById(R.id.txt_selected_session);
-
-		if(SessionManager.getInstance().isPersonal())
+		txtScreenType = (TextView) findViewById(R.id.txt_screen_type);
+		
+		
+		if(SessionManager.getInstance().isPersonal()) {
 			spsManager = new PPSManager(this, true, true);
-		else if(!SessionManager.getInstance().isPersonal())
+			txtScreenType.setText("Screen Type: Personal");
+		}
+		else if(!SessionManager.getInstance().isPersonal()) {
 			spsManager = new PPSManager(this, false, true);
+			txtScreenType.setText("Screen Type: Shared");
+		}
 		
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 	

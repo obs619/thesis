@@ -38,9 +38,6 @@ public class PlayPersonalActivity extends Activity{
 	// Adapter variables
 	private static HandAdapter handAdapter;
 	
-	// Cards variables
-	private List<Card> deckCards;
-	
 	// Shared/Personal screen variables
 	private PPSManager spsManager;
 	
@@ -62,8 +59,6 @@ public class PlayPersonalActivity extends Activity{
 		spsManager = new PPSManager(this, true, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
 		
-		deckCards = new ArrayList<Card>(); 
-		
 		// Initialize adapters
 		handAdapter = new HandAdapter(this);
 		listCards.setAdapter(handAdapter);
@@ -79,9 +74,6 @@ public class PlayPersonalActivity extends Activity{
 		
 		spinRecipient.setAdapter(dataAdapter);
 		dataAdapter.notifyDataSetChanged();
-		
-		initializeDeck();
-		initializeHand();
 	}
 	
 	@Override
@@ -94,24 +86,6 @@ public class PlayPersonalActivity extends Activity{
 	protected void onResume() {
 		super.onResume();
 		spsManager.start();
-	}
-	
-	private void initializeDeck() {
-		for (int i = 1; i <= 13; i++) {
-			for (int j = 1; j <= 4; j++) {
-				deckCards.add(new Card(i, j));
-		    }
-		}
-		// shuffle deck
-		Collections.shuffle(deckCards);
-	}
-	
-	private void initializeHand() {
-		List<Card>handCards=new ArrayList<Card>();
-		for(int i = 0; i <= 4; i++) {
-			handCards.add(deckCards.get(i));
-		}
-		handAdapter.addCards(handCards);
 	}
 	
 	public static void removeCard(Card card) {
@@ -132,17 +106,23 @@ public class PlayPersonalActivity extends Activity{
 	        	cardsToPlay.add(item);
 	    }
 	    if(SessionManager.getInstance().getPublicScreenList().size() > 0) {
-	    	if(cardsToPlay.size() > 0) {
-		    	for(Card card: cardsToPlay)
-			    {
-			    	Event e=new Event(Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,card);
-					EventManager.getInstance().triggerEvent(e);
+	    	if(cardsToPlay.size() == 2) {
+	    		if(cardsToPlay.get(0).getNumber() == cardsToPlay.get(1).getNumber()) {
+	    			for(Card card: cardsToPlay)
+				    {
+				    	Event e=new Event(Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,card);
+						EventManager.getInstance().triggerEvent(e);
+				    }
+			    	
+			    	txtError.setVisibility(View.GONE);
+	    		}
+	    		else {
+	    			txtError.setText("The 2 cards must have the same value!");
+					txtError.setVisibility(View.VISIBLE);
 			    }
-		    	
-		    	txtError.setVisibility(View.GONE);
 		    }
 		    else {
-		    	txtError.setText("Please select card/s");
+		    	txtError.setText("Please select 2 same value cards");
 				txtError.setVisibility(View.VISIBLE);
 		    }
 	    }

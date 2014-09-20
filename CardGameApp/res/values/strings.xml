@@ -6,7 +6,9 @@
     <string name="action_settings">Settings</string>
     
     <string name="personal">Personal</string>
-    <string name="shared">Shared</string>
+	<string name="shared">Shared</string>
+    
+    
     <string name="play">Play Card</string>
     <string name="pass">Pass Card</string>
     <string name="myhand">My Hand</string>

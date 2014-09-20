@@ -97,6 +97,9 @@ public class HandAdapter extends BaseAdapter{
 			}
 			
 		});
+		
+		viewHolder.cardCB.setChecked(mCards.get(position).isSelected());
+		
 		return convertView;
 	}
 
