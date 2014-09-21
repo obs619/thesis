@@ -120,8 +120,7 @@ public class PlaySharedActivity extends Activity {
 	}
 	
 	public void clickStart(View v) {
-		//check if there is at least 1 player - should be change to 2 later on
-		if(SessionManager.getInstance().getPrivateScreenList().size() > 0) {
+		if(SessionManager.getInstance().getPrivateScreenList().size() > 1) {
 			//initialize cards
 			List<Card> deckCards = new ArrayList<Card>();
 			
