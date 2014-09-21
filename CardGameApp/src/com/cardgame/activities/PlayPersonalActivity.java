@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -132,6 +135,26 @@ public class PlayPersonalActivity extends Activity{
 						EventManager.getInstance().triggerEvent(e);
 				    }
 			    	
+	    			Log.e("Number of cards left in hand", handAdapter.getCount() + "");
+	    			
+	    			if(handAdapter.getCount() == 0) {
+	    				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    					builder.setTitle("Result");
+		    			    builder.setCancelable(false);
+		    			    builder.setMessage("Congratulations! You're all out of cards!") ;
+		    			    builder.setPositiveButton("ok", new OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									finish();
+								}
+							});
+	    				
+	    				AlertDialog alert = builder.create();
+	                    alert.show();
+	    			}
+	    				
+	    			
 			    	txtError.setVisibility(View.GONE);
 	    		}
 	    		else {
@@ -148,6 +171,7 @@ public class PlayPersonalActivity extends Activity{
 	    	txtError.setText("No active shared device!");
 			txtError.setVisibility(View.VISIBLE);
 	    }
+	    
 	    
 	}
 	

@@ -59,13 +59,13 @@
 	            android:onClick="clickCheckSession" />
 	
 	        <Button
-	            android:id="@+id/btnSharedScreens"
+	            android:id="@+id/btnPlayersList"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1"
-	            android:text="SharedS"
+	            android:text="Players List"
 	            style="?android:attr/buttonStyle"
-	            android:onClick="clickShared" />
+	            android:onClick="clickPlayersList" />
 		    
 	</LinearLayout>
     
