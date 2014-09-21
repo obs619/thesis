@@ -134,7 +134,7 @@ public class PlaySharedActivity extends Activity {
 	}
 	
 	public void clickStart(View v) {
-		if(SessionManager.getInstance().getPrivateScreenList().size() > 0) {
+		if(SessionManager.getInstance().getPrivateScreenList().size() > 1) {
 			//initialize cards
 			List<Card> deckCards = new ArrayList<Card>();
 			
@@ -154,7 +154,6 @@ public class PlaySharedActivity extends Activity {
 			Log.e("Monkey Card", monkeyCard.toString());
 			
 			//get number of players
-			SessionManager.getInstance().getPrivateScreenList().add("test node");
 			int numPlayers = SessionManager.getInstance().getPrivateScreenList().size();
 			Log.e("Number of Players",SessionManager.getInstance().getPrivateScreenList().size() + "");
 			
@@ -185,7 +184,7 @@ public class PlaySharedActivity extends Activity {
 		    	subCards.add(new ArrayList<Card>(deckCards.subList(i, Math.min(deckCards.size(), i + totalCardsPerPlayer))));
 		    }
 		    
-		    for(int i = 0; i < 1; i++) {
+		    for(int i = 0; i < numPlayers; i++) {
 		    	for(int j = 0 ; j < subCards.get(i).size(); j++) {
 		    		Event e= new Event(playerMap.get(i),CardGameEvent.DECK_DISTRIBUTE, subCards.get(i).get(j));
 					EventManager.getInstance().sendEvent(e);
