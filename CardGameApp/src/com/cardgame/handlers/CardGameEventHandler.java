@@ -51,6 +51,7 @@ public class CardGameEventHandler implements EventHandler {
 			Log.e("card game event playernum", adjplay[0] + " with node value of " + adjplay[1]);
 			PlayPersonalActivity.playerToDrawFromNumber = adjplay[0];
 			PlayPersonalActivity.playerToDrawFromNodeName = adjplay[1];
+			PlayPersonalActivity.txtPlayerToDrawFrom.setText("Player to draw from: " + adjplay[0] + " - " + adjplay[1]);
 			break;
 			
 		case Event.USER_JOIN_PRIVATE:

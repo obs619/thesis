@@ -17,14 +17,21 @@
 	      	android:layout_width="wrap_content"
 	      	android:layout_height="wrap_content"
 	      	android:textSize="20sp"
-	      	android:text="Username: "/>
+	      	android:text="Device name: "/>
         
         <TextView
 	      	android:id="@+id/txtPlayerNum"
 	      	android:layout_width="wrap_content"
 	      	android:layout_height="wrap_content"
 	      	android:textSize="20sp"
-	      	android:text="Player Number: "/>
+	      	android:text="Player number: "/>
+        
+        <TextView
+	      	android:id="@+id/txtPlayerToDraw"
+	      	android:layout_width="wrap_content"
+	      	android:layout_height="wrap_content"
+	      	android:textSize="20sp"
+	      	android:text="Player to draw from: "/>
         
 		<LinearLayout
 		    android:id="@+id/lay1"

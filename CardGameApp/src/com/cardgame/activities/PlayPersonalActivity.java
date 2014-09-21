@@ -40,6 +40,7 @@ public class PlayPersonalActivity extends Activity{
 	private Button btnDone;
 	private TextView txtUserName;
 	public static TextView txtPlayerNum;
+	public static TextView txtPlayerToDrawFrom;
 	
 	// Adapter variables
 	private static HandAdapter handAdapter;
@@ -66,6 +67,8 @@ public class PlayPersonalActivity extends Activity{
 		btnDone = (Button) findViewById(R.id.btnPersonalDone);
 		txtUserName = (TextView) findViewById(R.id.txtUserName);
 		txtPlayerNum = (TextView) findViewById(R.id.txtPlayerNum);
+		txtPlayerToDrawFrom = (TextView) findViewById(R.id.txtPlayerToDraw);
+		
 		
 		spsManager = new PPSManager(this, true, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());

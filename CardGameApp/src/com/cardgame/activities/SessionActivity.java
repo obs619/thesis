@@ -123,14 +123,18 @@ public class SessionActivity extends Activity{
 	
 	public void selectProceed(View v) {
 		if(SessionManager.getInstance().getAvailableSessionsSet().size() != 0) {
-			if(SessionManager.getInstance().isPersonal()) {
-				Intent intent = new Intent(this, PlayPersonalActivity.class);
-				startActivity(intent);
+			if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
+				if(SessionManager.getInstance().isPersonal()) {
+					Intent intent = new Intent(this, PlayPersonalActivity.class);
+					startActivity(intent);
+				}
+				else if(!SessionManager.getInstance().isPersonal()) {
+					Intent intent = new Intent(this, PlaySharedActivity.class);
+					startActivity(intent);
+				}
 			}
-			else if(!SessionManager.getInstance().isPersonal()) {
-				Intent intent = new Intent(this, PlaySharedActivity.class);
-				startActivity(intent);
-			}
+			else
+				Toast.makeText(this, "Please choose a session!", Toast.LENGTH_LONG).show();	
 		}
 		else
 			Toast.makeText(this, "Please create a session!", Toast.LENGTH_LONG).show();	
