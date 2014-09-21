@@ -38,6 +38,8 @@ public class CardGameEvent extends Event {
 	public static final int DRAW_RESPOND=13;
 	public static final int OUT_OF_CARDS=14;
 	public static final int CHANGE_NUM_PLAYERS=15;
+	public static final int NOTIFY_HOST=16;
+	public static final int NOTIFY_PLAYER_TURN=17;
 	
 	
 	

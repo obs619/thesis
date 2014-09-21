@@ -33,6 +33,13 @@
 	      	android:textSize="20sp"
 	      	android:text="Player to draw from: "/>
         
+        <TextView
+	      	android:id="@+id/txtTurn"
+	      	android:layout_width="wrap_content"
+	      	android:layout_height="wrap_content"
+	      	android:textSize="20sp"
+	      	android:text="Is it your turn? "/>
+        
 		<LinearLayout
 		    android:id="@+id/lay1"
 		    android:layout_width="match_parent"

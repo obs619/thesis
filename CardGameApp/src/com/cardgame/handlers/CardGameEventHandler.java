@@ -65,7 +65,15 @@ public class CardGameEventHandler implements EventHandler {
 			PlayPersonalActivity.playerToDrawFromNodeName = newPlayer[1];
 			PlayPersonalActivity.txtPlayerToDrawFrom.setText("Player to draw from: " + newPlayer[0] + " - " + newPlayer[1]);
 			break;
-			
+		case CardGameEvent.NOTIFY_HOST:
+			Log.e("card game event notify turn", "turn of player: " + e.getPayload().toString());
+			PlaySharedActivity.notifyTurn(e.getPayload().toString());
+			break;
+		case CardGameEvent.NOTIFY_PLAYER_TURN:
+			Log.e("card game event notify player turn", "player: " + (Boolean)e.getPayload());
+			PlayPersonalActivity.turn = (Boolean)e.getPayload();
+			PlayPersonalActivity.txtTurn.setText("Is it your turn? " + (Boolean)e.getPayload());
+			break;
 		case Event.USER_JOIN_PRIVATE:
 			Log.e("USER_JOIN_PRIVATE","pasok");
 			if(SessionManager.getInstance().isPersonal()) {

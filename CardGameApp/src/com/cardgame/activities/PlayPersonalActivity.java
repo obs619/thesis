@@ -41,6 +41,7 @@ public class PlayPersonalActivity extends Activity{
 	private TextView txtUserName;
 	public static TextView txtPlayerNum;
 	public static TextView txtPlayerToDrawFrom;
+	public static TextView txtTurn;
 	
 	// Adapter variables
 	private static HandAdapter handAdapter;
@@ -55,6 +56,7 @@ public class PlayPersonalActivity extends Activity{
 	public static String playerToDrawFromNodeName;
 	
 	public static int playerNum;
+	public static boolean turn = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,7 @@ public class PlayPersonalActivity extends Activity{
 		txtUserName = (TextView) findViewById(R.id.txtUserName);
 		txtPlayerNum = (TextView) findViewById(R.id.txtPlayerNum);
 		txtPlayerToDrawFrom = (TextView) findViewById(R.id.txtPlayerToDraw);
-		
+		txtTurn = (TextView) findViewById(R.id.txtTurn);
 		
 		spsManager = new PPSManager(this, true, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
@@ -184,11 +186,22 @@ public class PlayPersonalActivity extends Activity{
 	}
 	
 	public void clickDraw(View v) {
-		Toast.makeText(this, "Draw from: " + playerToDrawFromNumber + " = " + playerToDrawFromNodeName, Toast.LENGTH_LONG).show();
+		
+		if(turn) {
+			Toast.makeText(this, "Draw from: " + playerToDrawFromNumber + " = " + playerToDrawFromNodeName, Toast.LENGTH_LONG).show();
 			
-		//send node name to player to notify for draw event
-		Event e=new Event(playerToDrawFromNodeName, CardGameEvent.CARD_DRAWN, spsManager.getDeviceName());
-		EventManager.getInstance().sendEvent(e);
+			//send node name to player to notify for draw event
+			Event e=new Event(playerToDrawFromNodeName, CardGameEvent.CARD_DRAWN, spsManager.getDeviceName());
+			EventManager.getInstance().sendEvent(e);
+			
+			//notify "host" shared screen of the next player
+			Event e1=new Event(Event.R_SHARED_SCREENS, CardGameEvent.NOTIFY_HOST, playerToDrawFromNodeName);
+			EventManager.getInstance().sendEvent(e1);
+		}
+		else {
+			Toast.makeText(this, "It is not your turn yet!", Toast.LENGTH_LONG).show();
+		}
+		
 	}
 	
 	public static void respondDrawRequest(String requesterNodeName) {

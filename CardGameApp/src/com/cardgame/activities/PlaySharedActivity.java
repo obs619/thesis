@@ -93,6 +93,20 @@ public class PlaySharedActivity extends Activity {
 		}
 	}
 	
+	public static void notifyTurn(String playerTurn) {
+		for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
+	    	Log.e("Players Turn", entry.getKey() + ":"  + entry.getValue());
+	    	if(entry.getValue().equalsIgnoreCase(playerTurn)) {
+	    		Event e1= new Event(entry.getValue(),CardGameEvent.NOTIFY_PLAYER_TURN, true);
+				EventManager.getInstance().sendEvent(e1);
+	    	}
+	    	else {
+	    		Event e1= new Event(entry.getValue(),CardGameEvent.NOTIFY_PLAYER_TURN, false);
+				EventManager.getInstance().sendEvent(e1);
+	    	}	    		
+		}
+	}
+	
 	public void clickMonkey(View v) {
 		if(monkeyCard != null)
 			Toast.makeText(this, monkeyCard.toString(), Toast.LENGTH_LONG).show();
@@ -120,7 +134,7 @@ public class PlaySharedActivity extends Activity {
 	}
 	
 	public void clickStart(View v) {
-		if(SessionManager.getInstance().getPrivateScreenList().size() > 1) {
+		if(SessionManager.getInstance().getPrivateScreenList().size() > 0) {
 			//initialize cards
 			List<Card> deckCards = new ArrayList<Card>();
 			
@@ -140,7 +154,7 @@ public class PlaySharedActivity extends Activity {
 			Log.e("Monkey Card", monkeyCard.toString());
 			
 			//get number of players
-
+			SessionManager.getInstance().getPrivateScreenList().add("test node");
 			int numPlayers = SessionManager.getInstance().getPrivateScreenList().size();
 			Log.e("Number of Players",SessionManager.getInstance().getPrivateScreenList().size() + "");
 			
@@ -171,7 +185,7 @@ public class PlaySharedActivity extends Activity {
 		    	subCards.add(new ArrayList<Card>(deckCards.subList(i, Math.min(deckCards.size(), i + totalCardsPerPlayer))));
 		    }
 		    
-		    for(int i = 0; i < numPlayers; i++) {
+		    for(int i = 0; i < 1; i++) {
 		    	for(int j = 0 ; j < subCards.get(i).size(); j++) {
 		    		Event e= new Event(playerMap.get(i),CardGameEvent.DECK_DISTRIBUTE, subCards.get(i).get(j));
 					EventManager.getInstance().sendEvent(e);
@@ -180,6 +194,16 @@ public class PlaySharedActivity extends Activity {
 		    	// send own player number
 		    	Event e= new Event(playerMap.get(i),CardGameEvent.PLAYER_NUM, i);
 				EventManager.getInstance().sendEvent(e);
+				
+				if(i == 0) {
+		    		Event e1= new Event(playerMap.get(i),CardGameEvent.NOTIFY_PLAYER_TURN, true);
+					EventManager.getInstance().sendEvent(e1);
+		    	}
+		    	else {
+		    		Event e1= new Event(playerMap.get(i),CardGameEvent.NOTIFY_PLAYER_TURN, false);
+					EventManager.getInstance().sendEvent(e1);
+		    	}	  
+				
 				
 				if(i != numPlayers - 1) {
 					Log.e("Adjacent", "not last player");
