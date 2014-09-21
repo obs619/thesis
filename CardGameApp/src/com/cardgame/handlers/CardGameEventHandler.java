@@ -1,12 +1,14 @@
 package com.cardgame.handlers;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cardgame.activities.PlayPersonalActivity;
 import com.cardgame.activities.PlaySharedActivity;
 import com.cardgame.objects.Card;
 import com.cardgame.screenapi.Event;
 import com.cardgame.screenapi.EventHandler;
+import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.SessionManager;
 
 public class CardGameEventHandler implements EventHandler {
@@ -18,7 +20,13 @@ public class CardGameEventHandler implements EventHandler {
 		switch(e.getType())
 		{
 		case CardGameEvent.CARD_DRAWN:
-			//update local world accordingly
+			Log.e("card game event card drawn", "card drawn");
+			PlayPersonalActivity.respondDrawRequest(e.getPayload().toString());
+			break;
+		case CardGameEvent.DRAW_RESPOND:
+			Log.e("card game event draw respond", "draw respond");
+			PlayPersonalActivity.addCard(((Card)e.getPayload()));
+			Toast.makeText(PPSManager.getContext(), "Received:" + ((Card)e.getPayload()).toString(), Toast.LENGTH_LONG).show();
 			break;
 		case CardGameEvent.CARD_PLAYED:
 			if(!SessionManager.getInstance().isPersonal())
@@ -42,7 +50,7 @@ public class CardGameEventHandler implements EventHandler {
 			String[] adjplay = e.getPayload().toString().split(":");
 			Log.e("card game event playernum", adjplay[0] + " with node value of " + adjplay[1]);
 			PlayPersonalActivity.playerToDrawFromNumber = adjplay[0];
-			PlayPersonalActivity.playerToDrawFromName = adjplay[1];
+			PlayPersonalActivity.playerToDrawFromNodeName = adjplay[1];
 			break;
 			
 		case Event.USER_JOIN_PRIVATE:

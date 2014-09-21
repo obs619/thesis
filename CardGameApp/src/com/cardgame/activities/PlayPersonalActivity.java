@@ -1,6 +1,7 @@
 package com.cardgame.activities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.Activity;
@@ -41,13 +42,13 @@ public class PlayPersonalActivity extends Activity{
 	private static HandAdapter handAdapter;
 	
 	// Shared/Personal screen variables
-	private PPSManager spsManager;
+	public static PPSManager spsManager;
 	
 	public static List<String> listNodes;
 	public static ArrayAdapter<String> dataAdapter;
 	
 	public static String playerToDrawFromNumber;
-	public static String playerToDrawFromName;
+	public static String playerToDrawFromNodeName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -151,9 +152,30 @@ public class PlayPersonalActivity extends Activity{
 	}
 	
 	public void clickDraw(View v) {
-		Toast.makeText(this, playerToDrawFromNumber + " = " + playerToDrawFromName, Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "Draw from: " + playerToDrawFromNumber + " = " + playerToDrawFromNodeName, Toast.LENGTH_LONG).show();
+			
+		//send node name to player to notify for draw event
+		Event e=new Event(playerToDrawFromNodeName, CardGameEvent.CARD_DRAWN, spsManager.getDeviceName());
+		EventManager.getInstance().sendEvent(e);
 	}
 	
+	public static void respondDrawRequest(String requesterNodeName) {
+		// get all available cards
+		List<Card> cardsToPlay = new ArrayList<Card>();
+	    for( int i = 0; i < handAdapter.getCount(); i++ ) {
+	        Card item = (Card) handAdapter.getItem(i);
+	        	cardsToPlay.add(item);
+	    }
+	    
+	    //shuffle
+	    Collections.shuffle(cardsToPlay);
+	    
+	    //remove and send first random card
+	    removeCard(cardsToPlay.get(0));
+    	Event e=new Event(requesterNodeName, CardGameEvent.DRAW_RESPOND, cardsToPlay.get(0));
+		EventManager.getInstance().sendEvent(e);
+		
+	}
 	
 	public void clickPass(View v) {
 		txtError.setVisibility(View.GONE);

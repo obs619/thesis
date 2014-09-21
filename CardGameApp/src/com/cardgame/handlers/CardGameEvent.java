@@ -35,5 +35,7 @@ public class CardGameEvent extends Event {
 	public static final int PLAYER_NUM=11;
 	public static final int ADJACENT_PLAYER=12;
 	
+	public static final int DRAW_RESPOND=13;
+	
 	
 }

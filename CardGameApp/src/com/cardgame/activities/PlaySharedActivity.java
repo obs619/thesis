@@ -109,7 +109,7 @@ public class PlaySharedActivity extends Activity {
 		Log.e("Monkey Card", monkeyCard.toString());
 		
 		//get number of players
-		SessionManager.getInstance().getPrivateScreenList().add("test node");
+
 		int numPlayers = SessionManager.getInstance().getPrivateScreenList().size();
 		Log.e("Number of Players",SessionManager.getInstance().getPrivateScreenList().size() + "");
 		
@@ -147,22 +147,23 @@ public class PlaySharedActivity extends Activity {
 				EventManager.getInstance().sendEvent(e);
 	    	}
 	    	
+	    	// send own player number
 	    	Event e= new Event(playerMap.get(i),CardGameEvent.PLAYER_NUM, i);
 			EventManager.getInstance().sendEvent(e);
 			
 			if(i != numPlayers - 1) {
-				Log.e("Adjacent", "1");
+				Log.e("Adjacent", "not last player");
 				int nxtPlayer = i + 1;
 				Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, nxtPlayer + ":" + playerMap.get(i + 1));
 				EventManager.getInstance().sendEvent(e1);
 			}
 			else if(i == numPlayers - 1) {
-				Log.e("Adjacent", "2");
+				Log.e("Adjacent", "last player");
 				Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, 0 + ":" + playerMap.get(0));
 				EventManager.getInstance().sendEvent(e1);
 			}
 							
-	    	Log.e("Sub size", "Player: " + i + " = " + subCards.get(i).size() + "");
+	    	Log.e("Sub size", "Player's hand size: " + i + " = " + subCards.get(i).size() + "");
 	    }
 	    
 	    
