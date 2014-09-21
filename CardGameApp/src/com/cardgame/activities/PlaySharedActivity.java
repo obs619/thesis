@@ -2,11 +2,10 @@ package com.cardgame.activities;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,7 +96,6 @@ public class PlaySharedActivity extends Activity {
 		Toast.makeText(this, spsManager.getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
-	@SuppressLint("UseSparseArrays") 
 	public void clickStart(View v) {
 		//check if there is at least 1 player - should be change to 2 later on
 		if(SessionManager.getInstance().getPrivateScreenList().size() > 0) {
@@ -126,7 +124,7 @@ public class PlaySharedActivity extends Activity {
 			
 		    int totalCardsPerPlayer = deckCards.size() / numPlayers;
 			
-		    playerMap = new HashMap<Integer, String>();
+		    playerMap = new TreeMap<Integer, String>();
 		    
 		    for(int i = 0; i < numPlayers; i++)
 		    	playerMap.put(i, SessionManager.getInstance().getPrivateScreenList().get(i));
