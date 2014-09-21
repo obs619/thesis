@@ -35,7 +35,7 @@ public class PlaySharedActivity extends Activity {
 	private PPSManager spsManager;
 	
 	private Card monkeyCard;
-	private Map<Integer, String> playerMap;
+	private static Map<Integer, String> playerMap;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,29 @@ public class PlaySharedActivity extends Activity {
 	
 	public static void addCard(Card c) {
 		handAdapter.addCard(c);
+	}
+	
+	public static void notifyPlayers(int playerNumOut) {
+		//remove player who ran out of cards from playermap
+		playerMap.remove(playerNumOut);
+		
+		List<Integer> keys = new ArrayList<Integer>(playerMap.keySet());
+		int firstkey = keys.get(0);
+		int lastkey = keys.get(keys.size() - 1);
+		
+		for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
+	    	Log.e("Players Left", entry.getKey() + ":"  + entry.getValue());
+	    	
+	    	if(entry.getKey() != lastkey) {
+	    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, 
+	    				keys.get(keys.indexOf(entry.getKey()) + 1) + ":" + playerMap.get(keys.get(keys.indexOf(entry.getKey()) + 1)));
+				EventManager.getInstance().sendEvent(e1);
+	    	}
+	    	else {
+	    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, firstkey + ":" + playerMap.get(firstkey));
+				EventManager.getInstance().sendEvent(e1);
+	    	}
+		}
 	}
 	
 	public void clickMonkey(View v) {
@@ -173,7 +196,6 @@ public class PlaySharedActivity extends Activity {
 								
 		    	Log.e("Sub size", "Player's hand size: " + i + " = " + subCards.get(i).size() + "");
 		    }
-		    
 		    
 		    btnStartGame.setVisibility(View.GONE);
 		    txtGameStarted.setVisibility(View.VISIBLE);

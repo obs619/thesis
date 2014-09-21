@@ -44,6 +44,7 @@ public class CardGameEventHandler implements EventHandler {
 			break;
 		case CardGameEvent.PLAYER_NUM:
 			Log.e("card game event playernum", (Integer)e.getPayload() + "");
+			PlayPersonalActivity.playerNum = (Integer)e.getPayload();
 			PlayPersonalActivity.txtPlayerNum.setText("Player Number: " + (Integer)e.getPayload());
 			break;
 		case CardGameEvent.ADJACENT_PLAYER:
@@ -52,6 +53,17 @@ public class CardGameEventHandler implements EventHandler {
 			PlayPersonalActivity.playerToDrawFromNumber = adjplay[0];
 			PlayPersonalActivity.playerToDrawFromNodeName = adjplay[1];
 			PlayPersonalActivity.txtPlayerToDrawFrom.setText("Player to draw from: " + adjplay[0] + " - " + adjplay[1]);
+			break;
+		case CardGameEvent.OUT_OF_CARDS:
+			Log.e("card game event out of cards", "out of cards player :" + (Integer)e.getPayload());
+			PlaySharedActivity.notifyPlayers((Integer)e.getPayload());
+			break;
+		case CardGameEvent.CHANGE_NUM_PLAYERS:
+			Log.e("card game event change num players", "new player to draw" + e.getPayload().toString());
+			String[] newPlayer = e.getPayload().toString().split(":");
+			PlayPersonalActivity.playerToDrawFromNumber = newPlayer[0];
+			PlayPersonalActivity.playerToDrawFromNodeName = newPlayer[1];
+			PlayPersonalActivity.txtPlayerToDrawFrom.setText("Player to draw from: " + newPlayer[0] + " - " + newPlayer[1]);
 			break;
 			
 		case Event.USER_JOIN_PRIVATE:

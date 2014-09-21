@@ -54,6 +54,8 @@ public class PlayPersonalActivity extends Activity{
 	public static String playerToDrawFromNumber;
 	public static String playerToDrawFromNodeName;
 	
+	public static int playerNum;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -141,6 +143,9 @@ public class PlayPersonalActivity extends Activity{
 	    			Log.e("Number of cards left in hand", handAdapter.getCount() + "");
 	    			
 	    			if(handAdapter.getCount() == 0) {
+	    				Event e=new Event(Event.R_SHARED_SCREENS,CardGameEvent.OUT_OF_CARDS,playerNum);
+						EventManager.getInstance().sendEvent(e);
+	    				
 	    				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	    					builder.setTitle("Result");
 		    			    builder.setCancelable(false);
