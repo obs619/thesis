@@ -140,8 +140,7 @@ public class PlaySharedActivity extends Activity {
 	    	subCards.add(new ArrayList<Card>(deckCards.subList(i, Math.min(deckCards.size(), i + totalCardsPerPlayer))));
 	    }
 	    
-	    //1 for test purposes in the case of 1 personal device, should be numPlayers
-	    for(int i = 0; i < 1; i++) {
+	    for(int i = 0; i < numPlayers; i++) {
 	    	for(int j = 0 ; j < subCards.get(i).size(); j++) {
 	    		Event e= new Event(playerMap.get(i),CardGameEvent.DECK_DISTRIBUTE, subCards.get(i).get(j));
 				EventManager.getInstance().sendEvent(e);
