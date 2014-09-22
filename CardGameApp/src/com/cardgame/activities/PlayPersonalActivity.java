@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +55,8 @@ public class PlayPersonalActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_personal);
+		
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		// Link UI variables to UI
 		listCards = (ListView) findViewById(R.id.listPersonalCards);

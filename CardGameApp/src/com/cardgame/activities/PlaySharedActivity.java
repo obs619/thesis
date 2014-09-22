@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +42,8 @@ public class PlaySharedActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_shared);
+		
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		listCards = (ListView) findViewById(R.id.listSharedCardsPlayed);
 		btnStartGame = (Button) findViewById(R.id.btnStartGame);
@@ -84,7 +87,7 @@ public class PlaySharedActivity extends Activity {
 			for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
 		    	Log.e("Players Left", entry.getKey() + ":"  + entry.getValue());
 		    	
-		    	if(entry.getKey() != lastkey) {
+		    	if(entry.getKey() != lastkey) {	
 		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, 
 		    				keys.get(keys.indexOf(entry.getKey()) + 1) + ":" + playerMap.get(keys.get(keys.indexOf(entry.getKey()) + 1)));
 					EventManager.getInstance().sendEvent(e1);
