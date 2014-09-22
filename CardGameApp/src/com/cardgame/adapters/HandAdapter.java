@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -83,19 +84,20 @@ public class HandAdapter extends BaseAdapter{
 		
 		viewHolder.cardName.setText(mCards.get(position).toString());
 		viewHolder.cardCB.setChecked(false);
-		
-		viewHolder.cardCB.setOnClickListener(new OnClickListener() {
 
+		convertView.setOnClickListener(new OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
 				if (viewHolder.cardCB.isChecked()) {
-					mCards.get(position).setSelected(true);
+					mCards.get(position).setSelected(false);
+					viewHolder.cardCB.setChecked(false);
 				}
 			    else {
-			    	mCards.get(position).setSelected(false);
+			    	mCards.get(position).setSelected(true);
+			    	viewHolder.cardCB.setChecked(true);
 			    }
 			}
-			
 		});
 		
 		viewHolder.cardCB.setChecked(mCards.get(position).isSelected());
