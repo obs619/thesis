@@ -26,7 +26,9 @@ public class CardGameEventHandler implements EventHandler {
 		case CardGameEvent.DRAW_RESPOND:
 			Log.e("card game event draw respond", "draw respond");
 			PlayPersonalActivity.addCard(((Card)e.getPayload()));
-			Toast.makeText(PPSManager.getContext(), "Received:" + ((Card)e.getPayload()).toString(), Toast.LENGTH_LONG).show();
+			Toast.makeText(PPSManager.getContext(), "Received:" + ((Card)e.getPayload()).toString() + "\r\n" +
+					"From: " + PlayPersonalActivity.playerToDrawFromNumber + " = " + PlayPersonalActivity.playerToDrawFromNodeName, 
+					Toast.LENGTH_LONG).show();
 			break;
 		case CardGameEvent.CARD_PLAYED:
 			if(!SessionManager.getInstance().isPersonal())

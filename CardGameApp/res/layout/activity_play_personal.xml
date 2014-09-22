@@ -16,28 +16,32 @@
 	      	android:id="@+id/txtUserName"
 	      	android:layout_width="wrap_content"
 	      	android:layout_height="wrap_content"
-	      	android:textSize="20sp"
+	      	android:textSize="18sp"
+	      	android:textColor="@android:color/holo_green_dark"
 	      	android:text="Device name: "/>
         
         <TextView
 	      	android:id="@+id/txtPlayerNum"
 	      	android:layout_width="wrap_content"
 	      	android:layout_height="wrap_content"
-	      	android:textSize="20sp"
+	      	android:textSize="18sp"
+	      	android:textColor="@android:color/holo_blue_dark"
 	      	android:text="Player number: "/>
         
         <TextView
 	      	android:id="@+id/txtPlayerToDraw"
 	      	android:layout_width="wrap_content"
 	      	android:layout_height="wrap_content"
-	      	android:textSize="20sp"
+	      	android:textSize="18sp"
+	      	android:textColor="@android:color/holo_red_light"
 	      	android:text="Player to draw from: "/>
         
         <TextView
 	      	android:id="@+id/txtTurn"
 	      	android:layout_width="wrap_content"
 	      	android:layout_height="wrap_content"
-	      	android:textSize="20sp"
+	      	android:textSize="18sp"
+	      	android:textColor="@android:color/holo_orange_dark"
 	      	android:text="Is it your turn? "/>
         
 		<LinearLayout
@@ -62,7 +66,7 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_weight="1" 
-	            android:text="MySession?"
+	            android:text="My Session"
 	            style="?android:attr/buttonStyle"
 	            android:onClick="clickCheckSession" />
 	

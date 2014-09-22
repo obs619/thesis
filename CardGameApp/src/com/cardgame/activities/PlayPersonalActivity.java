@@ -166,8 +166,6 @@ public class PlayPersonalActivity extends Activity{
 	public void clickDraw(View v) {
 		
 		if(turn) {
-			Toast.makeText(this, "Draw from: " + playerToDrawFromNumber + " = " + playerToDrawFromNodeName, Toast.LENGTH_LONG).show();
-			
 			//send node name to player to notify for draw event
 			Event e=new Event(playerToDrawFromNodeName, CardGameEvent.CARD_DRAWN, spsManager.getDeviceName());
 			EventManager.getInstance().sendEvent(e);
