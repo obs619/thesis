@@ -16,11 +16,25 @@ public class APIEventHandler implements EventHandler {
 		{
 		case Event.USER_JOIN_PRIVATE:
 			Log.e("PERSONAL API", "pasok");
-			SessionManager.getInstance().addPrivateScreen(e.getPayload().toString());
+			boolean exist = false;
+			for(String username : SessionManager.getInstance().getPrivateScreenList()) {
+				if(username.equals(e.getPayload().toString()))
+					exist = true;
+			}
+			if(!exist) {
+				SessionManager.getInstance().addPrivateScreen(e.getPayload().toString());
+			}
 			break;
 		case Event.USER_JOIN_PUBLIC:
 			Log.e("SHARED API", "pasok");
-			SessionManager.getInstance().addPublicScreen(e.getPayload().toString());
+			boolean exist1 = false;
+			for(String username : SessionManager.getInstance().getPublicScreenList()) {
+				if(username.equals(e.getPayload().toString()))
+					exist1 = true;
+			}
+			if(!exist1) {
+				SessionManager.getInstance().addPublicScreen(e.getPayload().toString());
+			}
 			break;
 		case Event.USER_LEFT_PRIVATE:
 			Log.e("user left private", "pasok");
