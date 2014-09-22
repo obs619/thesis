@@ -74,6 +74,10 @@ public class CardGameEventHandler implements EventHandler {
 			PlayPersonalActivity.turn = (Boolean)e.getPayload();
 			PlayPersonalActivity.txtTurn.setText("Is it your turn? " + (Boolean)e.getPayload());
 			break;
+		case CardGameEvent.LOSE_PLAYER:
+			Log.e("card game event loseplayer", "player: " + e.getPayload().toString());
+			PlayPersonalActivity.showLoseDialog();
+			break;
 		case Event.USER_JOIN_PRIVATE:
 			Log.e("USER_JOIN_PRIVATE","pasok");
 			break;

@@ -74,23 +74,35 @@ public class PlaySharedActivity extends Activity {
 		//remove player who ran out of cards from playermap
 		playerMap.remove(playerNumOut);
 		
-		List<Integer> keys = new ArrayList<Integer>(playerMap.keySet());
-		int firstkey = keys.get(0);
-		int lastkey = keys.get(keys.size() - 1);
-		
-		for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
-	    	Log.e("Players Left", entry.getKey() + ":"  + entry.getValue());
-	    	
-	    	if(entry.getKey() != lastkey) {
-	    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, 
-	    				keys.get(keys.indexOf(entry.getKey()) + 1) + ":" + playerMap.get(keys.get(keys.indexOf(entry.getKey()) + 1)));
+		Log.e("Player number left",playerMap.size() + "");
+		//there are still 2 or more players
+		if(playerMap.size() > 1) {
+			List<Integer> keys = new ArrayList<Integer>(playerMap.keySet());
+			int firstkey = keys.get(0);
+			int lastkey = keys.get(keys.size() - 1);
+			
+			for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
+		    	Log.e("Players Left", entry.getKey() + ":"  + entry.getValue());
+		    	
+		    	if(entry.getKey() != lastkey) {
+		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, 
+		    				keys.get(keys.indexOf(entry.getKey()) + 1) + ":" + playerMap.get(keys.get(keys.indexOf(entry.getKey()) + 1)));
+					EventManager.getInstance().sendEvent(e1);
+		    	}
+		    	else {
+		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, firstkey + ":" + playerMap.get(firstkey));
+					EventManager.getInstance().sendEvent(e1);
+		    	}
+			}
+		} else {
+			// 1 player left
+			for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
+				Event e1= new Event(entry.getValue(),CardGameEvent.LOSE_PLAYER, "You Lose!");
 				EventManager.getInstance().sendEvent(e1);
-	    	}
-	    	else {
-	    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, firstkey + ":" + playerMap.get(firstkey));
-				EventManager.getInstance().sendEvent(e1);
-	    	}
+			}
 		}
+		
+		
 	}
 	
 	public static void notifyTurn(String playerTurn) {

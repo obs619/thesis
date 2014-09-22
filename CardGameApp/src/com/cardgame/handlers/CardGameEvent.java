@@ -40,7 +40,7 @@ public class CardGameEvent extends Event {
 	public static final int CHANGE_NUM_PLAYERS=15;
 	public static final int NOTIFY_HOST=16;
 	public static final int NOTIFY_PLAYER_TURN=17;
-	
+	public static final int LOSE_PLAYER=18;
 	
 	
 }

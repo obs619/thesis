@@ -48,6 +48,8 @@ public class PlayPersonalActivity extends Activity{
 	public static int playerNum;
 	public static boolean turn = false;
 	
+	static Activity activity;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,6 +62,8 @@ public class PlayPersonalActivity extends Activity{
 		txtPlayerNum = (TextView) findViewById(R.id.txtPlayerNum);
 		txtPlayerToDrawFrom = (TextView) findViewById(R.id.txtPlayerToDraw);
 		txtTurn = (TextView) findViewById(R.id.txtTurn);
+		
+		activity = this;
 		
 		spsManager = new PPSManager(this, true, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
@@ -138,8 +142,6 @@ public class PlayPersonalActivity extends Activity{
 	    				AlertDialog alert = builder.create();
 	                    alert.show();
 	    			}
-	    				
-	    			
 			    	txtError.setVisibility(View.GONE);
 	    		}
 	    		else {
@@ -156,8 +158,6 @@ public class PlayPersonalActivity extends Activity{
 	    	txtError.setText("No active shared device!");
 			txtError.setVisibility(View.VISIBLE);
 	    }
-	    
-	    
 	}
 	
 	public void clickDraw(View v) {
@@ -195,6 +195,43 @@ public class PlayPersonalActivity extends Activity{
     	Event e=new Event(requesterNodeName, CardGameEvent.DRAW_RESPOND, cardsToPlay.get(0));
 		EventManager.getInstance().sendEvent(e);
 		
+		//check if player has no cards left then player wins
+		if(handAdapter.getCount() == 0) {
+			Event e1=new Event(Event.R_SHARED_SCREENS,CardGameEvent.OUT_OF_CARDS,playerNum);
+			EventManager.getInstance().sendEvent(e1);
+			
+			AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+			builder.setTitle("Result");
+		    builder.setCancelable(false);
+		    builder.setMessage("Congratulations! You're all out of cards!") ;
+		    builder.setPositiveButton("ok", new OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					activity.finish();
+				}
+			});
+		
+		AlertDialog alert = builder.create();
+        alert.show();
+		}
+	}
+	
+	public static void showLoseDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+		builder.setTitle("Result");
+	    builder.setCancelable(false);
+	    builder.setMessage("Lose! You are the monkey!") ;
+	    builder.setPositiveButton("ok", new OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				activity.finish();
+			}
+		});
+	
+		AlertDialog alert = builder.create();
+	    alert.show();
 	}
 	
 	public void clickPersonal(View v) {
