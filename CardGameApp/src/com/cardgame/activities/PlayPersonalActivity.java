@@ -12,11 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,9 +31,6 @@ public class PlayPersonalActivity extends Activity{
 	// UI variables
 	private ListView listCards;
 	private TextView txtError;
-	private LinearLayout layoutPassTo;
-	private Spinner spinRecipient;
-	private Button btnDone;
 	private TextView txtUserName;
 	public static TextView txtPlayerNum;
 	public static TextView txtPlayerToDrawFrom;
@@ -48,9 +41,6 @@ public class PlayPersonalActivity extends Activity{
 	
 	// Shared/Personal screen variables
 	public static PPSManager spsManager;
-	
-	public static List<String> listNodes;
-	public static ArrayAdapter<String> dataAdapter;
 	
 	public static String playerToDrawFromNumber;
 	public static String playerToDrawFromNodeName;
@@ -66,9 +56,6 @@ public class PlayPersonalActivity extends Activity{
 		// Link UI variables to UI
 		listCards = (ListView) findViewById(R.id.listPersonalCards);
 		txtError = (TextView) findViewById(R.id.txtPersonalError);
-		layoutPassTo = (LinearLayout) findViewById(R.id.layoutPersonalPassTo);
-		spinRecipient = (Spinner) findViewById(R.id.spinPersonalRecipient);
-		btnDone = (Button) findViewById(R.id.btnPersonalDone);
 		txtUserName = (TextView) findViewById(R.id.txtUserName);
 		txtPlayerNum = (TextView) findViewById(R.id.txtPlayerNum);
 		txtPlayerToDrawFrom = (TextView) findViewById(R.id.txtPlayerToDraw);
@@ -80,18 +67,6 @@ public class PlayPersonalActivity extends Activity{
 		// Initialize adapters
 		handAdapter = new HandAdapter(this);
 		listCards.setAdapter(handAdapter);
-		
-		listNodes = new ArrayList<String>();
-		listNodes.addAll(SessionManager.getInstance().getPrivateScreenList());
-		
-		for(String name: SessionManager.getInstance().getPrivateScreenList())
-			Log.e("listnodes", name);
-		
-		dataAdapter = new ArrayAdapter<String>
-        (this, android.R.layout.simple_list_item_1, listNodes);
-		
-		spinRecipient.setAdapter(dataAdapter);
-		dataAdapter.notifyDataSetChanged();
 	
 		final Handler handler = new Handler();
 	    handler.postDelayed(new Runnable() {
@@ -222,45 +197,6 @@ public class PlayPersonalActivity extends Activity{
 		
 	}
 	
-	public void clickPass(View v) {
-		txtError.setVisibility(View.GONE);
-		layoutPassTo.setVisibility(View.VISIBLE);
-		btnDone.setVisibility(View.VISIBLE);
-	}
-	
-	public void clickDone(View v) {
-		
-		List<Card> cardsToPlay = new ArrayList<Card>();
-	    for( int i = 0; i < handAdapter.getCount(); i++ ) {
-	        Card item = (Card) handAdapter.getItem(i);
-	        if(item.isSelected())
-	        	cardsToPlay.add(item);
-	    }
-	    if(SessionManager.getInstance().getPrivateScreenList().size() > 0) {
-		    if(cardsToPlay.size() > 0) {
-		    	for(Card card: cardsToPlay)
-			    {
-		    		removeCard(card);
-			    	Event e2=new Event(spinRecipient.getSelectedItem().toString(), CardGameEvent.TURN_OVER, card);
-					EventManager.getInstance().sendEvent(e2);
-			    }
-		    	
-		    	txtError.setVisibility(View.GONE);
-				layoutPassTo.setVisibility(View.GONE);
-				btnDone.setVisibility(View.GONE);
-		    }
-		    else {
-		    	txtError.setText("Please select card/s");
-				txtError.setVisibility(View.VISIBLE);
-		    }
-	    }
-	    else {
-	    	txtError.setText("No active personal device!");
-			txtError.setVisibility(View.VISIBLE);
-	    }
-	    
-	}
-
 	public void clickPersonal(View v) {
 		String nodes = "";
 		for(String node: SessionManager.getInstance().getPrivateScreenList())

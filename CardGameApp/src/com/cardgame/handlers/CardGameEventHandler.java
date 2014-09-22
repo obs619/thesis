@@ -76,20 +76,12 @@ public class CardGameEventHandler implements EventHandler {
 			break;
 		case Event.USER_JOIN_PRIVATE:
 			Log.e("USER_JOIN_PRIVATE","pasok");
-			if(SessionManager.getInstance().isPersonal()) {
-				PlayPersonalActivity.listNodes.add(e.getPayload().toString());
-				PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
-			}
 			break;
 		case Event.USER_JOIN_PUBLIC:
 			Log.e("USER_JOIN_PUBLIC","pasok");
 			break;
 		case Event.USER_LEFT_PRIVATE:
 			Log.e("USER_LEFT_PRIVATE","pasok");
-			if(SessionManager.getInstance().isPersonal()) {
-				PlayPersonalActivity.listNodes.remove(e.getPayload().toString());
-				PlayPersonalActivity.dataAdapter.notifyDataSetChanged();
-			}
 			break;
 		case Event.USER_LEFT_PUBLIC:
 			Log.e("USER_LEFT_PUBLIC","pasok");
