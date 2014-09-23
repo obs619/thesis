@@ -95,6 +95,11 @@ public class PlaySharedActivity extends Activity {
 		    	else {
 		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, firstkey + ":" + playerMap.get(firstkey));
 					EventManager.getInstance().sendEvent(e1);
+					
+					//set last index player turn to true
+					Event e2= new Event(entry.getValue(),CardGameEvent.NOTIFY_PLAYER_TURN, true);
+					EventManager.getInstance().sendEvent(e2);
+					
 		    	}
 			}
 		} else {
@@ -104,7 +109,6 @@ public class PlaySharedActivity extends Activity {
 				EventManager.getInstance().sendEvent(e1);
 			}
 		}
-		
 		
 	}
 	
