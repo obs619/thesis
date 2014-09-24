@@ -1,5 +1,6 @@
 package com.cardgame.handlers;
 
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,7 +15,7 @@ import com.cardgame.screenapi.SessionManager;
 public class CardGameEventHandler implements EventHandler {
 	
 	@Override
-	public void handleEvent(Event e) {
+	public void handleEvent(final Event e) {
 
 		Log.e("Handling CardGameEvent", "Type: "+e.getType() + "Recipient:" + e.getRecipient());
 		switch(e.getType())
@@ -73,8 +74,25 @@ public class CardGameEventHandler implements EventHandler {
 			break;
 		case CardGameEvent.NOTIFY_PLAYER_TURN:
 			Log.e("card game event notify player turn", "player: " + (Boolean)e.getPayload());
-			PlayPersonalActivity.turn = (Boolean)e.getPayload();
-			PlayPersonalActivity.txtTurn.setText("Is it your turn? " + (Boolean)e.getPayload());
+			// if true add a 3second delay before player would be able to draw
+			if((Boolean)e.getPayload()) {
+				//buffer of 500miliseconds for the slight delay in receiving
+				 new CountDownTimer(3500, 1000) {
+
+				     public void onTick(long millisUntilFinished) {
+				         PlayPersonalActivity.txtTurn.setText("Is it your turn? " + millisUntilFinished / 1000);
+				     }
+
+				     public void onFinish() {
+				    	 PlayPersonalActivity.turn = (Boolean)e.getPayload();
+				    	 PlayPersonalActivity.txtTurn.setText("Is it your turn? " + (Boolean)e.getPayload());
+				     }
+				  }.start();
+			}else {
+				PlayPersonalActivity.turn = (Boolean)e.getPayload();
+				PlayPersonalActivity.txtTurn.setText("Is it your turn? " + (Boolean)e.getPayload());
+			}
+			
 			break;
 		case CardGameEvent.LOSE_PLAYER:
 			Log.e("card game event loseplayer", "player: " + e.getPayload().toString());

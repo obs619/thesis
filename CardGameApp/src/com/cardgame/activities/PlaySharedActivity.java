@@ -241,7 +241,7 @@ public class PlaySharedActivity extends Activity {
 		    btnStartGame.setVisibility(View.GONE);
 		    txtGameStarted.setVisibility(View.VISIBLE);
 		} else {
-			Toast.makeText(this, "Can't start game with no players!", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Must have 2 or more players to start game!", Toast.LENGTH_LONG).show();
 		}
 		
 	}
