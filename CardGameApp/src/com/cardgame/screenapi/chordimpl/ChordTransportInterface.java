@@ -56,6 +56,7 @@ public class ChordTransportInterface implements TransportInterface {
 			}
 		}
 		
+		//device
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
 			Log.e("JOINED", fromNode);

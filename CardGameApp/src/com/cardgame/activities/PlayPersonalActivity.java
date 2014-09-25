@@ -166,6 +166,10 @@ public class PlayPersonalActivity extends Activity{
 	public void clickDraw(View v) {
 		
 		if(turn) {
+			//to avoid drawing multiple cards due to network problem and multiple clicking; set turn immediately to false
+			turn = false;
+			PlayPersonalActivity.txtTurn.setText("Is it your turn? " + false);
+			
 			//send node name to player to notify for draw event
 			Event e=new Event(playerToDrawFromNodeName, CardGameEvent.CARD_DRAWN, spsManager.getDeviceName());
 			EventManager.getInstance().sendEvent(e);
@@ -173,6 +177,7 @@ public class PlayPersonalActivity extends Activity{
 			//notify "host" shared screen of the next player
 			Event e1=new Event(Event.R_SHARED_SCREENS, CardGameEvent.NOTIFY_HOST, playerToDrawFromNodeName);
 			EventManager.getInstance().sendEvent(e1);
+			
 		}
 		else {
 			Toast.makeText(this, "It is not your turn yet!", Toast.LENGTH_LONG).show();
