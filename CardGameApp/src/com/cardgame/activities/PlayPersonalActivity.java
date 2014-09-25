@@ -196,6 +196,8 @@ public class PlayPersonalActivity extends Activity{
 	    //shuffle
 	    Collections.shuffle(cardsToPlay);
 	    
+	    Toast.makeText(PPSManager.getContext(), cardsToPlay.get(0).toString() + " was taken from you.", Toast.LENGTH_LONG).show();
+	    
 	    //remove and send first random card
 	    removeCard(cardsToPlay.get(0));
     	Event e=new Event(requesterNodeName, CardGameEvent.DRAW_RESPOND, cardsToPlay.get(0));
