@@ -37,10 +37,6 @@ public class CardGameEventHandler implements EventHandler {
 			else
 				PlayPersonalActivity.removeCard(((Card)e.getPayload()));
 			break;
-		case CardGameEvent.TURN_OVER:
-			Log.e("card game event turn over", "turn over");
-			PlayPersonalActivity.addCard(((Card)e.getPayload()));
-			break;
 		case CardGameEvent.DECK_DISTRIBUTE:
 			//Log.e("card game event deck distrubute", "distrubute");
 			PlayPersonalActivity.addCard(((Card)e.getPayload()));
