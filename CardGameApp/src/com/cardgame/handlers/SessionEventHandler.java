@@ -14,7 +14,7 @@ public class SessionEventHandler implements EventHandler{
 		switch(e.getType())
 		{
 		case Event.ADD_NEW_SESSION:
-			SessionActivity.listChannels.add(e.getPayload().toString());
+			SessionActivity.listChannels.add(e.getSession());
 			SessionActivity.channelsAdapter.notifyDataSetChanged();
 			break;
 		}
