@@ -16,5 +16,6 @@
     <string name="table">Table</string>
     <string name="done">Done</string>
     <string name="error">Errors will be displayed here.</string>
+    <string name="username">Enter Username:</string>
 
 </resources>

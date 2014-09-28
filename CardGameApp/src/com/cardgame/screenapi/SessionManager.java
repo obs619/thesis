@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
@@ -15,6 +16,8 @@ public class SessionManager {
 	private List<String> publicScreenList = new ArrayList<String>();//<name, sessionID>
 	private List<String> privateScreenList = new ArrayList<String>();
 	private Map<String,Boolean> availableSessions = new HashMap<String,Boolean>();
+	private String alias;
+	private Map<String,String> aliasList = new HashMap<String, String>();
 	
 	private boolean isPersonal;
 	private boolean sessionMode = true;
@@ -30,12 +33,14 @@ public class SessionManager {
 	}
 	
 	// add functions
-	public void addPublicScreen(String screenName){
-		publicScreenList.add(screenName);
+	public void addPublicScreen(String[] nodeAlias){
+		publicScreenList.add(nodeAlias[0]);
+		aliasList.put(nodeAlias[0], nodeAlias[1]);
 	}
 	
-	public void addPrivateScreen(String screenName){
-		privateScreenList.add(screenName);
+	public void addPrivateScreen(String[] nodeAlias){
+		privateScreenList.add(nodeAlias[0]);
+		aliasList.put(nodeAlias[0], nodeAlias[1]);
 	}
 	
 	public void addAvailableSession(String sessionID, Boolean isLock){
@@ -47,7 +52,44 @@ public class SessionManager {
 		availableSessions.remove(sessionID);
 	}
 	
+	public void removeNodeAlias(String nodeName){
+		aliasList.remove(nodeName);
+	}
+	
 	//getters
+	public String getOwnAlias(){
+		/*
+		if(alias == null);
+			alias = ChordNetworkManager.getChordManager().getName();
+			*/
+		return alias;
+	}
+	
+	public String getOthersAlias(String key){
+		return aliasList.get(key);
+	}
+	
+	public List<String>getPublicScreenAliasList(){
+		List<String> result = new ArrayList<String>();
+		for(String key: publicScreenList){
+			if(aliasList.containsKey(key))
+				result.add(aliasList.get(key));
+		}
+		
+		return result;
+	}
+	
+	
+	public List<String>getPrivateScreenAliasList(){
+		List<String> result = new ArrayList<String>();
+		for(String key: privateScreenList){
+			if(aliasList.containsKey(key))
+				result.add(aliasList.get(key));
+		}
+		
+		return result;
+	}
+	
 	public List<String> getPublicScreenList() {
 		return publicScreenList;
 	}
@@ -78,6 +120,13 @@ public class SessionManager {
 	}
 	
 	//setters
+	
+	public void setAlias(String alias){
+		/* if no alias is given */
+		
+		this.alias = alias;
+	}
+	
 	public void setPublicScreenList(List<String> publicScreenList) {
 		this.publicScreenList = publicScreenList;
 	}
@@ -112,6 +161,10 @@ public class SessionManager {
 	}
 	
 	//clear functions
+	public void clearAliasList(){
+		aliasList.clear();
+	}
+	
 	public void clearPrivateScreenList(){
 		privateScreenList.clear();
 	}

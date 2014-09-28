@@ -16,7 +16,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:hint="@string/hint_sender_name"
-            android:paddingStart="5dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textIsSelectable="false" />
         

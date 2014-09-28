@@ -60,26 +60,32 @@ public class ChordTransportInterface implements TransportInterface {
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
 			Log.e("JOINED", fromNode);
+			
+			
+			String[] nodeAlias = getNodeAlias();
+				
+			
 			if(SessionManager.getInstance().isPersonal()) {
+				
 				Event e=new Event(Event.R_ALL_SCREENS
 						,Event.USER_JOIN_PRIVATE
-						,ChordNetworkManager.getChordManager().getName(),true);
+						,nodeAlias,true);
 				EventManager.getInstance().sendEvent(e);
 				
 				Event e1=new Event(Event.R_ALL_SCREENS
 						,Event.USER_JOIN_PRIVATE
-						,ChordNetworkManager.getChordManager().getName(),false);
+						,nodeAlias,false);
 				EventManager.getInstance().sendEvent(e1);
 			}
 			else {
 				Event e=new Event(Event.R_ALL_SCREENS
 						,Event.USER_JOIN_PUBLIC
-						,ChordNetworkManager.getChordManager().getName(),true);
+						,nodeAlias,true);
 				EventManager.getInstance().sendEvent(e);
 				
 				Event e1=new Event(Event.R_ALL_SCREENS
 						,Event.USER_JOIN_PUBLIC
-						,ChordNetworkManager.getChordManager().getName(),false);
+						,nodeAlias,false);
 				EventManager.getInstance().sendEvent(e1);
 			}
 			
@@ -89,6 +95,8 @@ public class ChordTransportInterface implements TransportInterface {
 		public void onNodeLeft(String fromNode, String fromChannel) {
 			Log.e("LEFT", fromNode);
 			if(SessionManager.getInstance().getPrivateScreenList().contains(fromNode)) {
+
+				//can be remove
 				Event e=new Event(Event.R_LOCAL_SCREEN
 						,Event.USER_LEFT_PRIVATE
 						,fromNode,false);
@@ -111,6 +119,15 @@ public class ChordTransportInterface implements TransportInterface {
 				EventManager.getInstance().applyEvent(e1);
 			}
 			
+		}
+		
+		//get nodeName and it's alias if exist
+		public String[] getNodeAlias(){
+			String[] nodeAlias = new String[2]; 
+			nodeAlias[0] = ChordNetworkManager.getChordManager().getName();
+			Log.e("OnNodeJoin get Alias", SessionManager.getInstance().getOwnAlias());
+			nodeAlias[1] = SessionManager.getInstance().getOwnAlias();
+			return nodeAlias;
 		}
 		
 	};

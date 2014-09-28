@@ -56,7 +56,8 @@ public class PlayPersonalActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_personal);
 		
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		Log.e("Get own alias", SessionManager.getInstance().getOwnAlias());
+ 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		// Link UI variables to UI
 		listCards = (ListView) findViewById(R.id.listPersonalCards);
@@ -79,7 +80,7 @@ public class PlayPersonalActivity extends Activity{
 	    handler.postDelayed(new Runnable() {
 	        @Override
 	        public void run() {
-	        	txtUserName.setText("Username: " + spsManager.getDeviceName());
+	        	txtUserName.setText("Username: " + SessionManager.getInstance().getOwnAlias());
 	        }
 	    }, 500);
 		
@@ -244,14 +245,14 @@ public class PlayPersonalActivity extends Activity{
 	
 	public void clickPersonal(View v) {
 		String nodes = "";
-		for(String node: SessionManager.getInstance().getPrivateScreenList())
+		for(String node: SessionManager.getInstance().getPrivateScreenAliasList())
 			nodes += node + ",";
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}
 	
 	public void clickShared(View v) {
 		String nodes = "";
-		for(String node: SessionManager.getInstance().getPublicScreenList())
+		for(String node: SessionManager.getInstance().getPublicScreenAliasList())
 			nodes += node + ",";
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}
