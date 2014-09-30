@@ -89,11 +89,11 @@ public class PlaySharedActivity extends Activity {
 		    	
 		    	if(entry.getKey() != lastkey) {	
 		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, 
-		    				keys.get(keys.indexOf(entry.getKey()) + 1) + ":" + playerMap.get(keys.get(keys.indexOf(entry.getKey()) + 1)));
+		    				keys.get(keys.indexOf(entry.getKey()) + 1) + ":" + SessionManager.getInstance().getAlias(playerMap.get(keys.get(keys.indexOf(entry.getKey()) + 1))));
 					EventManager.getInstance().sendEvent(e1);
 		    	}
 		    	else {
-		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, firstkey + ":" + playerMap.get(firstkey));
+		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, firstkey + ":" + SessionManager.getInstance().getAlias(playerMap.get(firstkey)));
 					EventManager.getInstance().sendEvent(e1);
 					
 					//set last index player turn to true
@@ -226,12 +226,15 @@ public class PlaySharedActivity extends Activity {
 				if(i != numPlayers - 1) {
 					Log.e("Adjacent", "not last player");
 					int nxtPlayer = i + 1;
-					Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, nxtPlayer + ":" + playerMap.get(i + 1));
+
+					String alias = SessionManager.getInstance().getAlias(playerMap.get(nxtPlayer));
+					Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, nxtPlayer + ":" + alias);
 					EventManager.getInstance().sendEvent(e1);
 				}
 				else if(i == numPlayers - 1) {
 					Log.e("Adjacent", "last player");
-					Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, 0 + ":" + playerMap.get(0));
+					String alias = SessionManager.getInstance().getAlias(playerMap.get(0));
+					Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, 0 + ":" + alias);
 					EventManager.getInstance().sendEvent(e1);
 				}
 								

@@ -25,6 +25,7 @@ public class SessionManager {
 	
 	private static SessionManager instance = null;
 
+	
 	public static SessionManager getInstance() {
 		if(instance==null) {
 			instance=new SessionManager();
@@ -32,43 +33,84 @@ public class SessionManager {
 		return instance;
 	}
 	
-	// add functions
-	public void addPublicScreen(String[] nodeAlias){
-		publicScreenList.add(nodeAlias[0]);
-		aliasList.put(nodeAlias[0], nodeAlias[1]);
+	/**
+	 * Adds the node into public screen list.
+	 * @param nodeName fixed name of the device
+	 * @param aliasName name representation for the device
+	 */
+	public void addPublicScreen(String nodeName, String aliasName){
+		publicScreenList.add(nodeName);
+		aliasList.put(nodeName, aliasName);
 	}
 	
-	public void addPrivateScreen(String[] nodeAlias){
-		privateScreenList.add(nodeAlias[0]);
-		aliasList.put(nodeAlias[0], nodeAlias[1]);
+	/**
+	 * Adds the node into private screen list.
+	 * @param nodeName fixed name of the device
+	 * @param aliasName name representation for the device
+	 */
+	public void addPrivateScreen(String nodeName, String aliasName){
+		privateScreenList.add(nodeName);
+		aliasList.put(nodeName, aliasName);
+
 	}
-	
+	/**
+	 * Adds the newly created session.
+	 * @param sessionID name of the session
+	 * @param isLock if the session is lock
+	 */
 	public void addAvailableSession(String sessionID, Boolean isLock){
 		availableSessions.put(sessionID, isLock);
 	}
 	
-	//remove functions
+	
+	/**
+	 * Removes the session from the session list 
+	 * with the specified session ID
+	 * @param sessionID identifier of the session
+	 */
 	public void removeAvailableSession(String sessionID){
 		availableSessions.remove(sessionID);
 	}
 	
-	public void removeNodeAlias(String nodeName){
+	/**
+	 * Removes the alias from alias list.
+	 * @param aliasName name representation for the device
+	 */
+	public void removeAlias(String nodeName){
 		aliasList.remove(nodeName);
 	}
 	
-	//getters
+	/**
+	 * Returns device's own alias.
+	 * @return String value of device's own alias
+	 */
 	public String getOwnAlias(){
-		/*
-		if(alias == null);
-			alias = ChordNetworkManager.getChordManager().getName();
-			*/
 		return alias;
 	}
 	
-	public String getOthersAlias(String key){
+	public void removeFromPrivateScreen(String nodeName){
+		for(int i = 0; i < privateScreenList.size(); i++)
+			if(privateScreenList.get(i).equals(nodeName))
+				privateScreenList.remove(i);
+	}
+	
+	public void removeFromPublicScreen(String nodeName){
+		for(int i = 0; i < publicScreenList.size(); i++)
+			if(publicScreenList.get(i).equals(nodeName))
+				publicScreenList.remove(i);
+	}
+	
+	/**
+	 * Returns alias value of 
+	 * @param key node name of the target alias
+	 * @return alias name of the node given key
+	 * or not if it doesn't exist.
+	 */
+	public String getAlias(String key){
 		return aliasList.get(key);
 	}
 	
+	//maybe remove
 	public List<String>getPublicScreenAliasList(){
 		List<String> result = new ArrayList<String>();
 		for(String key: publicScreenList){
@@ -76,6 +118,18 @@ public class SessionManager {
 				result.add(aliasList.get(key));
 		}
 		
+		return result;
+	}
+	
+	public String getNodeName(String alias){
+		String result="";
+		for(Map.Entry<String, String> entry : aliasList.entrySet()) {
+		    if(entry.getValue().equals(alias))
+		    {result = entry.getKey();
+		    		break;
+		    }
+		    	
+		}
 		return result;
 	}
 	
@@ -178,7 +232,7 @@ public class SessionManager {
 	}
 	
 	public String createSession(String sessionID) {
-		String deviceName = "[" + ChordNetworkManager.getChordManager().getName() + "]";
+		String deviceName = "[" + alias + "]";
 		
 		addAvailableSession(sessionID + deviceName, false);
 		Event e=new Event(Event.R_ALL_SCREENS
@@ -195,7 +249,7 @@ public class SessionManager {
 	}
 	
 	public void lockSession(String sessionID) {
-		if(sessionID.contains(ChordNetworkManager.getChordManager().getName())) {
+		if(sessionID.contains(alias)) {
 			Event e=new Event(Event.R_ALL_SCREENS
 					,Event.LOCK_SESSION
 					,sessionID,true);
@@ -209,7 +263,7 @@ public class SessionManager {
 	}
 	
 	public void unlockSession(String sessionID) {
-		if(sessionID.contains(ChordNetworkManager.getChordManager().getName())) {
+		if(sessionID.contains(alias)) {
 			Event e=new Event(Event.R_ALL_SCREENS
 					,Event.UNLOCK_SESSION
 					,sessionID,true);

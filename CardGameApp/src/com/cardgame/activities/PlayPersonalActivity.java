@@ -172,11 +172,11 @@ public class PlayPersonalActivity extends Activity{
 			PlayPersonalActivity.txtTurn.setText("Is it your turn? " + false);
 			
 			//send node name to player to notify for draw event
-			Event e=new Event(playerToDrawFromNodeName, CardGameEvent.CARD_DRAWN, spsManager.getDeviceName());
+			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromNodeName), CardGameEvent.CARD_DRAWN, spsManager.getDeviceName());
 			EventManager.getInstance().sendEvent(e);
 			
 			//notify "host" shared screen of the next player
-			Event e1=new Event(Event.R_SHARED_SCREENS, CardGameEvent.NOTIFY_HOST, playerToDrawFromNodeName);
+			Event e1=new Event(Event.R_SHARED_SCREENS, CardGameEvent.NOTIFY_HOST, SessionManager.getInstance().getNodeName(playerToDrawFromNodeName));
 			EventManager.getInstance().sendEvent(e1);
 			
 		}
