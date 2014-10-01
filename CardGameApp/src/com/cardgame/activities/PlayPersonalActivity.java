@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -84,7 +85,6 @@ public class PlayPersonalActivity extends Activity{
 	        }
 	    }, 500);
 		
-		
 	}
 	
 	@Override
@@ -145,6 +145,8 @@ public class PlayPersonalActivity extends Activity{
 	    				
 	    				AlertDialog alert = builder.create();
 	                    alert.show();
+	                    
+	                    spsManager.stop();
 	    			}
 			    	txtError.setVisibility(View.GONE);
 	    		}
@@ -169,15 +171,11 @@ public class PlayPersonalActivity extends Activity{
 		if(turn) {
 			//to avoid drawing multiple cards due to network problem and multiple clicking; set turn immediately to false
 			turn = false;
-			PlayPersonalActivity.txtTurn.setText("Is it your turn? " + false);
+			PlayPersonalActivity.txtTurn.setText("Is it your turn? No");
 			
 			//send node name to player to notify for draw event
 			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, spsManager.getDeviceName());
 			EventManager.getInstance().sendEvent(e);
-			
-			//notify "host" shared screen of the next player
-			Event e1=new Event(Event.R_SHARED_SCREENS, CardGameEvent.NOTIFY_HOST, SessionManager.getInstance().getNodeName(playerToDrawFromAliasName));
-			EventManager.getInstance().sendEvent(e1);
 			
 		}
 		else {
@@ -221,9 +219,23 @@ public class PlayPersonalActivity extends Activity{
 				}
 			});
 		
-		AlertDialog alert = builder.create();
-        alert.show();
+			AlertDialog alert = builder.create();
+	        alert.show();
+        
+	        spsManager.stop();
 		}
+		
+		 new CountDownTimer(3500, 1000) {
+
+		     public void onTick(long millisUntilFinished) {
+		         PlayPersonalActivity.txtTurn.setText("Is it your turn? " + millisUntilFinished / 1000);
+		     }
+
+		     public void onFinish() {
+		    	 PlayPersonalActivity.turn = true;
+		    	 PlayPersonalActivity.txtTurn.setText("Is it your turn? Yes");
+		     }
+		  }.start();
 	}
 	
 	public static void showLoseDialog() {

@@ -63,32 +63,15 @@ public class CardGameEventHandler implements EventHandler {
 			PlayPersonalActivity.playerToDrawFromNumber = newPlayer[0];
 			PlayPersonalActivity.playerToDrawFromAliasName = newPlayer[1];
 			PlayPersonalActivity.txtPlayerToDrawFrom.setText("Player to draw from: " + newPlayer[0] + " - " + newPlayer[1]);
-			break;
-		case CardGameEvent.NOTIFY_HOST:
-			Log.e("card game event notify turn", "turn of player: " + e.getPayload().toString());
-			PlaySharedActivity.notifyTurn(e.getPayload().toString());
+			if(newPlayer[2].equals("1"))
+				setTurn(true);	
+			else
+				setTurn(false);
 			break;
 		case CardGameEvent.NOTIFY_PLAYER_TURN:
 			Log.e("card game event notify player turn", "player: " + (Boolean)e.getPayload());
 			// if true add a 3second delay before player would be able to draw
-			if((Boolean)e.getPayload()) {
-				//buffer of 500miliseconds for the slight delay in receiving
-				 new CountDownTimer(3500, 1000) {
-
-				     public void onTick(long millisUntilFinished) {
-				         PlayPersonalActivity.txtTurn.setText("Is it your turn? " + millisUntilFinished / 1000);
-				     }
-
-				     public void onFinish() {
-				    	 PlayPersonalActivity.turn = (Boolean)e.getPayload();
-				    	 PlayPersonalActivity.txtTurn.setText("Is it your turn? " + (Boolean)e.getPayload());
-				     }
-				  }.start();
-			}else {
-				PlayPersonalActivity.turn = (Boolean)e.getPayload();
-				PlayPersonalActivity.txtTurn.setText("Is it your turn? " + (Boolean)e.getPayload());
-			}
-			
+			setTurn((Boolean)e.getPayload());
 			break;
 		case CardGameEvent.LOSE_PLAYER:
 			Log.e("card game event loseplayer", "player: " + e.getPayload().toString());
@@ -108,6 +91,26 @@ public class CardGameEventHandler implements EventHandler {
 			break;
 		}
 		
+	}
+	
+	public void setTurn(final Boolean isTurn) {
+		if(isTurn) {
+			//buffer of 500miliseconds for the slight delay in receiving
+			 new CountDownTimer(3500, 1000) {
+
+			     public void onTick(long millisUntilFinished) {
+			         PlayPersonalActivity.txtTurn.setText("Is it your turn? " + millisUntilFinished / 1000);
+			     }
+
+			     public void onFinish() {
+			    	 PlayPersonalActivity.turn = isTurn;
+			    	 PlayPersonalActivity.txtTurn.setText("Is it your turn? Yes");
+			     }
+			  }.start();
+		}else {
+			PlayPersonalActivity.turn = isTurn;
+			PlayPersonalActivity.txtTurn.setText("Is it your turn? No");
+		}
 	}
 	
 }
