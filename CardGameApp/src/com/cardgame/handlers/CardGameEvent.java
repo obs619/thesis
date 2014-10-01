@@ -7,7 +7,7 @@ public class CardGameEvent extends Event {
 		super(recipient, type, payload);
 	}
 	
-	public static final int CARD_DRAWN=0;
+	public static final int CARD_DRAW_REQUEST=0;
 	public static final int CARD_PLAYED=1;
 
 	public static final int START_GAME=2;

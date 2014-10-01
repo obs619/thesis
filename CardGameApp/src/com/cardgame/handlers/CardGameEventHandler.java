@@ -20,7 +20,7 @@ public class CardGameEventHandler implements EventHandler {
 		Log.e("Handling CardGameEvent", "Type: "+e.getType() + "Recipient:" + e.getRecipient());
 		switch(e.getType())
 		{
-		case CardGameEvent.CARD_DRAWN:
+		case CardGameEvent.CARD_DRAW_REQUEST:
 			Log.e("card game event card drawn", "card drawn");
 			PlayPersonalActivity.respondDrawRequest(e.getPayload().toString());
 			break;
@@ -28,7 +28,7 @@ public class CardGameEventHandler implements EventHandler {
 			Log.e("card game event draw respond", "draw respond");
 			PlayPersonalActivity.addCard(((Card)e.getPayload()));
 			Toast.makeText(PPSManager.getContext(), "Received:" + ((Card)e.getPayload()).toString() + "\r\n" +
-					"From: " + PlayPersonalActivity.playerToDrawFromNumber + " = " + PlayPersonalActivity.playerToDrawFromNodeName, 
+					"From: " + PlayPersonalActivity.playerToDrawFromNumber + " = " + PlayPersonalActivity.playerToDrawFromAliasName, 
 					Toast.LENGTH_LONG).show();
 			break;
 		case CardGameEvent.CARD_PLAYED:
@@ -50,7 +50,7 @@ public class CardGameEventHandler implements EventHandler {
 			String[] adjplay = e.getPayload().toString().split(":");
 			Log.e("card game event playernum", adjplay[0] + " with node value of " + adjplay[1]);
 			PlayPersonalActivity.playerToDrawFromNumber = adjplay[0];
-			PlayPersonalActivity.playerToDrawFromNodeName = adjplay[1];
+			PlayPersonalActivity.playerToDrawFromAliasName = adjplay[1];
 			PlayPersonalActivity.txtPlayerToDrawFrom.setText("Player to draw from: " + adjplay[0] + " - " + adjplay[1]);
 			break;
 		case CardGameEvent.OUT_OF_CARDS:
@@ -61,7 +61,7 @@ public class CardGameEventHandler implements EventHandler {
 			Log.e("card game event change num players", "new player to draw" + e.getPayload().toString());
 			String[] newPlayer = e.getPayload().toString().split(":");
 			PlayPersonalActivity.playerToDrawFromNumber = newPlayer[0];
-			PlayPersonalActivity.playerToDrawFromNodeName = newPlayer[1];
+			PlayPersonalActivity.playerToDrawFromAliasName = newPlayer[1];
 			PlayPersonalActivity.txtPlayerToDrawFrom.setText("Player to draw from: " + newPlayer[0] + " - " + newPlayer[1]);
 			break;
 		case CardGameEvent.NOTIFY_HOST:
