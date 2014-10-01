@@ -198,7 +198,7 @@ public class SessionManager {
 	}
 	
 	public Boolean setChosenSession(String session) {
-		if(!isSessionLocked(session)) {
+		if(!isSessionLocked(session) || session.contains(alias)) {
     		Toast.makeText(PPSManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
 			this.chosenSession = session;
 			return true;
@@ -255,6 +255,12 @@ public class SessionManager {
 					,sessionID,true);
 			EventManager.getInstance().sendEvent(e);
 			
+			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
+				if(sessionID.equalsIgnoreCase(entry.getKey())) {
+					entry.setValue(true);
+				}	
+			}
+			
 			Toast.makeText(PPSManager.getContext(), "Successfuly locked " + sessionID, Toast.LENGTH_LONG).show();
 		}
 		else {
@@ -268,6 +274,12 @@ public class SessionManager {
 					,Event.UNLOCK_SESSION
 					,sessionID,true);
 			EventManager.getInstance().sendEvent(e);
+			
+			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
+				if(sessionID.equalsIgnoreCase(entry.getKey())) {
+					entry.setValue(false);
+				}	
+			}
 			
 			Toast.makeText(PPSManager.getContext(), "Successfuly unlocked " + sessionID, Toast.LENGTH_LONG).show();
 		}
@@ -283,6 +295,13 @@ public class SessionManager {
 			}	
 		}
 		return null;
+	}
+	
+	public void requestSessions() {
+		Event e=new Event(Event.R_ALL_SCREENS
+				,Event.REQUEST_SESSIONS
+				,ChordNetworkManager.getChordManager().getName(),true);
+		EventManager.getInstance().sendEvent(e);
 	}
 	
 }

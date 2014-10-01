@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -116,6 +117,23 @@ public class SessionActivity extends Activity{
 		channelsAdapter.notifyDataSetChanged();
 
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
+	}
+	
+	public void selectRequestSessions(View v) {
+		SessionManager.getInstance().requestSessions();
+		
+		listChannels.clear();
+		channelsAdapter.notifyDataSetChanged();
+		
+		final Handler handler = new Handler();
+	    handler.postDelayed(new Runnable() {
+	        @Override
+	        public void run() {
+	        	listChannels.addAll(SessionManager.getInstance().getAvailableSessionsSet());
+	    		channelsAdapter.notifyDataSetChanged();
+	        }
+	    }, 500);
+		
 	}
 	
 	public void selectCreateSession(View v) {

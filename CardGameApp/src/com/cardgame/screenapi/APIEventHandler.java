@@ -110,7 +110,19 @@ public class APIEventHandler implements EventHandler {
 				}	
 			}
 			break;
-			
+		case Event.REQUEST_SESSIONS:
+			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
+				if(entry.getValue().equals(false)) {
+					Event e=new Event(event.getPayload().toString()
+							,Event.RESPOND_REQUEST_SESSIONS
+							,entry.getKey(),true);
+					EventManager.getInstance().sendEvent(e);
+				}
+			}
+			break;
+		case Event.RESPOND_REQUEST_SESSIONS:
+			SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), false);
+			break;
 		default:
 			break;
 		}
