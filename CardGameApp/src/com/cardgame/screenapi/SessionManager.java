@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import android.util.Log;
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 
 public class SessionManager {
 	
+	private static final String defaultSession = "Default";
 	private List<String> publicScreenList = new ArrayList<String>();//<name, sessionID>
 	private List<String> privateScreenList = new ArrayList<String>();
 	private Map<String,Boolean> availableSessions = new HashMap<String,Boolean>();
@@ -31,6 +35,21 @@ public class SessionManager {
 			instance=new SessionManager();
 		}
 		return instance;
+	}
+	
+	public void saveSessionID(Activity activity){
+		SharedPreferences sharedPreferences = PreferenceManager
+				.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		editor.putString("session", chosenSession);
+		editor.commit();
+	}
+	
+	public String getSavedSessionID(Activity activity) {
+		SharedPreferences sharedPreferences = PreferenceManager
+				.getDefaultSharedPreferences(activity);
+		String session = sharedPreferences.getString("session", defaultSession);
+		return session;
 	}
 	
 	/**

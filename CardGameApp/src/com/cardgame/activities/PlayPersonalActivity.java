@@ -57,7 +57,6 @@ public class PlayPersonalActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_personal);
 		
-		Log.e("Get own alias", SessionManager.getInstance().getOwnAlias());
  		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		// Link UI variables to UI
