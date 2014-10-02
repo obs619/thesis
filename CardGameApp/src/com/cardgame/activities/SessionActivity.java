@@ -68,7 +68,13 @@ public class SessionActivity extends Activity{
 		
 		spinChannels.setAdapter(channelsAdapter);
 		channelsAdapter.notifyDataSetChanged();
-
+		SessionManager.getInstance().loadSavedSessionID();
+		String session = SessionManager.getInstance().getChosenSession();
+			listChannels.add(session);
+		Log.e("session", session);
+		
+		channelsAdapter.notifyDataSetChanged();
+		
 		spinChannels.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 		    @Override
@@ -83,8 +89,6 @@ public class SessionActivity extends Activity{
 
 		    }
 		});
-		//for test
-		Log.e("load session", SessionManager.getInstance().getSavedSessionID(this));
 
 	}
 	
@@ -150,14 +154,10 @@ public class SessionActivity extends Activity{
 			if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
 				if(SessionManager.getInstance().isPersonal()) {
 					Intent intent = new Intent(this, PlayPersonalActivity.class);
-					SessionManager.getInstance().saveSessionID(this);
-					//for test
-					Log.e("save session", SessionManager.getInstance().getChosenSession());
 					startActivity(intent);
 				}
 				else if(!SessionManager.getInstance().isPersonal()) {
 					Intent intent = new Intent(this, PlaySharedActivity.class);
-					SessionManager.getInstance().saveSessionID(this);
 					//for test
 					Log.e("save session", SessionManager.getInstance().getChosenSession());
 					startActivity(intent);
