@@ -10,7 +10,6 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:hint="@string/channel_name_hint"
-        android:paddingLeft="5dp"
         android:textSize="15sp" />
 
     <ImageView
@@ -21,7 +20,6 @@
         android:layout_centerVertical="true"
         android:clickable="true"
         android:contentDescription="@string/desc_delete_icon"
-        android:paddingRight="5dp"
         android:src="@drawable/ic_delete" />
 
 </RelativeLayout>

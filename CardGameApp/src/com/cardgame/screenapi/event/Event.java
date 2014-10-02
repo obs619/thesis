@@ -2,6 +2,8 @@ package com.cardgame.screenapi.event;
 
 import java.io.Serializable;
 
+import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
+
 public class Event {
 	
 	public static final String R_SHARED_SCREENS="shared";
@@ -23,11 +25,15 @@ public class Event {
 	public static final int T_SEND_CURRENT_STATE=110;	
 	
 	public static final int ADD_NEW_SESSION=111;
+	public static final int REQUEST_SESSIONS=112;
+	public static final int RESPOND_REQUEST_SESSIONS=113;
+	
 	
 	private String recipient;//who does this event affect?
 	private int type;
 	private boolean isAPIEvent;
 	private Serializable payload;
+	private String session;
 	
 	public Event() {}
 	
@@ -41,6 +47,13 @@ public class Event {
 		this.type=type;
 		this.payload=payload;
 		this.setAPIEvent(false);
+		
+		if (type == ADD_NEW_SESSION) {
+			this.session = payload.toString();
+		}
+		else {
+			this.session = ChordNetworkManager.getChordManager().getName();
+		}
 	}
 	
 	public Event(String recipient, int type, Serializable payload, boolean isAPIEvent) {
@@ -48,6 +61,14 @@ public class Event {
 		this.type=type;
 		this.payload=payload;
 		this.setAPIEvent(isAPIEvent);
+		this.session = ChordNetworkManager.getChordManager().getName();
+		
+		if (type == ADD_NEW_SESSION) {
+			this.session = payload.toString();
+		}
+		else {
+			this.session = ChordNetworkManager.getChordManager().getName();
+		}
 	}
 	
 	public int getType() {
@@ -68,6 +89,10 @@ public class Event {
 	
 	public void setAPIEvent(boolean isAPIEvent) {
 		this.isAPIEvent = isAPIEvent;
+	}
+	
+	public String getSession() {
+		return session;
 	}
 
 }

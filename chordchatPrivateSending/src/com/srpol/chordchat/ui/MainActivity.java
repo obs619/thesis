@@ -30,6 +30,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -443,6 +444,7 @@ public class MainActivity extends Activity implements OnAddChannelListener {
 					}
 				}	
 			}
+			Log.d("S", "Send message");
 			
 			
 			// Check if there is a message

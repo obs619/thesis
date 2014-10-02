@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="CardGameApp/gen"/>
+	<classpathentry kind="src" path="CardGameApp/src"/>
+	<classpathentry kind="src" path="chordchatPrivateSending/src"/>
+	<classpathentry kind="lib" path="CardGameApp/bin/dexedLibs/android-support-v4-30d311795f0cd63b181a1dc33f90ffbf.jar"/>
+	<classpathentry kind="lib" path="CardGameApp/bin/dexedLibs/chord-v2.0.0-7855b14656e75c99c8df9d503c7d0d4f.jar"/>
+	<classpathentry kind="lib" path="CardGameApp/bin/dexedLibs/sdk-v1.0.0-6ed31ca62ccfe557cb53e4d350c5ddcb.jar"/>
+	<classpathentry kind="lib" path="CardGameApp/libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="CardGameApp/libs/chord-v2.0.0.jar"/>
+	<classpathentry kind="lib" path="CardGameApp/libs/sdk-v1.0.0.jar"/>
+	<classpathentry kind="lib" path="chordchatPrivateSending/libs/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="chordchatPrivateSending/libs/chord-v2.0.0.jar"/>
+	<classpathentry kind="lib" path="chordchatPrivateSending/libs/guava-14.0.1.jar"/>
+	<classpathentry kind="lib" path="chordchatPrivateSending/libs/sdk-v1.0.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="CardGameApp/bin/classes"/>
+</classpath>

@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -44,7 +45,7 @@ public class PlayPersonalActivity extends Activity{
 	public static PPSManager spsManager;
 	
 	public static String playerToDrawFromNumber;
-	public static String playerToDrawFromNodeName;
+	public static String playerToDrawFromAliasName;
 	
 	public static int playerNum;
 	public static boolean turn = false;
@@ -56,7 +57,7 @@ public class PlayPersonalActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_personal);
 		
-		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+ 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		// Link UI variables to UI
 		listCards = (ListView) findViewById(R.id.listPersonalCards);
@@ -79,10 +80,9 @@ public class PlayPersonalActivity extends Activity{
 	    handler.postDelayed(new Runnable() {
 	        @Override
 	        public void run() {
-	        	txtUserName.setText("Username: " + spsManager.getDeviceName());
+	        	txtUserName.setText("Username: " + SessionManager.getInstance().getOwnAlias());
 	        }
 	    }, 500);
-		
 		
 	}
 	
@@ -144,6 +144,8 @@ public class PlayPersonalActivity extends Activity{
 	    				
 	    				AlertDialog alert = builder.create();
 	                    alert.show();
+	                    
+	                    spsManager.stop();
 	    			}
 			    	txtError.setVisibility(View.GONE);
 	    		}
@@ -166,13 +168,14 @@ public class PlayPersonalActivity extends Activity{
 	public void clickDraw(View v) {
 		
 		if(turn) {
+			//to avoid drawing multiple cards due to network problem and multiple clicking; set turn immediately to false
+			turn = false;
+			PlayPersonalActivity.txtTurn.setText("Is it your turn? No");
+			
 			//send node name to player to notify for draw event
-			Event e=new Event(playerToDrawFromNodeName, CardGameEvent.CARD_DRAWN, spsManager.getDeviceName());
+			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, spsManager.getDeviceName());
 			EventManager.getInstance().sendEvent(e);
 			
-			//notify "host" shared screen of the next player
-			Event e1=new Event(Event.R_SHARED_SCREENS, CardGameEvent.NOTIFY_HOST, playerToDrawFromNodeName);
-			EventManager.getInstance().sendEvent(e1);
 		}
 		else {
 			Toast.makeText(this, "It is not your turn yet!", Toast.LENGTH_LONG).show();
@@ -190,6 +193,8 @@ public class PlayPersonalActivity extends Activity{
 	    
 	    //shuffle
 	    Collections.shuffle(cardsToPlay);
+	    
+	    Toast.makeText(PPSManager.getContext(), cardsToPlay.get(0).toString() + " was taken from you.", Toast.LENGTH_LONG).show();
 	    
 	    //remove and send first random card
 	    removeCard(cardsToPlay.get(0));
@@ -213,9 +218,23 @@ public class PlayPersonalActivity extends Activity{
 				}
 			});
 		
-		AlertDialog alert = builder.create();
-        alert.show();
+			AlertDialog alert = builder.create();
+	        alert.show();
+        
+	        spsManager.stop();
 		}
+		
+		 new CountDownTimer(3500, 1000) {
+
+		     public void onTick(long millisUntilFinished) {
+		         PlayPersonalActivity.txtTurn.setText("Is it your turn? " + millisUntilFinished / 1000);
+		     }
+
+		     public void onFinish() {
+		    	 PlayPersonalActivity.turn = true;
+		    	 PlayPersonalActivity.txtTurn.setText("Is it your turn? Yes");
+		     }
+		  }.start();
 	}
 	
 	public static void showLoseDialog() {
@@ -237,14 +256,14 @@ public class PlayPersonalActivity extends Activity{
 	
 	public void clickPersonal(View v) {
 		String nodes = "";
-		for(String node: SessionManager.getInstance().getPrivateScreenList())
+		for(String node: SessionManager.getInstance().getPrivateScreenAliasList())
 			nodes += node + ",";
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}
 	
 	public void clickShared(View v) {
 		String nodes = "";
-		for(String node: SessionManager.getInstance().getPublicScreenList())
+		for(String node: SessionManager.getInstance().getPublicScreenAliasList())
 			nodes += node + ",";
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}

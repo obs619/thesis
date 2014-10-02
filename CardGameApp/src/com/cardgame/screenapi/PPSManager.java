@@ -26,6 +26,7 @@ public class PPSManager {
 		SessionManager.getInstance().setScreenType(isPersonal);
 		SessionManager.getInstance().clearPrivateScreenList();
 		SessionManager.getInstance().clearPublicScreenList();
+		SessionManager.getInstance().clearAliasList();
 		
 		SessionManager.getInstance().setSessionMode(sessionMode);
 		
