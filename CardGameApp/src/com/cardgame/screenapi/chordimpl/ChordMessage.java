@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class ChordMessage extends com.cardgame.screenapi.Message implements Serializable {
+public class ChordMessage extends com.cardgame.screenapi.messaging.Message implements Serializable {
 
 	private static final long serialVersionUID = 20130219L;
 

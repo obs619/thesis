@@ -21,10 +21,10 @@ import com.cardgame.adapters.HandAdapter;
 import com.cardgame.handlers.CardGameEvent;
 import com.cardgame.handlers.CardGameEventHandler;
 import com.cardgame.objects.Card;
-import com.cardgame.screenapi.Event;
-import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
-import com.cardgame.screenapi.SessionManager;
+import com.cardgame.screenapi.event.Event;
+import com.cardgame.screenapi.event.EventManager;
+import com.cardgame.screenapi.session.SessionManager;
 
 public class PlaySharedActivity extends Activity {
 	
@@ -89,17 +89,16 @@ public class PlaySharedActivity extends Activity {
 		    	
 		    	if(entry.getKey() != lastkey) {	
 		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, 
-		    				keys.get(keys.indexOf(entry.getKey()) + 1) + ":" + playerMap.get(keys.get(keys.indexOf(entry.getKey()) + 1)));
+		    				keys.get(keys.indexOf(entry.getKey()) + 1) + ":" 
+		    						+ SessionManager.getInstance().getAlias(playerMap.get(keys.get(keys.indexOf(entry.getKey()) + 1))) 
+		    						+ ":0");
 					EventManager.getInstance().sendEvent(e1);
 		    	}
 		    	else {
-		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, firstkey + ":" + playerMap.get(firstkey));
-					EventManager.getInstance().sendEvent(e1);
-					
-					//set last index player turn to true
-					Event e2= new Event(entry.getValue(),CardGameEvent.NOTIFY_PLAYER_TURN, true);
-					EventManager.getInstance().sendEvent(e2);
-					
+		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, firstkey + ":" 
+		    						+ SessionManager.getInstance().getAlias(playerMap.get(firstkey))
+		    						+ ":1");
+					EventManager.getInstance().sendEvent(e1);				
 		    	}
 			}
 		} else {
@@ -110,20 +109,6 @@ public class PlaySharedActivity extends Activity {
 			}
 		}
 		
-	}
-	
-	public static void notifyTurn(String playerTurn) {
-		for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
-	    	Log.e("Players Turn", entry.getKey() + ":"  + entry.getValue());
-	    	if(entry.getValue().equalsIgnoreCase(playerTurn)) {
-	    		Event e1= new Event(entry.getValue(),CardGameEvent.NOTIFY_PLAYER_TURN, true);
-				EventManager.getInstance().sendEvent(e1);
-	    	}
-	    	else {
-	    		Event e1= new Event(entry.getValue(),CardGameEvent.NOTIFY_PLAYER_TURN, false);
-				EventManager.getInstance().sendEvent(e1);
-	    	}	    		
-		}
 	}
 	
 	public void clickMonkey(View v) {
@@ -138,7 +123,7 @@ public class PlaySharedActivity extends Activity {
 
 		if(playerMap != null) {
 			for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
-		    	nodes += entry.getKey() + " - "  + entry.getValue() + "\r\n";
+		    	nodes += entry.getKey() + " - "  + SessionManager.getInstance().getAlias(entry.getValue()) + "\r\n";
 			}
 
 			Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
@@ -213,6 +198,8 @@ public class PlaySharedActivity extends Activity {
 		    	Event e= new Event(playerMap.get(i),CardGameEvent.PLAYER_NUM, i);
 				EventManager.getInstance().sendEvent(e);
 				
+				
+				//set first player 0's turn to true; while the rest is false
 				if(i == 0) {
 		    		Event e1= new Event(playerMap.get(i),CardGameEvent.NOTIFY_PLAYER_TURN, true);
 					EventManager.getInstance().sendEvent(e1);
@@ -226,12 +213,15 @@ public class PlaySharedActivity extends Activity {
 				if(i != numPlayers - 1) {
 					Log.e("Adjacent", "not last player");
 					int nxtPlayer = i + 1;
-					Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, nxtPlayer + ":" + playerMap.get(i + 1));
+
+					String alias = SessionManager.getInstance().getAlias(playerMap.get(nxtPlayer));
+					Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, nxtPlayer + ":" + alias);
 					EventManager.getInstance().sendEvent(e1);
 				}
 				else if(i == numPlayers - 1) {
 					Log.e("Adjacent", "last player");
-					Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, 0 + ":" + playerMap.get(0));
+					String alias = SessionManager.getInstance().getAlias(playerMap.get(0));
+					Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, 0 + ":" + alias);
 					EventManager.getInstance().sendEvent(e1);
 				}
 								

@@ -6,6 +6,9 @@ import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
 import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
+import com.cardgame.screenapi.event.EventManager;
+import com.cardgame.screenapi.network.NetworkManager;
+import com.cardgame.screenapi.session.SessionManager;
 
 public class PPSManager {
 

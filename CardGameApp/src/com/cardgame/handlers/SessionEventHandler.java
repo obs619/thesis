@@ -3,8 +3,8 @@ package com.cardgame.handlers;
 import android.util.Log;
 
 import com.cardgame.activities.SessionActivity;
-import com.cardgame.screenapi.Event;
-import com.cardgame.screenapi.EventHandler;
+import com.cardgame.screenapi.event.Event;
+import com.cardgame.screenapi.event.EventHandler;
 
 public class SessionEventHandler implements EventHandler{
 

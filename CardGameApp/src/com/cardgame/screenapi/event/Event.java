@@ -1,4 +1,4 @@
-package com.cardgame.screenapi;
+package com.cardgame.screenapi.event;
 
 import java.io.Serializable;
 
@@ -25,6 +25,9 @@ public class Event {
 	public static final int T_SEND_CURRENT_STATE=110;	
 	
 	public static final int ADD_NEW_SESSION=111;
+	public static final int REQUEST_SESSIONS=112;
+	public static final int RESPOND_REQUEST_SESSIONS=113;
+	
 	
 	private String recipient;//who does this event affect?
 	private int type;

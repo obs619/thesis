@@ -1,7 +1,7 @@
 package com.cardgame.screenapi.chordimpl;
 
-import com.cardgame.screenapi.NetworkManager;
-import com.cardgame.screenapi.NetworkManagerFactory;
+import com.cardgame.screenapi.network.NetworkManager;
+import com.cardgame.screenapi.network.NetworkManagerFactory;
 
 public class ChordNetworkManagerFactory implements NetworkManagerFactory {
 

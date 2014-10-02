@@ -1,4 +1,5 @@
-package com.cardgame.screenapi;
+package com.cardgame.screenapi.messaging;
+
 
 public interface MessageDispatcher {
 

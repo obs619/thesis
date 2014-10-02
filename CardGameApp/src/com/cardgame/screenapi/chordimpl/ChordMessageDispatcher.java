@@ -1,12 +1,12 @@
 package com.cardgame.screenapi.chordimpl;
 
-import com.cardgame.screenapi.Event;
-import com.cardgame.screenapi.EventManager;
-import com.cardgame.screenapi.Message;
-import com.cardgame.screenapi.SessionManager;
-import com.cardgame.screenapi.TransportInterface;
+import com.cardgame.screenapi.event.Event;
+import com.cardgame.screenapi.event.EventManager;
+import com.cardgame.screenapi.messaging.Message;
+import com.cardgame.screenapi.messaging.TransportInterface;
+import com.cardgame.screenapi.session.SessionManager;
 
-public class ChordMessageDispatcher implements com.cardgame.screenapi.MessageDispatcher{
+public class ChordMessageDispatcher implements com.cardgame.screenapi.messaging.MessageDispatcher{
 	
 	private TransportInterface transportInterface;
 	

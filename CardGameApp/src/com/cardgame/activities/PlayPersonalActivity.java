@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -22,10 +23,10 @@ import com.cardgame.adapters.HandAdapter;
 import com.cardgame.handlers.CardGameEvent;
 import com.cardgame.handlers.CardGameEventHandler;
 import com.cardgame.objects.Card;
-import com.cardgame.screenapi.Event;
-import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
-import com.cardgame.screenapi.SessionManager;
+import com.cardgame.screenapi.event.Event;
+import com.cardgame.screenapi.event.EventManager;
+import com.cardgame.screenapi.session.SessionManager;
 
 public class PlayPersonalActivity extends Activity{
 	
@@ -44,7 +45,7 @@ public class PlayPersonalActivity extends Activity{
 	public static PPSManager spsManager;
 	
 	public static String playerToDrawFromNumber;
-	public static String playerToDrawFromNodeName;
+	public static String playerToDrawFromAliasName;
 	
 	public static int playerNum;
 	public static boolean turn = false;
@@ -56,7 +57,6 @@ public class PlayPersonalActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_play_personal);
 		
-		Log.e("Get own alias", SessionManager.getInstance().getOwnAlias());
  		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		// Link UI variables to UI
@@ -83,7 +83,6 @@ public class PlayPersonalActivity extends Activity{
 	        	txtUserName.setText("Username: " + SessionManager.getInstance().getOwnAlias());
 	        }
 	    }, 500);
-		
 		
 	}
 	
@@ -145,6 +144,8 @@ public class PlayPersonalActivity extends Activity{
 	    				
 	    				AlertDialog alert = builder.create();
 	                    alert.show();
+	                    
+	                    spsManager.stop();
 	    			}
 			    	txtError.setVisibility(View.GONE);
 	    		}
@@ -169,15 +170,11 @@ public class PlayPersonalActivity extends Activity{
 		if(turn) {
 			//to avoid drawing multiple cards due to network problem and multiple clicking; set turn immediately to false
 			turn = false;
-			PlayPersonalActivity.txtTurn.setText("Is it your turn? " + false);
+			PlayPersonalActivity.txtTurn.setText("Is it your turn? No");
 			
 			//send node name to player to notify for draw event
-			Event e=new Event(playerToDrawFromNodeName, CardGameEvent.CARD_DRAWN, spsManager.getDeviceName());
+			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, spsManager.getDeviceName());
 			EventManager.getInstance().sendEvent(e);
-			
-			//notify "host" shared screen of the next player
-			Event e1=new Event(Event.R_SHARED_SCREENS, CardGameEvent.NOTIFY_HOST, playerToDrawFromNodeName);
-			EventManager.getInstance().sendEvent(e1);
 			
 		}
 		else {
@@ -221,9 +218,23 @@ public class PlayPersonalActivity extends Activity{
 				}
 			});
 		
-		AlertDialog alert = builder.create();
-        alert.show();
+			AlertDialog alert = builder.create();
+	        alert.show();
+        
+	        spsManager.stop();
 		}
+		
+		 new CountDownTimer(3500, 1000) {
+
+		     public void onTick(long millisUntilFinished) {
+		         PlayPersonalActivity.txtTurn.setText("Is it your turn? " + millisUntilFinished / 1000);
+		     }
+
+		     public void onFinish() {
+		    	 PlayPersonalActivity.turn = true;
+		    	 PlayPersonalActivity.txtTurn.setText("Is it your turn? Yes");
+		     }
+		  }.start();
 	}
 	
 	public static void showLoseDialog() {

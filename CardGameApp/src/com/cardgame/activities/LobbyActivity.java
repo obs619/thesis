@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cardgame.R;
-import com.cardgame.screenapi.SessionManager;
+import com.cardgame.screenapi.session.SessionManager;
 
 public class LobbyActivity extends Activity {
 

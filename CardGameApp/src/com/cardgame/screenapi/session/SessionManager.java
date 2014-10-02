@@ -1,4 +1,4 @@
-package com.cardgame.screenapi;
+package com.cardgame.screenapi.session;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,12 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
+import com.cardgame.screenapi.event.Event;
+import com.cardgame.screenapi.event.EventManager;
 
 public class SessionManager {
 	
+	private static final String defaultSession = "Default";
 	private List<String> publicScreenList = new ArrayList<String>();//<name, sessionID>
 	private List<String> privateScreenList = new ArrayList<String>();
 	private Map<String,Boolean> availableSessions = new HashMap<String,Boolean>();
@@ -24,6 +32,7 @@ public class SessionManager {
 	
 	private static SessionManager instance = null;
 
+	
 	public static SessionManager getInstance() {
 		if(instance==null) {
 			instance=new SessionManager();
@@ -31,43 +40,99 @@ public class SessionManager {
 		return instance;
 	}
 	
-	// add functions
-	public void addPublicScreen(String[] nodeAlias){
-		publicScreenList.add(nodeAlias[0]);
-		aliasList.put(nodeAlias[0], nodeAlias[1]);
+	public void saveSessionID(Activity activity){
+		SharedPreferences sharedPreferences = PreferenceManager
+				.getDefaultSharedPreferences(activity);
+		Editor editor = sharedPreferences.edit();
+		editor.putString("session", chosenSession);
+		editor.commit();
 	}
 	
-	public void addPrivateScreen(String[] nodeAlias){
-		privateScreenList.add(nodeAlias[0]);
-		aliasList.put(nodeAlias[0], nodeAlias[1]);
+	public String getSavedSessionID(Activity activity) {
+		SharedPreferences sharedPreferences = PreferenceManager
+				.getDefaultSharedPreferences(activity);
+		String session = sharedPreferences.getString("session", defaultSession);
+		return session;
 	}
 	
+	/**
+	 * Adds the node into public screen list.
+	 * @param nodeName fixed name of the device
+	 * @param aliasName name representation for the device
+	 */
+	public void addPublicScreen(String nodeName, String aliasName){
+		publicScreenList.add(nodeName);
+		aliasList.put(nodeName, aliasName);
+	}
+	
+	/**
+	 * Adds the node into private screen list.
+	 * @param nodeName fixed name of the device
+	 * @param aliasName name representation for the device
+	 */
+	public void addPrivateScreen(String nodeName, String aliasName){
+		privateScreenList.add(nodeName);
+		aliasList.put(nodeName, aliasName);
+
+	}
+	/**
+	 * Adds the newly created session.
+	 * @param sessionID name of the session
+	 * @param isLock if the session is lock
+	 */
 	public void addAvailableSession(String sessionID, Boolean isLock){
 		availableSessions.put(sessionID, isLock);
 	}
 	
-	//remove functions
+	
+	/**
+	 * Removes the session from the session list 
+	 * with the specified session ID
+	 * @param sessionID identifier of the session
+	 */
 	public void removeAvailableSession(String sessionID){
 		availableSessions.remove(sessionID);
 	}
 	
-	public void removeNodeAlias(String nodeName){
+	/**
+	 * Removes the alias from alias list.
+	 * @param aliasName name representation for the device
+	 */
+	public void removeAlias(String nodeName){
 		aliasList.remove(nodeName);
 	}
 	
-	//getters
+	/**
+	 * Returns device's own alias.
+	 * @return String value of device's own alias
+	 */
 	public String getOwnAlias(){
-		/*
-		if(alias == null);
-			alias = ChordNetworkManager.getChordManager().getName();
-			*/
 		return alias;
 	}
 	
-	public String getOthersAlias(String key){
+	public void removeFromPrivateScreen(String nodeName){
+		for(int i = 0; i < privateScreenList.size(); i++)
+			if(privateScreenList.get(i).equals(nodeName))
+				privateScreenList.remove(i);
+	}
+	
+	public void removeFromPublicScreen(String nodeName){
+		for(int i = 0; i < publicScreenList.size(); i++)
+			if(publicScreenList.get(i).equals(nodeName))
+				publicScreenList.remove(i);
+	}
+	
+	/**
+	 * Returns alias value of 
+	 * @param key node name of the target alias
+	 * @return alias name of the node given key
+	 * or not if it doesn't exist.
+	 */
+	public String getAlias(String key){
 		return aliasList.get(key);
 	}
 	
+	//maybe remove
 	public List<String>getPublicScreenAliasList(){
 		List<String> result = new ArrayList<String>();
 		for(String key: publicScreenList){
@@ -75,6 +140,18 @@ public class SessionManager {
 				result.add(aliasList.get(key));
 		}
 		
+		return result;
+	}
+	
+	public String getNodeName(String alias){
+		String result="";
+		for(Map.Entry<String, String> entry : aliasList.entrySet()) {
+		    if(entry.getValue().equals(alias))
+		    {result = entry.getKey();
+		    		break;
+		    }
+		    	
+		}
 		return result;
 	}
 	
@@ -147,7 +224,7 @@ public class SessionManager {
 	}
 	
 	public Boolean setChosenSession(String session) {
-		if(!isSessionLocked(session)) {
+		if(!isSessionLocked(session) || session.contains(alias)) {
     		Toast.makeText(PPSManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
 			this.chosenSession = session;
 			return true;
@@ -181,7 +258,7 @@ public class SessionManager {
 	}
 	
 	public String createSession(String sessionID) {
-		String deviceName = "[" + ChordNetworkManager.getChordManager().getName() + "]";
+		String deviceName = "[" + alias + "]";
 		
 		addAvailableSession(sessionID + deviceName, false);
 		Event e=new Event(Event.R_ALL_SCREENS
@@ -198,11 +275,17 @@ public class SessionManager {
 	}
 	
 	public void lockSession(String sessionID) {
-		if(sessionID.contains(ChordNetworkManager.getChordManager().getName())) {
+		if(sessionID.contains(alias)) {
 			Event e=new Event(Event.R_ALL_SCREENS
 					,Event.LOCK_SESSION
 					,sessionID,true);
 			EventManager.getInstance().sendEvent(e);
+			
+			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
+				if(sessionID.equalsIgnoreCase(entry.getKey())) {
+					entry.setValue(true);
+				}	
+			}
 			
 			Toast.makeText(PPSManager.getContext(), "Successfuly locked " + sessionID, Toast.LENGTH_LONG).show();
 		}
@@ -212,11 +295,17 @@ public class SessionManager {
 	}
 	
 	public void unlockSession(String sessionID) {
-		if(sessionID.contains(ChordNetworkManager.getChordManager().getName())) {
+		if(sessionID.contains(alias)) {
 			Event e=new Event(Event.R_ALL_SCREENS
 					,Event.UNLOCK_SESSION
 					,sessionID,true);
 			EventManager.getInstance().sendEvent(e);
+			
+			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
+				if(sessionID.equalsIgnoreCase(entry.getKey())) {
+					entry.setValue(false);
+				}	
+			}
 			
 			Toast.makeText(PPSManager.getContext(), "Successfuly unlocked " + sessionID, Toast.LENGTH_LONG).show();
 		}
@@ -232,6 +321,13 @@ public class SessionManager {
 			}	
 		}
 		return null;
+	}
+	
+	public void requestSessions() {
+		Event e=new Event(Event.R_ALL_SCREENS
+				,Event.REQUEST_SESSIONS
+				,ChordNetworkManager.getChordManager().getName(),true);
+		EventManager.getInstance().sendEvent(e);
 	}
 	
 }

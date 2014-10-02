@@ -1,4 +1,6 @@
-package com.cardgame.screenapi;
+package com.cardgame.screenapi.messaging;
+
+import com.cardgame.screenapi.event.Event;
 
 public interface MessageBuilder {
 

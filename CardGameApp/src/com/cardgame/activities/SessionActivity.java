@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,9 +20,9 @@ import android.widget.Toast;
 
 import com.cardgame.R;
 import com.cardgame.handlers.SessionEventHandler;
-import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
-import com.cardgame.screenapi.SessionManager;
+import com.cardgame.screenapi.event.EventManager;
+import com.cardgame.screenapi.session.SessionManager;
 
 public class SessionActivity extends Activity{
 	
@@ -82,6 +83,8 @@ public class SessionActivity extends Activity{
 
 		    }
 		});
+		//for test
+		Log.e("load session", SessionManager.getInstance().getSavedSessionID(this));
 
 	}
 	
@@ -118,6 +121,23 @@ public class SessionActivity extends Activity{
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}
 	
+	public void selectRequestSessions(View v) {
+		SessionManager.getInstance().requestSessions();
+		
+		listChannels.clear();
+		channelsAdapter.notifyDataSetChanged();
+		
+		final Handler handler = new Handler();
+	    handler.postDelayed(new Runnable() {
+	        @Override
+	        public void run() {
+	        	listChannels.addAll(SessionManager.getInstance().getAvailableSessionsSet());
+	    		channelsAdapter.notifyDataSetChanged();
+	        }
+	    }, 500);
+		
+	}
+	
 	public void selectCreateSession(View v) {
 		listChannels.add(SessionManager.getInstance().createSession(txtChannel.getText().toString()));
 		channelsAdapter.notifyDataSetChanged();
@@ -130,10 +150,16 @@ public class SessionActivity extends Activity{
 			if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
 				if(SessionManager.getInstance().isPersonal()) {
 					Intent intent = new Intent(this, PlayPersonalActivity.class);
+					SessionManager.getInstance().saveSessionID(this);
+					//for test
+					Log.e("save session", SessionManager.getInstance().getChosenSession());
 					startActivity(intent);
 				}
 				else if(!SessionManager.getInstance().isPersonal()) {
 					Intent intent = new Intent(this, PlaySharedActivity.class);
+					SessionManager.getInstance().saveSessionID(this);
+					//for test
+					Log.e("save session", SessionManager.getInstance().getChosenSession());
 					startActivity(intent);
 				}
 			}
