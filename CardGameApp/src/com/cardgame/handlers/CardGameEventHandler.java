@@ -6,10 +6,10 @@ import android.widget.Toast;
 import com.cardgame.activities.PlayPersonalActivity;
 import com.cardgame.activities.PlaySharedActivity;
 import com.cardgame.objects.Card;
-import com.cardgame.screenapi.Event;
-import com.cardgame.screenapi.EventHandler;
 import com.cardgame.screenapi.PPSManager;
-import com.cardgame.screenapi.SessionManager;
+import com.cardgame.screenapi.event.Event;
+import com.cardgame.screenapi.event.EventHandler;
+import com.cardgame.screenapi.session.SessionManager;
 
 public class CardGameEventHandler implements EventHandler {
 	

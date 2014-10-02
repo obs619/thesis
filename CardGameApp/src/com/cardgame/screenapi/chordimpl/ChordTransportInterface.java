@@ -2,12 +2,12 @@ package com.cardgame.screenapi.chordimpl;
 
 import android.util.Log;
 
-import com.cardgame.screenapi.Event;
-import com.cardgame.screenapi.EventManager;
-import com.cardgame.screenapi.Message;
-import com.cardgame.screenapi.MessageDispatcher;
-import com.cardgame.screenapi.SessionManager;
-import com.cardgame.screenapi.TransportInterface;
+import com.cardgame.screenapi.event.Event;
+import com.cardgame.screenapi.event.EventManager;
+import com.cardgame.screenapi.messaging.Message;
+import com.cardgame.screenapi.messaging.MessageDispatcher;
+import com.cardgame.screenapi.messaging.TransportInterface;
+import com.cardgame.screenapi.session.SessionManager;
 import com.samsung.android.sdk.chord.SchordChannel;
 
 public class ChordTransportInterface implements TransportInterface {
