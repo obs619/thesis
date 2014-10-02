@@ -134,6 +134,10 @@ public class SessionManager {
 		this.privateScreenList = privateScreenList;
 	}
 	
+	/**
+	 * Sets whether the current device will have a public or private screen
+	 * @param screenType the current device is either PUBLIC or PRIVATE
+	 */
 	public void setScreenType(boolean screenType) {
 		this.isPersonal = screenType;
 	}
