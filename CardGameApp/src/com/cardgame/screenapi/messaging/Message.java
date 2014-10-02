@@ -1,4 +1,4 @@
-package com.cardgame.screenapi;
+package com.cardgame.screenapi.messaging;
 
 import java.io.Serializable;
 

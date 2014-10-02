@@ -1,4 +1,4 @@
-package com.cardgame.screenapi;
+package com.cardgame.screenapi.event;
 
 public interface EventHandler {
 	

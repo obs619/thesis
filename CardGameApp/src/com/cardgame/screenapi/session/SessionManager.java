@@ -1,4 +1,4 @@
-package com.cardgame.screenapi;
+package com.cardgame.screenapi.session;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +14,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
+import com.cardgame.screenapi.event.Event;
+import com.cardgame.screenapi.event.EventManager;
 
 public class SessionManager {
 	

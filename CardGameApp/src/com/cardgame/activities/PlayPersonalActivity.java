@@ -23,10 +23,10 @@ import com.cardgame.adapters.HandAdapter;
 import com.cardgame.handlers.CardGameEvent;
 import com.cardgame.handlers.CardGameEventHandler;
 import com.cardgame.objects.Card;
-import com.cardgame.screenapi.Event;
-import com.cardgame.screenapi.EventManager;
 import com.cardgame.screenapi.PPSManager;
-import com.cardgame.screenapi.SessionManager;
+import com.cardgame.screenapi.event.Event;
+import com.cardgame.screenapi.event.EventManager;
+import com.cardgame.screenapi.session.SessionManager;
 
 public class PlayPersonalActivity extends Activity{
 	

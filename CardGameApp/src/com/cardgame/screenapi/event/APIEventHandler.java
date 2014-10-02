@@ -1,7 +1,9 @@
-package com.cardgame.screenapi;
+package com.cardgame.screenapi.event;
 
 import java.util.Iterator;
 import java.util.Map;
+
+import com.cardgame.screenapi.session.SessionManager;
 
 import android.util.Log;
 
