@@ -6,7 +6,10 @@ import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 
 public class Event {
 	
-	public static final String R_SHARED_SCREENS="shared";
+	public static final String R_PUBLIC_SCREENS="shared";
+	public static final String R_TEAM_SHARED_SCREENS="teamshared";
+	public static final String R_TEAM_PERSONAL_SCREENS="teampersonal";
+	public static final String R_TEAM_SCREENS="team";
 	public static final String R_PERSONAL_SCREENS="personal";
 	public static final String R_ALL_SCREENS="all";
 	public static final String R_LOCAL_SCREEN="onlyme";
@@ -31,6 +34,7 @@ public class Event {
 	
 	private String recipient;//who does this event affect?
 	private int type;
+	private int teamNo=null;
 	private boolean isAPIEvent;
 	private Serializable payload;
 	private String session;
@@ -45,6 +49,21 @@ public class Event {
 	public Event(String recipient, int type, Serializable payload) {
 		this.recipient=recipient;
 		this.type=type;
+		this.payload=payload;
+		this.setAPIEvent(false);
+		
+		if (type == ADD_NEW_SESSION) {
+			this.session = payload.toString();
+		}
+		else {
+			this.session = ChordNetworkManager.getChordManager().getName();
+		}
+	}
+	
+	public Event(String recipient, int type, Serializable payload, int teamNo) {
+		this.recipient=recipient;
+		this.type=type;
+		this.teamNo=teamNo;
 		this.payload=payload;
 		this.setAPIEvent(false);
 		

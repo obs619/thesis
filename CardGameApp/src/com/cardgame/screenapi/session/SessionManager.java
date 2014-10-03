@@ -28,6 +28,9 @@ public class SessionManager {
 	private String alias;
 	private Map<String,String> aliasList = new HashMap<String, String>();
 	
+	//for tracking teams
+	private Map<Integer,List<String>>teamMap=new HashMap<Integer, List<String>>();
+	
 	private boolean isPersonal;
 	private boolean sessionMode = true;
 	private String chosenSession = "";
@@ -178,7 +181,30 @@ public class SessionManager {
 	public List<String> getPrivateScreenList() {
 		return privateScreenList;
 	}
-	
+	/*Team screen methods
+	 * 
+	 *
+	 */
+	public void addTeamScreen(int teamNo, String nodeName, String aliasName)
+	{
+		if(teamMap.get(teamNo)!=null)
+			teamMap.get(teamNo).add(nodeName);
+		else {
+			List<String>newTeamList=new ArrayList<String>();
+			newTeamList.add(nodeName);
+			teamMap.put(teamNo, newTeamList);
+		}
+		//aliasList.put(nodeName, aliasName); not used since we assume the node already exists?
+		//TODO check if node is in public or private screen list, ensure it is no longer a "public" screen?
+	}
+	public List<String> getTeamScreenList(int teamNo)
+	{
+		return teamMap.get(teamNo);
+	}
+	/* End team screen methods
+	 * 
+	 *
+	 */
 	public Set<String> getAvailableSessionsSet() {
 		Set<String> keys = availableSessions.keySet();
 		return keys;

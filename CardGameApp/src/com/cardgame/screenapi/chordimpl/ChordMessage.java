@@ -17,6 +17,13 @@ public class ChordMessage extends com.cardgame.screenapi.messaging.Message imple
 		mMessageType = messageType;
 	}
 	
+	ChordMessage(Serializable message, String recipients, int messageType, int teamNo) {
+		mMessage = message;
+		mRecipients = recipients;
+		mMessageType = messageType;
+		this.teamNo=teamNo;
+	}
+	
 	ChordMessage(Serializable message, String recipients, int messageType, boolean isAPIEvent) {
 		mMessage = message;
 		mRecipients = recipients;
