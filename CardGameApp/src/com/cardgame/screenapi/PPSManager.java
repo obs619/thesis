@@ -17,6 +17,10 @@ public class PPSManager {
 	private SessionManager sessionManager;
 	private static Context mContext;
 	
+	//singleton attributes
+	private static PPSManagerFactory factory;
+	private static PPSManager instance=null;
+	
 	public PPSManager(Context mContext, boolean isPersonal, boolean sessionMode) {
 		PPSManager.mContext = mContext;
 
@@ -33,7 +37,42 @@ public class PPSManager {
 		setNetworkInitializer();
 		setEventManager();
 	}
-	
+	/* begin code required for singleton
+	 */
+	 public PPSManager()
+	  {
+	  	NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
+		EventManager.setDefaultFactory(new ChordEventManagerFactory());
+
+		setNetworkInitializer();
+		setEventManager();
+	  }
+	  
+	  public static PPSManager getInstance() {
+		if (instance==null)
+			instance= factory.createPPSManager();
+		return instance;
+		}
+	  public void setContext(Context context){
+	  	PPSManager.mContext = context;
+	  }
+	  
+	  public void setPersonal(boolean isPersonal){
+	  	SessionManager.getInstance().setScreenType(isPersonal);
+	  	SessionManager.getInstance().clearPrivateScreenList();
+		SessionManager.getInstance().clearPublicScreenList();
+		SessionManager.getInstance().clearAliasList();
+	  }
+	  
+	  public void setSessionMode(boolean sessionMode){
+	  	SessionManager.getInstance().setSessionMode(sessionMode);
+	  }
+	  
+	  
+	  
+	  /*
+	   * end code required for singleton
+	 */
 	public void stop() {
 		ChordNetworkManager.getChordManager().stop();
 	}
