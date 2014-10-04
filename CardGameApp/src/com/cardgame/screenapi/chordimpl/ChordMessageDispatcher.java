@@ -15,27 +15,27 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.messaging.
 	}
 	
 	@Override
-	public void sendMessage(Message m) {
-		String recipient=m.getRecipient();
+	public void sendMessage(Message message) {
+		String recipient=message.getRecipient();
 		
 		if(recipient.equals(Event.R_ALL_SCREENS))
 		{
-			transportInterface.sendToAll(m);
+			transportInterface.sendToAll(message);
 		}
 		else if(recipient.equals(Event.R_PUBLIC_SCREENS))
 		{
 			for(String node: SessionManager.getInstance().getPublicScreenList())
-				transportInterface.send(node,m);
+				transportInterface.send(node,message);
 		}
 		else if(recipient.equals(Event.R_PERSONAL_SCREENS))
 		{
 			for(String node: SessionManager.getInstance().getPrivateScreenList())
-				transportInterface.send(node,m);
+				transportInterface.send(node,message);
 		}
 		else if(recipient.equals(Event.R_TEAM_SCREENS))
 		{
-			for(String node: SessionManager.getInstance().getTeamScreenList(m.getTeamNo()))
-				transportInterface.send(node,m);
+			for(String node: SessionManager.getInstance().getTeamScreenList(message.getTeamNo()))
+				transportInterface.send(node,message);
 				
 		}
 		else if(recipient.equals(Event.R_TEAM_SHARED_SCREENS))
@@ -48,13 +48,13 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.messaging.
 		}
 		else
 		{
-			transportInterface.send(recipient,m);
+			transportInterface.send(recipient,message);
 		}
 		
 	}
 	@Override
-	public void receiveMessage(Message m) {
-		EventManager.getInstance().unpackEvent(m);
+	public void receiveMessage(Message message) {
+		EventManager.getInstance().unpackEvent(message);
 	}
 	
 	@Override

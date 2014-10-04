@@ -56,15 +56,6 @@ public class APIEventHandler implements EventHandler {
 		case Event.USER_LEFT_PRIVATE:
 			Log.e("user left private", "pasok");
 			
-			/*
-			Iterator<String> it = SessionManager.getInstance().getPrivateScreenList().iterator();
-			while(it.hasNext()){
-				String value = it.next();
-				if(value.equals(event.getPayload().toString())){
-					it.remove();
-				}
-			}
-			*/
 			SessionManager.getInstance().removeFromPrivateScreen(event.getPayload().toString());
 			SessionManager.getInstance().removeAlias(event.getPayload().toString());
 			Log.e("private list size", Integer.toString(SessionManager.getInstance().getPrivateScreenList().size()));
@@ -73,15 +64,7 @@ public class APIEventHandler implements EventHandler {
 			
 		case Event.USER_LEFT_PUBLIC:
 			Log.e("user left public", "pasok");
-			/*
-			Iterator<String> it2 = SessionManager.getInstance().getPublicScreenList().iterator();
-			while(it2.hasNext()){
-				String value = it2.next();
-				if(value.equals(event.getPayload().toString())){
-					it2.remove();
-				}
-			}
-			*/
+			
 			SessionManager.getInstance().removeFromPublicScreen(event.getPayload().toString());
 			SessionManager.getInstance().removeAlias(event.getPayload().toString());
 
