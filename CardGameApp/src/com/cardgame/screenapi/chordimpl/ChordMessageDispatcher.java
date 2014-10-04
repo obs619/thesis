@@ -22,7 +22,7 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.messaging.
 		{
 			transportInterface.sendToAll(m);
 		}
-		else if(recipient.equals(Event.R_SHARED_SCREENS))
+		else if(recipient.equals(Event.R_PUBLIC_SCREENS))
 		{
 			for(String node: SessionManager.getInstance().getPublicScreenList())
 				transportInterface.send(node,m);
@@ -31,6 +31,20 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.messaging.
 		{
 			for(String node: SessionManager.getInstance().getPrivateScreenList())
 				transportInterface.send(node,m);
+		}
+		else if(recipient.equals(Event.R_TEAM_SCREENS))
+		{
+			for(String node: SessionManager.getInstance().getTeamScreenList(m.getTeamNo()))
+				transportInterface.send(node,m);
+				
+		}
+		else if(recipient.equals(Event.R_TEAM_SHARED_SCREENS))
+		{
+			
+		}
+		else if(recipient.equals(Event.R_TEAM_PERSONAL_SCREENS))
+		{
+			
 		}
 		else
 		{

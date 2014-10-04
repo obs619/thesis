@@ -7,9 +7,11 @@ import java.util.Map;
 import java.util.Set;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cardgame.screenapi.PPSManager;
@@ -19,12 +21,15 @@ import com.cardgame.screenapi.event.EventManager;
 
 public class SessionManager {
 	
-	private static final String defaultSession = "Default";
+	public static final String DEFAULT_SESSION = "DEFAULT";
 	private List<String> publicScreenList = new ArrayList<String>();//<name, sessionID>
 	private List<String> privateScreenList = new ArrayList<String>();
 	private Map<String,Boolean> availableSessions = new HashMap<String,Boolean>();
 	private String alias;
 	private Map<String,String> aliasList = new HashMap<String, String>();
+	
+	//for tracking teams
+	private Map<Integer,List<String>>teamMap=new HashMap<Integer, List<String>>();
 	
 	private boolean isPersonal;
 	private boolean sessionMode = true;
@@ -40,19 +45,22 @@ public class SessionManager {
 		return instance;
 	}
 	
-	public void saveSessionID(Activity activity){
+	public void saveSessionID(){
 		SharedPreferences sharedPreferences = PreferenceManager
-				.getDefaultSharedPreferences(activity);
+				.getDefaultSharedPreferences(PPSManager.getContext());
 		Editor editor = sharedPreferences.edit();
 		editor.putString("session", chosenSession);
+		editor.putBoolean("isLock", isSessionLocked(chosenSession));
 		editor.commit();
 	}
 	
-	public String getSavedSessionID(Activity activity) {
+	public void loadSavedSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
-				.getDefaultSharedPreferences(activity);
-		String session = sharedPreferences.getString("session", defaultSession);
-		return session;
+				.getDefaultSharedPreferences(PPSManager.getContext());
+		String session = sharedPreferences.getString("session", DEFAULT_SESSION);
+		Boolean isLock = sharedPreferences.getBoolean("isLock", false);
+		availableSessions.put(session, isLock);
+		chosenSession = session;
 	}
 	
 	/**
@@ -173,7 +181,30 @@ public class SessionManager {
 	public List<String> getPrivateScreenList() {
 		return privateScreenList;
 	}
-	
+	/*Team screen methods
+	 * 
+	 *
+	 */
+	public void addTeamScreen(int teamNo, String nodeName, String aliasName)
+	{
+		if(teamMap.get(teamNo)!=null)
+			teamMap.get(teamNo).add(nodeName);
+		else {
+			List<String>newTeamList=new ArrayList<String>();
+			newTeamList.add(nodeName);
+			teamMap.put(teamNo, newTeamList);
+		}
+		//aliasList.put(nodeName, aliasName); not used since we assume the node already exists?
+		//TODO check if node is in public or private screen list, ensure it is no longer a "public" screen?
+	}
+	public List<String> getTeamScreenList(int teamNo)
+	{
+		return teamMap.get(teamNo);
+	}
+	/* End team screen methods
+	 * 
+	 *
+	 */
 	public Set<String> getAvailableSessionsSet() {
 		Set<String> keys = availableSessions.keySet();
 		return keys;
@@ -227,17 +258,22 @@ public class SessionManager {
 		if(!isSessionLocked(session) || session.contains(alias)) {
     		Toast.makeText(PPSManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
 			this.chosenSession = session;
+
+			this.saveSessionID();
 			return true;
 		}
 		else {
 			Toast.makeText(PPSManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
-			this.chosenSession = "Default";
+			this.chosenSession = DEFAULT_SESSION;
+
+			this.saveSessionID();
 			return false;
 		}
+		
 	}
 	
 	public void setDefaultSession() {
-		this.chosenSession = "Default";
+		this.chosenSession = DEFAULT_SESSION;
 	}
 	
 	//clear functions

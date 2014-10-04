@@ -120,14 +120,14 @@ public class PlayPersonalActivity extends Activity{
 	    		if(cardsToPlay.get(0).getNumber() == cardsToPlay.get(1).getNumber()) {
 	    			for(Card card: cardsToPlay)
 				    {
-				    	Event e=new Event(Event.R_SHARED_SCREENS,CardGameEvent.CARD_PLAYED,card);
+				    	Event e=new Event(Event.R_PUBLIC_SCREENS,CardGameEvent.CARD_PLAYED,card);
 						EventManager.getInstance().triggerEvent(e);
 				    }
 			    	
 	    			Log.e("Number of cards left in hand", handAdapter.getCount() + "");
 	    			
 	    			if(handAdapter.getCount() == 0) {
-	    				Event e=new Event(Event.R_SHARED_SCREENS,CardGameEvent.OUT_OF_CARDS,playerNum);
+	    				Event e=new Event(Event.R_PUBLIC_SCREENS,CardGameEvent.OUT_OF_CARDS,playerNum);
 						EventManager.getInstance().sendEvent(e);
 	    				
 	    				AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -203,7 +203,7 @@ public class PlayPersonalActivity extends Activity{
 		
 		//check if player has no cards left then player wins
 		if(handAdapter.getCount() == 0) {
-			Event e1=new Event(Event.R_SHARED_SCREENS,CardGameEvent.OUT_OF_CARDS,playerNum);
+			Event e1=new Event(Event.R_PUBLIC_SCREENS,CardGameEvent.OUT_OF_CARDS,playerNum);
 			EventManager.getInstance().sendEvent(e1);
 			
 			AlertDialog.Builder builder = new AlertDialog.Builder(activity);
