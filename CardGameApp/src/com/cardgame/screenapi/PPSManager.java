@@ -12,6 +12,11 @@ import com.cardgame.screenapi.session.SessionManager;
 
 public class PPSManager {
 
+	public static final boolean PRIVATE = true;
+	public static final boolean PUBLIC = false;
+	public static final boolean AS_DEFAULT = true;
+	public static final boolean AS_CUSTOM = false;
+
 	private EventManager eventManager;
 	private NetworkManager networkInitializer; 
 	private SessionManager sessionManager;

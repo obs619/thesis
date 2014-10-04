@@ -51,11 +51,11 @@ public class SessionActivity extends Activity{
 		
 		
 		if(SessionManager.getInstance().isPersonal()) {
-			spsManager = new PPSManager(this, true, true);
+			spsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_DEFAULT);
 			txtScreenType.setText("Screen Type: Personal");
 		}
 		else if(!SessionManager.getInstance().isPersonal()) {
-			spsManager = new PPSManager(this, false, true);
+			spsManager = new PPSManager(this, PPSManager.PUBLIC, PPSManager.AS_DEFAULT);
 			txtScreenType.setText("Screen Type: Shared");
 		}
 		

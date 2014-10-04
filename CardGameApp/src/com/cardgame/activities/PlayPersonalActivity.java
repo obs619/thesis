@@ -42,7 +42,7 @@ public class PlayPersonalActivity extends Activity{
 	private static HandAdapter handAdapter;
 	
 	// Shared/Personal screen variables
-	public static PPSManager spsManager;
+	public static PPSManager ppsManager;
 	
 	public static String playerToDrawFromNumber;
 	public static String playerToDrawFromAliasName;
@@ -69,7 +69,7 @@ public class PlayPersonalActivity extends Activity{
 		
 		activity = this;
 		
-		spsManager = new PPSManager(this, true, false);
+		ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_CUSTOM);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
 		
 		// Initialize adapters
@@ -89,13 +89,13 @@ public class PlayPersonalActivity extends Activity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		spsManager.stop();
+		ppsManager.stop();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		spsManager.start();
+		ppsManager.start();
 	}
 	
 	public static void removeCard(Card card) {
@@ -145,7 +145,7 @@ public class PlayPersonalActivity extends Activity{
 	    				AlertDialog alert = builder.create();
 	                    alert.show();
 	                    
-	                    spsManager.stop();
+	                    ppsManager.stop();
 	    			}
 			    	txtError.setVisibility(View.GONE);
 	    		}
@@ -173,7 +173,7 @@ public class PlayPersonalActivity extends Activity{
 			PlayPersonalActivity.txtTurn.setText("Is it your turn? No");
 			
 			//send node name to player to notify for draw event
-			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, spsManager.getDeviceName());
+			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, ppsManager.getDeviceName());
 			EventManager.getInstance().sendEvent(e);
 			
 		}
@@ -221,7 +221,7 @@ public class PlayPersonalActivity extends Activity{
 			AlertDialog alert = builder.create();
 	        alert.show();
         
-	        spsManager.stop();
+	        ppsManager.stop();
 		}
 		
 		 new CountDownTimer(3500, 1000) {
@@ -269,7 +269,7 @@ public class PlayPersonalActivity extends Activity{
 	}
 	
 	public void clickCheckSession(View v) {
-		Toast.makeText(this, spsManager.getCurrentSessionName(), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, ppsManager.getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
 }

@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cardgame.R;
+import com.cardgame.screenapi.PPSManager;
 import com.cardgame.screenapi.session.SessionManager;
 
 public class LobbyActivity extends Activity {
-
+	public static PPSManager ppsManager;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,14 +22,15 @@ public class LobbyActivity extends Activity {
 	
 	public void selectAsPersonal(View v) {
 		Intent intent = new Intent(this, SessionActivity.class);
-		SessionManager.getInstance().setScreenType(true);
+		SessionManager.getInstance().setScreenType(PPSManager.PRIVATE);
 		setDeviceAlias();
 		startActivity(intent);
 	}
 	
 	public void selectAsShared(View v) {
 		Intent intent = new Intent(this, SessionActivity.class);
-		SessionManager.getInstance().setScreenType(false);
+		//ppsManager = new PPSManager(this, false, false);
+		SessionManager.getInstance().setScreenType(PPSManager.PUBLIC);
 		setDeviceAlias();
 		startActivity(intent);
 	}
