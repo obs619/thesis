@@ -27,7 +27,7 @@ public class PPSManager {
 	private static PPSManagerFactory factory;
 	
 	//temporary public
-	public static PPSManager instance=null;
+	private static PPSManager instance=null;
 	
 	public PPSManager(Context mContext, boolean isPersonal, boolean sessionMode) {
 		PPSManager.mContext = mContext;

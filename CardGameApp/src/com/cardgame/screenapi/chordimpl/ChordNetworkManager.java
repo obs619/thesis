@@ -62,7 +62,6 @@ public class ChordNetworkManager extends NetworkManager {
 			mChordManager.start(infList.get(0), mChordManagerListener);
 			Log.e("Starting Chord", "Success");
 		}catch(Exception e){
-			Log.e("Starting Chord", "Fail");
 			e.printStackTrace();
 		}
 
