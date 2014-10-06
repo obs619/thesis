@@ -134,7 +134,12 @@ public class ChordTransportInterface implements TransportInterface {
 	
 	@Override
 	public void sendToAll(Message message) {
-		mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
+		try{
+			mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
+		}catch(Exception e) {
+            Log.e("ChordTransportInterface", "sendToAll failed");
+            return;
+        }
 	}
 
 	@Override
@@ -147,7 +152,12 @@ public class ChordTransportInterface implements TransportInterface {
 	}
 	
 	public void send(String userToSend,Message message) {
-		mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
+		try{
+			mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
+		}catch(Exception e){
+			Log.e("ChordTransportInterface", "send failed");
+			return;
+		}
 	}
 
 }

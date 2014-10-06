@@ -3,7 +3,6 @@ package com.cardgame.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -20,17 +19,18 @@ public class LobbyActivity extends Activity {
 		setContentView(R.layout.activity_lobby);
 	}
 	
-	public void selectAsPersonal(View v) {
+	public void selectAsPrivate(View v) {
 		Intent intent = new Intent(this, SessionActivity.class);
-		SessionManager.getInstance().setScreenType(PPSManager.PRIVATE);
+		ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_DEFAULT);
+		//SessionManager.getInstance().setScreenType(PPSManager.PRIVATE);
 		setDeviceAlias();
 		startActivity(intent);
 	}
 	
-	public void selectAsShared(View v) {
+	public void selectAsPublic(View v) {
 		Intent intent = new Intent(this, SessionActivity.class);
-		//ppsManager = new PPSManager(this, false, false);
-		SessionManager.getInstance().setScreenType(PPSManager.PUBLIC);
+		ppsManager = new PPSManager(this, PPSManager.PUBLIC, PPSManager.AS_DEFAULT);
+		//SessionManager.getInstance().setScreenType(PPSManager.PUBLIC);
 		setDeviceAlias();
 		startActivity(intent);
 	}

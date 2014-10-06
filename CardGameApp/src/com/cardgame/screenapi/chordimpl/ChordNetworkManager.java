@@ -27,6 +27,7 @@ public class ChordNetworkManager extends NetworkManager {
 		
 		@Override
 		public void onStarted(String nodeName, int reason) {
+			Log.e("Schord Status Listener", "Chord start");
 			//check if the device has a session
 			if(SessionManager.getInstance().isSessionMode())
 				ChordTransportInterface.joinDefaultChannel();
@@ -37,7 +38,7 @@ public class ChordNetworkManager extends NetworkManager {
 		@Override
 		public void onStopped(int reason) {
 			// TODO Auto-generated method stub
-			
+			Log.e("Schord Status Listener", "Chord Stop");
 		}
 
 	};
