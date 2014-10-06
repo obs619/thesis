@@ -34,7 +34,7 @@ public class Event {
 	
 	private String recipient;//who does this event affect?
 	private int type;
-	private int teamNo=null;
+	private int teamNo;
 	private boolean isAPIEvent;
 	private Serializable payload;
 	private String session;

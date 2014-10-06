@@ -1,6 +1,7 @@
 package com.cardgame.screenapi;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
@@ -12,6 +13,11 @@ import com.cardgame.screenapi.session.SessionManager;
 
 public class PPSManager {
 
+	public static final boolean PRIVATE = true;
+	public static final boolean PUBLIC = false;
+	public static final boolean AS_DEFAULT = true;
+	public static final boolean AS_CUSTOM = false;
+
 	private EventManager eventManager;
 	private NetworkManager networkInitializer; 
 	private SessionManager sessionManager;
@@ -19,49 +25,59 @@ public class PPSManager {
 	
 	//singleton attributes
 	private static PPSManagerFactory factory;
-	private static PPSManager instance=null;
+	
+	//temporary public
+	public static PPSManager instance=null;
 	
 	public PPSManager(Context mContext, boolean isPersonal, boolean sessionMode) {
 		PPSManager.mContext = mContext;
-
-		NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
-		EventManager.setDefaultFactory(new ChordEventManagerFactory());
-		
+		initializeNetworkManager();
+		initializeEventManager();
+		clearSessionList();
 		SessionManager.getInstance().setScreenType(isPersonal);
-		SessionManager.getInstance().clearPrivateScreenList();
-		SessionManager.getInstance().clearPublicScreenList();
-		SessionManager.getInstance().clearAliasList();
-		
 		SessionManager.getInstance().setSessionMode(sessionMode);
-		
-		setNetworkInitializer();
-		setEventManager();
+		instance = this;
 	}
 	/* begin code required for singleton
 	 */
 	 public PPSManager()
 	  {
-	  	NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
-		EventManager.setDefaultFactory(new ChordEventManagerFactory());
 
-		setNetworkInitializer();
-		setEventManager();
+		initializeNetworkManager();
+		initializeEventManager();
+		clearSessionList();
+		
+		instance = this;
 	  }
 	  
-	  public static PPSManager getInstance() {
-		if (instance==null)
+	  public static PPSManager getInstance() 
+	  {
+		if (instance==null){
+			Log.e("PPSManager is null", "getInstance PPS");
 			instance= factory.createPPSManager();
-		return instance;
 		}
+		return instance;
+	  }	
+	  
+	  public void clearSessionList(){
+		  SessionManager.getInstance().clearPrivateScreenList();
+		  SessionManager.getInstance().clearPublicScreenList();
+		  SessionManager.getInstance().clearAliasList();
+
+	  }
+	  
+	  public void initializeEventManager(){
+		  EventManager.setDefaultFactory(new ChordEventManagerFactory());
+		  setEventManager();
+	  }
+	  
+	  public void initializeNetworkManager(){
+		  NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
+		  setNetworkInitializer();
+	  }
+	  
 	  public void setContext(Context context){
 	  	PPSManager.mContext = context;
-	  }
-	  
-	  public void setPersonal(boolean isPersonal){
-	  	SessionManager.getInstance().setScreenType(isPersonal);
-	  	SessionManager.getInstance().clearPrivateScreenList();
-		SessionManager.getInstance().clearPublicScreenList();
-		SessionManager.getInstance().clearAliasList();
 	  }
 	  
 	  public void setSessionMode(boolean sessionMode){
@@ -75,6 +91,10 @@ public class PPSManager {
 	 */
 	public void stop() {
 		ChordNetworkManager.getChordManager().stop();
+	}
+	
+	public void setScreenType(boolean screenType){
+		SessionManager.getInstance().setScreenType(screenType);
 	}
 	
 	public void start() {

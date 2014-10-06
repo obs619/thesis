@@ -3,8 +3,8 @@ package com.cardgame.screenapi.messaging;
 
 public interface MessageDispatcher {
 
-	public void sendMessage(Message m);
-	public void receiveMessage(Message m);
+	public void sendMessage(Message message);
+	public void receiveMessage(Message message);
 	public void setTransportInterface(TransportInterface transportInterface);
 
 }

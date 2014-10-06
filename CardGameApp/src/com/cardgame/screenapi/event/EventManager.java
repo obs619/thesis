@@ -28,32 +28,32 @@ public class EventManager {
 		this.messageDispatcher=messageDispatcher;
 	}
 	
-	public void sendEvent(Event e) {
-		Message m=messageBuilder.buildMessage(e);
-		messageDispatcher.sendMessage(m);
+	public void sendEvent(Event event) {
+		Message message=messageBuilder.buildMessage(event);
+		messageDispatcher.sendMessage(message);
 	}
 	
-	public void unpackEvent(Message m) {
-		Event e=messageBuilder.unpackEvent(m);
-		applyEvent(e);
+	public void unpackEvent(Message message) {
+		Event event=messageBuilder.unpackEvent(message);
+		applyEvent(event);
 	}
 	
-	public void setEventHandler(EventHandler h) {
-		eventHandler=h;
+	public void setEventHandler(EventHandler handler) {
+		eventHandler=handler;
 	}
 	
-	public void triggerEvent(Event e) {
-		if(e.getRecipient()!=Event.R_LOCAL_SCREEN)
-			sendEvent(e);
-		applyEvent(e);//apply event to yourself (if it affects you)
+	public void triggerEvent(Event event) {
+		if(event.getRecipient()!=Event.R_LOCAL_SCREEN)
+			sendEvent(event);
+		applyEvent(event);//apply event to yourself (if it affects you)
 	}
 	
-	public void applyEvent(Event e) {
-		if(e.isAPIEvent()) {
-			apiEventHandler.handleEvent(e);
+	public void applyEvent(Event event) {
+		if(event.isAPIEvent()) {
+			apiEventHandler.handleEvent(event);
 		}
 		else {
-			eventHandler.handleEvent(e);
+			eventHandler.handleEvent(event);
 		}
 	}
 	

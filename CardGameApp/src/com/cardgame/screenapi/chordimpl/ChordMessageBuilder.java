@@ -7,13 +7,13 @@ import com.cardgame.screenapi.messaging.MessageBuilder;
 public class ChordMessageBuilder implements MessageBuilder {
 
 	@Override
-	public Message buildMessage(Event e) {
-		return new ChordMessage(e.getPayload(), e.getRecipient(), e.getType(), e.isAPIEvent());
+	public Message buildMessage(Event event) {
+		return new ChordMessage(event.getPayload(), event.getRecipient(), event.getType(), event.isAPIEvent());
 	}
 
 	@Override
-	public Event unpackEvent(Message m) {
-		return new Event(m.getRecipient(), m.getType(), m.getContents(), m.isAPIEvent());
+	public Event unpackEvent(Message message) {
+		return new Event(message.getRecipient(), message.getType(), message.getContents(), message.isAPIEvent());
 	}
 
 }

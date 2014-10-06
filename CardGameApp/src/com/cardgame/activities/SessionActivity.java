@@ -26,7 +26,7 @@ import com.cardgame.screenapi.session.SessionManager;
 
 public class SessionActivity extends Activity{
 	
-	private PPSManager spsManager;
+	//private PPSManager ppsManager;
 	
 	private Spinner spinChannels;
 	public static List<String> listChannels;
@@ -51,13 +51,16 @@ public class SessionActivity extends Activity{
 		
 		
 		if(SessionManager.getInstance().isPersonal()) {
-			spsManager = new PPSManager(this, true, true);
+			//PPSManager.getInstance().setScreenType(PPSManager.PRIVATE);
+			//ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_DEFAULT);
 			txtScreenType.setText("Screen Type: Personal");
 		}
 		else if(!SessionManager.getInstance().isPersonal()) {
-			spsManager = new PPSManager(this, false, true);
+			//ppsManager = new PPSManager(this, PPSManager.PUBLIC, PPSManager.AS_DEFAULT);
+			//PPSManager.getInstance().setScreenType(PPSManager.PUBLIC);
 			txtScreenType.setText("Screen Type: Shared");
 		}
+		
 		
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 	
@@ -71,7 +74,6 @@ public class SessionActivity extends Activity{
 		SessionManager.getInstance().loadSavedSessionID();
 		String session = SessionManager.getInstance().getChosenSession();
 			listChannels.add(session);
-		Log.e("session", session);
 		
 		channelsAdapter.notifyDataSetChanged();
 		
@@ -95,20 +97,32 @@ public class SessionActivity extends Activity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		spsManager.stop();
+		//ppsManager.stop();
+		PPSManager.getInstance().stop();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
-		spsManager.start();
-
+		//ppsManager.start();
+		if(PPSManager.instance==null)
+			Log.e("SessionActivity onResume", "PPSManager is null");
+		else
+			Log.e("SessionActivity onResume", "PPSManager is not null");
+			
+		PPSManager.getInstance().start();
+/*
 		if(SessionManager.getInstance().isPersonal())
-			spsManager = new PPSManager(this, true, true);
+			//ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_DEFAULT);
+			new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_DEFAULT);
 		else if(!SessionManager.getInstance().isPersonal())
-			spsManager = new PPSManager(this, false, true);
+			//ppsManager = new PPSManager(this, PPSManager.PUBLIC, PPSManager.AS_DEFAULT);
+			new PPSManager(this, PPSManager.PUBLIC, PPSManager.AS_DEFAULT);
+*/
 		
+		//maybe can remove, after test
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
+		
 	}
 	
 	public void selectRefreshSessions(View v) {
@@ -154,14 +168,16 @@ public class SessionActivity extends Activity{
 			if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
 				if(SessionManager.getInstance().isPersonal()) {
 					Intent intent = new Intent(this, PlayPersonalActivity.class);
+					PPSManager.getInstance().setSessionMode(PPSManager.AS_CUSTOM);
 					startActivity(intent);
 				}
 				else if(!SessionManager.getInstance().isPersonal()) {
 					Intent intent = new Intent(this, PlaySharedActivity.class);
-					//for test
-					Log.e("save session", SessionManager.getInstance().getChosenSession());
+					PPSManager.getInstance().setSessionMode(PPSManager.AS_CUSTOM);
 					startActivity(intent);
 				}
+				//for test
+				Log.e("Select Process", "Session Name:" + SessionManager.getInstance().getChosenSession());
 			}
 			else
 				Toast.makeText(this, "Please choose a session!", Toast.LENGTH_LONG).show();	
