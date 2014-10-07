@@ -53,23 +53,7 @@ public class ChordTransportInterface implements TransportInterface {
 	
 	
 	
-	@Override
-	public void sendToAll(Message message) {
-		mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
-	}
-
-	@Override
-	public void setMessageDispatcher(MessageDispatcher dispatcher) {
-		ChordTransportInterface.messageDispatcher=dispatcher;
-	}
 	
-	public static void onMessageReceived(Message receivedMessage) {
-		messageDispatcher.receiveMessage(receivedMessage);
-	}
-	
-	public void send(String userToSend,Message message) {
-		mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
-	}
 	public void sendOnDefaultChannel(String userToSend,Message message){
 		defaultChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
 	}
