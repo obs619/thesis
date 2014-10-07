@@ -33,7 +33,6 @@ public class PPSManager {
 		PPSManager.mContext = mContext;
 		initializeNetworkManager();
 		initializeEventManager();
-		clearSessionList();
 		SessionManager.getInstance().setScreenType(isPersonal);
 		SessionManager.getInstance().setSessionMode(sessionMode);
 		instance = this;
@@ -81,6 +80,7 @@ public class PPSManager {
 	  }
 	  
 	  public void setSessionMode(boolean sessionMode){
+		clearSessionList();
 	  	SessionManager.getInstance().setSessionMode(sessionMode);
 	  }
 	  

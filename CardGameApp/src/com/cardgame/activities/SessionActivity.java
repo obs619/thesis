@@ -93,17 +93,21 @@ public class SessionActivity extends Activity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		PPSManager.getInstance().stop();
+		try{
+			PPSManager.getInstance().stop();
+		}catch(Exception e ){
+			Log.e("PPSMANAGER", "stop failed");
+		}
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-			
+		PPSManager.getInstance().setSessionMode(PPSManager.AS_DEFAULT);
 		PPSManager.getInstance().start();
 		
 		//maybe can remove, after test
-		//EventManager.getInstance().setEventHandler(new SessionEventHandler());
+		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 		
 	}
 	
