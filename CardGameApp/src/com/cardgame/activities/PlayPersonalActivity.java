@@ -42,7 +42,6 @@ public class PlayPersonalActivity extends Activity{
 	private static HandAdapter handAdapter;
 	
 	// Shared/Personal screen variables
-	public static PPSManager ppsManager;
 	
 	public static String playerToDrawFromNumber;
 	public static String playerToDrawFromAliasName;
@@ -50,7 +49,7 @@ public class PlayPersonalActivity extends Activity{
 	public static int playerNum;
 	public static boolean turn = false;
 	
-	static Activity activity;
+	static Activity personalActivity;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +66,8 @@ public class PlayPersonalActivity extends Activity{
 		txtPlayerToDrawFrom = (TextView) findViewById(R.id.txtPlayerToDraw);
 		txtTurn = (TextView) findViewById(R.id.txtTurn);
 		
-		activity = this;
+		personalActivity = this;
 		
-		ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_CUSTOM);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
 		
 		// Initialize adapters
@@ -89,13 +87,13 @@ public class PlayPersonalActivity extends Activity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		ppsManager.stop();
+		PPSManager.getInstance().stop();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		ppsManager.start();
+		PPSManager.getInstance().start();
 	}
 	
 	public static void removeCard(Card card) {
@@ -145,7 +143,7 @@ public class PlayPersonalActivity extends Activity{
 	    				AlertDialog alert = builder.create();
 	                    alert.show();
 	                    
-	                    ppsManager.stop();
+	                    PPSManager.getInstance().stop();
 	    			}
 			    	txtError.setVisibility(View.GONE);
 	    		}
@@ -173,7 +171,7 @@ public class PlayPersonalActivity extends Activity{
 			PlayPersonalActivity.txtTurn.setText("Is it your turn? No");
 			
 			//send node name to player to notify for draw event
-			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, ppsManager.getDeviceName());
+			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, PPSManager.getInstance().getDeviceName());
 			EventManager.getInstance().sendEvent(e);
 			
 		}
@@ -206,7 +204,7 @@ public class PlayPersonalActivity extends Activity{
 			Event e1=new Event(Event.R_PUBLIC_SCREENS,CardGameEvent.OUT_OF_CARDS,playerNum);
 			EventManager.getInstance().sendEvent(e1);
 			
-			AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+			AlertDialog.Builder builder = new AlertDialog.Builder(personalActivity);
 			builder.setTitle("Result");
 		    builder.setCancelable(false);
 		    builder.setMessage("Congratulations! You're all out of cards!") ;
@@ -214,14 +212,14 @@ public class PlayPersonalActivity extends Activity{
 				
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					activity.finish();
+					personalActivity.finish();
 				}
 			});
 		
 			AlertDialog alert = builder.create();
 	        alert.show();
         
-	        ppsManager.stop();
+	        PPSManager.getInstance().stop();
 		}
 		
 		 new CountDownTimer(3500, 1000) {
@@ -238,7 +236,7 @@ public class PlayPersonalActivity extends Activity{
 	}
 	
 	public static void showLoseDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+		AlertDialog.Builder builder = new AlertDialog.Builder(personalActivity);
 		builder.setTitle("Result");
 	    builder.setCancelable(false);
 	    builder.setMessage("Lose! You are the monkey!") ;
@@ -246,7 +244,7 @@ public class PlayPersonalActivity extends Activity{
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				activity.finish();
+				personalActivity.finish();
 			}
 		});
 	
@@ -269,7 +267,7 @@ public class PlayPersonalActivity extends Activity{
 	}
 	
 	public void clickCheckSession(View v) {
-		Toast.makeText(this, ppsManager.getCurrentSessionName(), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, PPSManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
 }

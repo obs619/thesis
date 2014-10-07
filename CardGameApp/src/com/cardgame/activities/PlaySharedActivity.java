@@ -33,7 +33,6 @@ public class PlaySharedActivity extends Activity {
 	private TextView txtGameStarted;
 	
 	private static HandAdapter handAdapter;
-	private PPSManager spsManager;
 	
 	private Card monkeyCard;
 	private static Map<Integer, String> playerMap;
@@ -49,8 +48,6 @@ public class PlaySharedActivity extends Activity {
 		btnStartGame = (Button) findViewById(R.id.btnStartGame);
 		txtGameStarted = (TextView) findViewById(R.id.txtGameStarted);
 		
-		
-		spsManager = new PPSManager(this, false, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
 		
 		handAdapter = new HandAdapter(this);
@@ -60,13 +57,13 @@ public class PlaySharedActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		spsManager.stop();
+		PPSManager.getInstance().stop();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		spsManager.start();
+		PPSManager.getInstance().start();
 	}
 	
 	public static void addCard(Card c) {
@@ -134,7 +131,7 @@ public class PlaySharedActivity extends Activity {
 	}
 	
 	public void clickCheckSession(View v) {
-		Toast.makeText(this, spsManager.getCurrentSessionName(), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, PPSManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
 	public void clickStart(View v) {

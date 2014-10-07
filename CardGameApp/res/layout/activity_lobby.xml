@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
         android:text="@string/personal"
-        android:onClick="selectAsPersonal" />
+        android:onClick="selectAsPrivate" />
 
     <Button
         android:id="@+id/btnLobbyShared"
@@ -54,6 +54,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="0dp"
         android:text="@string/shared"
-        android:onClick="selectAsShared" />
+        android:onClick="selectAsPublic" />
 
 </LinearLayout>

@@ -163,5 +163,35 @@ public class ChordTransportInterface implements TransportInterface {
 			nodeAlias[1] = SessionManager.getInstance().getOwnAlias();
 			return nodeAlias;
 		}
+		
+	};
+	
+	@Override
+	public void sendToAll(Message message) {
+		try{
+			mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
+		}catch(Exception e) {
+            Log.e("ChordTransportInterface", "sendToAll failed");
+            return;
+        }
 	}
+
+	@Override
+	public void setMessageDispatcher(MessageDispatcher dispatcher) {
+		ChordTransportInterface.messageDispatcher=dispatcher;
+	}
+	
+	public static void onMessageReceived(Message receivedMessage) {
+		messageDispatcher.receiveMessage(receivedMessage);
+	}
+	
+	public void send(String userToSend,Message message) {
+		try{
+			mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
+		}catch(Exception e){
+			Log.e("ChordTransportInterface", "send failed");
+			return;
+		}
+	}
+
 }
