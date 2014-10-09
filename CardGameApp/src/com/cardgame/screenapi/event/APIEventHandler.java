@@ -58,8 +58,6 @@ public class APIEventHandler implements EventHandler {
 			
 			SessionManager.getInstance().removeFromPrivateScreen(event.getPayload().toString());
 			SessionManager.getInstance().removeAlias(event.getPayload().toString());
-			Log.e("private list size", Integer.toString(SessionManager.getInstance().getPrivateScreenList().size()));
-			Log.e("private aliaslist size", Integer.toString(SessionManager.getInstance().getPrivateScreenAliasList().size()));
 			break;
 			
 		case Event.USER_LEFT_PUBLIC:
@@ -67,9 +65,6 @@ public class APIEventHandler implements EventHandler {
 			
 			SessionManager.getInstance().removeFromPublicScreen(event.getPayload().toString());
 			SessionManager.getInstance().removeAlias(event.getPayload().toString());
-
-			Log.e("public list size", Integer.toString(SessionManager.getInstance().getPublicScreenList().size()));
-			Log.e("public aliaslist size", Integer.toString(SessionManager.getInstance().getPublicScreenAliasList().size()));
 			break;
 			
 		case Event.ADD_NEW_SESSION:

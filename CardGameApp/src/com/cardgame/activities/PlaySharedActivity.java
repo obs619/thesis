@@ -48,8 +48,6 @@ public class PlaySharedActivity extends Activity {
 		btnStartGame = (Button) findViewById(R.id.btnStartGame);
 		txtGameStarted = (TextView) findViewById(R.id.txtGameStarted);
 		
-		//ppsManager.setSessionMode(PPSManager.AS_CUSTOM);
-		//spsManager = new PPSManager(this, false, false);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
 		
 		handAdapter = new HandAdapter(this);

@@ -51,13 +51,9 @@ public class SessionActivity extends Activity{
 		
 		
 		if(SessionManager.getInstance().isPersonal()) {
-			//PPSManager.getInstance().setScreenType(PPSManager.PRIVATE);
-			//ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_DEFAULT);
 			txtScreenType.setText("Screen Type: Personal");
 		}
 		else if(!SessionManager.getInstance().isPersonal()) {
-			//ppsManager = new PPSManager(this, PPSManager.PUBLIC, PPSManager.AS_DEFAULT);
-			//PPSManager.getInstance().setScreenType(PPSManager.PUBLIC);
 			txtScreenType.setText("Screen Type: Shared");
 		}
 		
@@ -97,28 +93,18 @@ public class SessionActivity extends Activity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		//ppsManager.stop();
-		PPSManager.getInstance().stop();
+		try{
+			PPSManager.getInstance().stop();
+		}catch(Exception e ){
+			Log.e("PPSMANAGER", "stop failed");
+		}
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//ppsManager.start();
-		if(PPSManager.instance==null)
-			Log.e("SessionActivity onResume", "PPSManager is null");
-		else
-			Log.e("SessionActivity onResume", "PPSManager is not null");
-			
+		PPSManager.getInstance().setSessionMode(PPSManager.AS_DEFAULT);
 		PPSManager.getInstance().start();
-/*
-		if(SessionManager.getInstance().isPersonal())
-			//ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_DEFAULT);
-			new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_DEFAULT);
-		else if(!SessionManager.getInstance().isPersonal())
-			//ppsManager = new PPSManager(this, PPSManager.PUBLIC, PPSManager.AS_DEFAULT);
-			new PPSManager(this, PPSManager.PUBLIC, PPSManager.AS_DEFAULT);
-*/
 		
 		//maybe can remove, after test
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());

@@ -27,13 +27,12 @@ public class PPSManager {
 	private static PPSManagerFactory factory;
 	
 	//temporary public
-	public static PPSManager instance=null;
+	private static PPSManager instance=null;
 	
 	public PPSManager(Context mContext, boolean isPersonal, boolean sessionMode) {
 		PPSManager.mContext = mContext;
 		initializeNetworkManager();
 		initializeEventManager();
-		clearSessionList();
 		SessionManager.getInstance().setScreenType(isPersonal);
 		SessionManager.getInstance().setSessionMode(sessionMode);
 		instance = this;
@@ -81,6 +80,7 @@ public class PPSManager {
 	  }
 	  
 	  public void setSessionMode(boolean sessionMode){
+		clearSessionList();
 	  	SessionManager.getInstance().setSessionMode(sessionMode);
 	  }
 	  

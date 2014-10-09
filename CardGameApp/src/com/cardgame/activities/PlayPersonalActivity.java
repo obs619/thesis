@@ -68,8 +68,6 @@ public class PlayPersonalActivity extends Activity{
 		
 		personalActivity = this;
 		
-		//PPSManager.getInstance().setSessionMode(PPSManager.AS_CUSTOM);
-		//ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_CUSTOM);
 		EventManager.getInstance().setEventHandler(new CardGameEventHandler());
 		
 		// Initialize adapters

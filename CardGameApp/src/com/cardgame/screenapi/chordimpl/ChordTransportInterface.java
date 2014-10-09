@@ -16,6 +16,7 @@ public class ChordTransportInterface implements TransportInterface {
 	private static final String PAYLOAD_TYPE = "CHORD_SPS"; 
 	
 	public static SchordChannel mChannel;
+	public static SchordChannel defaultChannel;
 	public static String channelName = "defaultchannel";
 	
 	public ChordTransportInterface() {}
@@ -23,13 +24,15 @@ public class ChordTransportInterface implements TransportInterface {
 	public static void joinDefaultChannel() {
 
 		try {
-			mChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);		
+			defaultChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, defaultChannelListener);
+			mChannel=ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);//not sure if this is right or if you can attach two listeners to the same channel; this is to ensure that the send() function will not cause an NPE
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		 
-		 if(mChannel == null)
+		 if(defaultChannel==null)
 			 Log.e("CHANNEL ERROR", "Failed to join default channel");
+		 if(mChannel == null)
+			 Log.e("CHANNEL ERROR", "Failed to set mChannel to default channel");
 	}
 	
 	public static void joinCustomChannel() {
@@ -45,8 +48,17 @@ public class ChordTransportInterface implements TransportInterface {
 		
 	}
 	
-	private final static SchordChannel.StatusListener mChordChannelListener = new ChordChannelListenerAdapter() {
-		
+	private final static SchordChannel.StatusListener mChordChannelListener = new SPSChordChannelListenerAdapter();
+	private final static SchordChannel.StatusListener defaultChannelListener = new SPSChordChannelListenerAdapter();
+	
+	
+	
+	
+	public void sendOnDefaultChannel(String userToSend,Message message){
+		defaultChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
+	}
+
+	private static class SPSChordChannelListenerAdapter extends ChordChannelListenerAdapter{
 		@Override
 		public void onDataReceived(String fromNode, String fromChannel, String payloadType,
 				byte[][] payload) {
@@ -61,6 +73,12 @@ public class ChordTransportInterface implements TransportInterface {
 		public void onNodeJoined(String fromNode, String fromChannel) {
 			Log.e("JOINED", fromNode);
 			
+			if(fromChannel==channelName&& SessionManager.getInstance().getChosenSession()!=channelName)
+			{
+				//sendOnDefaultChannel()
+				//TODO get name of newly joined node
+				//TODO send SessionManager.getInstance().getChosenSession() as a message
+			}
 			
 			String[] nodeAlias = getNodeAlias();
 				
