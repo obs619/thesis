@@ -75,9 +75,10 @@ public class ChordTransportInterface implements TransportInterface {
 			
 			if(fromChannel==channelName&& SessionManager.getInstance().getChosenSession()!=channelName)
 			{
-				//sendOnDefaultChannel()
+				
 				//TODO get name of newly joined node
 				//TODO send SessionManager.getInstance().getChosenSession() as a message
+				//sendOnDefaultChannel()
 			}
 			
 			String[] nodeAlias = getNodeAlias();
