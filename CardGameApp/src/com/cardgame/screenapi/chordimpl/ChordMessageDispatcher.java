@@ -40,10 +40,14 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.messaging.
 		}
 		else if(recipient.equals(Event.R_TEAM_SHARED_SCREENS))
 		{
+			for(String node: SessionManager.getInstance().getTeamPublicScreenList(message.getTeamNo()))
+				transportInterface.send(node,message);
 			
 		}
 		else if(recipient.equals(Event.R_TEAM_PERSONAL_SCREENS))
 		{
+			for(String node: SessionManager.getInstance().getTeamPrivateScreenList(message.getTeamNo()))
+				transportInterface.send(node,message);
 			
 		}
 		else
