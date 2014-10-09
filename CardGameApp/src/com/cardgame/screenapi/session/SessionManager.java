@@ -2,16 +2,14 @@ package com.cardgame.screenapi.session;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.cardgame.screenapi.PPSManager;
@@ -200,6 +198,30 @@ public class SessionManager {
 	public List<String> getTeamScreenList(int teamNo)
 	{
 		return teamMap.get(teamNo);
+	}
+	public List<String> getTeamPrivateScreenList(int teamNo)
+	{
+		List<String> listScreens = new ArrayList<String>();
+		for (Iterator<String> iterator = teamMap.get(teamNo).iterator(); iterator.hasNext();) {
+			String current = iterator.next();
+			if (privateScreenList.contains(current))
+			{
+				listScreens.add(current);
+			}
+		}
+		return listScreens;
+	}
+	public List<String> getTeamPublicScreenList(int teamNo)
+	{
+		List<String> listScreens = new ArrayList<String>();
+		for (Iterator<String> iterator = teamMap.get(teamNo).iterator(); iterator.hasNext();) {
+			String current = iterator.next();
+			if (publicScreenList.contains(current))
+			{
+				listScreens.add(current);
+			}
+		}
+		return listScreens;
 	}
 	/* End team screen methods
 	 * 
