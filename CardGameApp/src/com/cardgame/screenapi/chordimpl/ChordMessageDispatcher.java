@@ -56,6 +56,13 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.messaging.
 		}
 		
 	}
+	
+	@Override
+	public void sendMessageOnDefaultChannel(Message message)
+	{
+		String recipient=message.getRecipient();
+		transportInterface.sendOnDefaultChannel(recipient, message);
+	}
 	@Override
 	public void receiveMessage(Message message) {
 		EventManager.getInstance().unpackEvent(message);

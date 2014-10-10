@@ -53,7 +53,7 @@ public class ChordTransportInterface implements TransportInterface {
 	
 	
 	
-	
+	@Override
 	public void sendOnDefaultChannel(String userToSend,Message message){
 		defaultChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
 	}
@@ -73,14 +73,24 @@ public class ChordTransportInterface implements TransportInterface {
 		public void onNodeJoined(String fromNode, String fromChannel) {
 			Log.e("JOINED", fromNode);
 			
+			/*The ff. code assumes that onNodeJoined() is triggered on the device that was already in the session*/
 			if(fromChannel==channelName&& SessionManager.getInstance().getChosenSession()!=channelName)
 			{
 				
-				//TODO get name of newly joined node
-				//TODO send SessionManager.getInstance().getChosenSession() as a message
-				//sendOnDefaultChannel()
+				//may change type to Event.LATE_JOIN_RESPONSE_SESSION
+				Event e=null;
+				String sessionID=SessionManager.getInstance().getChosenSession();
+				Log.i("SESSION ID",sessionID);
+				
+				if(!SessionManager.getInstance().isSessionLocked(sessionID))
+				{
+					e=new Event(fromNode,Event.RESPOND_REQUEST_SESSIONS,sessionID);
+					EventManager.getInstance().sendEventOnDefaultChannel(e);
+				}
+				
+		
 			}
-			
+			/*End code block*/
 			String[] nodeAlias = getNodeAlias();
 				
 			

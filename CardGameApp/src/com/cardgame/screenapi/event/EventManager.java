@@ -32,6 +32,11 @@ public class EventManager {
 		Message message=messageBuilder.buildMessage(event);
 		messageDispatcher.sendMessage(message);
 	}
+	public void sendEventOnDefaultChannel(Event event)
+	{
+		Message message=messageBuilder.buildMessage(event);
+		messageDispatcher.sendMessageOnDefaultChannel(message);
+	}
 	
 	public void unpackEvent(Message message) {
 		Event event=messageBuilder.unpackEvent(message);
