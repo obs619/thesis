@@ -102,6 +102,7 @@ public class APIEventHandler implements EventHandler {
 			break;
 		case Event.RESPOND_REQUEST_SESSIONS:
 			SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), false);
+			Log.i("SESSION NAME RECEIVED","Received session name:"+event.getPayload().toString());
 			break;
 		
 		/*case Event.LATE_JOIN_REQUEST_SESSION: (or we can just use REQUEST_SESSIONS)	//only to be used if onNodeJoined() is called by the joining node; it will request the session name from a previously existing node.

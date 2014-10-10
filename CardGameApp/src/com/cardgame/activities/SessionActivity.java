@@ -162,7 +162,7 @@ public class SessionActivity extends Activity{
 					PPSManager.getInstance().setSessionMode(PPSManager.AS_CUSTOM);
 					startActivity(intent);
 				}
-				//for test
+				//for testw
 				Log.e("Select Process", "Session Name:" + SessionManager.getInstance().getChosenSession());
 			}
 			else

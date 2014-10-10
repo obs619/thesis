@@ -80,7 +80,7 @@ public class ChordTransportInterface implements TransportInterface {
 				//may change type to Event.LATE_JOIN_RESPONSE_SESSION
 				Event e=null;
 				String sessionID=SessionManager.getInstance().getChosenSession();
-				Log.i("SESSION ID",sessionID);
+				Log.i("SESSION ID",sessionID+" fromNode: "+fromNode);
 				
 				if(!SessionManager.getInstance().isSessionLocked(sessionID))
 				{
