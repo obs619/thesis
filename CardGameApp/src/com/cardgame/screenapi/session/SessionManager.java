@@ -10,6 +10,7 @@ import java.util.Set;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cardgame.screenapi.PPSManager;
@@ -322,12 +323,15 @@ public class SessionManager {
 		Event e=new Event(Event.R_ALL_SCREENS
 				,Event.ADD_NEW_SESSION
 				,sessionID + deviceName,true);
-		EventManager.getInstance().sendEvent(e);
+		EventManager.getInstance().sendEventOnDefaultChannel(e);
+		Log.i("New Session","ADD_NEW_SESSION event sent: "+sessionID+" "+deviceName);
 		
+		
+		/*THE FF CODE IS SPECIFIC TO OUR APP. USED TO AUTO-REFRESH THE UI'S LIST OF SESSIONS*/
 		Event e1=new Event(Event.R_ALL_SCREENS
 				,Event.ADD_NEW_SESSION
 				,sessionID + deviceName,false);
-		EventManager.getInstance().sendEvent(e1);
+		EventManager.getInstance().sendEventOnDefaultChannel(e1);
 		
 		return sessionID + deviceName;
 	}

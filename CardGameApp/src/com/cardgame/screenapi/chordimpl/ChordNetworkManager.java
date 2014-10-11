@@ -29,9 +29,9 @@ public class ChordNetworkManager extends NetworkManager {
 		public void onStarted(String nodeName, int reason) {
 			Log.e("Schord Status Listener", "Chord start");
 			//check if the device has a session
-			if(SessionManager.getInstance().isSessionMode())
+
 				ChordTransportInterface.joinDefaultChannel();
-			else if(!SessionManager.getInstance().isSessionMode())
+			if(!SessionManager.getInstance().isSessionMode())
 				ChordTransportInterface.joinCustomChannel();
 		}
 

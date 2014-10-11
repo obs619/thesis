@@ -1,5 +1,7 @@
 package com.cardgame.screenapi.chordimpl;
 
+import java.util.Map;
+
 import android.util.Log;
 
 import com.cardgame.screenapi.event.Event;
@@ -25,14 +27,16 @@ public class ChordTransportInterface implements TransportInterface {
 
 		try {
 			defaultChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, defaultChannelListener);
-			mChannel=ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);//not sure if this is right or if you can attach two listeners to the same channel; this is to ensure that the send() function will not cause an NPE
+			
 		}catch(Exception e) {
 			e.printStackTrace();
-		}
+			Log.e("join default","error");		}
+		//mChannel=ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);//not sure if this is right or if you can attach two listeners to the same channel; this is to ensure that the send() function will not cause an NPE
 		 if(defaultChannel==null)
 			 Log.e("CHANNEL ERROR", "Failed to join default channel");
-		 if(mChannel == null)
-			 Log.e("CHANNEL ERROR", "Failed to set mChannel to default channel");
+		/*if(mChannel == null)
+			 Log.e("CHANNEL E"
+			 		+ "RROR", "Failed to set mChannel to default channel");*/
 	}
 	
 	public static void joinCustomChannel() {
@@ -79,15 +83,20 @@ public class ChordTransportInterface implements TransportInterface {
 				
 				//may change type to Event.LATE_JOIN_RESPONSE_SESSION
 				Event e=null;
-				String sessionID=SessionManager.getInstance().getChosenSession();
-				Log.i("SESSION ID",sessionID+" fromNode: "+fromNode);
+				/*String sessionID=SessionManager.getInstance().getChosenSession();*/
 				
-				if(!SessionManager.getInstance().isSessionLocked(sessionID))
-				{
-					e=new Event(fromNode,Event.RESPOND_REQUEST_SESSIONS,sessionID);
-					EventManager.getInstance().sendEventOnDefaultChannel(e);
+				
+				
+				for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
+					if(entry.getValue().equals(false)) {
+						Log.i("SENDING SESSIONS ", entry.getKey()+"fromNode: "+fromNode);
+						 e=new Event(fromNode
+								,Event.RESPOND_REQUEST_SESSIONS
+								,entry.getKey(),true);
+						 EventManager.getInstance().sendEventOnDefaultChannel(e);
+					}
 				}
-				
+						
 		
 			}
 			/*End code block*/
@@ -167,6 +176,16 @@ public class ChordTransportInterface implements TransportInterface {
 			mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
 		}catch(Exception e) {
             Log.e("ChordTransportInterface", "sendToAll failed");
+            return;
+        }
+	}
+	
+	@Override
+	public void sendToAllOnDefaultChannel(Message message){
+		try{
+			defaultChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
+		}catch(Exception e) {
+            Log.e("ChordTransportInterface", "sendToAll on default failed");
             return;
         }
 	}

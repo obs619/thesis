@@ -61,7 +61,44 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.messaging.
 	public void sendMessageOnDefaultChannel(Message message)
 	{
 		String recipient=message.getRecipient();
-		transportInterface.sendOnDefaultChannel(recipient, message);
+		if(recipient.equals(Event.R_ALL_SCREENS))
+		{
+			transportInterface.sendToAllOnDefaultChannel(message);
+		}
+		else if(recipient.equals(Event.R_PUBLIC_SCREENS))
+		{
+			for(String node: SessionManager.getInstance().getPublicScreenList())
+				transportInterface.sendOnDefaultChannel(node,message);
+		}
+		else if(recipient.equals(Event.R_PERSONAL_SCREENS))
+		{
+			for(String node: SessionManager.getInstance().getPrivateScreenList())
+				transportInterface.sendOnDefaultChannel(node,message);
+		}
+		else if(recipient.equals(Event.R_TEAM_SCREENS))
+		{
+			for(String node: SessionManager.getInstance().getTeamScreenList(message.getTeamNo()))
+				transportInterface.sendOnDefaultChannel(node,message);
+				
+		}
+		else if(recipient.equals(Event.R_TEAM_SHARED_SCREENS))
+		{
+			for(String node: SessionManager.getInstance().getTeamPublicScreenList(message.getTeamNo()))
+				transportInterface.sendOnDefaultChannel(node,message);
+			
+		}
+		else if(recipient.equals(Event.R_TEAM_PERSONAL_SCREENS))
+		{
+			for(String node: SessionManager.getInstance().getTeamPrivateScreenList(message.getTeamNo()))
+				transportInterface.sendOnDefaultChannel(node,message);
+			
+		}
+		else
+		{
+			transportInterface.sendOnDefaultChannel(recipient, message);
+		}
+		
+		
 	}
 	@Override
 	public void receiveMessage(Message message) {
