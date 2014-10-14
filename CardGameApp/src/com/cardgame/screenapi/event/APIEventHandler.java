@@ -1,11 +1,10 @@
 package com.cardgame.screenapi.event;
 
-import java.util.Iterator;
 import java.util.Map;
 
-import com.cardgame.screenapi.session.SessionManager;
-
 import android.util.Log;
+
+import com.cardgame.screenapi.session.SessionManager;
 
 public class APIEventHandler implements EventHandler {
 	

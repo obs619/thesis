@@ -85,8 +85,6 @@ public class ChordTransportInterface implements TransportInterface {
 				Event e=null;
 				/*String sessionID=SessionManager.getInstance().getChosenSession();*/
 				
-				
-				
 				for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 					if(entry.getValue().equals(false)) {
 						Log.i("SENDING SESSIONS ", entry.getKey()+"fromNode: "+fromNode);

@@ -21,14 +21,14 @@ public class LobbyActivity extends Activity {
 	
 	public void selectAsPrivate(View v) {
 		Intent intent = new Intent(this, SessionActivity.class);
-		ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.AS_DEFAULT);
+		ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.SESSION_MODE);
 		setDeviceAlias();
 		startActivity(intent);
 	}
 	
 	public void selectAsPublic(View v) {
 		Intent intent = new Intent(this, SessionActivity.class);
-		ppsManager = new PPSManager(this, PPSManager.PUBLIC, PPSManager.AS_DEFAULT);
+		ppsManager = new PPSManager(this, PPSManager.PUBLIC, PPSManager.SESSION_MODE);
 		setDeviceAlias();
 		startActivity(intent);
 	}

@@ -15,8 +15,8 @@ public class PPSManager {
 
 	public static final boolean PRIVATE = true;
 	public static final boolean PUBLIC = false;
-	public static final boolean AS_DEFAULT = true;
-	public static final boolean AS_CUSTOM = false;
+	public static final boolean SESSION_MODE = true;
+	public static final boolean GAME_MODE = false;
 
 	private EventManager eventManager;
 	private NetworkManager networkInitializer; 
@@ -37,58 +37,48 @@ public class PPSManager {
 		SessionManager.getInstance().setSessionMode(sessionMode);
 		instance = this;
 	}
-	/* begin code required for singleton
-	 */
-	 public PPSManager()
-	  {
 
+	public PPSManager() {
 		initializeNetworkManager();
 		initializeEventManager();
 		clearSessionList();
 		
 		instance = this;
-	  }
+	}
 	  
-	  public static PPSManager getInstance() 
-	  {
+	public static PPSManager getInstance() {
 		if (instance==null){
 			Log.e("PPSManager is null", "getInstance PPS");
 			instance= factory.createPPSManager();
 		}
 		return instance;
-	  }	
+	}	
 	  
-	  public void clearSessionList(){
-		  SessionManager.getInstance().clearPrivateScreenList();
-		  SessionManager.getInstance().clearPublicScreenList();
-		  SessionManager.getInstance().clearAliasList();
-
-	  }
+	public void clearSessionList(){
+		 SessionManager.getInstance().clearPrivateScreenList();
+		 SessionManager.getInstance().clearPublicScreenList();
+		 SessionManager.getInstance().clearAliasList();
+	}
 	  
-	  public void initializeEventManager(){
-		  EventManager.setDefaultFactory(new ChordEventManagerFactory());
-		  setEventManager();
-	  }
+	public void initializeEventManager(){
+		 EventManager.setDefaultFactory(new ChordEventManagerFactory());
+		 setEventManager();
+	}
 	  
-	  public void initializeNetworkManager(){
-		  NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
-		  setNetworkInitializer();
-	  }
+	public void initializeNetworkManager(){
+		 NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
+		 setNetworkInitializer();
+	}
 	  
-	  public void setContext(Context context){
-	  	PPSManager.mContext = context;
-	  }
+	public void setContext(Context context){
+	  	 PPSManager.mContext = context;
+	}
 	  
-	  public void setSessionMode(boolean sessionMode){
-		clearSessionList();
-	  	SessionManager.getInstance().setSessionMode(sessionMode);
-	  }
+	public void setScreenMode(boolean sessionMode){
+		 clearSessionList();
+	  	 SessionManager.getInstance().setSessionMode(sessionMode);
+	}
 	  
-	  
-	  
-	  /*
-	   * end code required for singleton
-	 */
 	public void stop() {
 		ChordNetworkManager.getChordManager().stop();
 	}

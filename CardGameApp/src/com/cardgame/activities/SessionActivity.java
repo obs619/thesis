@@ -26,8 +26,6 @@ import com.cardgame.screenapi.session.SessionManager;
 
 public class SessionActivity extends Activity{
 	
-	//private PPSManager ppsManager;
-	
 	private Spinner spinChannels;
 	public static List<String> listChannels;
 	public static ArrayAdapter<String> channelsAdapter;
@@ -41,7 +39,6 @@ public class SessionActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_session);
 
-		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		spinChannels = (Spinner) findViewById(R.id.spinner_channel_list);
@@ -57,7 +54,6 @@ public class SessionActivity extends Activity{
 			txtScreenType.setText("Screen Type: Shared");
 		}
 		
-		
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 	
 		listChannels = new ArrayList<String>();
@@ -67,6 +63,7 @@ public class SessionActivity extends Activity{
 		
 		spinChannels.setAdapter(channelsAdapter);
 		channelsAdapter.notifyDataSetChanged();
+		
 		SessionManager.getInstance().loadSavedSessionID();
 		String session = SessionManager.getInstance().getChosenSession();
 			listChannels.add(session);
@@ -104,10 +101,9 @@ public class SessionActivity extends Activity{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		PPSManager.getInstance().setSessionMode(PPSManager.AS_DEFAULT);
+		PPSManager.getInstance().setScreenMode(PPSManager.SESSION_MODE);
 		PPSManager.getInstance().start();
 		
-		//maybe can remove, after test
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 		
 	}
@@ -155,16 +151,15 @@ public class SessionActivity extends Activity{
 			if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
 				if(SessionManager.getInstance().isPersonal()) {
 					Intent intent = new Intent(this, PlayPersonalActivity.class);
-					PPSManager.getInstance().setSessionMode(PPSManager.AS_CUSTOM);
+					PPSManager.getInstance().setScreenMode(PPSManager.GAME_MODE);
 					startActivity(intent);
 				}
 				else if(!SessionManager.getInstance().isPersonal()) {
 					Intent intent = new Intent(this, PlaySharedActivity.class);
-					PPSManager.getInstance().setSessionMode(PPSManager.AS_CUSTOM);
+					PPSManager.getInstance().setScreenMode(PPSManager.GAME_MODE);
 					startActivity(intent);
 				}
-				//for testw
-				Log.e("Select Process", "Session Name:" + SessionManager.getInstance().getChosenSession());
+				Log.e("Select Proceed", "Session Name:" + SessionManager.getInstance().getChosenSession());
 			}
 			else
 				Toast.makeText(this, "Please choose a session!", Toast.LENGTH_LONG).show();	
