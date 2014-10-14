@@ -5,6 +5,8 @@ import java.io.Serializable;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 
 public class Event {
+	public static final boolean APP_EVENT = false;
+	public static final boolean API_EVENT = true;
 	
 	public static final String R_PUBLIC_SCREENS="shared";
 	public static final String R_TEAM_SHARED_SCREENS="teamshared";

@@ -9,12 +9,12 @@ import com.cardgame.screenapi.event.EventHandler;
 public class SessionEventHandler implements EventHandler{
 
 	@Override
-	public void handleEvent(Event e) {
-		Log.e("Handling SessionEvent", "Type: "+e.getType() + "Payload: " + e.getPayload().toString());
-		switch(e.getType())
+	public void handleEvent(Event event) {
+		Log.e("Handling SessionEvent", "Type: "+event.getType() + "Payload: " + event.getPayload().toString());
+		switch(event.getType())
 		{
 		case Event.ADD_NEW_SESSION:
-			SessionActivity.listChannels.add(e.getSession());
+			SessionActivity.listChannels.add(event.getSession());
 			SessionActivity.channelsAdapter.notifyDataSetChanged();
 			break;
 		}

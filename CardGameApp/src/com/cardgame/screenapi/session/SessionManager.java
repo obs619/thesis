@@ -21,6 +21,9 @@ import com.cardgame.screenapi.event.EventManager;
 public class SessionManager {
 	
 	public static final String DEFAULT_SESSION = "DEFAULT";
+	public static final boolean LOCK = true;
+	public static final boolean UNLOCK = false;
+	
 	private List<String> publicScreenList = new ArrayList<String>();//<name, sessionID>
 	private List<String> privateScreenList = new ArrayList<String>();
 	private Map<String,Boolean> availableSessions = new HashMap<String,Boolean>();
@@ -49,7 +52,18 @@ public class SessionManager {
 				.getDefaultSharedPreferences(PPSManager.getContext());
 		Editor editor = sharedPreferences.edit();
 		editor.putString("session", chosenSession);
+		
 		editor.putBoolean("isLock", isSessionLocked(chosenSession));
+		editor.commit();
+	}
+	
+	public void saveDefaultSessionID(){
+		SharedPreferences sharedPreferences = PreferenceManager
+				.getDefaultSharedPreferences(PPSManager.getContext());
+		Editor editor = sharedPreferences.edit();
+		editor.putString("session", chosenSession);
+		
+		editor.putBoolean("isLock", UNLOCK);
 		editor.commit();
 	}
 	
@@ -57,8 +71,9 @@ public class SessionManager {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PPSManager.getContext());
 		String session = sharedPreferences.getString("session", DEFAULT_SESSION);
-		Boolean isLock = sharedPreferences.getBoolean("isLock", false);
-		availableSessions.put(session, isLock);
+		Boolean isLock = sharedPreferences.getBoolean("isLock", UNLOCK);
+		if(!session.equals(DEFAULT_SESSION))
+			availableSessions.put(session, isLock);
 		chosenSession = session;
 	}
 	
@@ -188,6 +203,7 @@ public class SessionManager {
 	{
 		if(teamMap.get(teamNo)!=null)
 			teamMap.get(teamNo).add(nodeName);
+		
 		else {
 			List<String>newTeamList=new ArrayList<String>();
 			newTeamList.add(nodeName);
@@ -196,10 +212,12 @@ public class SessionManager {
 		//aliasList.put(nodeName, aliasName); not used since we assume the node already exists?
 		//TODO check if node is in public or private screen list, ensure it is no longer a "public" screen?
 	}
+	
 	public List<String> getTeamScreenList(int teamNo)
 	{
 		return teamMap.get(teamNo);
 	}
+	
 	public List<String> getTeamPrivateScreenList(int teamNo)
 	{
 		List<String> listScreens = new ArrayList<String>();
@@ -277,23 +295,22 @@ public class SessionManager {
 		this.sessionMode = sessionMode;
 	}
 	
-	public Boolean setChosenSession(String session) {
+	//set session return boolean?
+	public void setChosenSession(String session) {
 		if(!isSessionLocked(session) || session.contains(alias)) {
     		Toast.makeText(PPSManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
-			this.chosenSession = session;
 
+			this.chosenSession = session;
 			this.saveSessionID();
-			return true;
+
 		}
 		else {
 			Toast.makeText(PPSManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
 			this.chosenSession = DEFAULT_SESSION;
-
-			this.saveSessionID();
-			return false;
+			this.saveDefaultSessionID();
 		}
-		
 	}
+	
 	
 	public void setDefaultSession() {
 		this.chosenSession = DEFAULT_SESSION;
@@ -319,33 +336,37 @@ public class SessionManager {
 	public String createSession(String sessionID) {
 		String deviceName = "[" + alias + "]";
 		
-		addAvailableSession(sessionID + deviceName, false);
-		Event e=new Event(Event.R_ALL_SCREENS
-				,Event.ADD_NEW_SESSION
-				,sessionID + deviceName,true);
-		EventManager.getInstance().sendEventOnDefaultChannel(e);
+		addAvailableSession(sessionID + deviceName, UNLOCK);
+		
+		Event event1 = new Event(Event.R_ALL_SCREENS,
+				Event.ADD_NEW_SESSION,
+				sessionID + deviceName,
+				Event.API_EVENT);
+		EventManager.getInstance().sendEventOnDefaultChannel(event1);
 		Log.i("New Session","ADD_NEW_SESSION event sent: "+sessionID+" "+deviceName);
 		
 		
 		/*THE FF CODE IS SPECIFIC TO OUR APP. USED TO AUTO-REFRESH THE UI'S LIST OF SESSIONS*/
-		Event e1=new Event(Event.R_ALL_SCREENS
-				,Event.ADD_NEW_SESSION
-				,sessionID + deviceName,false);
-		EventManager.getInstance().sendEventOnDefaultChannel(e1);
+		Event event2 = new Event(Event.R_ALL_SCREENS,
+				Event.ADD_NEW_SESSION,
+				sessionID + deviceName,
+				Event.APP_EVENT);
+		EventManager.getInstance().sendEventOnDefaultChannel(event2);
 		
 		return sessionID + deviceName;
 	}
 	
 	public void lockSession(String sessionID) {
 		if(sessionID.contains(alias)) {
-			Event e=new Event(Event.R_ALL_SCREENS
-					,Event.LOCK_SESSION
-					,sessionID,true);
-			EventManager.getInstance().sendEvent(e);
+			Event event = new Event(Event.R_ALL_SCREENS,
+					Event.LOCK_SESSION,
+					sessionID,
+					Event.API_EVENT);
+			EventManager.getInstance().sendEventOnDefaultChannel(event );
 			
 			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 				if(sessionID.equalsIgnoreCase(entry.getKey())) {
-					entry.setValue(true);
+					entry.setValue(LOCK);
 				}	
 			}
 			
@@ -358,14 +379,15 @@ public class SessionManager {
 	
 	public void unlockSession(String sessionID) {
 		if(sessionID.contains(alias)) {
-			Event e=new Event(Event.R_ALL_SCREENS
-					,Event.UNLOCK_SESSION
-					,sessionID,true);
-			EventManager.getInstance().sendEvent(e);
+			Event event = new Event(Event.R_ALL_SCREENS,
+					Event.UNLOCK_SESSION,
+					sessionID,
+					Event.API_EVENT);
+			EventManager.getInstance().sendEventOnDefaultChannel(event );
 			
 			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 				if(sessionID.equalsIgnoreCase(entry.getKey())) {
-					entry.setValue(false);
+					entry.setValue(UNLOCK);
 				}	
 			}
 			
@@ -386,10 +408,12 @@ public class SessionManager {
 	}
 	
 	public void requestSessions() {
-		Event e=new Event(Event.R_ALL_SCREENS
-				,Event.REQUEST_SESSIONS
-				,ChordNetworkManager.getChordManager().getName(),true);
-		EventManager.getInstance().sendEvent(e);
+		Event event = new Event(Event.R_ALL_SCREENS,
+				Event.REQUEST_SESSIONS,
+				ChordNetworkManager.getChordManager().getName(),
+				Event.API_EVENT);
+		
+		EventManager.getInstance().sendEvent(event);
 	}
 	
 }

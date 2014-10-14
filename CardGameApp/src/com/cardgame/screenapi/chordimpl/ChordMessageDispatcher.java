@@ -95,6 +95,7 @@ public class ChordMessageDispatcher implements com.cardgame.screenapi.messaging.
 		}
 		else
 		{
+			//What is this for?
 			transportInterface.sendOnDefaultChannel(recipient, message);
 		}
 		

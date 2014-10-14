@@ -78,6 +78,7 @@ public class SessionActivity extends Activity{
 		    @Override
 		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 		    	Log.e("item selected",spinChannels.getItemAtPosition(position).toString());
+		    	
 		    	SessionManager.getInstance().setChosenSession(spinChannels.getItemAtPosition(position).toString());
 		    	txtSelectedSession.setText("Chosen Session: " + SessionManager.getInstance().getChosenSession());
 		    }

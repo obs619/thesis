@@ -69,13 +69,13 @@ public class APIEventHandler implements EventHandler {
 			
 		case Event.ADD_NEW_SESSION:
 			Log.e("new channel added", event.getPayload().toString());
-			SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), false);
+			SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), SessionManager.UNLOCK);
 			break;
 			
 		case Event.LOCK_SESSION:
 			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 				if(event.getPayload().toString().equalsIgnoreCase(entry.getKey())) {
-					entry.setValue(true);
+					entry.setValue(SessionManager.LOCK);
 				}	
 			}
 			// in case the device has its chosen session set as the "just locked session"
@@ -86,22 +86,25 @@ public class APIEventHandler implements EventHandler {
 		case Event.UNLOCK_SESSION:
 			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 				if(event.getPayload().toString().equalsIgnoreCase(entry.getKey())) {
-					entry.setValue(false);
+					entry.setValue(SessionManager.UNLOCK);
 				}	
 			}
 			break;
+			
 		case Event.REQUEST_SESSIONS:
 			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
-				if(entry.getValue().equals(false)) {
-					Event e=new Event(event.getPayload().toString()
-							,Event.RESPOND_REQUEST_SESSIONS
-							,entry.getKey(),true);
+				if(entry.getValue().equals(SessionManager.UNLOCK)) {
+					Event e=new Event(event.getPayload().toString(),
+							Event.RESPOND_REQUEST_SESSIONS,
+							entry.getKey(),
+							Event.API_EVENT);
 					EventManager.getInstance().sendEvent(e);
 				}
 			}
 			break;
+			
 		case Event.RESPOND_REQUEST_SESSIONS:
-			SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), false);
+			SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), SessionManager.UNLOCK);
 			Log.i("SESSION NAME RECEIVED","Received session name:"+event.getPayload().toString());
 			break;
 		
