@@ -23,7 +23,7 @@ import com.cardgame.adapters.HandAdapter;
 import com.cardgame.handlers.CardGameEvent;
 import com.cardgame.handlers.CardGameEventHandler;
 import com.cardgame.objects.Card;
-import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.PpsManager;
 import com.cardgame.screenapi.event.Event;
 import com.cardgame.screenapi.event.EventManager;
 import com.cardgame.screenapi.session.SessionManager;
@@ -87,13 +87,13 @@ public class PlayPersonalActivity extends Activity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		PPSManager.getInstance().stop();
+		PpsManager.getInstance().stop();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		PPSManager.getInstance().start();
+		PpsManager.getInstance().start();
 	}
 	
 	public static void removeCard(Card card) {
@@ -143,7 +143,7 @@ public class PlayPersonalActivity extends Activity{
 	    				AlertDialog alert = builder.create();
 	                    alert.show();
 	                    
-	                    PPSManager.getInstance().stop();
+	                    PpsManager.getInstance().stop();
 	    			}
 			    	txtError.setVisibility(View.GONE);
 	    		}
@@ -171,7 +171,7 @@ public class PlayPersonalActivity extends Activity{
 			PlayPersonalActivity.txtTurn.setText("Is it your turn? No");
 			
 			//send node name to player to notify for draw event
-			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, PPSManager.getInstance().getDeviceName());
+			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, PpsManager.getInstance().getDeviceName());
 			EventManager.getInstance().sendEvent(e);
 			
 		}
@@ -192,7 +192,7 @@ public class PlayPersonalActivity extends Activity{
 	    //shuffle
 	    Collections.shuffle(cardsToPlay);
 	    
-	    Toast.makeText(PPSManager.getContext(), cardsToPlay.get(0).toString() + " was taken from you.", Toast.LENGTH_LONG).show();
+	    Toast.makeText(PpsManager.getContext(), cardsToPlay.get(0).toString() + " was taken from you.", Toast.LENGTH_LONG).show();
 	    
 	    //remove and send first random card
 	    removeCard(cardsToPlay.get(0));
@@ -219,7 +219,7 @@ public class PlayPersonalActivity extends Activity{
 			AlertDialog alert = builder.create();
 	        alert.show();
         
-	        PPSManager.getInstance().stop();
+	        PpsManager.getInstance().stop();
 		}
 		
 		 new CountDownTimer(3500, 1000) {
@@ -267,7 +267,7 @@ public class PlayPersonalActivity extends Activity{
 	}
 	
 	public void clickCheckSession(View v) {
-		Toast.makeText(this, PPSManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, PpsManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
 }

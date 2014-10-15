@@ -7,11 +7,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cardgame.R;
-import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.PpsManager;
 import com.cardgame.screenapi.session.SessionManager;
 
 public class LobbyActivity extends Activity {
-	public static PPSManager ppsManager;
+	public static PpsManager ppsManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,16 +20,16 @@ public class LobbyActivity extends Activity {
 	}
 	
 	public void selectAsPrivate(View v) {
-		openNextPage(PPSManager.PRIVATE);
+		openNextPage(PpsManager.PRIVATE);
 	}
 	
 	public void selectAsPublic(View v) {
-		openNextPage(PPSManager.PUBLIC);
+		openNextPage(PpsManager.PUBLIC);
 	}
 	
 	public void openNextPage(boolean isPrivate) {
 		Intent intent = new Intent(this, SessionActivity.class);
-		ppsManager = new PPSManager(this, isPrivate, PPSManager.SESSION_MODE);
+		ppsManager = new PpsManager(this, isPrivate, PpsManager.SESSION_MODE);
 		
 		TextView mUserNameView;
 		mUserNameView = (TextView) findViewById(R.id.txtUserName);

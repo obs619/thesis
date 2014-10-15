@@ -13,7 +13,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.PpsManager;
 import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
 import com.cardgame.screenapi.event.Event;
 import com.cardgame.screenapi.event.EventManager;
@@ -49,7 +49,7 @@ public class SessionManager {
 	
 	public void saveSessionID(){
 		SharedPreferences sharedPreferences = PreferenceManager
-				.getDefaultSharedPreferences(PPSManager.getContext());
+				.getDefaultSharedPreferences(PpsManager.getContext());
 		Editor editor = sharedPreferences.edit();
 		editor.putString("session", chosenSession);
 		
@@ -59,7 +59,7 @@ public class SessionManager {
 	
 	public void saveDefaultSessionID(){
 		SharedPreferences sharedPreferences = PreferenceManager
-				.getDefaultSharedPreferences(PPSManager.getContext());
+				.getDefaultSharedPreferences(PpsManager.getContext());
 		Editor editor = sharedPreferences.edit();
 		editor.putString("session", chosenSession);
 		
@@ -69,7 +69,7 @@ public class SessionManager {
 	
 	public void loadSavedSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
-				.getDefaultSharedPreferences(PPSManager.getContext());
+				.getDefaultSharedPreferences(PpsManager.getContext());
 		String session = sharedPreferences.getString("session", DEFAULT_SESSION);
 		Boolean isLock = sharedPreferences.getBoolean("isLock", UNLOCK);
 		if(!session.equals(DEFAULT_SESSION))
@@ -298,14 +298,14 @@ public class SessionManager {
 	//set session return boolean?
 	public void setChosenSession(String session) {
 		if(!isSessionLocked(session) || session.contains(alias)) {
-    		Toast.makeText(PPSManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
+    		Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
 
 			this.chosenSession = session;
 			this.saveSessionID();
 
 		}
 		else {
-			Toast.makeText(PPSManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
+			Toast.makeText(PpsManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
 			this.chosenSession = DEFAULT_SESSION;
 			this.saveDefaultSessionID();
 		}
@@ -370,10 +370,10 @@ public class SessionManager {
 				}	
 			}
 			
-			Toast.makeText(PPSManager.getContext(), "Successfuly locked " + sessionID, Toast.LENGTH_LONG).show();
+			Toast.makeText(PpsManager.getContext(), "Successfuly locked " + sessionID, Toast.LENGTH_LONG).show();
 		}
 		else {
-			Toast.makeText(PPSManager.getContext(), "Cannot lock a session you did not create!", Toast.LENGTH_LONG).show();
+			Toast.makeText(PpsManager.getContext(), "Cannot lock a session you did not create!", Toast.LENGTH_LONG).show();
 		}
 	}
 	
@@ -391,10 +391,10 @@ public class SessionManager {
 				}	
 			}
 			
-			Toast.makeText(PPSManager.getContext(), "Successfuly unlocked " + sessionID, Toast.LENGTH_LONG).show();
+			Toast.makeText(PpsManager.getContext(), "Successfuly unlocked " + sessionID, Toast.LENGTH_LONG).show();
 		}
 		else {
-			Toast.makeText(PPSManager.getContext(), "Cannot unlock a session you did not create!", Toast.LENGTH_LONG).show();
+			Toast.makeText(PpsManager.getContext(), "Cannot unlock a session you did not create!", Toast.LENGTH_LONG).show();
 		}
 	}
 

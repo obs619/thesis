@@ -7,7 +7,7 @@ import android.widget.Toast;
 import com.cardgame.activities.PlayPersonalActivity;
 import com.cardgame.activities.PlaySharedActivity;
 import com.cardgame.objects.Card;
-import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.PpsManager;
 import com.cardgame.screenapi.event.Event;
 import com.cardgame.screenapi.event.EventHandler;
 import com.cardgame.screenapi.session.SessionManager;
@@ -28,7 +28,7 @@ public class CardGameEventHandler implements EventHandler {
 		case CardGameEvent.DRAW_RESPOND:
 			Log.e("card game event draw respond", "draw respond");
 			PlayPersonalActivity.addCard(((Card)event.getPayload()));
-			Toast.makeText(PPSManager.getContext(), "Received:" + ((Card)event.getPayload()).toString() + "\r\n" +
+			Toast.makeText(PpsManager.getContext(), "Received:" + ((Card)event.getPayload()).toString() + "\r\n" +
 					"From: " + PlayPersonalActivity.playerToDrawFromNumber + " = " + PlayPersonalActivity.playerToDrawFromAliasName, 
 					Toast.LENGTH_LONG).show();
 			break;

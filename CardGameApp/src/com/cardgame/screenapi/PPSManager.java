@@ -11,7 +11,7 @@ import com.cardgame.screenapi.event.EventManager;
 import com.cardgame.screenapi.network.NetworkManager;
 import com.cardgame.screenapi.session.SessionManager;
 
-public class PPSManager {
+public class PpsManager {
 
 	public static final boolean PRIVATE = true;
 	public static final boolean PUBLIC = false;
@@ -24,13 +24,13 @@ public class PPSManager {
 	private static Context mContext;
 	
 	//singleton attributes
-	private static PPSManagerFactory factory;
+	private static PpsManagerFactory factory;
 	
 	//temporary public
-	private static PPSManager instance=null;
+	private static PpsManager instance=null;
 	
-	public PPSManager(Context mContext, boolean isPersonal, boolean sessionMode) {
-		PPSManager.mContext = mContext;
+	public PpsManager(Context mContext, boolean isPersonal, boolean sessionMode) {
+		PpsManager.mContext = mContext;
 		initializeNetworkManager();
 		initializeEventManager();
 		SessionManager.getInstance().setScreenType(isPersonal);
@@ -38,7 +38,7 @@ public class PPSManager {
 		instance = this;
 	}
 
-	public PPSManager() {
+	public PpsManager() {
 		initializeNetworkManager();
 		initializeEventManager();
 		clearSessionList();
@@ -46,7 +46,7 @@ public class PPSManager {
 		instance = this;
 	}
 	  
-	public static PPSManager getInstance() {
+	public static PpsManager getInstance() {
 		if (instance==null){
 			Log.e("PPSManager is null", "getInstance PPS");
 			instance= factory.createPPSManager();
@@ -71,7 +71,7 @@ public class PPSManager {
 	}
 	  
 	public void setContext(Context context){
-	  	 PPSManager.mContext = context;
+	  	 PpsManager.mContext = context;
 	}
 	  
 	public void setScreenMode(boolean sessionMode){

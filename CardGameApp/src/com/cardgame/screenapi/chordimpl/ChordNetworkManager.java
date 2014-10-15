@@ -4,7 +4,7 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.PpsManager;
 import com.cardgame.screenapi.network.NetworkManager;
 import com.cardgame.screenapi.session.SessionManager;
 import com.samsung.android.sdk.SsdkUnsupportedException;
@@ -19,7 +19,7 @@ public class ChordNetworkManager extends NetworkManager {
 	public ChordNetworkManager() {
 		initializeChord();
 
-		mChordManager = new SchordManager(PPSManager.getContext());
+		mChordManager = new SchordManager(PpsManager.getContext());
 		initializeChordManager();
 	}
 	
@@ -48,7 +48,7 @@ public class ChordNetworkManager extends NetworkManager {
 		chord = new Schord();
 		
 		try {
-			chord.initialize(PPSManager.getContext());
+			chord.initialize(PpsManager.getContext());
 		} catch (SsdkUnsupportedException e) {
 			e.printStackTrace();
 		}

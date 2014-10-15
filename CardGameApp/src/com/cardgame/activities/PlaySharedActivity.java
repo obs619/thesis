@@ -21,7 +21,7 @@ import com.cardgame.adapters.HandAdapter;
 import com.cardgame.handlers.CardGameEvent;
 import com.cardgame.handlers.CardGameEventHandler;
 import com.cardgame.objects.Card;
-import com.cardgame.screenapi.PPSManager;
+import com.cardgame.screenapi.PpsManager;
 import com.cardgame.screenapi.event.Event;
 import com.cardgame.screenapi.event.EventManager;
 import com.cardgame.screenapi.session.SessionManager;
@@ -57,13 +57,13 @@ public class PlaySharedActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		PPSManager.getInstance().stop();
+		PpsManager.getInstance().stop();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		PPSManager.getInstance().start();
+		PpsManager.getInstance().start();
 	}
 	
 	public static void addCard(Card c) {
@@ -131,7 +131,7 @@ public class PlaySharedActivity extends Activity {
 	}
 	
 	public void clickCheckSession(View v) {
-		Toast.makeText(this, PPSManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, PpsManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
 	public void clickStart(View v) {
