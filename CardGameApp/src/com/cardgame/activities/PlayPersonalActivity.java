@@ -106,19 +106,19 @@ public class PlayPersonalActivity extends Activity{
 	}
 	
 	public void clickPlay(View v) {
-		
 	    List<Card> cardsToPlay = new ArrayList<Card>();
+	    
 	    for( int i = 0; i < handAdapter.getCount(); i++ ){
 	        Card item = (Card) handAdapter.getItem(i);
 	        if(item.isSelected())
 	        	cardsToPlay.add(item);
 	    }
+	    
 	    if(SessionManager.getInstance().getPublicScreenList().size() > 0) {
 	    	if(cardsToPlay.size() == 2) {
 	    		if(cardsToPlay.get(0).getNumber() == cardsToPlay.get(1).getNumber()) {
-	    			for(Card card: cardsToPlay)
-				    {
-				    	Event e=new Event(Event.R_PUBLIC_SCREENS,CardGameEvent.CARD_PLAYED,card);
+	    			for(Card card: cardsToPlay) {
+				    	Event e = new Event(Event.R_PUBLIC_SCREENS,CardGameEvent.CARD_PLAYED,card);
 						EventManager.getInstance().triggerEvent(e);
 				    }
 			    	

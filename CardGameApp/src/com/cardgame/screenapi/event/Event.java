@@ -37,7 +37,7 @@ public class Event {
 	private String recipient;//who does this event affect?
 	private int type;
 	private int teamNo;
-	private boolean isAPIEvent;
+	private boolean isApiEvent;
 	private Serializable payload;
 	private String session;
 	
@@ -52,13 +52,13 @@ public class Event {
 		this.recipient=recipient;
 		this.type=type;
 		this.payload=payload;
-		this.setAPIEvent(false);
+		isApiEvent = false;
 		
 		if (type == ADD_NEW_SESSION) {
-			this.session = payload.toString();
+			session = payload.toString();
 		}
 		else {
-			this.session = ChordNetworkManager.getChordManager().getName();
+			session = ChordNetworkManager.getChordManager().getName();
 		}
 	}
 	
@@ -67,28 +67,28 @@ public class Event {
 		this.type=type;
 		this.teamNo=teamNo;
 		this.payload=payload;
-		this.setAPIEvent(false);
+		isApiEvent = false;
 		
 		if (type == ADD_NEW_SESSION) {
-			this.session = payload.toString();
+			session = payload.toString();
 		}
 		else {
-			this.session = ChordNetworkManager.getChordManager().getName();
+			session = ChordNetworkManager.getChordManager().getName();
 		}
 	}
 	
-	public Event(String recipient, int type, Serializable payload, boolean isAPIEvent) {
+	public Event(String recipient, int type, Serializable payload, boolean isApiEvent) {
 		this.recipient=recipient;
 		this.type=type;
 		this.payload=payload;
-		this.setAPIEvent(isAPIEvent);
-		this.session = ChordNetworkManager.getChordManager().getName();
+		this.isApiEvent = isApiEvent;
+		session = ChordNetworkManager.getChordManager().getName();
 		
 		if (type == ADD_NEW_SESSION) {
-			this.session = payload.toString();
+			session = payload.toString();
 		}
 		else {
-			this.session = ChordNetworkManager.getChordManager().getName();
+			session = ChordNetworkManager.getChordManager().getName();
 		}
 	}
 	
@@ -105,11 +105,11 @@ public class Event {
 	}
 	
 	public boolean isAPIEvent() {
-		return isAPIEvent;
+		return isApiEvent;
 	}
 	
-	public void setAPIEvent(boolean isAPIEvent) {
-		this.isAPIEvent = isAPIEvent;
+	public void setAPIEvent(boolean isApiEvent) {
+		this.isApiEvent = isApiEvent;
 	}
 	
 	public String getSession() {
