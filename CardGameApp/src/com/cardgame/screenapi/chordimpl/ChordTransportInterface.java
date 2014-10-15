@@ -131,7 +131,7 @@ public class ChordTransportInterface implements TransportInterface {
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
 			Log.e("LEFT", fromNode);
-			if(SessionManager.getInstance().getPrivateScreenList().contains(fromNode)) {
+			if(PpsManager.getInstance().getPrivateScreenList().contains(fromNode)) {
 
 				//can be remove
 				Event e=new Event(Event.R_LOCAL_SCREEN

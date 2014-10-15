@@ -114,7 +114,7 @@ public class PlayPersonalActivity extends Activity{
 	        	cardsToPlay.add(item);
 	    }
 	    
-	    if(SessionManager.getInstance().getPublicScreenList().size() > 0) {
+	    if(PpsManager.getInstance().getPublicScreenList().size() > 0) {
 	    	if(cardsToPlay.size() == 2) {
 	    		if(cardsToPlay.get(0).getNumber() == cardsToPlay.get(1).getNumber()) {
 	    			for(Card card: cardsToPlay) {
@@ -254,14 +254,14 @@ public class PlayPersonalActivity extends Activity{
 	
 	public void clickPersonal(View v) {
 		String nodes = "";
-		for(String node: SessionManager.getInstance().getPrivateScreenAliasList())
+		for(String node: PpsManager.getInstance().getPrivateScreenAliasList())
 			nodes += node + ",";
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}
 	
 	public void clickShared(View v) {
 		String nodes = "";
-		for(String node: SessionManager.getInstance().getPublicScreenAliasList())
+		for(String node: PpsManager.getInstance().getPublicScreenAliasList())
 			nodes += node + ",";
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}

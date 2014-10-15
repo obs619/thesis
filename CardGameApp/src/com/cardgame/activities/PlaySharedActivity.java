@@ -135,7 +135,7 @@ public class PlaySharedActivity extends Activity {
 	}
 	
 	public void clickStart(View v) {
-		if(SessionManager.getInstance().getPrivateScreenList().size() > 1) {
+		if(PpsManager.getInstance().getPrivateScreenList().size() > 1) {
 			//initialize cards
 			List<Card> deckCards = new ArrayList<Card>();
 			
@@ -155,15 +155,15 @@ public class PlaySharedActivity extends Activity {
 			Log.e("Monkey Card", monkeyCard.toString());
 			
 			//get number of players
-			int numPlayers = SessionManager.getInstance().getPrivateScreenList().size();
-			Log.e("Number of Players",SessionManager.getInstance().getPrivateScreenList().size() + "");
+			int numPlayers = PpsManager.getInstance().getPrivateScreenList().size();
+			Log.e("Number of Players",PpsManager.getInstance().getPrivateScreenList().size() + "");
 			
 		    int totalCardsPerPlayer = deckCards.size() / numPlayers;
 			
 		    playerMap = new TreeMap<Integer, String>();
 		    
 		    for(int i = 0; i < numPlayers; i++)
-		    	playerMap.put(i, SessionManager.getInstance().getPrivateScreenList().get(i));
+		    	playerMap.put(i, PpsManager.getInstance().getPrivateScreenList().get(i));
 		    
 		    for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
 		    	Log.e("Map Player", entry.getKey() + ":"  + entry.getValue());

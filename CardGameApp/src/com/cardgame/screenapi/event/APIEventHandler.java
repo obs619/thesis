@@ -4,6 +4,7 @@ import java.util.Map;
 
 import android.util.Log;
 
+import com.cardgame.screenapi.PpsManager;
 import com.cardgame.screenapi.session.SessionManager;
 
 public class ApiEventHandler implements EventHandler {
@@ -33,8 +34,8 @@ public class ApiEventHandler implements EventHandler {
 			if(!exist) {
 				SessionManager.getInstance().addPrivateScreen(key, alias);
 			} Change of implementation */
-			if (!SessionManager.getInstance().getPrivateScreenList().contains(key)) {
-				SessionManager.getInstance().addPrivateScreen(key, alias);
+			if (!PpsManager.getInstance().getPrivateScreenList().contains(key)) {
+				PpsManager.getInstance().addPrivateScreen(key, alias);
 			}
 			
 			break;
@@ -54,22 +55,22 @@ public class ApiEventHandler implements EventHandler {
 			if(!exist1) {
 				SessionManager.getInstance().addPublicScreen(key, alias);
 			} Change of implementation */
-			if (!SessionManager.getInstance().getPublicScreenList().contains(key)) {
-				SessionManager.getInstance().addPublicScreen(key, alias);
+			if (!PpsManager.getInstance().getPublicScreenList().contains(key)) {
+				PpsManager.getInstance().addPublicScreen(key, alias);
 			}
 			break;
 			
 		case Event.USER_LEFT_PRIVATE:
 			Log.e("user left private", "pasok");
 			
-			SessionManager.getInstance().removeFromPrivateScreen(event.getPayload().toString());
+			PpsManager.getInstance().removeFromPrivateScreen(event.getPayload().toString());
 			SessionManager.getInstance().removeAlias(event.getPayload().toString());
 			break;
 			
 		case Event.USER_LEFT_PUBLIC:
 			Log.e("user left public", "pasok");
 			
-			SessionManager.getInstance().removeFromPublicScreen(event.getPayload().toString());
+			PpsManager.getInstance().removeFromPublicScreen(event.getPayload().toString());
 			SessionManager.getInstance().removeAlias(event.getPayload().toString());
 			break;
 			
