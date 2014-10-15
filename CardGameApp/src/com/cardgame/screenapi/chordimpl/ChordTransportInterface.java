@@ -4,6 +4,7 @@ import java.util.Map;
 
 import android.util.Log;
 
+import com.cardgame.screenapi.PpsManager;
 import com.cardgame.screenapi.event.Event;
 import com.cardgame.screenapi.event.EventManager;
 import com.cardgame.screenapi.messaging.Message;
@@ -101,7 +102,7 @@ public class ChordTransportInterface implements TransportInterface {
 			String[] nodeAlias = getNodeAlias();
 				
 			
-			if(SessionManager.getInstance().isPersonal()) {
+			if(PpsManager.getInstance().isPersonal()) {
 				
 				Event e=new Event(Event.R_ALL_SCREENS
 						,Event.USER_JOIN_PRIVATE

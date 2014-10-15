@@ -33,7 +33,6 @@ public class SessionManager {
 	//for tracking teams
 	private Map<Integer,List<String>>teamMap=new HashMap<Integer, List<String>>();
 	
-	private boolean isPersonal;
 	private boolean sessionMode = true;
 	private String chosenSession = "";
 	
@@ -255,10 +254,6 @@ public class SessionManager {
 		return availableSessions;
 	}
 	
-	public boolean isPersonal() {
-		return isPersonal;
-	}
-	
 	public boolean isSessionMode() {
 		return sessionMode;
 	}
@@ -281,14 +276,6 @@ public class SessionManager {
 	
 	public void setPrivateScreenList(List<String> privateScreenList) {
 		this.privateScreenList = privateScreenList;
-	}
-	
-	/**
-	 * Sets whether the current device will have a public or private screen
-	 * @param screenType the current device is either PUBLIC or PRIVATE
-	 */
-	public void setScreenType(boolean screenType) {
-		this.isPersonal = screenType;
 	}
 	
 	public void setSessionMode(boolean sessionMode) {

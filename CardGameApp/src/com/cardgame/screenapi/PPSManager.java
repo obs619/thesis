@@ -18,6 +18,7 @@ public class PpsManager {
 	public static final boolean SESSION_MODE = true;
 	public static final boolean GAME_MODE = false;
 
+	private boolean isPrivate;
 	private EventManager eventManager;
 	private NetworkManager networkInitializer; 
 	private SessionManager sessionManager;
@@ -33,7 +34,7 @@ public class PpsManager {
 		PpsManager.mContext = mContext;
 		initializeNetworkManager();
 		initializeEventManager();
-		SessionManager.getInstance().setScreenType(isPersonal);
+		isPrivate = isPersonal;
 		SessionManager.getInstance().setSessionMode(sessionMode);
 		instance = this;
 	}
@@ -83,12 +84,16 @@ public class PpsManager {
 		ChordNetworkManager.getChordManager().stop();
 	}
 	
-	public void setScreenType(boolean screenType){
-		SessionManager.getInstance().setScreenType(screenType);
+	public void setScreenType(boolean screenType) {
+		isPrivate = screenType;
 	}
 	
 	public void start() {
 		ChordNetworkManager.initializeChordManager();
+	}
+	
+	public boolean isPersonal() {
+		return isPrivate;
 	}
 	
 	public String getCurrentSessionName() {

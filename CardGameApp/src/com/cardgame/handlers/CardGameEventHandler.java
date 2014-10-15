@@ -10,7 +10,6 @@ import com.cardgame.objects.Card;
 import com.cardgame.screenapi.PpsManager;
 import com.cardgame.screenapi.event.Event;
 import com.cardgame.screenapi.event.EventHandler;
-import com.cardgame.screenapi.session.SessionManager;
 
 public class CardGameEventHandler implements EventHandler {
 	
@@ -34,7 +33,7 @@ public class CardGameEventHandler implements EventHandler {
 			break;
 			
 		case CardGameEvent.CARD_PLAYED:
-			if(!SessionManager.getInstance().isPersonal())
+			if(!PpsManager.getInstance().isPersonal())
 				PlaySharedActivity.addCard(((Card)event.getPayload()));
 			else
 				PlayPersonalActivity.removeCard(((Card)event.getPayload()));
