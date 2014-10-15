@@ -20,24 +20,22 @@ public class LobbyActivity extends Activity {
 	}
 	
 	public void selectAsPrivate(View v) {
-		Intent intent = new Intent(this, SessionActivity.class);
-		ppsManager = new PPSManager(this, PPSManager.PRIVATE, PPSManager.SESSION_MODE);
-		setDeviceAlias();
-		startActivity(intent);
+		openNextPage(PPSManager.PRIVATE);
 	}
 	
 	public void selectAsPublic(View v) {
-		Intent intent = new Intent(this, SessionActivity.class);
-		ppsManager = new PPSManager(this, PPSManager.PUBLIC, PPSManager.SESSION_MODE);
-		setDeviceAlias();
-		startActivity(intent);
+		openNextPage(PPSManager.PUBLIC);
 	}
 	
-	public void setDeviceAlias(){
+	public void openNextPage(boolean isPrivate) {
+		Intent intent = new Intent(this, SessionActivity.class);
+		ppsManager = new PPSManager(this, isPrivate, PPSManager.SESSION_MODE);
+		
 		TextView mUserNameView;
-
 		mUserNameView = (TextView) findViewById(R.id.txtUserName);
 		SessionManager.getInstance().setAlias(mUserNameView.getText().toString());
+		
+		startActivity(intent);
 	}
 	
 }
