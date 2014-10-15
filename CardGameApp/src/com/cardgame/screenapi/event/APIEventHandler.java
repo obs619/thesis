@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.cardgame.screenapi.session.SessionManager;
 
-public class APIEventHandler implements EventHandler {
+public class ApiEventHandler implements EventHandler {
 	
 	@Override
 	public void handleEvent(Event event) {

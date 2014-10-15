@@ -9,7 +9,7 @@ public class EventManager {
 	MessageBuilder messageBuilder;
 	MessageDispatcher messageDispatcher;
 	static EventHandler eventHandler;
-	static APIEventHandler apiEventHandler=new APIEventHandler();
+	static ApiEventHandler apiEventHandler=new ApiEventHandler();
 	public static EventManagerFactory factory;
 	public static EventManager instance=null;
 

@@ -108,7 +108,7 @@ public class Event {
 		return isApiEvent;
 	}
 	
-	public void setAPIEvent(boolean isApiEvent) {
+	public void setApiEvent(boolean isApiEvent) {
 		this.isApiEvent = isApiEvent;
 	}
 	
