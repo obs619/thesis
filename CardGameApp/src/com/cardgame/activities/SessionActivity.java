@@ -58,34 +58,35 @@ public class SessionActivity extends Activity{
 	
 		listChannels = new ArrayList<String>();
 		
-		channelsAdapter = new ArrayAdapter<String>
-        (this, android.R.layout.simple_list_item_1, listChannels);
+		channelsAdapter = new ArrayAdapter<String>(this,
+												   android.R.layout.
+												   simple_list_item_1,
+												   listChannels);
 		
 		spinChannels.setAdapter(channelsAdapter);
 		channelsAdapter.notifyDataSetChanged();
 		
 		SessionManager.getInstance().loadSavedSessionID();
 		String session = SessionManager.getInstance().getChosenSession();
-			listChannels.add(session);
+		listChannels.add(session);
 		
 		channelsAdapter.notifyDataSetChanged();
 		
 		spinChannels.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 		    @Override
-		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-		    	Log.e("item selected",spinChannels.getItemAtPosition(position).toString());
+		    public void onItemSelected(AdapterView<?> parentView,
+		    						   View selectedItemView, int position,
+		    						   long id) {
+		    	Log.e("session selected", spinChannels.getItemAtPosition(position).toString());
 		    	
 		    	SessionManager.getInstance().setChosenSession(spinChannels.getItemAtPosition(position).toString());
 		    	txtSelectedSession.setText("Chosen Session: " + SessionManager.getInstance().getChosenSession());
 		    }
 
 		    @Override
-		    public void onNothingSelected(AdapterView<?> parentView) {
-
-		    }
+		    public void onNothingSelected(AdapterView<?> parentView) {}
 		});
-
 	}
 	
 	@Override
@@ -105,7 +106,6 @@ public class SessionActivity extends Activity{
 		PPSManager.getInstance().start();
 		
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
-		
 	}
 	
 	public void selectRefreshSessions(View v) {
@@ -170,7 +170,6 @@ public class SessionActivity extends Activity{
 	
 	public void selectLock(View v) {
 		SessionManager.getInstance().lockSession(spinChannels.getSelectedItem().toString());
-		
 	}
 	
 	public void selectUnlock(View v) {
