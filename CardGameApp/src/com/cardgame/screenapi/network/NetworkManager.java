@@ -3,7 +3,7 @@ package com.cardgame.screenapi.network;
 public class NetworkManager {
 	
 	private static NetworkManager instance = null;
-	static NetworkManagerFactory factory;
+	private static NetworkManagerFactory factory;
 
 	public static NetworkManager getInstance() {
 		if(instance==null)
