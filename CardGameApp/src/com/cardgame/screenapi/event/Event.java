@@ -115,5 +115,9 @@ public class Event {
 	public String getSession() {
 		return session;
 	}
+	
+	public int getTeamNo() {
+		return teamNo;
+	}
 
 }
