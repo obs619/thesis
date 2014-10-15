@@ -20,34 +20,41 @@ public class APIEventHandler implements EventHandler {
 		{
 		case Event.USER_JOIN_PRIVATE:
 			Log.e("PERSONAL API", "pasok");
-			boolean exist = false;
+			// boolean exist = false;
 			
 			nodeAlias = (String[]) event.getPayload();
 			key = nodeAlias[0];
 			alias = nodeAlias[1];
 			
-			for(String username : SessionManager.getInstance().getPrivateScreenList()) {
-				if(username.equals(nodeAlias[0]))
+			/*for(String username : SessionManager.getInstance().getPrivateScreenList()) {
+				if(username.equals(key))
 					exist = true;
 			}
 			if(!exist) {
 				SessionManager.getInstance().addPrivateScreen(key, alias);
+			} Change of implementation */
+			if (!SessionManager.getInstance().getPrivateScreenList().contains(key)) {
+				SessionManager.getInstance().addPrivateScreen(key, alias);
 			}
+			
 			break;
 			
 		case Event.USER_JOIN_PUBLIC:
 			Log.e("SHARED API", "pasok");
-			boolean exist1 = false;
+			//boolean exist1 = false;
 			
 			nodeAlias = (String[]) event.getPayload();
 			key = nodeAlias[0];
 			alias = nodeAlias[1];
 			
-			for(String username : SessionManager.getInstance().getPublicScreenList()) {
+			/*for(String username : SessionManager.getInstance().getPublicScreenList()) {
 				if(username.equals(nodeAlias[0]))
 					exist1 = true;
 			}
 			if(!exist1) {
+				SessionManager.getInstance().addPublicScreen(key, alias);
+			} Change of implementation */
+			if (!SessionManager.getInstance().getPublicScreenList().contains(key)) {
 				SessionManager.getInstance().addPublicScreen(key, alias);
 			}
 			break;
