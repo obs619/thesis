@@ -29,11 +29,11 @@ public class ChordTransportInterface implements TransportInterface {
 		try {
 			defaultChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, defaultChannelListener);
 			
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 			Log.e("join default","error");		}
-		//mChannel=ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);//not sure if this is right or if you can attach two listeners to the same channel; this is to ensure that the send() function will not cause an NPE
-		 if(defaultChannel==null)
+		//mChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);//not sure if this is right or if you can attach two listeners to the same channel; this is to ensure that the send() function will not cause an NPE
+		 if (defaultChannel == null)
 			 Log.e("CHANNEL ERROR", "Failed to join default channel");
 		/*if(mChannel == null)
 			 Log.e("CHANNEL E"
@@ -44,11 +44,11 @@ public class ChordTransportInterface implements TransportInterface {
 		
 		try {
 			mChannel = ChordNetworkManager.getChordManager().joinChannel(SessionManager.getInstance().getChosenSession(), mChordChannelListener);
-		}catch(Exception e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	
-		 if(mChannel == null)
+		 if (mChannel == null)
 			 Log.e("CHANNEL ERROR", "Failed to join custom channel");
 		
 	}
@@ -59,11 +59,11 @@ public class ChordTransportInterface implements TransportInterface {
 	
 	
 	@Override
-	public void sendOnDefaultChannel(String userToSend,Message message){
-		defaultChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
+	public void sendOnDefaultChannel(String userToSend,Message message) {
+		defaultChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] { ((ChordMessage) message).getBytes() });
 	}
 
-	private static class SPSChordChannelListenerAdapter extends ChordChannelListenerAdapter{
+	private static class SPSChordChannelListenerAdapter extends ChordChannelListenerAdapter {
 		@Override
 		public void onDataReceived(String fromNode, String fromChannel, String payloadType,
 				byte[][] payload) {
@@ -79,48 +79,46 @@ public class ChordTransportInterface implements TransportInterface {
 			Log.e("JOINED", fromNode);
 			
 			/*The ff. code assumes that onNodeJoined() is triggered on the device that was already in the session*/
-			if(fromChannel==channelName&& SessionManager.getInstance().getChosenSession()!=channelName)
-			{
+			if(fromChannel == channelName&& SessionManager.getInstance().getChosenSession() != channelName) {
 				
 				//may change type to Event.LATE_JOIN_RESPONSE_SESSION
-				Event e=null;
-				/*String sessionID=SessionManager.getInstance().getChosenSession();*/
+				Event e = null;
+				/*String sessionID = SessionManager.getInstance().getChosenSession();*/
 				
 				for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 					if(entry.getValue().equals(false)) {
 						Log.i("SENDING SESSIONS ", entry.getKey()+"fromNode: "+fromNode);
-						 e=new Event(fromNode
+						 e = new Event(fromNode
 								,Event.RESPOND_REQUEST_SESSIONS
 								,entry.getKey(),true);
 						 EventManager.getInstance().sendEventOnDefaultChannel(e);
 					}
 				}
-						
-		
+			
 			}
 			/*End code block*/
 			String[] nodeAlias = getNodeAlias();
 				
 			
-			if(PpsManager.getInstance().isPersonal()) {
+			if(PpsManager.getInstance().isPrivate()) {
 				
-				Event e=new Event(Event.R_ALL_SCREENS
+				Event e = new Event(Event.R_ALL_SCREENS
 						,Event.USER_JOIN_PRIVATE
 						,nodeAlias,true);
 				EventManager.getInstance().sendEvent(e);
 				
-				Event e1=new Event(Event.R_ALL_SCREENS
+				Event e1 = new Event(Event.R_ALL_SCREENS
 						,Event.USER_JOIN_PRIVATE
 						,nodeAlias,false);
 				EventManager.getInstance().sendEvent(e1);
 			}
 			else {
-				Event e=new Event(Event.R_ALL_SCREENS
+				Event e = new Event(Event.R_ALL_SCREENS
 						,Event.USER_JOIN_PUBLIC
 						,nodeAlias,true);
 				EventManager.getInstance().sendEvent(e);
 				
-				Event e1=new Event(Event.R_ALL_SCREENS
+				Event e1 = new Event(Event.R_ALL_SCREENS
 						,Event.USER_JOIN_PUBLIC
 						,nodeAlias,false);
 				EventManager.getInstance().sendEvent(e1);
@@ -134,23 +132,23 @@ public class ChordTransportInterface implements TransportInterface {
 			if(PpsManager.getInstance().getPrivateScreenList().contains(fromNode)) {
 
 				//can be remove
-				Event e=new Event(Event.R_LOCAL_SCREEN
+				Event e = new Event(Event.R_LOCAL_SCREEN
 						,Event.USER_LEFT_PRIVATE
 						,fromNode,false);
 				EventManager.getInstance().applyEvent(e);
 				
-				Event e1=new Event(Event.R_LOCAL_SCREEN
+				Event e1 = new Event(Event.R_LOCAL_SCREEN
 						,Event.USER_LEFT_PRIVATE
 						,fromNode,true);
 				EventManager.getInstance().applyEvent(e1);
 			}
 			else {
-				Event e=new Event(Event.R_LOCAL_SCREEN
+				Event e = new Event(Event.R_LOCAL_SCREEN
 						,Event.USER_LEFT_PUBLIC
 						,fromNode,false);
 				EventManager.getInstance().applyEvent(e);
 				
-				Event e1=new Event(Event.R_LOCAL_SCREEN
+				Event e1 = new Event(Event.R_LOCAL_SCREEN
 						,Event.USER_LEFT_PUBLIC
 						,fromNode,true);
 				EventManager.getInstance().applyEvent(e1);
@@ -159,39 +157,38 @@ public class ChordTransportInterface implements TransportInterface {
 		}
 		
 		//get nodeName and it's alias if exist
-		public String[] getNodeAlias(){
+		public String[] getNodeAlias() {
 			String[] nodeAlias = new String[2]; 
 			nodeAlias[0] = ChordNetworkManager.getChordManager().getName();
 			Log.e("OnNodeJoin get Alias", SessionManager.getInstance().getOwnAlias());
 			nodeAlias[1] = SessionManager.getInstance().getOwnAlias();
 			return nodeAlias;
 		}
-		
-	};
+	}
 	
 	@Override
 	public void sendToAll(Message message) {
 		try{
 			mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
-		}catch(Exception e) {
-            Log.e("ChordTransportInterface", "sendToAll failed");
-            return;
-        }
+		} catch(Exception e) {
+		    Log.e("ChordTransportInterface", "sendToAll failed");
+		    return;
+		}
 	}
 	
 	@Override
-	public void sendToAllOnDefaultChannel(Message message){
+	public void sendToAllOnDefaultChannel(Message message) {
 		try{
 			defaultChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
-		}catch(Exception e) {
-            Log.e("ChordTransportInterface", "sendToAll on default failed");
-            return;
-        }
+		} catch(Exception e) {
+			Log.e("ChordTransportInterface", "sendToAll on default failed");
+	    	return;
+	    }
 	}
 
 	@Override
 	public void setMessageDispatcher(MessageDispatcher dispatcher) {
-		ChordTransportInterface.messageDispatcher=dispatcher;
+		ChordTransportInterface.messageDispatcher = dispatcher;
 	}
 	
 	public static void onMessageReceived(Message receivedMessage) {
@@ -200,8 +197,8 @@ public class ChordTransportInterface implements TransportInterface {
 	
 	public void send(String userToSend,Message message) {
 		try{
-			mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] {  ((ChordMessage) message).getBytes() });
-		}catch(Exception e){
+			mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] { ((ChordMessage) message).getBytes() });
+		} catch(Exception e) {
 			Log.e("ChordTransportInterface", "send failed");
 			return;
 		}

@@ -33,7 +33,7 @@ public class CardGameEventHandler implements EventHandler {
 			break;
 			
 		case CardGameEvent.CARD_PLAYED:
-			if(!PpsManager.getInstance().isPersonal())
+			if(!PpsManager.getInstance().isPrivate())
 				PlaySharedActivity.addCard(((Card)event.getPayload()));
 			else
 				PlayPersonalActivity.removeCard(((Card)event.getPayload()));

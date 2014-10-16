@@ -52,7 +52,7 @@ public class ChordMessage extends com.llsx.pps.messaging.Message implements Seri
 	 * Recreates {@link ChordMessage} from the byte array.
 	 * 
 	 * @param data
-	 *            byte array representing {@link ChordMessage}
+	 *      byte array representing {@link ChordMessage}
 	 * @return
 	 */
 	public static ChordMessage obtainChatMessage(byte[] data) {
