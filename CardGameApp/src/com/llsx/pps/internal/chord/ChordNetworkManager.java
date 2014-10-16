@@ -22,7 +22,6 @@ public class ChordNetworkManager extends NetworkManager {
 		mChordManager = new SchordManager(PpsManager.getContext());
 		initializeChordManager();
 	}
-	
 	public void initializeChord() {
 		// Initialize Chord
 		chord = new Schord();
