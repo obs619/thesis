@@ -1,7 +1,7 @@
-package com.cardgame.screenapi.chordimpl;
+package com.llsx.pps.internal.chord;
 
-import com.cardgame.screenapi.network.NetworkManager;
-import com.cardgame.screenapi.network.NetworkManagerFactory;
+import com.llsx.pps.network.NetworkManager;
+import com.llsx.pps.network.NetworkManagerFactory;
 
 public class ChordNetworkManagerFactory implements NetworkManagerFactory {
 

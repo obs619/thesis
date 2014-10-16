@@ -1,4 +1,4 @@
-package com.cardgame.screenapi.chordimpl;
+package com.llsx.pps.internal.chord;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-public class ChordMessage extends com.cardgame.screenapi.messaging.Message implements Serializable {
+public class ChordMessage extends com.llsx.pps.messaging.Message implements Serializable {
 
 	private static final long serialVersionUID = 20130219L;
 

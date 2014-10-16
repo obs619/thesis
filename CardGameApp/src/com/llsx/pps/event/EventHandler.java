@@ -1,4 +1,4 @@
-package com.cardgame.screenapi.event;
+package com.llsx.pps.event;
 
 public interface EventHandler {
 	

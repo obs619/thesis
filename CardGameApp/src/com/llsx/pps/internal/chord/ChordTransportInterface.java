@@ -1,16 +1,16 @@
-package com.cardgame.screenapi.chordimpl;
+package com.llsx.pps.internal.chord;
 
 import java.util.Map;
 
 import android.util.Log;
 
-import com.cardgame.screenapi.PpsManager;
-import com.cardgame.screenapi.event.Event;
-import com.cardgame.screenapi.event.EventManager;
-import com.cardgame.screenapi.messaging.Message;
-import com.cardgame.screenapi.messaging.MessageDispatcher;
-import com.cardgame.screenapi.messaging.TransportInterface;
-import com.cardgame.screenapi.session.SessionManager;
+import com.llsx.pps.PpsManager;
+import com.llsx.pps.event.Event;
+import com.llsx.pps.event.EventManager;
+import com.llsx.pps.messaging.Message;
+import com.llsx.pps.messaging.MessageDispatcher;
+import com.llsx.pps.messaging.TransportInterface;
+import com.llsx.pps.session.SessionManager;
 import com.samsung.android.sdk.chord.SchordChannel;
 
 public class ChordTransportInterface implements TransportInterface {

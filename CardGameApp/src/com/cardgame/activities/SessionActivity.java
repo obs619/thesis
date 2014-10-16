@@ -20,9 +20,9 @@ import android.widget.Toast;
 
 import com.cardgame.R;
 import com.cardgame.handlers.SessionEventHandler;
-import com.cardgame.screenapi.PpsManager;
-import com.cardgame.screenapi.event.EventManager;
-import com.cardgame.screenapi.session.SessionManager;
+import com.llsx.pps.PpsManager;
+import com.llsx.pps.event.EventManager;
+import com.llsx.pps.session.SessionManager;
 
 public class SessionActivity extends Activity{
 	

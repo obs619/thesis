@@ -7,9 +7,9 @@ import android.widget.Toast;
 import com.cardgame.activities.PlayPersonalActivity;
 import com.cardgame.activities.PlaySharedActivity;
 import com.cardgame.objects.Card;
-import com.cardgame.screenapi.PpsManager;
-import com.cardgame.screenapi.event.Event;
-import com.cardgame.screenapi.event.EventHandler;
+import com.llsx.pps.PpsManager;
+import com.llsx.pps.event.Event;
+import com.llsx.pps.event.EventHandler;
 
 public class CardGameEventHandler implements EventHandler {
 	

@@ -1,12 +1,12 @@
-package com.cardgame.screenapi.chordimpl;
+package com.llsx.pps.internal.chord;
 
-import com.cardgame.screenapi.PpsManager;
-import com.cardgame.screenapi.event.Event;
-import com.cardgame.screenapi.event.EventManager;
-import com.cardgame.screenapi.messaging.Message;
-import com.cardgame.screenapi.messaging.TransportInterface;
+import com.llsx.pps.PpsManager;
+import com.llsx.pps.event.Event;
+import com.llsx.pps.event.EventManager;
+import com.llsx.pps.messaging.Message;
+import com.llsx.pps.messaging.TransportInterface;
 
-public class ChordMessageDispatcher implements com.cardgame.screenapi.messaging.MessageDispatcher{
+public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDispatcher{
 	
 	private TransportInterface transportInterface;
 	

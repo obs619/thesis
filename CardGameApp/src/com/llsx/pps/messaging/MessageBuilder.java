@@ -1,6 +1,6 @@
-package com.cardgame.screenapi.messaging;
+package com.llsx.pps.messaging;
 
-import com.cardgame.screenapi.event.Event;
+import com.llsx.pps.event.Event;
 
 public interface MessageBuilder {
 

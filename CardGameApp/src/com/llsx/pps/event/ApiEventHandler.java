@@ -1,11 +1,11 @@
-package com.cardgame.screenapi.event;
+package com.llsx.pps.event;
 
 import java.util.Map;
 
 import android.util.Log;
 
-import com.cardgame.screenapi.PpsManager;
-import com.cardgame.screenapi.session.SessionManager;
+import com.llsx.pps.PpsManager;
+import com.llsx.pps.session.SessionManager;
 
 public class ApiEventHandler implements EventHandler {
 	

@@ -1,12 +1,12 @@
-package com.cardgame.screenapi.chordimpl;
+package com.llsx.pps.internal.chord;
 
 import java.util.List;
 
 import android.util.Log;
 
-import com.cardgame.screenapi.PpsManager;
-import com.cardgame.screenapi.network.NetworkManager;
-import com.cardgame.screenapi.session.SessionManager;
+import com.llsx.pps.PpsManager;
+import com.llsx.pps.network.NetworkManager;
+import com.llsx.pps.session.SessionManager;
 import com.samsung.android.sdk.SsdkUnsupportedException;
 import com.samsung.android.sdk.chord.Schord;
 import com.samsung.android.sdk.chord.SchordManager;

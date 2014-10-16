@@ -1,7 +1,7 @@
-package com.cardgame.screenapi.chordimpl;
+package com.llsx.pps.internal.chord;
 
-import com.cardgame.screenapi.event.EventManager;
-import com.cardgame.screenapi.event.EventManagerFactory;
+import com.llsx.pps.event.EventManager;
+import com.llsx.pps.event.EventManagerFactory;
 
 public class ChordEventManagerFactory implements EventManagerFactory {
 

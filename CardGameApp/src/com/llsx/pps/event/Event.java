@@ -1,8 +1,8 @@
-package com.cardgame.screenapi.event;
+package com.llsx.pps.event;
 
 import java.io.Serializable;
 
-import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
+import com.llsx.pps.internal.chord.ChordNetworkManager;
 
 public class Event {
 	public static final boolean APP_EVENT = false;

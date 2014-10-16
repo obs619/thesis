@@ -1,8 +1,8 @@
-package com.cardgame.screenapi.chordimpl;
+package com.llsx.pps.internal.chord;
 
-import com.cardgame.screenapi.event.Event;
-import com.cardgame.screenapi.messaging.Message;
-import com.cardgame.screenapi.messaging.MessageBuilder;
+import com.llsx.pps.event.Event;
+import com.llsx.pps.messaging.Message;
+import com.llsx.pps.messaging.MessageBuilder;
 
 public class ChordMessageBuilder implements MessageBuilder {
 

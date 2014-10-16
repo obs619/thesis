@@ -1,4 +1,4 @@
-package com.cardgame.screenapi;
+package com.llsx.pps;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,13 +9,13 @@ import java.util.Map;
 import android.content.Context;
 import android.util.Log;
 
-import com.cardgame.screenapi.chordimpl.ChordEventManagerFactory;
-import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
-import com.cardgame.screenapi.chordimpl.ChordNetworkManagerFactory;
-import com.cardgame.screenapi.chordimpl.ChordTransportInterface;
-import com.cardgame.screenapi.event.EventManager;
-import com.cardgame.screenapi.network.NetworkManager;
-import com.cardgame.screenapi.session.SessionManager;
+import com.llsx.pps.event.EventManager;
+import com.llsx.pps.internal.chord.ChordEventManagerFactory;
+import com.llsx.pps.internal.chord.ChordNetworkManager;
+import com.llsx.pps.internal.chord.ChordNetworkManagerFactory;
+import com.llsx.pps.internal.chord.ChordTransportInterface;
+import com.llsx.pps.network.NetworkManager;
+import com.llsx.pps.session.SessionManager;
 
 public class PpsManager {
 

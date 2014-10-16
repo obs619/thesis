@@ -1,4 +1,4 @@
-package com.cardgame.screenapi.session;
+package com.llsx.pps.session;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,10 +10,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.cardgame.screenapi.PpsManager;
-import com.cardgame.screenapi.chordimpl.ChordNetworkManager;
-import com.cardgame.screenapi.event.Event;
-import com.cardgame.screenapi.event.EventManager;
+import com.llsx.pps.PpsManager;
+import com.llsx.pps.event.Event;
+import com.llsx.pps.event.EventManager;
+import com.llsx.pps.internal.chord.ChordNetworkManager;
 
 public class SessionManager {
 	

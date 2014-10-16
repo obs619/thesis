@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cardgame.R;
-import com.cardgame.screenapi.PpsManager;
-import com.cardgame.screenapi.session.SessionManager;
+import com.llsx.pps.PpsManager;
+import com.llsx.pps.session.SessionManager;
 
 public class LobbyActivity extends Activity {
 	public static PpsManager ppsManager;

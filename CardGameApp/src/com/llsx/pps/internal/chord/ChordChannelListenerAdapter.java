@@ -1,4 +1,4 @@
-package com.cardgame.screenapi.chordimpl;
+package com.llsx.pps.internal.chord;
 
 import com.samsung.android.sdk.chord.SchordChannel;
 

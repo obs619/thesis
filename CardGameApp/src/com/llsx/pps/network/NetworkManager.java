@@ -1,4 +1,4 @@
-package com.cardgame.screenapi.network;
+package com.llsx.pps.network;
 
 public class NetworkManager {
 	

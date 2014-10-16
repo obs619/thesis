@@ -1,6 +1,6 @@
 package com.cardgame.handlers;
 
-import com.cardgame.screenapi.event.Event;
+import com.llsx.pps.event.Event;
 
 public class CardGameEvent extends Event {
 	public CardGameEvent(String recipient, int type, String payload) {

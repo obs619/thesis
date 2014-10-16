@@ -1,8 +1,8 @@
-package com.cardgame.screenapi.event;
+package com.llsx.pps.event;
 
-import com.cardgame.screenapi.messaging.Message;
-import com.cardgame.screenapi.messaging.MessageBuilder;
-import com.cardgame.screenapi.messaging.MessageDispatcher;
+import com.llsx.pps.messaging.Message;
+import com.llsx.pps.messaging.MessageBuilder;
+import com.llsx.pps.messaging.MessageDispatcher;
 
 public class EventManager {
 	
