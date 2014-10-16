@@ -23,7 +23,7 @@ public class PpsManager {
 	public static final boolean PRIVATE = true;
 	public static final boolean PUBLIC = false;
 	public static final boolean SESSION_MODE = true;
-	public static final boolean GAME_MODE = false;
+	public static final boolean APP_MODE = false;
 
 	/* Public and Private Screens Tracking */
 	private boolean isPrivate;
@@ -47,6 +47,9 @@ public class PpsManager {
 	 * Constructors
 	 */
 	
+	/**
+	 * Constructs a new PpsManager with default settings
+	 */
 	public PpsManager() {
 		initializeNetworkManager();
 		initializeEventManager();
@@ -55,6 +58,12 @@ public class PpsManager {
 		instance = this;
 	}
 	
+	/**
+	 * Constructs a new PpsManager for the given context, screen type and session mode
+	 * @param mContext current context of the device
+	 * @param isPrivate screen type of the device
+	 * @param sessionMode current session of the device
+	 */
 	public PpsManager(Context mContext, boolean isPrivate, boolean sessionMode) {
 		PpsManager.mContext = mContext;
 		initializeNetworkManager();
@@ -63,56 +72,59 @@ public class PpsManager {
 		SessionManager.getInstance().setSessionMode(sessionMode);
 		instance = this;
 	}
-	 
+	
+	/**
+	 * @return The current instance of PpsManager.
+	 */
 	public static PpsManager getInstance() {
 		if (instance == null) {
 			Log.e("PPSManager is null", "getInstance PPS");
 			instance = factory.createPpsManager();
 		}
 		return instance;
-	}	
-	 
-	public void clearSessionList() {
-		privateScreenList.clear();
-		publicScreenList.clear();
-		SessionManager.getInstance().clearAliasList();
-	}
-	 
-	public void initializeEventManager() {
-		 EventManager.setDefaultFactory(new ChordEventManagerFactory());
-		 setEventManager();
-	}
-	 
-	public void initializeNetworkManager() {
-		 NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
-		 setNetworkInitializer();
 	}
 	
+	/**
+	 * Starts the network manager and connects the app to the network
+	 */
 	public void start() {
 		ChordNetworkManager.initializeChordManager();
 	}
-	 
+	
+	/**
+	 * Stops the network manager and disconnects the app from the network
+	 */
 	public void stop() {
 		ChordNetworkManager.getChordManager().stop();
 	}
 	
+	/*
+	 * Public Screen Management
+	 */
+	
 	/**
-	 * Adds the node into public screen list.
+	 * Adds the node into the list of public screens.
 	 * @param nodeName fixed name of the device
-	 * @param aliasName name representation for the device
+	 * @param aliasName alias or name representation for the device (e.g. "Gameboard1")
 	 */
 	public void addPublicScreen(String nodeName, String aliasName) {
 		publicScreenList.add(nodeName);
 		SessionManager.getInstance().addAlias(nodeName, aliasName);
 	}
 	
+	/**
+	 * Remove the given node from the list of public screens
+	 * @param nodeName fixed name of the device to be removed
+	 */
 	public void removeFromPublicScreen(String nodeName) {
 		for(int i = 0; i < publicScreenList.size(); i++)
 			if(publicScreenList.get(i).equals(nodeName))
 				publicScreenList.remove(i);
 	}
 	
-	//maybe remove
+	/**
+	 * @return The list of aliases for the public screen devices.
+	 */ //maybe remove
 	public List<String> getPublicScreenAliasList() {
 		List<String> result = new ArrayList<String>();
 		for(String key: publicScreenList) {
@@ -124,22 +136,34 @@ public class PpsManager {
 		return result;
 	}
 	
+	/*
+	 * Private Screen Management
+	 */
+	
 	/**
-	 * Adds the node into private screen list.
+	 * Adds the node into the list of private screens.
 	 * @param nodeName fixed name of the device
-	 * @param aliasName name representation for the device
+	 * @param aliasName alias or name representation for the device (e.g. "Player1")
 	 */
 	public void addPrivateScreen(String nodeName, String aliasName) {
 		privateScreenList.add(nodeName);
 		SessionManager.getInstance().addAlias(nodeName, aliasName);
 	}
 	
+	/**
+	 * Remove the given node from the list of private screens
+	 * @param nodeName fixed name of the device to be removed
+	 */
 	public void removeFromPrivateScreen(String nodeName) {
 		for(int i = 0; i < privateScreenList.size(); i++)
 			if(privateScreenList.get(i).equals(nodeName))
 				privateScreenList.remove(i);
 	}
 	
+	
+	/**
+	 * @return The list of aliases for the private screen devices.
+	 */ //maybe remove
 	public List<String>getPrivateScreenAliasList() {
 		List<String> result = new ArrayList<String>();
 		for(String key: privateScreenList) {
@@ -151,9 +175,15 @@ public class PpsManager {
 		return result;
 	}
 	
-	/*Team screen methods
-	 * 
-	 *
+	/*
+	 * Team Screen Management
+	 */
+	
+	/**
+	 * Adds the node to a team or logical group
+	 * @param teamNo the assigned team number or logical group number
+	 * @param nodeName fixed name of the device
+	 * @param aliasName alias or name representation for the device (e.g. "Player1")
 	 */
 	public void addTeamScreen(int teamNo, String nodeName, String aliasName) {
 		if(teamMap.get(teamNo) != null)
@@ -168,21 +198,10 @@ public class PpsManager {
 		//TODO check if node is in public or private screen list, ensure it is no longer a "public" screen?
 	}
 	
-	public List<String> getTeamScreenList(int teamNo) {
-		return teamMap.get(teamNo);
-	}
-	
-	public List<String> getTeamPrivateScreenList(int teamNo) {
-		List<String> listScreens = new ArrayList<String>();
-		for (Iterator<String> iterator = teamMap.get(teamNo).iterator(); iterator.hasNext();) {
-			String current = iterator.next();
-			if (privateScreenList.contains(current))
-			{
-				listScreens.add(current);
-			}
-		}
-		return listScreens;
-	}
+	/**
+	 * @param teamNo the assigned team number or logical group number
+	 * @return The list of public screens belonging to the given team.
+	 */
 	public List<String> getTeamPublicScreenList(int teamNo) {
 		List<String> listScreens = new ArrayList<String>();
 		for (Iterator<String> iterator = teamMap.get(teamNo).iterator(); iterator.hasNext();) {
@@ -194,28 +213,82 @@ public class PpsManager {
 		}
 		return listScreens;
 	}
-	/* End team screen methods
-	 * 
-	 *
-	 */
 	
+	/**
+	 * @param teamNo the assigned team number or logical group number
+	 * @return The list of private screens belonging to the given team.
+	 */
+	public List<String> getTeamPrivateScreenList(int teamNo) {
+		List<String> listScreens = new ArrayList<String>();
+		for (Iterator<String> iterator = teamMap.get(teamNo).iterator(); iterator.hasNext();) {
+			String current = iterator.next();
+			if (privateScreenList.contains(current))
+			{
+				listScreens.add(current);
+			}
+		}
+		return listScreens;
+	}
+	
+	/**
+	 * @param teamNo the assigned team number or logical group number
+	 * @return The list screens (public and private) belonging to the given team.
+	 */
+	public List<String> getTeamScreenList(int teamNo) {
+		return teamMap.get(teamNo);
+	}
+	
+	/**
+	 * @return The name of the current session.
+	 */
 	public String getCurrentSessionName() {
 		return ChordTransportInterface.mChannel.getName();
 	}
 	
+	/**
+	 * @return The name of the device.
+	 */
 	public String getDeviceName() {
 		return ChordNetworkManager.getChordManager().getName();
 	}
 	
 	/**
-	 * Select which implementation you want (Chord in this case)
+	 * Sets the screen mode as Session Mode or App Mode.
+	 * @param sessionMode PpsManager.SESSION_MODE or PpsManager.APP_MODE
+	 */
+	public void setScreenMode(boolean sessionMode) {
+		 clearSessionList();
+	 	 SessionManager.getInstance().setSessionMode(sessionMode);
+	}
+	
+	/**
+	 * Select which implementation you want (The default implementation is Chord).
 	 */
 	public void setNetworkInitializer() {
 		this.networkInitializer = NetworkManager.getInstance();
 	}
 	
+	// TODO Should this be made private instead?
+	public void clearSessionList() {
+		privateScreenList.clear();
+		publicScreenList.clear();
+		SessionManager.getInstance().clearAliasList();
+	}
+	
+	// TODO Should this be made private instead?
+	public void initializeEventManager() {
+		 EventManager.setDefaultFactory(new ChordEventManagerFactory());
+		 setEventManager();
+	}
+	 
+	// TODO Should this be made private instead?
+	public void initializeNetworkManager() {
+		 NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
+		 setNetworkInitializer();
+	}
+	
 	/*
-	 * Getters and Setters below
+	 * Getters and Setters for class variables below
 	 */
 	
 	public static Context getContext() {
@@ -264,11 +337,6 @@ public class PpsManager {
 	
 	public void setPrivateScreenList(List<String> privateScreenList) {
 		this.privateScreenList = privateScreenList;
-	}
-	
-	public void setScreenMode(boolean sessionMode) {
-		 clearSessionList();
-	 	 SessionManager.getInstance().setSessionMode(sessionMode);
 	}
 	
 	public void setScreenType(boolean screenType) {

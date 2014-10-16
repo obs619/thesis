@@ -151,12 +151,12 @@ public class SessionActivity extends Activity{
 			if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
 				if(PpsManager.getInstance().isPrivate()) {
 					Intent intent = new Intent(this, PlayPersonalActivity.class);
-					PpsManager.getInstance().setScreenMode(PpsManager.GAME_MODE);
+					PpsManager.getInstance().setScreenMode(PpsManager.APP_MODE);
 					startActivity(intent);
 				}
 				else if(!PpsManager.getInstance().isPrivate()) {
 					Intent intent = new Intent(this, PlaySharedActivity.class);
-					PpsManager.getInstance().setScreenMode(PpsManager.GAME_MODE);
+					PpsManager.getInstance().setScreenMode(PpsManager.APP_MODE);
 					startActivity(intent);
 				}
 				Log.e("Select Proceed", "Session Name:" + SessionManager.getInstance().getChosenSession());
