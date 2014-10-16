@@ -1,8 +1,7 @@
 package com.llsx.pps;
 
 public class PpsManagerFactory {
-	public PpsManager createPPSManager(){
+	public PpsManager createPpsManager() {
 		return new PpsManager();
-		
 	}
 }

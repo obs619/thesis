@@ -18,14 +18,16 @@ public abstract class Message implements Serializable{
 	public int getType() {
 		return mMessageType;
 	}
+	
 	public int getTeamNo() {
 		return teamNo;
 	}
+	
 	public Serializable getContents() {
 		return mMessage;
 	}
 	
-	public String getRecipient(){
+	public String getRecipient() {
 		return mRecipients;
 	}
 	

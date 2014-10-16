@@ -29,7 +29,7 @@ public class PpsManager {
 	private List<String> privateScreenList = new ArrayList<String>();
 	
 	//for tracking teams
-	private Map<Integer,List<String>>teamMap=new HashMap<Integer, List<String>>();
+	private Map<Integer,List<String>>teamMap = new HashMap<Integer, List<String>>();
 	
 	private EventManager eventManager;
 	private NetworkManager networkInitializer; 
@@ -39,14 +39,13 @@ public class PpsManager {
 	//singleton attributes
 	private static PpsManagerFactory factory;
 	
-	//temporary public
-	private static PpsManager instance=null;
+	private static PpsManager instance = null;
 	
-	public PpsManager(Context mContext, boolean isPersonal, boolean sessionMode) {
+	public PpsManager(Context mContext, boolean isPrivate, boolean sessionMode) {
 		PpsManager.mContext = mContext;
 		initializeNetworkManager();
 		initializeEventManager();
-		isPrivate = isPersonal;
+		this.isPrivate = isPrivate;
 		SessionManager.getInstance().setSessionMode(sessionMode);
 		instance = this;
 	}
@@ -58,40 +57,40 @@ public class PpsManager {
 		
 		instance = this;
 	}
-	  
+	 
 	public static PpsManager getInstance() {
-		if (instance==null){
+		if (instance == null) {
 			Log.e("PPSManager is null", "getInstance PPS");
-			instance= factory.createPPSManager();
+			instance = factory.createPpsManager();
 		}
 		return instance;
 	}	
-	  
-	public void clearSessionList(){
+	 
+	public void clearSessionList() {
 		privateScreenList.clear();
 		publicScreenList.clear();
 		SessionManager.getInstance().clearAliasList();
 	}
-	  
-	public void initializeEventManager(){
+	 
+	public void initializeEventManager() {
 		 EventManager.setDefaultFactory(new ChordEventManagerFactory());
 		 setEventManager();
 	}
-	  
-	public void initializeNetworkManager(){
+	 
+	public void initializeNetworkManager() {
 		 NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
 		 setNetworkInitializer();
 	}
-	  
-	public void setContext(Context context){
-	  	 PpsManager.mContext = context;
+	 
+	public void setContext(Context context) {
+	 	 PpsManager.mContext = context;
 	}
-	  
-	public void setScreenMode(boolean sessionMode){
+	 
+	public void setScreenMode(boolean sessionMode) {
 		 clearSessionList();
-	  	 SessionManager.getInstance().setSessionMode(sessionMode);
+	 	 SessionManager.getInstance().setSessionMode(sessionMode);
 	}
-	  
+	 
 	public void stop() {
 		ChordNetworkManager.getChordManager().stop();
 	}
@@ -104,7 +103,7 @@ public class PpsManager {
 		ChordNetworkManager.initializeChordManager();
 	}
 	
-	public boolean isPersonal() {
+	public boolean isPrivate() {
 		return isPrivate;
 	}
 	
@@ -113,12 +112,12 @@ public class PpsManager {
 	 * @param nodeName fixed name of the device
 	 * @param aliasName name representation for the device
 	 */
-	public void addPublicScreen(String nodeName, String aliasName){
+	public void addPublicScreen(String nodeName, String aliasName) {
 		publicScreenList.add(nodeName);
 		SessionManager.getInstance().addAlias(nodeName, aliasName);
 	}
 	
-	public void removeFromPublicScreen(String nodeName){
+	public void removeFromPublicScreen(String nodeName) {
 		for(int i = 0; i < publicScreenList.size(); i++)
 			if(publicScreenList.get(i).equals(nodeName))
 				publicScreenList.remove(i);
@@ -133,9 +132,9 @@ public class PpsManager {
 	}
 	
 	//maybe remove
-	public List<String> getPublicScreenAliasList(){
+	public List<String> getPublicScreenAliasList() {
 		List<String> result = new ArrayList<String>();
-		for(String key: publicScreenList){
+		for(String key: publicScreenList) {
 			String alias = SessionManager.getInstance().getAlias(key);
 			if(alias != null)
 				result.add(alias);
@@ -149,12 +148,12 @@ public class PpsManager {
 	 * @param nodeName fixed name of the device
 	 * @param aliasName name representation for the device
 	 */
-	public void addPrivateScreen(String nodeName, String aliasName){
+	public void addPrivateScreen(String nodeName, String aliasName) {
 		privateScreenList.add(nodeName);
 		SessionManager.getInstance().addAlias(nodeName, aliasName);
 	}
 	
-	public void removeFromPrivateScreen(String nodeName){
+	public void removeFromPrivateScreen(String nodeName) {
 		for(int i = 0; i < privateScreenList.size(); i++)
 			if(privateScreenList.get(i).equals(nodeName))
 				privateScreenList.remove(i);
@@ -168,9 +167,9 @@ public class PpsManager {
 		this.privateScreenList = privateScreenList;
 	}
 	
-	public List<String>getPrivateScreenAliasList(){
+	public List<String>getPrivateScreenAliasList() {
 		List<String> result = new ArrayList<String>();
-		for(String key: privateScreenList){
+		for(String key: privateScreenList) {
 			String alias = SessionManager.getInstance().getAlias(key);
 			if(alias != null)
 				result.add(alias);
@@ -183,13 +182,12 @@ public class PpsManager {
 	 * 
 	 *
 	 */
-	public void addTeamScreen(int teamNo, String nodeName, String aliasName)
-	{
-		if(teamMap.get(teamNo)!=null)
+	public void addTeamScreen(int teamNo, String nodeName, String aliasName) {
+		if(teamMap.get(teamNo) != null)
 			teamMap.get(teamNo).add(nodeName);
 		
 		else {
-			List<String>newTeamList=new ArrayList<String>();
+			List<String>newTeamList = new ArrayList<String>();
 			newTeamList.add(nodeName);
 			teamMap.put(teamNo, newTeamList);
 		}
@@ -197,13 +195,11 @@ public class PpsManager {
 		//TODO check if node is in public or private screen list, ensure it is no longer a "public" screen?
 	}
 	
-	public List<String> getTeamScreenList(int teamNo)
-	{
+	public List<String> getTeamScreenList(int teamNo) {
 		return teamMap.get(teamNo);
 	}
 	
-	public List<String> getTeamPrivateScreenList(int teamNo)
-	{
+	public List<String> getTeamPrivateScreenList(int teamNo) {
 		List<String> listScreens = new ArrayList<String>();
 		for (Iterator<String> iterator = teamMap.get(teamNo).iterator(); iterator.hasNext();) {
 			String current = iterator.next();
@@ -214,8 +210,7 @@ public class PpsManager {
 		}
 		return listScreens;
 	}
-	public List<String> getTeamPublicScreenList(int teamNo)
-	{
+	public List<String> getTeamPublicScreenList(int teamNo) {
 		List<String> listScreens = new ArrayList<String>();
 		for (Iterator<String> iterator = teamMap.get(teamNo).iterator(); iterator.hasNext();) {
 			String current = iterator.next();

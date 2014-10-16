@@ -32,13 +32,13 @@ public class SessionManager {
 
 	
 	public static SessionManager getInstance() {
-		if(instance==null) {
-			instance=new SessionManager();
+		if(instance == null) {
+			instance = new SessionManager();
 		}
 		return instance;
 	}
 	
-	public void saveSessionID(){
+	public void saveSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());
 		Editor editor = sharedPreferences.edit();
@@ -48,7 +48,7 @@ public class SessionManager {
 		editor.commit();
 	}
 	
-	public void saveDefaultSessionID(){
+	public void saveDefaultSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());
 		Editor editor = sharedPreferences.edit();
@@ -73,7 +73,7 @@ public class SessionManager {
 	 * @param sessionID name of the session
 	 * @param isLock if the session is lock
 	 */
-	public void addAvailableSession(String sessionID, Boolean isLock){
+	public void addAvailableSession(String sessionID, Boolean isLock) {
 		availableSessions.put(sessionID, isLock);
 	}
 	
@@ -86,7 +86,7 @@ public class SessionManager {
 	 * with the specified session ID
 	 * @param sessionID identifier of the session
 	 */
-	public void removeAvailableSession(String sessionID){
+	public void removeAvailableSession(String sessionID) {
 		availableSessions.remove(sessionID);
 	}
 	
@@ -94,7 +94,7 @@ public class SessionManager {
 	 * Removes the alias from alias list.
 	 * @param aliasName name representation for the device
 	 */
-	public void removeAlias(String nodeName){
+	public void removeAlias(String nodeName) {
 		aliasList.remove(nodeName);
 	}
 	
@@ -102,7 +102,7 @@ public class SessionManager {
 	 * Returns device's own alias.
 	 * @return String value of device's own alias
 	 */
-	public String getOwnAlias(){
+	public String getOwnAlias() {
 		return alias;
 	}
 	
@@ -112,21 +112,22 @@ public class SessionManager {
 	 * @return alias name of the node given key
 	 * or not if it doesn't exist.
 	 */
-	public String getAlias(String key){
+	public String getAlias(String key) {
 		return aliasList.get(key);
 	}
 	
-	public String getNodeName(String alias){
-		String result="";
+	public String getNodeName(String alias) {
+		String result = "";
 		for(Map.Entry<String, String> entry : aliasList.entrySet()) {
-		    if(entry.getValue().equals(alias))
-		    {result = entry.getKey();
-		    		break;
-		    }
-		    	
+		  if(entry.getValue().equals(alias))
+		  {result = entry.getKey();
+		  		break;
+		  }
+		  	
 		}
 		return result;
 	}
+	
 	public Set<String> getAvailableSessionsSet() {
 		Set<String> keys = availableSessions.keySet();
 		return keys;
@@ -146,7 +147,7 @@ public class SessionManager {
 	
 	//setters
 	
-	public void setAlias(String alias){
+	public void setAlias(String alias) {
 		/* if no alias is given */
 		
 		this.alias = alias;
@@ -159,7 +160,7 @@ public class SessionManager {
 	//set session return boolean?
 	public void setChosenSession(String session) {
 		if(!isSessionLocked(session) || session.contains(alias)) {
-    		Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
+  		Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
 
 			this.chosenSession = session;
 			this.saveSessionID();
@@ -177,11 +178,11 @@ public class SessionManager {
 	}
 	
 	//clear functions
-	public void clearAliasList(){
+	public void clearAliasList() {
 		aliasList.clear();
 	}
 	
-	public void clearAvailableSessionsList(){
+	public void clearAvailableSessionsList() {
 		availableSessions.clear();
 	}
 	

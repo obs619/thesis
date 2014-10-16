@@ -47,10 +47,10 @@ public class SessionActivity extends Activity{
 		txtScreenType = (TextView) findViewById(R.id.txt_screen_type);
 		
 		
-		if(PpsManager.getInstance().isPersonal()) {
+		if(PpsManager.getInstance().isPrivate()) {
 			txtScreenType.setText("Screen Type: Personal");
 		}
-		else if(!PpsManager.getInstance().isPersonal()) {
+		else if(!PpsManager.getInstance().isPrivate()) {
 			txtScreenType.setText("Screen Type: Shared");
 		}
 		
@@ -149,12 +149,12 @@ public class SessionActivity extends Activity{
 	public void selectProceed(View v) {
 		if(SessionManager.getInstance().getAvailableSessionsSet().size() != 0) {
 			if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
-				if(PpsManager.getInstance().isPersonal()) {
+				if(PpsManager.getInstance().isPrivate()) {
 					Intent intent = new Intent(this, PlayPersonalActivity.class);
 					PpsManager.getInstance().setScreenMode(PpsManager.GAME_MODE);
 					startActivity(intent);
 				}
-				else if(!PpsManager.getInstance().isPersonal()) {
+				else if(!PpsManager.getInstance().isPrivate()) {
 					Intent intent = new Intent(this, PlaySharedActivity.class);
 					PpsManager.getInstance().setScreenMode(PpsManager.GAME_MODE);
 					startActivity(intent);

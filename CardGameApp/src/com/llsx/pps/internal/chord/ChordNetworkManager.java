@@ -23,26 +23,6 @@ public class ChordNetworkManager extends NetworkManager {
 		initializeChordManager();
 	}
 	
-	private final static SchordManager.StatusListener mChordManagerListener = new SchordManager.StatusListener() {
-		
-		@Override
-		public void onStarted(String nodeName, int reason) {
-			Log.e("Schord Status Listener", "Chord start");
-			//check if the device has a session
-
-				ChordTransportInterface.joinDefaultChannel();
-			if(!SessionManager.getInstance().isSessionMode())
-				ChordTransportInterface.joinCustomChannel();
-		}
-
-		@Override
-		public void onStopped(int reason) {
-			// TODO Auto-generated method stub
-			Log.e("Schord Status Listener", "Chord Stop");
-		}
-
-	};
-	
 	public void initializeChord() {
 		// Initialize Chord
 		chord = new Schord();
@@ -55,8 +35,7 @@ public class ChordNetworkManager extends NetworkManager {
 	}
 	
 	public static void initializeChordManager() {
-
-		List<Integer> infList =mChordManager.getAvailableInterfaceTypes();
+		List<Integer> infList = mChordManager.getAvailableInterfaceTypes();
 		
 		try {
 			mChordManager.start(infList.get(0), mChordManagerListener);
@@ -65,12 +44,29 @@ public class ChordNetworkManager extends NetworkManager {
 			Log.e("Starting Chord", "Fail");
 			e.printStackTrace();
 		}
-
-
 	}
 	
 	public static SchordManager getChordManager() {
 		return mChordManager;
 	}
+
+	private final static SchordManager.StatusListener mChordManagerListener = new SchordManager.StatusListener() {
+		
+		@Override
+		public void onStarted(String nodeName, int reason) {
+			Log.e("Schord Status Listener", "Chord start");
+			//check if the device has a session
+
+			ChordTransportInterface.joinDefaultChannel();
+			if(!SessionManager.getInstance().isSessionMode())
+				ChordTransportInterface.joinCustomChannel();
+		}
+
+		@Override
+		public void onStopped(int reason) {
+			Log.e("Schord Status Listener", "Chord Stop");
+		}
+
+	};
 	
 }

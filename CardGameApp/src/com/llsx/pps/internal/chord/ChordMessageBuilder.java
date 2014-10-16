@@ -8,7 +8,7 @@ public class ChordMessageBuilder implements MessageBuilder {
 
 	@Override
 	public Message buildMessage(Event event) {
-		return new ChordMessage(event.getPayload(), event.getRecipient(), event.getType(), event.isAPIEvent());
+		return new ChordMessage(event.getPayload(), event.getRecipient(), event.getType(), event.isApiEvent());
 	}
 
 	@Override
