@@ -15,19 +15,19 @@ public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDis
 	}
 	
 	@Override
-	public void sendMessage(Message message) {
+	public void sendMessage(Message message, boolean isCustomChannel) {
 		String recipient = message.getRecipient();
 		
 		if(recipient.equals(Event.R_ALL_SCREENS))
-			transportInterface.sendToAll(message);
+			transportInterface.sendToAll(message, isCustomChannel);
 		
 		else if(recipient.equals(Event.R_PUBLIC_SCREENS))
 			for(String node: PpsManager.getInstance().getPublicScreenList())
-				transportInterface.send(node,message);
+				transportInterface.send(node,message, isCustomChannel);
 		
 		else if(recipient.equals(Event.R_PERSONAL_SCREENS))
 			for(String node: PpsManager.getInstance().getPrivateScreenList())
-				transportInterface.send(node,message);
+				transportInterface.send(node,message, isCustomChannel);
 		
 		/*else if(recipient.equals(Event.R_TEAM_SCREENS))
 			for(String node: PpsManager.getInstance().getTeamScreenList(message.getTeamNo()))
@@ -42,41 +42,10 @@ public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDis
 				transportInterface.send(node,message);*/
 		
 		else
-			transportInterface.send(recipient,message);
+			transportInterface.send(recipient,message, isCustomChannel);
 	}
 	
-	@Override
-	public void sendMessageOnDefaultChannel(Message message) {
-		String recipient = message.getRecipient();
-		
-		if(recipient.equals(Event.R_ALL_SCREENS))
-			transportInterface.sendToAllOnDefaultChannel(message);
-		
-		else if(recipient.equals(Event.R_PUBLIC_SCREENS))
-			for(String node: PpsManager.getInstance().getPublicScreenList())
-				transportInterface.sendOnDefaultChannel(node,message);
-		
-		else if(recipient.equals(Event.R_PERSONAL_SCREENS))
-			for(String node: PpsManager.getInstance().getPrivateScreenList())
-				transportInterface.sendOnDefaultChannel(node,message);
-		
-		/*else if(recipient.equals(Event.R_TEAM_SCREENS))
-			for(String node: PpsManager.getInstance().getTeamScreenList(message.getTeamNo()))
-				transportInterface.sendOnDefaultChannel(node,message);
-		
-		else if(recipient.equals(Event.R_TEAM_SHARED_SCREENS))
-			for(String node: PpsManager.getInstance().getTeamPublicScreenList(message.getTeamNo()))
-				transportInterface.sendOnDefaultChannel(node,message);
-		
-		else if(recipient.equals(Event.R_TEAM_PERSONAL_SCREENS))
-			for(String node: PpsManager.getInstance().getTeamPrivateScreenList(message.getTeamNo()))
-				transportInterface.sendOnDefaultChannel(node,message);*/
-		
-		else
-			//What is this for?
-			transportInterface.sendOnDefaultChannel(recipient, message);
-	}
-	
+
 	@Override
 	public void receiveMessage(Message message) {
 		EventManager.getInstance().unpackEvent(message);

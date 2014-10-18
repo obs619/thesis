@@ -58,10 +58,7 @@ public class ChordTransportInterface implements TransportInterface {
 	
 	
 	
-	@Override
-	public void sendOnDefaultChannel(String userToSend,Message message) {
-		defaultChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] { ((ChordMessage) message).getBytes() });
-	}
+
 
 	private static class SPSChordChannelListenerAdapter extends ChordChannelListenerAdapter {
 		@Override
@@ -167,24 +164,20 @@ public class ChordTransportInterface implements TransportInterface {
 	}
 	
 	@Override
-	public void sendToAll(Message message) {
+	public void sendToAll(Message message, boolean isCustomChannel) {
+		SchordChannel channel;
+		if(isCustomChannel)
+			channel=mChannel;
+		else
+			channel=defaultChannel;
 		try{
-			mChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
+			channel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
 		} catch(Exception e) {
 		    Log.e("ChordTransportInterface", "sendToAll failed");
 		    return;
 		}
 	}
 	
-	@Override
-	public void sendToAllOnDefaultChannel(Message message) {
-		try{
-			defaultChannel.sendDataToAll(PAYLOAD_TYPE, new byte[][] {((ChordMessage) message).getBytes() });
-		} catch(Exception e) {
-			Log.e("ChordTransportInterface", "sendToAll on default failed");
-	    	return;
-	    }
-	}
 
 	@Override
 	public void setMessageDispatcher(MessageDispatcher dispatcher) {
@@ -195,9 +188,15 @@ public class ChordTransportInterface implements TransportInterface {
 		messageDispatcher.receiveMessage(receivedMessage);
 	}
 	
-	public void send(String userToSend,Message message) {
+	@Override
+	public void send(String userToSend,Message message, boolean isCustomChannel) {
+		SchordChannel channel;
+		if(isCustomChannel)
+			channel=mChannel;
+		else
+			channel=defaultChannel;
 		try{
-			mChannel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] { ((ChordMessage) message).getBytes() });
+			channel.sendData(userToSend, PAYLOAD_TYPE, new byte[][] { ((ChordMessage) message).getBytes() });
 		} catch(Exception e) {
 			Log.e("ChordTransportInterface", "send failed");
 			return;
