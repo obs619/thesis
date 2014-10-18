@@ -65,6 +65,21 @@ public class Event {
 		}
 	}*/
 	
+	public Event(String recipient, int type, Serializable payload) {
+		this.recipient = recipient;
+		this.type = type;
+		this.payload = payload;
+		this.isApiEvent = false;
+		session = ChordNetworkManager.getChordManager().getName();
+		
+		if (type == ADD_NEW_SESSION) {
+			session = payload.toString();
+		}
+		else {
+			session = ChordNetworkManager.getChordManager().getName();
+		}
+	}
+	
 	public Event(String recipient, int type, Serializable payload, boolean isApiEvent) {
 		this.recipient = recipient;
 		this.type = type;
