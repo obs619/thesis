@@ -275,14 +275,14 @@ public class PpsManager {
 		SessionManager.getInstance().clearAliasList();
 	}
 	
-	// TODO Should this be made private instead?
-	public void initializeEventManager() {
+	
+	private void initializeEventManager() {
 		 EventManager.setDefaultFactory(new ChordEventManagerFactory());
 		 setEventManager();
 	}
 	 
-	// TODO Should this be made private instead?
-	public void initializeNetworkManager() {
+	
+	private void initializeNetworkManager() {
 		 NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
 		 setNetworkInitializer();
 	}
