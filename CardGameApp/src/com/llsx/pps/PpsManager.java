@@ -31,7 +31,7 @@ public class PpsManager {
 	private List<String> privateScreenList = new ArrayList<String>();
 	
 	/* Logical Groups / Team Tracking */
-	private Map<Integer,List<String>>teamMap = new HashMap<Integer, List<String>>();
+	//private Map<Integer,List<String>>teamMap = new HashMap<Integer, List<String>>();
 	
 	/* Network / Connection Management */
 	private EventManager eventManager;
@@ -185,7 +185,7 @@ public class PpsManager {
 	 * @param nodeName fixed name of the device
 	 * @param aliasName alias or name representation for the device (e.g. "Player1")
 	 */
-	public void addTeamScreen(int teamNo, String nodeName, String aliasName) {
+	/*public void addTeamScreen(int teamNo, String nodeName, String aliasName) {
 		if(teamMap.get(teamNo) != null)
 			teamMap.get(teamNo).add(nodeName);
 		
@@ -196,13 +196,13 @@ public class PpsManager {
 		}
 		//aliasList.put(nodeName, aliasName); not used since we assume the node already exists?
 		//TODO check if node is in public or private screen list, ensure it is no longer a "public" screen?
-	}
+	}*/
 	
 	/**
 	 * @param teamNo the assigned team number or logical group number
 	 * @return The list of public screens belonging to the given team.
 	 */
-	public List<String> getTeamPublicScreenList(int teamNo) {
+	/*public List<String> getTeamPublicScreenList(int teamNo) {
 		List<String> listScreens = new ArrayList<String>();
 		for (Iterator<String> iterator = teamMap.get(teamNo).iterator(); iterator.hasNext();) {
 			String current = iterator.next();
@@ -212,13 +212,13 @@ public class PpsManager {
 			}
 		}
 		return listScreens;
-	}
+	}*/
 	
 	/**
 	 * @param teamNo the assigned team number or logical group number
 	 * @return The list of private screens belonging to the given team.
 	 */
-	public List<String> getTeamPrivateScreenList(int teamNo) {
+	/*public List<String> getTeamPrivateScreenList(int teamNo) {
 		List<String> listScreens = new ArrayList<String>();
 		for (Iterator<String> iterator = teamMap.get(teamNo).iterator(); iterator.hasNext();) {
 			String current = iterator.next();
@@ -228,16 +228,17 @@ public class PpsManager {
 			}
 		}
 		return listScreens;
-	}
+	}*/
+	
 	
 	/**
 	 * @param teamNo the assigned team number or logical group number
 	 * @return The list screens (public and private) belonging to the given team.
 	 */
-	public List<String> getTeamScreenList(int teamNo) {
+	/*public List<String> getTeamScreenList(int teamNo) {
 		return teamMap.get(teamNo);
 	}
-	
+	*/
 	/**
 	 * @return The name of the current session.
 	 */

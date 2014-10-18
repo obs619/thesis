@@ -29,7 +29,7 @@ public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDis
 			for(String node: PpsManager.getInstance().getPrivateScreenList())
 				transportInterface.send(node,message);
 		
-		else if(recipient.equals(Event.R_TEAM_SCREENS))
+		/*else if(recipient.equals(Event.R_TEAM_SCREENS))
 			for(String node: PpsManager.getInstance().getTeamScreenList(message.getTeamNo()))
 				transportInterface.send(node,message);
 		
@@ -39,7 +39,7 @@ public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDis
 		
 		else if(recipient.equals(Event.R_TEAM_PERSONAL_SCREENS))
 			for(String node: PpsManager.getInstance().getTeamPrivateScreenList(message.getTeamNo()))
-				transportInterface.send(node,message);
+				transportInterface.send(node,message);*/
 		
 		else
 			transportInterface.send(recipient,message);
@@ -60,7 +60,7 @@ public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDis
 			for(String node: PpsManager.getInstance().getPrivateScreenList())
 				transportInterface.sendOnDefaultChannel(node,message);
 		
-		else if(recipient.equals(Event.R_TEAM_SCREENS))
+		/*else if(recipient.equals(Event.R_TEAM_SCREENS))
 			for(String node: PpsManager.getInstance().getTeamScreenList(message.getTeamNo()))
 				transportInterface.sendOnDefaultChannel(node,message);
 		
@@ -70,7 +70,7 @@ public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDis
 		
 		else if(recipient.equals(Event.R_TEAM_PERSONAL_SCREENS))
 			for(String node: PpsManager.getInstance().getTeamPrivateScreenList(message.getTeamNo()))
-				transportInterface.sendOnDefaultChannel(node,message);
+				transportInterface.sendOnDefaultChannel(node,message);*/
 		
 		else
 			//What is this for?

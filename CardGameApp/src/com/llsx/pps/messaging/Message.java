@@ -10,7 +10,7 @@ public abstract class Message implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	protected int mMessageType;
-	protected int teamNo;
+	//protected int teamNo;
 	protected Serializable mMessage;
 	protected String mRecipients;
 	protected boolean isAPIEvent;
@@ -19,9 +19,9 @@ public abstract class Message implements Serializable{
 		return mMessageType;
 	}
 	
-	public int getTeamNo() {
+	/*public int getTeamNo() {
 		return teamNo;
-	}
+	}*/
 	
 	public Serializable getContents() {
 		return mMessage;

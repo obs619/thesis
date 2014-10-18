@@ -11,18 +11,14 @@ public class ChordMessage extends com.llsx.pps.messaging.Message implements Seri
 
 	private static final long serialVersionUID = 20130219L;
 
-	ChordMessage(Serializable message, String recipients, int messageType) {
-		mMessage = message;
-		mRecipients = recipients;
-		mMessageType = messageType;
-	}
+
 	
-	ChordMessage(Serializable message, String recipients, int messageType, int teamNo) {
+	/*ChordMessage(Serializable message, String recipients, int messageType, int teamNo) {
 		mMessage = message;
 		mRecipients = recipients;
 		mMessageType = messageType;
 		this.teamNo = teamNo;
-	}
+	}*/
 	
 	ChordMessage(Serializable message, String recipients, int messageType, boolean isAPIEvent) {
 		mMessage = message;
