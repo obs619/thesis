@@ -113,14 +113,6 @@ public class ApiEventHandler implements EventHandler {
 				SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), SessionManager.UNLOCK);
 				Log.i("SESSION NAME RECEIVED","Received session name:"+event.getPayload().toString());
 				break;
-			
-			/*case Event.LATE_JOIN_REQUEST_SESSION: (or we can just use REQUEST_SESSIONS)	//only to be used if onNodeJoined() is called by the joining node; it will request the session name from a previously existing node.
-				
-				//TODO: create a LATE_JOIN_RESPONSE_SESSION event (on the node which is already in the session) and send it back to the joining node
-				break;
-			case Event.LATE_JOIN_RESPONSE_SESSION: (or we can just use RESPOND_REQUEST_SESSIONS) //this event is created on a node already in the session and sent to the newly joined node
-				//TODO: get session name and add session to session list (on joining node)
-				break;*/
 			default:
 				break;
 		}
