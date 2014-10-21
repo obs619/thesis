@@ -9,9 +9,6 @@ public class Event {
 	public static final boolean API_EVENT = true;
 	
 	public static final String R_PUBLIC_SCREENS = "shared";
-	/*public static final String R_TEAM_SHARED_SCREENS = "teamshared";
-	public static final String R_TEAM_PERSONAL_SCREENS = "teampersonal";
-	public static final String R_TEAM_SCREENS = "team";*/
 	public static final String R_PERSONAL_SCREENS = "personal";
 	public static final String R_ALL_SCREENS = "all";
 	public static final String R_LOCAL_SCREEN = "onlyme";
@@ -34,12 +31,15 @@ public class Event {
 	public static final int RESPOND_REQUEST_SESSIONS = 113;
 	
 	
-	private String recipient;//who does this event affect?
+	private String recipient; //who does this event affect?
 	private int type;
-	//private int teamNo;
 	private boolean isApiEvent;
 	private Serializable payload;
 	private String session;
+	
+	/*
+	 * Constructors
+	 */
 	
 	public Event() {}
 	
@@ -48,23 +48,6 @@ public class Event {
 	 * @param type the type of event as specified by the developer
 	 * @param payload information about the event
 	 */
-
-	
-	/*public Event(String recipient, int type, Serializable payload, int teamNo) {
-		this.recipient = recipient;
-		this.type = type;
-		this.teamNo = teamNo;
-		this.payload = payload;
-		isApiEvent = false;
-		
-		if (type == ADD_NEW_SESSION) {
-			session = payload.toString();
-		}
-		else {
-			session = ChordNetworkManager.getChordManager().getName();
-		}
-	}*/
-	
 	public Event(String recipient, int type, Serializable payload) {
 		this.recipient = recipient;
 		this.type = type;
@@ -119,8 +102,4 @@ public class Event {
 		return session;
 	}
 	
-	/*public int getTeamNo() {
-		return teamNo;
-	}*/
-
 }

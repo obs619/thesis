@@ -7,6 +7,8 @@ import android.util.Log;
 import com.llsx.pps.PpsManager;
 import com.llsx.pps.session.SessionManager;
 
+// TODO consider renaming to PpsEventHandler
+// TODO consider making accessible only to the package
 public class ApiEventHandler implements EventHandler {
 	
 	@Override
@@ -20,19 +22,11 @@ public class ApiEventHandler implements EventHandler {
 		switch(event.getType()) {
 			case Event.USER_JOIN_PRIVATE:
 				Log.e("PERSONAL API", "pasok");
-				// boolean exist = false;
 				
 				nodeAlias = (String[]) event.getPayload();
 				key = nodeAlias[0];
 				alias = nodeAlias[1];
 				
-				/*for(String username : SessionManager.getInstance().getPrivateScreenList()) {
-					if(username.equals(key))
-						exist = true;
-				}
-				if(!exist) {
-					SessionManager.getInstance().addPrivateScreen(key, alias);
-				} Change of implementation */
 				if (!PpsManager.getInstance().getPrivateScreenList().contains(key)) {
 					PpsManager.getInstance().addPrivateScreen(key, alias);
 				}
@@ -41,19 +35,11 @@ public class ApiEventHandler implements EventHandler {
 				
 			case Event.USER_JOIN_PUBLIC:
 				Log.e("SHARED API", "pasok");
-				//boolean exist1 = false;
 				
 				nodeAlias = (String[]) event.getPayload();
 				key = nodeAlias[0];
 				alias = nodeAlias[1];
 				
-				/*for(String username : SessionManager.getInstance().getPublicScreenList()) {
-					if(username.equals(nodeAlias[0]))
-						exist1 = true;
-				}
-				if(!exist1) {
-					SessionManager.getInstance().addPublicScreen(key, alias);
-				} Change of implementation */
 				if (!PpsManager.getInstance().getPublicScreenList().contains(key)) {
 					PpsManager.getInstance().addPublicScreen(key, alias);
 				}

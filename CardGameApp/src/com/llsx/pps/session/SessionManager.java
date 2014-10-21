@@ -17,20 +17,24 @@ import com.llsx.pps.internal.chord.ChordNetworkManager;
 
 public class SessionManager {
 	
+	/* Constants */
 	public static final String DEFAULT_SESSION = "DEFAULT";
 	public static final boolean LOCK = true;
 	public static final boolean UNLOCK = false;
 	
-	private Map<String,Boolean> availableSessions = new HashMap<String,Boolean>();
+	/* Session Management Variables */
 	private String alias;
-	private Map<String,String> aliasList = new HashMap<String, String>();
-	
 	private boolean sessionMode = true;
 	private String chosenSession = "";
+	private Map<String,String> aliasList = new HashMap<String, String>();
+	private Map<String,Boolean> availableSessions = new HashMap<String,Boolean>();
 	
+	/* SessionManager */
 	private static SessionManager instance = null;
 
-	
+	/**
+	 * @return The current instance of SessionManager.
+	 */
 	public static SessionManager getInstance() {
 		if(instance == null) {
 			instance = new SessionManager();
@@ -38,6 +42,10 @@ public class SessionManager {
 		return instance;
 	}
 	
+	/**
+	 * Saves the current session ID and its status (locked/unlocked)
+	 * into device's memory
+	 */
 	public void saveSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());
@@ -48,6 +56,9 @@ public class SessionManager {
 		editor.commit();
 	}
 	
+	/**
+	 * Saves the ID for the default session into the device's memory
+	 */
 	public void saveDefaultSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());
@@ -58,6 +69,10 @@ public class SessionManager {
 		editor.commit();
 	}
 	
+	/**
+	 * Loads the last session ID and its status (locked/unlocked)
+	 * from the device's memory
+	 */
 	public void loadSavedSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());

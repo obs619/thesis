@@ -23,28 +23,15 @@ public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDis
 		
 		else if(recipient.equals(Event.R_PUBLIC_SCREENS))
 			for(String node: PpsManager.getInstance().getPublicScreenList())
-				transportInterface.send(node,message, isCustomChannel);
+				transportInterface.send(node, message, isCustomChannel);
 		
 		else if(recipient.equals(Event.R_PERSONAL_SCREENS))
 			for(String node: PpsManager.getInstance().getPrivateScreenList())
-				transportInterface.send(node,message, isCustomChannel);
-		
-		/*else if(recipient.equals(Event.R_TEAM_SCREENS))
-			for(String node: PpsManager.getInstance().getTeamScreenList(message.getTeamNo()))
-				transportInterface.send(node,message);
-		
-		else if(recipient.equals(Event.R_TEAM_SHARED_SCREENS))
-			for(String node: PpsManager.getInstance().getTeamPublicScreenList(message.getTeamNo()))
-				transportInterface.send(node,message);
-		
-		else if(recipient.equals(Event.R_TEAM_PERSONAL_SCREENS))
-			for(String node: PpsManager.getInstance().getTeamPrivateScreenList(message.getTeamNo()))
-				transportInterface.send(node,message);*/
+				transportInterface.send(node, message, isCustomChannel);
 		
 		else
-			transportInterface.send(recipient,message, isCustomChannel);
+			transportInterface.send(recipient, message, isCustomChannel);
 	}
-	
 
 	@Override
 	public void receiveMessage(Message message) {
