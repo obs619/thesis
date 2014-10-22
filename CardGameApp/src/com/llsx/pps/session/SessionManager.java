@@ -52,7 +52,7 @@ public class SessionManager {
 	
 	/**
 	 * Saves the current session ID and its status (locked/unlocked)
-	 * into device's memory
+	 * into device's memory.
 	 */
 	public void saveSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
@@ -65,7 +65,7 @@ public class SessionManager {
 	}
 	
 	/**
-	 * Saves the ID for the default session into the device's memory
+	 * Saves the ID for the default session into the device's memory.
 	 */
 	public void saveDefaultSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
@@ -79,7 +79,7 @@ public class SessionManager {
 	
 	/**
 	 * Loads the last session ID and its status (locked/unlocked)
-	 * from the device's memory
+	 * from the device's memory.
 	 */
 	public void loadSavedSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
@@ -96,28 +96,37 @@ public class SessionManager {
 	 */
 	
 	/**
-	 * Adds the newly created session.
-	 * @param sessionID name of the session
-	 * @param isLock if the session is lock
+	 * Adds the newly created or newly received session
+	 * to the list of sessions.
+	 * @param sessionID unique identifier (ID) of the session
+	 * @param isLock whether or not the session is locked
 	 */
 	public void addAvailableSession(String sessionID, Boolean isLock) {
 		availableSessions.put(sessionID, isLock);
 	}
 	
 	/**
-	 * Removes the session from the session list 
-	 * with the specified session ID
-	 * @param sessionID identifier of the session
+	 * Removes the session from the session list
+	 * with the specified session ID.
+	 * @param sessionID unique identifier (ID) of the session
 	 */
 	public void removeAvailableSession(String sessionID) {
 		availableSessions.remove(sessionID);
 	}
 	
+	/**
+	 * @return A <code>Set&#60;String&#62;</code> of all session IDs
+	 * that can be accessed, whether locked or unlocked.
+	 */
 	public Set<String> getAvailableSessionsSet() {
 		Set<String> keys = availableSessions.keySet();
 		return keys;
 	}
 	
+	/**
+	 * Sends an event to all devices requesting for all
+	 * the known sessions.
+	 */
 	public void requestSessions() {
 		Event event = new Event(Event.R_ALL_SCREENS,
 				Event.REQUEST_SESSIONS,
@@ -127,6 +136,14 @@ public class SessionManager {
 		EventManager.getInstance().sendEvent(event);
 	}
 	
+	/**
+	 * Creates a new session given a unique identifier (ID)
+	 * or name for the session. Also announces the creation of
+	 * to other devices.
+	 * @param sessionID unique identifier (ID) of the session
+	 * @return A <code>String</code> containing the session identifier
+	 * and the device name.
+	 */
 	public String createSession(String sessionID) {
 		String deviceName = "[" + alias + "]";
 		
@@ -139,8 +156,9 @@ public class SessionManager {
 		EventManager.getInstance().sendEventOnDefaultChannel(event1);
 		Log.i("New Session","ADD_NEW_SESSION event sent: "+sessionID+" "+deviceName);
 		
-		
-		/*THE FF CODE IS SPECIFIC TO OUR APP. USED TO AUTO-REFRESH THE UI'S LIST OF SESSIONS*/
+		/* The following code sends an event for the app side
+		 * (maybe for UI if necessary)
+		 */
 		Event event2 = new Event(Event.R_ALL_SCREENS,
 				Event.ADD_NEW_SESSION,
 				sessionID + deviceName,
@@ -150,14 +168,15 @@ public class SessionManager {
 		return sessionID + deviceName;
 	}
 	
-	//set session return boolean?
+	/**
+	 * Sets the given session as the current session.
+	 * @param session the selected session
+	 */ //TODO return boolean?
 	public void setChosenSession(String session) {
 		if(!isSessionLocked(session) || session.contains(alias)) {
-  		Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
-
+			Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
 			this.chosenSession = session;
 			this.saveSessionID();
-
 		}
 		else {
 			Toast.makeText(PpsManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
@@ -166,6 +185,9 @@ public class SessionManager {
 		}
 	}
 	
+	/**
+	 * Sets the default session as the current session.
+	 */
 	public void setDefaultSession() {
 		this.chosenSession = DEFAULT_SESSION;
 	}
@@ -174,6 +196,10 @@ public class SessionManager {
 	 * Lock / Unlock a Session
 	 */
 	
+	/**
+	 * Locks the given session so that no one new can join.
+	 * @param sessionID the selected session to lock
+	 */
 	public void lockSession(String sessionID) {
 		if(sessionID.contains(alias)) {
 			Event event = new Event(Event.R_ALL_SCREENS,
@@ -195,6 +221,10 @@ public class SessionManager {
 		}
 	}
 	
+	/**
+	 * Unlocks the given session so that other people can join.
+	 * @param sessionID the selected session to lock
+	 */
 	public void unlockSession(String sessionID) {
 		if(sessionID.contains(alias)) {
 			Event event = new Event(Event.R_ALL_SCREENS,
@@ -215,7 +245,14 @@ public class SessionManager {
 			Toast.makeText(PpsManager.getContext(), "Cannot unlock a session you did not create!", Toast.LENGTH_LONG).show();
 		}
 	}
-
+	
+	/**
+	 * Checks if the given session is locked.
+	 * @param sessionID the selected session to check
+	 * @return <code>true</code> if the session is locked,
+	 * otherwise <code>false</code>. <code>null</code> if
+	 * the session does not exist.
+	 */
 	public Boolean isSessionLocked(String sessionID) {
 		for (Map.Entry<String, Boolean> entry : availableSessions.entrySet()) {
 			if(entry.getKey().equalsIgnoreCase(sessionID)) {
@@ -230,8 +267,8 @@ public class SessionManager {
 	 */
 	
 	/**
-	 * Register a new device's node name ('user ID') and alias ('user name')
-	 * @param nodeName
+	 * Register a new device's node name (device ID) and alias (device name).
+	 * @param nodeName the identifier (ID) of the device
 	 * @param aliasName name representation for the device
 	 */
 	public void addAlias(String nodeName, String aliasName) {
@@ -250,7 +287,7 @@ public class SessionManager {
 	 * Returns alias value of 
 	 * @param key node name of the target alias
 	 * @return alias name of the node given a key / node name
-	 * or not if it doesn't exist.
+	 * or <code>null</code> if it doesn't exist.
 	 */
 	public String getAlias(String key) {
 		return aliasList.get(key);
