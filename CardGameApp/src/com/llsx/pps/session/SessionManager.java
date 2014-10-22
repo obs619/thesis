@@ -23,11 +23,11 @@ public class SessionManager {
 	public static final boolean UNLOCK = false;
 	
 	/* Session Management Variables */
-	private String alias;
+	private String deviceName;
 	private boolean sessionMode = true;
 	private String chosenSession = "";
-	private Map<String,String> aliasList = new HashMap<String, String>();
-	private Map<String,Boolean> availableSessions = new HashMap<String,Boolean>();
+	private Map<String,String> deviceMap = new HashMap<String, String>();
+	private Map<String,Boolean> availableSessionsMap = new HashMap<String,Boolean>();
 	
 	/* SessionManager */
 	private static SessionManager instance = null;
@@ -87,7 +87,7 @@ public class SessionManager {
 		String session = sharedPreferences.getString("session", DEFAULT_SESSION);
 		Boolean isLock = sharedPreferences.getBoolean("isLock", UNLOCK);
 		if(!session.equals(DEFAULT_SESSION))
-			availableSessions.put(session, isLock);
+			availableSessionsMap.put(session, isLock);
 		chosenSession = session;
 	}
 	
@@ -102,7 +102,7 @@ public class SessionManager {
 	 * @param isLock whether or not the session is locked
 	 */
 	public void addAvailableSession(String sessionID, Boolean isLock) {
-		availableSessions.put(sessionID, isLock);
+		availableSessionsMap.put(sessionID, isLock);
 	}
 	
 	/**
@@ -111,7 +111,7 @@ public class SessionManager {
 	 * @param sessionID unique identifier (ID) of the session
 	 */
 	public void removeAvailableSession(String sessionID) {
-		availableSessions.remove(sessionID);
+		availableSessionsMap.remove(sessionID);
 	}
 	
 	/**
@@ -119,7 +119,7 @@ public class SessionManager {
 	 * that can be accessed, whether locked or unlocked.
 	 */
 	public Set<String> getAvailableSessionsSet() {
-		Set<String> keys = availableSessions.keySet();
+		Set<String> keys = availableSessionsMap.keySet();
 		return keys;
 	}
 	
@@ -146,27 +146,27 @@ public class SessionManager {
 	 * and the device name.
 	 */
 	public String createSession(String sessionName) {
-		String deviceName = "[" + alias + "]";
+		String taggedDeviceName = "[" + deviceName + "]";
 		
-		addAvailableSession(sessionName + deviceName, UNLOCK);
+		addAvailableSession(sessionName + taggedDeviceName, UNLOCK);
 		
 		Event event1 = new Event(Event.R_ALL_SCREENS,
 				Event.ADD_NEW_SESSION,
-				sessionName + deviceName,
+				sessionName + taggedDeviceName,
 				Event.API_EVENT);
 		EventManager.getInstance().sendEventOnDefaultChannel(event1);
-		Log.i("New Session","ADD_NEW_SESSION event sent: "+sessionName+" "+deviceName);
+		Log.i("New Session","ADD_NEW_SESSION event sent: "+sessionName+" "+taggedDeviceName);
 		
 		/* The following code sends an event for the app side
 		 * (maybe for UI if necessary)
 		 */
 		Event event2 = new Event(Event.R_ALL_SCREENS,
 				Event.ADD_NEW_SESSION,
-				sessionName + deviceName,
+				sessionName + taggedDeviceName,
 				Event.APP_EVENT);
 		EventManager.getInstance().sendEventOnDefaultChannel(event2);
 		
-		return sessionName + deviceName;
+		return sessionName + taggedDeviceName;
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class SessionManager {
 	 * into the current session
 	 */ //TODO return boolean?
 	public void setChosenSession(String sessionID) {
-		if(!isSessionLocked(sessionID) || sessionID.contains(alias)) {
+		if(!isSessionLocked(sessionID) || sessionID.contains(deviceName)) {
 			Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
 			this.chosenSession = sessionID;
 			this.saveSessionID();
@@ -203,7 +203,7 @@ public class SessionManager {
 	 * @param sessionID the selected session to lock
 	 */
 	public void lockSession(String sessionID) {
-		if(sessionID.contains(alias)) {
+		if(sessionID.contains(deviceName)) {
 			Event event = new Event(Event.R_ALL_SCREENS,
 					Event.LOCK_SESSION,
 					sessionID,
@@ -228,7 +228,7 @@ public class SessionManager {
 	 * @param sessionID the selected session to lock
 	 */
 	public void unlockSession(String sessionID) {
-		if(sessionID.contains(alias)) {
+		if(sessionID.contains(deviceName)) {
 			Event event = new Event(Event.R_ALL_SCREENS,
 					Event.UNLOCK_SESSION,
 					sessionID,
@@ -256,7 +256,7 @@ public class SessionManager {
 	 * the session does not exist.
 	 */
 	public Boolean isSessionLocked(String sessionID) {
-		for (Map.Entry<String, Boolean> entry : availableSessions.entrySet()) {
+		for (Map.Entry<String, Boolean> entry : availableSessionsMap.entrySet()) {
 			if(entry.getKey().equalsIgnoreCase(sessionID)) {
 				return entry.getValue();
 			}	
@@ -274,7 +274,7 @@ public class SessionManager {
 	 * @param aliasName name representation for the device
 	 */
 	public void addAlias(String nodeName, String aliasName) {
-		aliasList.put(nodeName, aliasName);
+		deviceMap.put(nodeName, aliasName);
 	}
 	
 	/**
@@ -282,7 +282,7 @@ public class SessionManager {
 	 * @param aliasName name representation for the device
 	 */
 	public void removeAlias(String nodeName) {
-		aliasList.remove(nodeName);
+		deviceMap.remove(nodeName);
 	}
 	
 	/**
@@ -293,7 +293,7 @@ public class SessionManager {
 	 * or <code>null</code> if it doesn't exist.
 	 */
 	public String getAlias(String key) {
-		return aliasList.get(key);
+		return deviceMap.get(key);
 	}
 	
 	/**
@@ -304,7 +304,7 @@ public class SessionManager {
 	 */
 	public String getNodeName(String alias) {
 		String result = "";
-		for(Map.Entry<String, String> entry : aliasList.entrySet()) {
+		for(Map.Entry<String, String> entry : deviceMap.entrySet()) {
 			if(entry.getValue().equals(alias)) {
 				result = entry.getKey();
 				break;
@@ -321,14 +321,14 @@ public class SessionManager {
 	 * Clears/Empties the list of accessible devices
 	 */
 	public void clearAliasList() {
-		aliasList.clear();
+		deviceMap.clear();
 	}
 	
 	/**
 	 * Clears/Empties the list of available sessions
 	 */
 	public void clearAvailableSessionsList() {
-		availableSessions.clear();
+		availableSessionsMap.clear();
 	}
 	
 	/*
@@ -339,14 +339,14 @@ public class SessionManager {
 	 * @return
 	 */
 	public Map<String, Boolean> getAvailableSessionsMap() {
-		return availableSessions;
+		return availableSessionsMap;
 	}
 	
 	/**
 	 * @return The current device's own alias.
 	 */
 	public String getOwnAlias() {
-		return alias;
+		return deviceName;
 	}
 	
 	/**
@@ -356,7 +356,7 @@ public class SessionManager {
 	public void setAlias(String alias) {
 		// TODO if no alias is given
 		
-		this.alias = alias;
+		this.deviceName = alias;
 	}
 	
 	/**
