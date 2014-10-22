@@ -284,7 +284,8 @@ public class SessionManager {
 	}
 	
 	/**
-	 * Returns alias value of 
+	 * Gets the alias of the target device given the device's
+	 * node name.
 	 * @param key node name of the target alias
 	 * @return alias name of the node given a key / node name
 	 * or <code>null</code> if it doesn't exist.
@@ -294,7 +295,8 @@ public class SessionManager {
 	}
 	
 	/**
-	 * 
+	 * Gets the node name of the target device given the
+	 * device's alias.
 	 * @param alias name representation for the device
 	 * @return node name of the target/given alias
 	 */
@@ -313,10 +315,16 @@ public class SessionManager {
 	 * Clear Functions
 	 */
 	
+	/**
+	 * Clears/Empties the list of accessible devices
+	 */
 	public void clearAliasList() {
 		aliasList.clear();
 	}
 	
+	/**
+	 * Clears/Empties the list of available sessions
+	 */
 	public void clearAvailableSessionsList() {
 		availableSessions.clear();
 	}
@@ -325,32 +333,52 @@ public class SessionManager {
 	 * Getters and Setters of the class variables
 	 */
 	
+	/**
+	 * @return
+	 */
 	public Map<String, Boolean> getAvailableSessionsMap() {
 		return availableSessions;
 	}
 	
 	/**
-	 * Returns device's own alias.
-	 * @return String value of device's own alias
+	 * @return The current device's own alias.
 	 */
 	public String getOwnAlias() {
 		return alias;
 	}
 	
+	/**
+	 * Sets the current device's alias as the given string.
+	 * @param alias the name you want for the current device
+	 */
 	public void setAlias(String alias) {
 		// TODO if no alias is given
 		
 		this.alias = alias;
 	}
 	
+	/**
+	 * @return <code>true</code> if the app is on session
+	 * management mode; <code>false</code> if the app is
+	 * in app mode.
+	 */
 	public boolean isSessionMode() {
 		return sessionMode;
 	}
 	
+	/**
+	 * Sets the current session mode as the given session mode.
+	 * @param sessionMode <code>true</code> if the app should be in session
+	 * management mode; <code>false</code> if the app should be
+	 * in app mode
+	 */
 	public void setSessionMode(boolean sessionMode) {
 		this.sessionMode = sessionMode;
 	}
 	
+	/**
+	 * @return The current session.
+	 */
 	public String getChosenSession() {
 		return chosenSession;
 	}
