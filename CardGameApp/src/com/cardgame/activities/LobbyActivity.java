@@ -33,7 +33,7 @@ public class LobbyActivity extends Activity {
 		
 		TextView mUserNameView;
 		mUserNameView = (TextView) findViewById(R.id.txtUserName);
-		SessionManager.getInstance().setAlias(mUserNameView.getText().toString());
+		SessionManager.getInstance().setDeviceName(mUserNameView.getText().toString());
 		
 		startActivity(intent);
 	}

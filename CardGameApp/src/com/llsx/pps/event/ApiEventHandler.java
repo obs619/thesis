@@ -49,14 +49,14 @@ public class ApiEventHandler implements EventHandler {
 				Log.e("user left private", "pasok");
 				
 				PpsManager.getInstance().removeFromPrivateScreen(event.getPayload().toString());
-				SessionManager.getInstance().removeAlias(event.getPayload().toString());
+				SessionManager.getInstance().removeDevice(event.getPayload().toString());
 				break;
 				
 			case Event.USER_LEFT_PUBLIC:
 				Log.e("user left public", "pasok");
 				
 				PpsManager.getInstance().removeFromPublicScreen(event.getPayload().toString());
-				SessionManager.getInstance().removeAlias(event.getPayload().toString());
+				SessionManager.getInstance().removeDevice(event.getPayload().toString());
 				break;
 				
 			case Event.ADD_NEW_SESSION:

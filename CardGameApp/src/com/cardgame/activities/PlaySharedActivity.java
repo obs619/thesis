@@ -87,13 +87,13 @@ public class PlaySharedActivity extends Activity {
 		    	if(entry.getKey() != lastkey) {	
 		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, 
 		    				keys.get(keys.indexOf(entry.getKey()) + 1) + ":" 
-		    						+ SessionManager.getInstance().getAlias(playerMap.get(keys.get(keys.indexOf(entry.getKey()) + 1))) 
+		    						+ SessionManager.getInstance().getDeviceName(playerMap.get(keys.get(keys.indexOf(entry.getKey()) + 1))) 
 		    						+ ":0");
 					EventManager.getInstance().sendEvent(e1);
 		    	}
 		    	else {
 		    		Event e1= new Event(entry.getValue(),CardGameEvent.CHANGE_NUM_PLAYERS, firstkey + ":" 
-		    						+ SessionManager.getInstance().getAlias(playerMap.get(firstkey))
+		    						+ SessionManager.getInstance().getDeviceName(playerMap.get(firstkey))
 		    						+ ":1");
 					EventManager.getInstance().sendEvent(e1);				
 		    	}
@@ -120,7 +120,7 @@ public class PlaySharedActivity extends Activity {
 
 		if(playerMap != null) {
 			for (Map.Entry<Integer, String> entry : playerMap.entrySet()) {
-		    	nodes += entry.getKey() + " - "  + SessionManager.getInstance().getAlias(entry.getValue()) + "\r\n";
+		    	nodes += entry.getKey() + " - "  + SessionManager.getInstance().getDeviceName(entry.getValue()) + "\r\n";
 			}
 
 			Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
@@ -211,13 +211,13 @@ public class PlaySharedActivity extends Activity {
 					Log.e("Adjacent", "not last player");
 					int nxtPlayer = i + 1;
 
-					String alias = SessionManager.getInstance().getAlias(playerMap.get(nxtPlayer));
+					String alias = SessionManager.getInstance().getDeviceName(playerMap.get(nxtPlayer));
 					Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, nxtPlayer + ":" + alias);
 					EventManager.getInstance().sendEvent(e1);
 				}
 				else if(i == numPlayers - 1) {
 					Log.e("Adjacent", "last player");
-					String alias = SessionManager.getInstance().getAlias(playerMap.get(0));
+					String alias = SessionManager.getInstance().getDeviceName(playerMap.get(0));
 					Event e1= new Event(playerMap.get(i),CardGameEvent.ADJACENT_PLAYER, 0 + ":" + alias);
 					EventManager.getInstance().sendEvent(e1);
 				}

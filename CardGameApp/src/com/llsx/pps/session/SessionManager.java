@@ -118,7 +118,7 @@ public class SessionManager {
 	 * @return A <code>Set&#60;String&#62;</code> of all session IDs
 	 * that can be accessed, whether locked or unlocked.
 	 */
-	public Set<String> getAvailableSessionsSet() {
+	public Set<String> getAvailableSessions() {
 		Set<String> keys = availableSessionsMap.keySet();
 		return keys;
 	}
@@ -270,42 +270,42 @@ public class SessionManager {
 	
 	/**
 	 * Register a new device's node name (device ID) and alias (device name).
-	 * @param nodeName the identifier (ID) of the device
-	 * @param aliasName name representation for the device
+	 * @param deviceId the identifier (ID) of the device
+	 * @param deviceName name representation for the device
 	 */
-	public void addAlias(String nodeName, String aliasName) {
-		deviceMap.put(nodeName, aliasName);
+	public void addDevice(String deviceId, String deviceName) {
+		deviceMap.put(deviceId, deviceName);
 	}
 	
 	/**
 	 * Removes the alias from alias list.
-	 * @param aliasName name representation for the device
+	 * @param deviceId name representation for the device
 	 */
-	public void removeAlias(String nodeName) {
-		deviceMap.remove(nodeName);
+	public void removeDevice(String deviceId) {
+		deviceMap.remove(deviceId);
 	}
 	
 	/**
 	 * Gets the alias of the target device given the device's
 	 * node name.
-	 * @param key node name of the target alias
+	 * @param deviceId node name of the target alias
 	 * @return alias name of the node given a key / node name
 	 * or <code>null</code> if it doesn't exist.
 	 */
-	public String getAlias(String key) {
-		return deviceMap.get(key);
+	public String getDeviceName(String deviceId) {
+		return deviceMap.get(deviceId);
 	}
 	
 	/**
 	 * Gets the node name of the target device given the
 	 * device's alias.
-	 * @param alias name representation for the device
-	 * @return node name of the target/given alias
+	 * @param deviceName name representation for the device
+	 * @return The device ID of the target/given alias.
 	 */
-	public String getNodeName(String alias) {
+	public String getDeviceId(String deviceName) {
 		String result = "";
 		for(Map.Entry<String, String> entry : deviceMap.entrySet()) {
-			if(entry.getValue().equals(alias)) {
+			if(entry.getValue().equals(deviceName)) {
 				result = entry.getKey();
 				break;
 			}
@@ -320,14 +320,14 @@ public class SessionManager {
 	/**
 	 * Clears/Empties the list of accessible devices
 	 */
-	public void clearAliasList() {
+	public void clearDeviceMap() {
 		deviceMap.clear();
 	}
 	
 	/**
 	 * Clears/Empties the list of available sessions
 	 */
-	public void clearAvailableSessionsList() {
+	public void clearAvailableSessionsMap() {
 		availableSessionsMap.clear();
 	}
 	
@@ -345,18 +345,18 @@ public class SessionManager {
 	/**
 	 * @return The current device's own alias.
 	 */
-	public String getOwnAlias() {
+	public String getOwnDeviceName() {
 		return deviceName;
 	}
 	
 	/**
 	 * Sets the current device's alias as the given string.
-	 * @param alias the name you want for the current device
+	 * @param deviceName the name you want for the current device
 	 */
-	public void setAlias(String alias) {
+	public void setDeviceName(String deviceName) {
 		// TODO if no alias is given
 		
-		this.deviceName = alias;
+		this.deviceName = deviceName;
 	}
 	
 	/**

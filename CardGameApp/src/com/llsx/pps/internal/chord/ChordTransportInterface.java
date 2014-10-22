@@ -157,8 +157,8 @@ public class ChordTransportInterface implements TransportInterface {
 		public String[] getNodeAlias() {
 			String[] nodeAlias = new String[2]; 
 			nodeAlias[0] = ChordNetworkManager.getChordManager().getName();
-			Log.e("OnNodeJoin get Alias", SessionManager.getInstance().getOwnAlias());
-			nodeAlias[1] = SessionManager.getInstance().getOwnAlias();
+			Log.e("OnNodeJoin get Alias", SessionManager.getInstance().getOwnDeviceName());
+			nodeAlias[1] = SessionManager.getInstance().getOwnDeviceName();
 			return nodeAlias;
 		}
 	}

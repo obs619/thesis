@@ -107,7 +107,7 @@ public class PpsManager {
 	 */
 	public void addPublicScreen(String nodeName, String aliasName) {
 		publicScreenList.add(nodeName);
-		SessionManager.getInstance().addAlias(nodeName, aliasName);
+		SessionManager.getInstance().addDevice(nodeName, aliasName);
 	}
 	
 	/**
@@ -126,7 +126,7 @@ public class PpsManager {
 	public List<String> getPublicScreenAliasList() {
 		List<String> result = new ArrayList<String>();
 		for(String key: publicScreenList) {
-			String alias = SessionManager.getInstance().getAlias(key);
+			String alias = SessionManager.getInstance().getDeviceName(key);
 			if(alias != null)
 				result.add(alias);
 		}
@@ -145,7 +145,7 @@ public class PpsManager {
 	 */
 	public void addPrivateScreen(String nodeName, String aliasName) {
 		privateScreenList.add(nodeName);
-		SessionManager.getInstance().addAlias(nodeName, aliasName);
+		SessionManager.getInstance().addDevice(nodeName, aliasName);
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public class PpsManager {
 	public List<String>getPrivateScreenAliasList() {
 		List<String> result = new ArrayList<String>();
 		for(String key: privateScreenList) {
-			String alias = SessionManager.getInstance().getAlias(key);
+			String alias = SessionManager.getInstance().getDeviceName(key);
 			if(alias != null)
 				result.add(alias);
 		}
@@ -207,7 +207,7 @@ public class PpsManager {
 	public void clearSessionList() {
 		privateScreenList.clear();
 		publicScreenList.clear();
-		SessionManager.getInstance().clearAliasList();
+		SessionManager.getInstance().clearDeviceMap();
 	}
 	
 	private void initializeEventManager() {

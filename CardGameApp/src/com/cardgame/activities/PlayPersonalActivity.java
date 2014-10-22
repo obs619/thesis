@@ -78,7 +78,7 @@ public class PlayPersonalActivity extends Activity{
 	    handler.postDelayed(new Runnable() {
 	        @Override
 	        public void run() {
-	        	txtUserName.setText("Username: " + SessionManager.getInstance().getOwnAlias());
+	        	txtUserName.setText("Username: " + SessionManager.getInstance().getOwnDeviceName());
 	        }
 	    }, 500);
 		
@@ -171,7 +171,7 @@ public class PlayPersonalActivity extends Activity{
 			PlayPersonalActivity.txtTurn.setText("Is it your turn? No");
 			
 			//send node name to player to notify for draw event
-			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, PpsManager.getInstance().getDeviceName());
+			Event e=new Event(SessionManager.getInstance().getDeviceId(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, PpsManager.getInstance().getDeviceName());
 			EventManager.getInstance().sendEvent(e);
 			
 		}
