@@ -65,7 +65,7 @@ public class SessionManager {
 	}
 	
 	/**
-	 * Saves the ID for the default session into the device's memory.
+	 * Saves the ID of the default session into the device's memory.
 	 */
 	public void saveDefaultSessionID() {
 		SharedPreferences sharedPreferences = PreferenceManager
@@ -137,45 +137,47 @@ public class SessionManager {
 	}
 	
 	/**
-	 * Creates a new session given a unique identifier (ID)
-	 * or name for the session. Also announces the creation of
-	 * to other devices.
-	 * @param sessionID unique identifier (ID) of the session
-	 * @return A <code>String</code> containing the session identifier
+	 * Creates a new session given a unique name for
+	 * the session. Also announces the creation of the
+	 * session to other devices.
+	 * @param sessionName unique name for the session
+	 * @return The session identifier (ID), which is a
+	 * <code>String</code> containing the session name
 	 * and the device name.
 	 */
-	public String createSession(String sessionID) {
+	public String createSession(String sessionName) {
 		String deviceName = "[" + alias + "]";
 		
-		addAvailableSession(sessionID + deviceName, UNLOCK);
+		addAvailableSession(sessionName + deviceName, UNLOCK);
 		
 		Event event1 = new Event(Event.R_ALL_SCREENS,
 				Event.ADD_NEW_SESSION,
-				sessionID + deviceName,
+				sessionName + deviceName,
 				Event.API_EVENT);
 		EventManager.getInstance().sendEventOnDefaultChannel(event1);
-		Log.i("New Session","ADD_NEW_SESSION event sent: "+sessionID+" "+deviceName);
+		Log.i("New Session","ADD_NEW_SESSION event sent: "+sessionName+" "+deviceName);
 		
 		/* The following code sends an event for the app side
 		 * (maybe for UI if necessary)
 		 */
 		Event event2 = new Event(Event.R_ALL_SCREENS,
 				Event.ADD_NEW_SESSION,
-				sessionID + deviceName,
+				sessionName + deviceName,
 				Event.APP_EVENT);
 		EventManager.getInstance().sendEventOnDefaultChannel(event2);
 		
-		return sessionID + deviceName;
+		return sessionName + deviceName;
 	}
 	
 	/**
 	 * Sets the given session as the current session.
-	 * @param session the selected session
+	 * @param sessionID the selected session to be made
+	 * into the current session
 	 */ //TODO return boolean?
-	public void setChosenSession(String session) {
-		if(!isSessionLocked(session) || session.contains(alias)) {
+	public void setChosenSession(String sessionID) {
+		if(!isSessionLocked(sessionID) || sessionID.contains(alias)) {
 			Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
-			this.chosenSession = session;
+			this.chosenSession = sessionID;
 			this.saveSessionID();
 		}
 		else {
