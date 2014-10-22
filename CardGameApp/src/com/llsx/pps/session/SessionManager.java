@@ -54,7 +54,7 @@ public class SessionManager {
 	 * Saves the current session ID and its status (locked/unlocked)
 	 * into device's memory.
 	 */
-	public void saveSessionID() {
+	public void saveSessionId() {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());
 		Editor editor = sharedPreferences.edit();
@@ -67,7 +67,7 @@ public class SessionManager {
 	/**
 	 * Saves the ID of the default session into the device's memory.
 	 */
-	public void saveDefaultSessionID() {
+	public void saveDefaultSessionId() {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());
 		Editor editor = sharedPreferences.edit();
@@ -81,7 +81,7 @@ public class SessionManager {
 	 * Loads the last session ID and its status (locked/unlocked)
 	 * from the device's memory.
 	 */
-	public void loadSavedSessionID() {
+	public void loadSavedSessionId() {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());
 		String session = sharedPreferences.getString("session", DEFAULT_SESSION);
@@ -98,20 +98,20 @@ public class SessionManager {
 	/**
 	 * Adds the newly created or newly received session
 	 * to the list of sessions.
-	 * @param sessionID unique identifier (ID) of the session
+	 * @param sessionId unique identifier (ID) of the session
 	 * @param isLock whether or not the session is locked
 	 */
-	public void addAvailableSession(String sessionID, Boolean isLock) {
-		availableSessionsMap.put(sessionID, isLock);
+	public void addAvailableSession(String sessionId, Boolean isLock) {
+		availableSessionsMap.put(sessionId, isLock);
 	}
 	
 	/**
 	 * Removes the session from the session list
 	 * with the specified session ID.
-	 * @param sessionID unique identifier (ID) of the session
+	 * @param sessionId unique identifier (ID) of the session
 	 */
-	public void removeAvailableSession(String sessionID) {
-		availableSessionsMap.remove(sessionID);
+	public void removeAvailableSession(String sessionId) {
+		availableSessionsMap.remove(sessionId);
 	}
 	
 	/**
@@ -171,19 +171,19 @@ public class SessionManager {
 	
 	/**
 	 * Sets the given session as the current session.
-	 * @param sessionID the selected session to be made
+	 * @param sessionId the selected session to be made
 	 * into the current session
 	 */ //TODO return boolean?
-	public void setChosenSession(String sessionID) {
-		if(!isSessionLocked(sessionID) || sessionID.contains(deviceName)) {
+	public void setChosenSession(String sessionId) {
+		if(!isSessionLocked(sessionId) || sessionId.contains(deviceName)) {
 			Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
-			this.chosenSession = sessionID;
-			this.saveSessionID();
+			this.chosenSession = sessionId;
+			this.saveSessionId();
 		}
 		else {
 			Toast.makeText(PpsManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
 			this.chosenSession = DEFAULT_SESSION;
-			this.saveDefaultSessionID();
+			this.saveDefaultSessionId();
 		}
 	}
 	
@@ -200,23 +200,23 @@ public class SessionManager {
 	
 	/**
 	 * Locks the given session so that no one new can join.
-	 * @param sessionID the selected session to lock
+	 * @param sessionId the selected session to lock
 	 */
-	public void lockSession(String sessionID) {
-		if(sessionID.contains(deviceName)) {
+	public void lockSession(String sessionId) {
+		if(sessionId.contains(deviceName)) {
 			Event event = new Event(Event.R_ALL_SCREENS,
 					Event.LOCK_SESSION,
-					sessionID,
+					sessionId,
 					Event.API_EVENT);
 			EventManager.getInstance().sendEventOnDefaultChannel(event );
 			
 			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
-				if(sessionID.equalsIgnoreCase(entry.getKey())) {
+				if(sessionId.equalsIgnoreCase(entry.getKey())) {
 					entry.setValue(LOCK);
 				}	
 			}
 			
-			Toast.makeText(PpsManager.getContext(), "Successfuly locked " + sessionID, Toast.LENGTH_LONG).show();
+			Toast.makeText(PpsManager.getContext(), "Successfuly locked " + sessionId, Toast.LENGTH_LONG).show();
 		}
 		else {
 			Toast.makeText(PpsManager.getContext(), "Cannot lock a session you did not create!", Toast.LENGTH_LONG).show();
@@ -225,23 +225,23 @@ public class SessionManager {
 	
 	/**
 	 * Unlocks the given session so that other people can join.
-	 * @param sessionID the selected session to lock
+	 * @param sessionId the selected session to lock
 	 */
-	public void unlockSession(String sessionID) {
-		if(sessionID.contains(deviceName)) {
+	public void unlockSession(String sessionId) {
+		if(sessionId.contains(deviceName)) {
 			Event event = new Event(Event.R_ALL_SCREENS,
 					Event.UNLOCK_SESSION,
-					sessionID,
+					sessionId,
 					Event.API_EVENT);
 			EventManager.getInstance().sendEventOnDefaultChannel(event );
 			
 			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
-				if(sessionID.equalsIgnoreCase(entry.getKey())) {
+				if(sessionId.equalsIgnoreCase(entry.getKey())) {
 					entry.setValue(UNLOCK);
 				}	
 			}
 			
-			Toast.makeText(PpsManager.getContext(), "Successfuly unlocked " + sessionID, Toast.LENGTH_LONG).show();
+			Toast.makeText(PpsManager.getContext(), "Successfuly unlocked " + sessionId, Toast.LENGTH_LONG).show();
 		}
 		else {
 			Toast.makeText(PpsManager.getContext(), "Cannot unlock a session you did not create!", Toast.LENGTH_LONG).show();
@@ -250,14 +250,14 @@ public class SessionManager {
 	
 	/**
 	 * Checks if the given session is locked.
-	 * @param sessionID the selected session to check
+	 * @param sessionId the selected session to check
 	 * @return <code>true</code> if the session is locked,
 	 * otherwise <code>false</code>. <code>null</code> if
 	 * the session does not exist.
 	 */
-	public Boolean isSessionLocked(String sessionID) {
+	public Boolean isSessionLocked(String sessionId) {
 		for (Map.Entry<String, Boolean> entry : availableSessionsMap.entrySet()) {
-			if(entry.getKey().equalsIgnoreCase(sessionID)) {
+			if(entry.getKey().equalsIgnoreCase(sessionId)) {
 				return entry.getValue();
 			}	
 		}

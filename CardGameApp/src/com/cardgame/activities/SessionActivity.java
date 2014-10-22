@@ -66,7 +66,7 @@ public class SessionActivity extends Activity{
 		spinChannels.setAdapter(channelsAdapter);
 		channelsAdapter.notifyDataSetChanged();
 		
-		SessionManager.getInstance().loadSavedSessionID();
+		SessionManager.getInstance().loadSavedSessionId();
 		String session = SessionManager.getInstance().getChosenSession();
 		listChannels.add(session);
 		
