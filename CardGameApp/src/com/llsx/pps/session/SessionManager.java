@@ -129,9 +129,9 @@ public class SessionManager {
 	 */
 	public void requestSessions() {
 		Event event = new Event(Event.R_ALL_SCREENS,
-				Event.REQUEST_SESSIONS,
+				Event.T_REQUEST_SESSIONS,
 				ChordNetworkManager.getChordManager().getName(),
-				Event.API_EVENT);
+				Event.PPS_EVENT);
 		
 		EventManager.getInstance().sendEvent(event);
 	}
@@ -151,9 +151,9 @@ public class SessionManager {
 		addAvailableSession(sessionName + deviceName, UNLOCK);
 		
 		Event event1 = new Event(Event.R_ALL_SCREENS,
-				Event.ADD_NEW_SESSION,
+				Event.T_ADD_NEW_SESSION,
 				sessionName + deviceName,
-				Event.API_EVENT);
+				Event.PPS_EVENT);
 		EventManager.getInstance().sendEventOnDefaultChannel(event1);
 		Log.i("New Session","ADD_NEW_SESSION event sent: "+sessionName+" "+deviceName);
 		
@@ -161,7 +161,7 @@ public class SessionManager {
 		 * (maybe for UI if necessary)
 		 */
 		Event event2 = new Event(Event.R_ALL_SCREENS,
-				Event.ADD_NEW_SESSION,
+				Event.T_ADD_NEW_SESSION,
 				sessionName + deviceName,
 				Event.APP_EVENT);
 		EventManager.getInstance().sendEventOnDefaultChannel(event2);
@@ -205,9 +205,9 @@ public class SessionManager {
 	public void lockSession(String sessionID) {
 		if(sessionID.contains(alias)) {
 			Event event = new Event(Event.R_ALL_SCREENS,
-					Event.LOCK_SESSION,
+					Event.T_LOCK_SESSION,
 					sessionID,
-					Event.API_EVENT);
+					Event.PPS_EVENT);
 			EventManager.getInstance().sendEventOnDefaultChannel(event );
 			
 			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
@@ -230,9 +230,9 @@ public class SessionManager {
 	public void unlockSession(String sessionID) {
 		if(sessionID.contains(alias)) {
 			Event event = new Event(Event.R_ALL_SCREENS,
-					Event.UNLOCK_SESSION,
+					Event.T_UNLOCK_SESSION,
 					sessionID,
-					Event.API_EVENT);
+					Event.PPS_EVENT);
 			EventManager.getInstance().sendEventOnDefaultChannel(event );
 			
 			for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {

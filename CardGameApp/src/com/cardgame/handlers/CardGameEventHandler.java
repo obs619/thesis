@@ -86,19 +86,19 @@ public class CardGameEventHandler implements EventHandler {
 			PlayPersonalActivity.showLoseDialog();
 			break;
 			
-		case Event.USER_JOIN_PRIVATE:
+		case Event.T_USER_JOIN_PRIVATE:
 			Log.e("USER_JOIN_PRIVATE","pasok");
 			break;
 			
-		case Event.USER_JOIN_PUBLIC:
+		case Event.T_USER_JOIN_PUBLIC:
 			Log.e("USER_JOIN_PUBLIC","pasok");
 			break;
 			
-		case Event.USER_LEFT_PRIVATE:
+		case Event.T_USER_LEFT_PRIVATE:
 			Log.e("USER_LEFT_PRIVATE","pasok");
 			break;
 			
-		case Event.USER_LEFT_PUBLIC:
+		case Event.T_USER_LEFT_PUBLIC:
 			Log.e("USER_LEFT_PUBLIC","pasok");
 			break;
 		}

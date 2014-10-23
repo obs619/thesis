@@ -13,7 +13,7 @@ public class SessionEventHandler implements EventHandler{
 		Log.e("Handling SessionEvent", "Type: "+event.getType() + "Payload: " + event.getPayload().toString());
 		switch(event.getType())
 		{
-		case Event.ADD_NEW_SESSION:
+		case Event.T_ADD_NEW_SESSION:
 			SessionActivity.listChannels.add(event.getSession());
 			SessionActivity.channelsAdapter.notifyDataSetChanged();
 			break;
