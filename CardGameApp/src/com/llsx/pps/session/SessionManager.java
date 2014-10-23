@@ -15,6 +15,7 @@ import com.llsx.pps.event.Event;
 import com.llsx.pps.event.EventManager;
 import com.llsx.pps.internal.chord.ChordNetworkManager;
 
+// TODO Change all toasts to logs
 public class SessionManager {
 	
 	/* Constants */
@@ -109,7 +110,7 @@ public class SessionManager {
 	 * Removes the session from the session list
 	 * with the specified session ID.
 	 * @param sessionId unique identifier (ID) of the session
-	 */
+	 */ // TODO unused
 	public void removeAvailableSession(String sessionId) {
 		availableSessionsMap.remove(sessionId);
 	}
@@ -173,7 +174,7 @@ public class SessionManager {
 	 * Sets the given session as the current session.
 	 * @param sessionId the selected session to be made
 	 * into the current session
-	 */ //TODO return boolean?
+	 */
 	public void setChosenSession(String sessionId) {
 		if(!isSessionLocked(sessionId) || sessionId.contains(deviceName)) {
 			Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
@@ -329,7 +330,7 @@ public class SessionManager {
 	
 	/**
 	 * Clears/Empties the list of available sessions
-	 */
+	 */ // TODO unused
 	public void clearAvailableSessionsMap() {
 		availableSessionsMap.clear();
 	}
@@ -359,8 +360,6 @@ public class SessionManager {
 	 * @param deviceName the name you want for the current device
 	 */
 	public void setDeviceName(String deviceName) {
-		// TODO if no alias is given
-		
 		this.deviceName = deviceName;
 	}
 	
