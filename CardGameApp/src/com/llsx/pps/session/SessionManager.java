@@ -15,6 +15,12 @@ import com.llsx.pps.event.Event;
 import com.llsx.pps.event.EventManager;
 import com.llsx.pps.internal.chord.ChordNetworkManager;
 
+/**
+ * Manages the device session along with
+ * who else is in the same session.
+ * 
+ * @author Amanda
+ */
 // TODO Change all toasts to logs
 public class SessionManager {
 	

@@ -1,5 +1,11 @@
 package com.llsx.pps.network;
 
+/**
+ * Takes care of the link between the app and
+ * the available network connections.
+ * 
+ * @author Amanda
+ */
 public class NetworkManager {
 	
 	private static NetworkManager instance = null;

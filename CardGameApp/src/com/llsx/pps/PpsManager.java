@@ -14,6 +14,11 @@ import com.llsx.pps.internal.chord.ChordTransportInterface;
 import com.llsx.pps.network.NetworkManager;
 import com.llsx.pps.session.SessionManager;
 
+/**
+ * Manages public and private screens.
+ * 
+ * @author Amanda
+ */
 public class PpsManager {
 
 	/* Constants */

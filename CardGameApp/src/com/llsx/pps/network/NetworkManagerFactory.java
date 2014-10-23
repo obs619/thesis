@@ -1,5 +1,10 @@
 package com.llsx.pps.network;
 
+/**
+ * Used to create a NetworkManager.
+ * 
+ * @author Amanda
+ */
 public interface NetworkManagerFactory {
 	
 	/**
