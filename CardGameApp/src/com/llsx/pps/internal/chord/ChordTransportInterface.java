@@ -86,7 +86,7 @@ public class ChordTransportInterface implements TransportInterface {
 					if(entry.getValue().equals(false)) {
 						Log.i("SENDING SESSIONS ", entry.getKey()+"fromNode: "+fromNode);
 						 e = new Event(fromNode
-								,Event.RESPOND_REQUEST_SESSIONS
+								,Event.T_RESPOND_REQUEST_SESSIONS
 								,entry.getKey(),true);
 						 EventManager.getInstance().sendEventOnDefaultChannel(e);
 					}
@@ -100,23 +100,23 @@ public class ChordTransportInterface implements TransportInterface {
 			if(PpsManager.getInstance().isPrivate()) {
 				
 				Event e = new Event(Event.R_ALL_SCREENS
-						,Event.USER_JOIN_PRIVATE
+						,Event.T_USER_JOIN_PRIVATE
 						,nodeAlias,true);
 				EventManager.getInstance().sendEvent(e);
 				
 				Event e1 = new Event(Event.R_ALL_SCREENS
-						,Event.USER_JOIN_PRIVATE
+						,Event.T_USER_JOIN_PRIVATE
 						,nodeAlias,false);
 				EventManager.getInstance().sendEvent(e1);
 			}
 			else {
 				Event e = new Event(Event.R_ALL_SCREENS
-						,Event.USER_JOIN_PUBLIC
+						,Event.T_USER_JOIN_PUBLIC
 						,nodeAlias,true);
 				EventManager.getInstance().sendEvent(e);
 				
 				Event e1 = new Event(Event.R_ALL_SCREENS
-						,Event.USER_JOIN_PUBLIC
+						,Event.T_USER_JOIN_PUBLIC
 						,nodeAlias,false);
 				EventManager.getInstance().sendEvent(e1);
 			}
@@ -130,23 +130,23 @@ public class ChordTransportInterface implements TransportInterface {
 
 				//can be remove
 				Event e = new Event(Event.R_LOCAL_SCREEN
-						,Event.USER_LEFT_PRIVATE
+						,Event.T_USER_LEFT_PRIVATE
 						,fromNode,false);
 				EventManager.getInstance().applyEvent(e);
 				
 				Event e1 = new Event(Event.R_LOCAL_SCREEN
-						,Event.USER_LEFT_PRIVATE
+						,Event.T_USER_LEFT_PRIVATE
 						,fromNode,true);
 				EventManager.getInstance().applyEvent(e1);
 			}
 			else {
 				Event e = new Event(Event.R_LOCAL_SCREEN
-						,Event.USER_LEFT_PUBLIC
+						,Event.T_USER_LEFT_PUBLIC
 						,fromNode,false);
 				EventManager.getInstance().applyEvent(e);
 				
 				Event e1 = new Event(Event.R_LOCAL_SCREEN
-						,Event.USER_LEFT_PUBLIC
+						,Event.T_USER_LEFT_PUBLIC
 						,fromNode,true);
 				EventManager.getInstance().applyEvent(e1);
 			}

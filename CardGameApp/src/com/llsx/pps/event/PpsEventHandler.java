@@ -7,9 +7,16 @@ import android.util.Log;
 import com.llsx.pps.PpsManager;
 import com.llsx.pps.session.SessionManager;
 
-// TODO consider renaming to PpsEventHandler
+
 // TODO consider making accessible only to the package
-public class ApiEventHandler implements EventHandler {
+/**
+ * 
+ * Used to handle common (non-application-specific) public/private screen events.
+ * 
+ * @author Andrew
+ *
+ */
+public class PpsEventHandler implements EventHandler {
 	
 	@Override
 	public void handleEvent(Event event) {
@@ -20,7 +27,7 @@ public class ApiEventHandler implements EventHandler {
 		String alias;
 		
 		switch(event.getType()) {
-			case Event.USER_JOIN_PRIVATE:
+			case Event.T_USER_JOIN_PRIVATE:
 				Log.e("PERSONAL API", "pasok");
 				
 				nodeAlias = (String[]) event.getPayload();
@@ -33,7 +40,7 @@ public class ApiEventHandler implements EventHandler {
 				
 				break;
 				
-			case Event.USER_JOIN_PUBLIC:
+			case Event.T_USER_JOIN_PUBLIC:
 				Log.e("SHARED API", "pasok");
 				
 				nodeAlias = (String[]) event.getPayload();
@@ -45,26 +52,26 @@ public class ApiEventHandler implements EventHandler {
 				}
 				break;
 				
-			case Event.USER_LEFT_PRIVATE:
+			case Event.T_USER_LEFT_PRIVATE:
 				Log.e("user left private", "pasok");
 				
 				PpsManager.getInstance().removeFromPrivateScreen(event.getPayload().toString());
 				SessionManager.getInstance().removeDevice(event.getPayload().toString());
 				break;
 				
-			case Event.USER_LEFT_PUBLIC:
+			case Event.T_USER_LEFT_PUBLIC:
 				Log.e("user left public", "pasok");
 				
 				PpsManager.getInstance().removeFromPublicScreen(event.getPayload().toString());
 				SessionManager.getInstance().removeDevice(event.getPayload().toString());
 				break;
 				
-			case Event.ADD_NEW_SESSION:
+			case Event.T_ADD_NEW_SESSION:
 				Log.e("new channel added", event.getPayload().toString());
 				SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), SessionManager.UNLOCK);
 				break;
 				
-			case Event.LOCK_SESSION:
+			case Event.T_LOCK_SESSION:
 				for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 					if(event.getPayload().toString().equalsIgnoreCase(entry.getKey())) {
 						entry.setValue(SessionManager.LOCK);
@@ -75,7 +82,7 @@ public class ApiEventHandler implements EventHandler {
 					SessionManager.getInstance().setDefaultSession();
 				break;
 				
-			case Event.UNLOCK_SESSION:
+			case Event.T_UNLOCK_SESSION:
 				for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 					if(event.getPayload().toString().equalsIgnoreCase(entry.getKey())) {
 						entry.setValue(SessionManager.UNLOCK);
@@ -83,19 +90,19 @@ public class ApiEventHandler implements EventHandler {
 				}
 				break;
 				
-			case Event.REQUEST_SESSIONS:
+			case Event.T_REQUEST_SESSIONS:
 				for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 					if(entry.getValue().equals(SessionManager.UNLOCK)) {
 						Event e = new Event(event.getPayload().toString(),
-											Event.RESPOND_REQUEST_SESSIONS,
+											Event.T_RESPOND_REQUEST_SESSIONS,
 											entry.getKey(),
-											Event.API_EVENT);
+											Event.PPS_EVENT);
 						EventManager.getInstance().sendEvent(e);
 					}
 				}
 				break;
 				
-			case Event.RESPOND_REQUEST_SESSIONS:
+			case Event.T_RESPOND_REQUEST_SESSIONS:
 				SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), SessionManager.UNLOCK);
 				Log.i("SESSION NAME RECEIVED","Received session name:"+event.getPayload().toString());
 				break;
