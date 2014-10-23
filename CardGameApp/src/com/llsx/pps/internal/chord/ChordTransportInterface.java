@@ -22,8 +22,14 @@ public class ChordTransportInterface implements TransportInterface {
 	public static SchordChannel defaultChannel;
 	public static String channelName = "defaultchannel";
 	
+	private final static SchordChannel.StatusListener mChordChannelListener = new SPSChordChannelListenerAdapter();
+	private final static SchordChannel.StatusListener defaultChannelListener = new SPSChordChannelListenerAdapter();
+	
 	public ChordTransportInterface() {}
 	
+	/**
+	 * joins the default channel named "defaultchannel"
+	 */
 	public static void joinDefaultChannel() {
 
 		try {
@@ -40,6 +46,9 @@ public class ChordTransportInterface implements TransportInterface {
 			 		+ "RROR", "Failed to set mChannel to default channel");*/
 	}
 	
+	/**
+	 * joins the custom channel by getting chosen session from the session manager
+	 */
 	public static void joinCustomChannel() {
 		
 		try {
@@ -52,14 +61,12 @@ public class ChordTransportInterface implements TransportInterface {
 			 Log.e("CHANNEL ERROR", "Failed to join custom channel");
 		
 	}
-	
-	private final static SchordChannel.StatusListener mChordChannelListener = new SPSChordChannelListenerAdapter();
-	private final static SchordChannel.StatusListener defaultChannelListener = new SPSChordChannelListenerAdapter();
-	
-	
-	
 
-
+	/**
+	 *
+	 * Initialises a class for the chord channel listener
+	 *
+	 */
 	private static class SPSChordChannelListenerAdapter extends ChordChannelListenerAdapter {
 		@Override
 		public void onDataReceived(String fromNode, String fromChannel, String payloadType,
@@ -163,6 +170,10 @@ public class ChordTransportInterface implements TransportInterface {
 		}
 	}
 	
+	/**
+	 * @param message the actual message being sent
+	 * @param isCustomChannel boolean stating whether the message being sent is to the custom channel
+	 */
 	@Override
 	public void sendToAll(Message message, boolean isCustomChannel) {
 		SchordChannel channel;
@@ -178,16 +189,27 @@ public class ChordTransportInterface implements TransportInterface {
 		}
 	}
 	
-
+	/**
+	 * @param the message dispatcher to be used
+	 */
 	@Override
 	public void setMessageDispatcher(MessageDispatcher dispatcher) {
 		ChordTransportInterface.messageDispatcher = dispatcher;
 	}
 	
+	/**
+	 * 
+	 * @param receivedMessage the message being received
+	 */
 	public static void onMessageReceived(Message receivedMessage) {
 		messageDispatcher.receiveMessage(receivedMessage);
 	}
 	
+	/**
+	 * @param userToSend the recipient of the message being sent
+	 * @param message the actual message being sent
+	 * @param isCustomChannel boolean stating whether the message being sent is to the custom channel
+	 */
 	@Override
 	public void send(String userToSend,Message message, boolean isCustomChannel) {
 		SchordChannel channel;

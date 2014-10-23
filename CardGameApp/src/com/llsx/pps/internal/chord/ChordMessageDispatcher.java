@@ -10,10 +10,18 @@ public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDis
 	
 	private TransportInterface transportInterface;
 	
+	/**
+	 * 
+	 * @param transportInterface Chord transport interface
+	 */
 	public ChordMessageDispatcher(ChordTransportInterface transportInterface) {
 		setTransportInterface(transportInterface);
 	}
 	
+	/**
+	 * @param message the message being sent
+	 * @param isCustomChannel boolean stating whether the message being sent is to the custom channel
+	 */
 	@Override
 	public void sendMessage(Message message, boolean isCustomChannel) {
 		String recipient = message.getRecipient();
@@ -33,11 +41,17 @@ public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDis
 			transportInterface.send(recipient, message, isCustomChannel);
 	}
 
+	/**
+	 * @param message the message being received
+	 */
 	@Override
 	public void receiveMessage(Message message) {
 		EventManager.getInstance().unpackEvent(message);
 	}
 	
+	/**
+	 * @param transportInterface the transport interface for the dispatcher
+	 */
 	@Override
 	public void setTransportInterface(TransportInterface transportInterface) {
 		this.transportInterface = transportInterface;

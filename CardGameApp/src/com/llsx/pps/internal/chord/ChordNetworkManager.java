@@ -16,12 +16,18 @@ public class ChordNetworkManager extends NetworkManager {
 	public Schord chord;
 	public static SchordManager mChordManager;
 	
+	/**
+	 * Initialises the chord and the chord manager
+	 */
 	public ChordNetworkManager() {
 		initializeChord();
 
 		mChordManager = new SchordManager(PpsManager.getContext());
 		initializeChordManager();
 	}
+	/**
+	 * Initialises the chord and checks whether the device supports the API
+	 */
 	public void initializeChord() {
 		// Initialize Chord
 		chord = new Schord();
@@ -33,6 +39,9 @@ public class ChordNetworkManager extends NetworkManager {
 		}
 	}
 	
+	/**
+	 * Initialises the chord manager and gets the first available network interface
+	 */
 	public static void initializeChordManager() {
 		List<Integer> infList = mChordManager.getAvailableInterfaceTypes();
 		
@@ -45,10 +54,17 @@ public class ChordNetworkManager extends NetworkManager {
 		}
 	}
 	
+	/**
+	 * 
+	 * @return instance of the chord manager
+	 */
 	public static SchordManager getChordManager() {
 		return mChordManager;
 	}
 
+	/**
+	 * Initialises the listener for the chord manager
+	 */
 	private final static SchordManager.StatusListener mChordManagerListener = new SchordManager.StatusListener() {
 		
 		@Override

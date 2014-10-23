@@ -5,6 +5,9 @@ import com.llsx.pps.network.NetworkManagerFactory;
 
 public class ChordNetworkManagerFactory implements NetworkManagerFactory {
 
+	/**
+	 * @return instance of the chord network manager
+	 */
 	@Override
 	public NetworkManager createNetworkManager() {
 		return new ChordNetworkManager();

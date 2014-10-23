@@ -10,7 +10,14 @@ import java.io.Serializable;
 public class ChordMessage extends com.llsx.pps.messaging.Message implements Serializable {
 
 	private static final long serialVersionUID = 20130219L;
-	
+
+	/**
+	 * 
+	 * @param message the actual message being sent/received
+	 * @param recipients the intended recipient of the event
+	 * @param messageType the message type represented by an integer
+	 * @param isAPIEvent boolean indicating whether the event is for the api or user
+	 */
 	ChordMessage(Serializable message, String recipients, int messageType, boolean isAPIEvent) {
 		mMessage = message;
 		mRecipients = recipients;
