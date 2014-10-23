@@ -29,8 +29,7 @@ public class PpsManager {
 	
 	/* Network / Connection Management */
 	private EventManager eventManager;
-	private NetworkManager networkManager; 
-	private SessionManager sessionManager;
+	private NetworkManager networkManager;
 	private static Context mContext;
 	
 	/* PpsManager */
@@ -53,16 +52,19 @@ public class PpsManager {
 	}
 	
 	/**
-	 * Constructs a new PpsManager for the given context, screen type and session mode
+	 * Constructs a new PpsManager for the given context,
+	 * screen type and session mode.
 	 * @param mContext current context of the device
-	 * @param isPrivate screen type of the device
+	 * @param screenType screen type of the device;
+	 * <code>PpsManager.PRIVATE</code> or
+	 * <code>PpsManager.PUBLIC</code>
 	 * @param sessionMode current session of the device
 	 */
-	public PpsManager(Context mContext, boolean isPrivate, boolean sessionMode) {
+	public PpsManager(Context mContext, boolean screenType, boolean sessionMode) {
 		PpsManager.mContext = mContext;
 		initializeNetworkManager();
 		initializeEventManager();
-		this.isPrivate = isPrivate;
+		this.isPrivate = screenType;
 		SessionManager.getInstance().setSessionMode(sessionMode);
 		
 		instance = this;
@@ -172,7 +174,7 @@ public class PpsManager {
 	 * @return The list of name representations
 	 * (e.g. "Player 1") for the private screen devices.
 	 */ //maybe remove
-	public List<String>getPrivateScreenNameList() {
+	public List<String> getPrivateScreenNameList() {
 		List<String> result = new ArrayList<String>();
 		for(String key: privateScreenList) {
 			String alias = SessionManager.getInstance().getDeviceName(key);
@@ -238,7 +240,10 @@ public class PpsManager {
 	 */
 	
 	/**
-	 * @return The <code>Context</code> of PpsManager.
+	 * @return The current <code>Context</code> of PpsManager.
+	 * (A <code>Context</code> gives 'context' or more
+	 * information about the current state of the application
+	 * or object.)
 	 */ // TODO Fix this description.
 	public static Context getContext() {
 		return mContext;
@@ -247,51 +252,72 @@ public class PpsManager {
 	/**
 	 * Sets the <code>Context</code> of PpsManager as
 	 * the given <code>Context</code>.
-	 * @param context
+	 * (A <code>Context</code> gives 'context' or more
+	 * information about the current state of the application
+	 * or object.)
+	 * @param context information about the current state
+	 * of the application or object
 	 */ // TODO Fix this description.
 	public void setContext(Context context) {
 	 	 PpsManager.mContext = context;
 	}
 	
 	/**
-	 * @return
-	 */
+	 * @return The <code>EventManager</code> which takes
+	 * care of which event handlers will be in effect
+	 * to catch events for that specific context.
+	 */ // TODO unused
 	public EventManager getEventManager() {
 		return eventManager;
 	}
-
+	
+	/**
+	 * @return The <code>NetworkManager</code> which takes
+	 * care of the link between the app and the available
+	 * network connections.
+	 */ // TODO unused
 	public NetworkManager getNetworkManager() {
 		return networkManager;
 	}
 	
-	public SessionManager getSessionManager() {
-		return sessionManager;
-	}
-
-	public void setSessionManager(SessionManager sessionManager) {
-		this.sessionManager = sessionManager;
-	}
-	
+	/**
+	 * @return <code>true</code> if the current device is
+	 * private; <false> if the current device is public.
+	 */
 	public boolean isPrivate() {
 		return isPrivate;
 	}
 	
+	/**
+	 * @return The list of public screen device
+	 * identifications (IDs).
+	 */
 	public List<String> getPublicScreenList() {
 		return publicScreenList;
 	}
 	
-	public void setPublicScreenList(List<String> publicScreenList) {
+	/*public void setPublicScreenList(List<String> publicScreenList) {
 		this.publicScreenList = publicScreenList;
-	}
+	} TODO unused */
 	
+	/**
+	 * @returnThe list of private screen device
+	 * identifications (IDs).
+	 */
 	public List<String> getPrivateScreenList() {
 		return privateScreenList;
 	}
 	
-	public void setPrivateScreenList(List<String> privateScreenList) {
+	/*public void setPrivateScreenList(List<String> privateScreenList) {
 		this.privateScreenList = privateScreenList;
-	}
+	} TODO unused */
 	
+	/**
+	 * Sets the current device as either public or private.
+	 * @param screenType screen type of the device;
+	 * <code>PpsManager.PRIVATE</code> or
+	 * <code>PpsManager.PUBLIC</code>
+	 */
 	public void setScreenType(boolean screenType) {
 		isPrivate = screenType;
 	}
