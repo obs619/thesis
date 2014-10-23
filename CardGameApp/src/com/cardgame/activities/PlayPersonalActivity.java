@@ -254,14 +254,14 @@ public class PlayPersonalActivity extends Activity{
 	
 	public void clickPersonal(View v) {
 		String nodes = "";
-		for(String node: PpsManager.getInstance().getPrivateScreenAliasList())
+		for(String node: PpsManager.getInstance().getPrivateScreenNameList())
 			nodes += node + ",";
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}
 	
 	public void clickShared(View v) {
 		String nodes = "";
-		for(String node: PpsManager.getInstance().getPublicScreenAliasList())
+		for(String node: PpsManager.getInstance().getPublicScreenNameList())
 			nodes += node + ",";
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}
