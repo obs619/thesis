@@ -269,8 +269,9 @@ public class SessionManager {
 	 */
 	
 	/**
-	 * Register a new device's node name (device ID) and alias (device name).
-	 * @param deviceId the identifier (ID) of the device
+	 * Register a new device given its unique identifier (device ID)
+	 * and its name representation (e.g. "Player 1").
+	 * @param deviceId unique identifier (ID) of the device
 	 * @param deviceName name representation for the device
 	 */
 	public void addDevice(String deviceId, String deviceName) {
@@ -278,16 +279,17 @@ public class SessionManager {
 	}
 	
 	/**
-	 * Removes the alias from alias list.
-	 * @param deviceId name representation for the device
+	 * Removes the device from the list of devices given
+	 * the device identifier.
+	 * @param deviceId unique identifier (ID) of the device
 	 */
 	public void removeDevice(String deviceId) {
 		deviceMap.remove(deviceId);
 	}
 	
 	/**
-	 * Gets the alias of the target device given the device's
-	 * node name.
+	 * Gets the name representation (e.g. "Player 1") of
+	 * the target device given the device's identifier (ID).
 	 * @param deviceId node name of the target alias
 	 * @return alias name of the node given a key / node name
 	 * or <code>null</code> if it doesn't exist.
@@ -297,10 +299,11 @@ public class SessionManager {
 	}
 	
 	/**
-	 * Gets the node name of the target device given the
-	 * device's alias.
+	 * Gets the identifier (ID) of the target device given the
+	 * device's name representation (e.g. "Player 1").
 	 * @param deviceName name representation for the device
-	 * @return The device ID of the target/given alias.
+	 * @return The device ID of the target device given its
+	 * name representation.
 	 */
 	public String getDeviceId(String deviceName) {
 		String result = "";
@@ -336,21 +339,23 @@ public class SessionManager {
 	 */
 	
 	/**
-	 * @return
+	 * @return A <code>Map</code> of the available sessions.
 	 */
 	public Map<String, Boolean> getAvailableSessionsMap() {
 		return availableSessionsMap;
 	}
 	
 	/**
-	 * @return The current device's own alias.
+	 * @return The current device's own name representation.
+	 * (e.g. "Player 1")
 	 */
 	public String getOwnDeviceName() {
 		return deviceName;
 	}
 	
 	/**
-	 * Sets the current device's alias as the given string.
+	 * Sets the current device's name representation
+	 * (e.g. "Player 1") as the given string.
 	 * @param deviceName the name you want for the current device
 	 */
 	public void setDeviceName(String deviceName) {
