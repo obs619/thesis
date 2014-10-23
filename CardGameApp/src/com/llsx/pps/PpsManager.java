@@ -64,6 +64,7 @@ public class PpsManager {
 		initializeEventManager();
 		this.isPrivate = isPrivate;
 		SessionManager.getInstance().setSessionMode(sessionMode);
+		
 		instance = this;
 	}
 	
@@ -83,14 +84,16 @@ public class PpsManager {
 	}
 	
 	/**
-	 * Starts the network manager and connects the app to the network
+	 * Starts the network manager and connects
+	 * the app to the network.
 	 */
 	public void start() {
 		ChordNetworkManager.initializeChordManager();
 	}
 	
 	/**
-	 * Stops the network manager and disconnects the app from the network
+	 * Stops the network manager and disconnects
+	 * the app from the network.
 	 */
 	public void stop() {
 		ChordNetworkManager.getChordManager().stop();
@@ -101,32 +104,36 @@ public class PpsManager {
 	 */
 	
 	/**
-	 * Adds the node into the list of public screens.
-	 * @param nodeName fixed name of the device
-	 * @param aliasName alias or name representation for the device (e.g. "Gameboard1")
+	 * Adds the device into the list of public screens.
+	 * @param deviceId unique identifier (ID) of the device
+	 * @param deviceName name representation for the device
+	 * (e.g. "Gameboard1")
 	 */
-	public void addPublicScreen(String nodeName, String aliasName) {
-		publicScreenList.add(nodeName);
-		SessionManager.getInstance().addAlias(nodeName, aliasName);
+	public void addPublicScreen(String deviceId, String deviceName) {
+		publicScreenList.add(deviceId);
+		SessionManager.getInstance().addDevice(deviceId, deviceName);
 	}
 	
 	/**
-	 * Remove the given node from the list of public screens
-	 * @param nodeName fixed name of the device to be removed
+	 * Remove the given device from the list of
+	 * public screens.
+	 * @param deviceId unique identifier (ID)
+	 * of the device to be removed
 	 */
-	public void removeFromPublicScreen(String nodeName) {
+	public void removeFromPublicScreen(String deviceId) {
 		for(int i = 0; i < publicScreenList.size(); i++)
-			if(publicScreenList.get(i).equals(nodeName))
+			if(publicScreenList.get(i).equals(deviceId))
 				publicScreenList.remove(i);
 	}
 	
 	/**
-	 * @return The list of aliases for the public screen devices.
+	 * @return The list of name representations
+	 * (e.g. "Gameboard1") for the public screen devices.
 	 */ //maybe remove
-	public List<String> getPublicScreenAliasList() {
+	public List<String> getPublicScreenNameList() {
 		List<String> result = new ArrayList<String>();
 		for(String key: publicScreenList) {
-			String alias = SessionManager.getInstance().getAlias(key);
+			String alias = SessionManager.getInstance().getDeviceName(key);
 			if(alias != null)
 				result.add(alias);
 		}
@@ -139,33 +146,36 @@ public class PpsManager {
 	 */
 	
 	/**
-	 * Adds the node into the list of private screens.
-	 * @param nodeName fixed name of the device
-	 * @param aliasName alias or name representation for the device (e.g. "Player1")
+	 * Adds the device into the list of private screens.
+	 * @param deviceId unique identifier (ID) of the device
+	 * @param deviceName name representation of the device
+	 * (e.g. "Player1")
 	 */
-	public void addPrivateScreen(String nodeName, String aliasName) {
-		privateScreenList.add(nodeName);
-		SessionManager.getInstance().addAlias(nodeName, aliasName);
+	public void addPrivateScreen(String deviceId, String deviceName) {
+		privateScreenList.add(deviceId);
+		SessionManager.getInstance().addDevice(deviceId, deviceName);
 	}
 	
 	/**
-	 * Remove the given node from the list of private screens
-	 * @param nodeName fixed name of the device to be removed
+	 * Remove the given device from the list of private screens.
+	 * @param deviceId unique identifier (ID) of the device
+	 * to be removed
 	 */
-	public void removeFromPrivateScreen(String nodeName) {
+	public void removeFromPrivateScreen(String deviceId) {
 		for(int i = 0; i < privateScreenList.size(); i++)
-			if(privateScreenList.get(i).equals(nodeName))
+			if(privateScreenList.get(i).equals(deviceId))
 				privateScreenList.remove(i);
 	}
 	
 	
 	/**
-	 * @return The list of aliases for the private screen devices.
+	 * @return The list of name representations
+	 * (e.g. "Player 1") for the private screen devices.
 	 */ //maybe remove
-	public List<String>getPrivateScreenAliasList() {
+	public List<String>getPrivateScreenNameList() {
 		List<String> result = new ArrayList<String>();
 		for(String key: privateScreenList) {
-			String alias = SessionManager.getInstance().getAlias(key);
+			String alias = SessionManager.getInstance().getDeviceName(key);
 			if(alias != null)
 				result.add(alias);
 		}
@@ -207,7 +217,7 @@ public class PpsManager {
 	public void clearSessionList() {
 		privateScreenList.clear();
 		publicScreenList.clear();
-		SessionManager.getInstance().clearAliasList();
+		SessionManager.getInstance().clearDeviceMap();
 	}
 	
 	private void initializeEventManager() {

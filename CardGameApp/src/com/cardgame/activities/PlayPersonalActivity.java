@@ -78,7 +78,7 @@ public class PlayPersonalActivity extends Activity{
 	    handler.postDelayed(new Runnable() {
 	        @Override
 	        public void run() {
-	        	txtUserName.setText("Username: " + SessionManager.getInstance().getOwnAlias());
+	        	txtUserName.setText("Username: " + SessionManager.getInstance().getOwnDeviceName());
 	        }
 	    }, 500);
 		
@@ -171,7 +171,7 @@ public class PlayPersonalActivity extends Activity{
 			PlayPersonalActivity.txtTurn.setText("Is it your turn? No");
 			
 			//send node name to player to notify for draw event
-			Event e=new Event(SessionManager.getInstance().getNodeName(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, PpsManager.getInstance().getDeviceName());
+			Event e=new Event(SessionManager.getInstance().getDeviceId(playerToDrawFromAliasName), CardGameEvent.CARD_DRAW_REQUEST, PpsManager.getInstance().getDeviceName());
 			EventManager.getInstance().sendEvent(e);
 			
 		}
@@ -254,14 +254,14 @@ public class PlayPersonalActivity extends Activity{
 	
 	public void clickPersonal(View v) {
 		String nodes = "";
-		for(String node: PpsManager.getInstance().getPrivateScreenAliasList())
+		for(String node: PpsManager.getInstance().getPrivateScreenNameList())
 			nodes += node + ",";
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}
 	
 	public void clickShared(View v) {
 		String nodes = "";
-		for(String node: PpsManager.getInstance().getPublicScreenAliasList())
+		for(String node: PpsManager.getInstance().getPublicScreenNameList())
 			nodes += node + ",";
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}

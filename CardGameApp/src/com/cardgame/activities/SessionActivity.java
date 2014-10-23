@@ -66,7 +66,7 @@ public class SessionActivity extends Activity{
 		spinChannels.setAdapter(channelsAdapter);
 		channelsAdapter.notifyDataSetChanged();
 		
-		SessionManager.getInstance().loadSavedSessionID();
+		SessionManager.getInstance().loadSavedSessionId();
 		String session = SessionManager.getInstance().getChosenSession();
 		listChannels.add(session);
 		
@@ -110,13 +110,13 @@ public class SessionActivity extends Activity{
 	
 	public void selectRefreshSessions(View v) {
 		String nodes = "";
-		for(String node: SessionManager.getInstance().getAvailableSessionsSet())
+		for(String node: SessionManager.getInstance().getAvailableSessions())
 			nodes += node + ",";
 		
 		listChannels.clear();
 		channelsAdapter.notifyDataSetChanged();
 		
-		listChannels.addAll(SessionManager.getInstance().getAvailableSessionsSet());
+		listChannels.addAll(SessionManager.getInstance().getAvailableSessions());
 		channelsAdapter.notifyDataSetChanged();
 
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
@@ -132,7 +132,7 @@ public class SessionActivity extends Activity{
 	    handler.postDelayed(new Runnable() {
 	        @Override
 	        public void run() {
-	        	listChannels.addAll(SessionManager.getInstance().getAvailableSessionsSet());
+	        	listChannels.addAll(SessionManager.getInstance().getAvailableSessions());
 	    		channelsAdapter.notifyDataSetChanged();
 	        }
 	    }, 500);
@@ -147,7 +147,7 @@ public class SessionActivity extends Activity{
 	}
 	
 	public void selectProceed(View v) {
-		if(SessionManager.getInstance().getAvailableSessionsSet().size() != 0) {
+		if(SessionManager.getInstance().getAvailableSessions().size() != 0) {
 			if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
 				if(PpsManager.getInstance().isPrivate()) {
 					Intent intent = new Intent(this, PlayPersonalActivity.class);
