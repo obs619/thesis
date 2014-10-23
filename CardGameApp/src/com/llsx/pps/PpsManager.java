@@ -29,7 +29,7 @@ public class PpsManager {
 	
 	/* Network / Connection Management */
 	private EventManager eventManager;
-	private NetworkManager networkInitializer; 
+	private NetworkManager networkManager; 
 	private SessionManager sessionManager;
 	private static Context mContext;
 	
@@ -207,13 +207,8 @@ public class PpsManager {
 	}
 	
 	/**
-	 * Select which implementation you want (The default implementation is Chord).
+	 * Clears/Empties the list of sessions.
 	 */
-	public void setNetworkInitializer() {
-		this.networkInitializer = NetworkManager.getInstance();
-	}
-	
-	// TODO Should this be made private instead?
 	public void clearSessionList() {
 		privateScreenList.clear();
 		publicScreenList.clear();
@@ -227,31 +222,46 @@ public class PpsManager {
 	 
 	private void initializeNetworkManager() {
 		 NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
-		 setNetworkInitializer();
+		 setNetworkManager();
+	}
+	
+	private void setNetworkManager() {
+		this.networkManager = NetworkManager.getInstance();
+	}
+
+	private void setEventManager() {
+		this.eventManager = EventManager.getInstance();
 	}
 	
 	/*
 	 * Getters and Setters for class variables
 	 */
 	
+	/**
+	 * @return The <code>Context</code> of PpsManager.
+	 */ // TODO Fix this description.
 	public static Context getContext() {
 		return mContext;
 	}
 	
+	/**
+	 * Sets the <code>Context</code> of PpsManager as
+	 * the given <code>Context</code>.
+	 * @param context
+	 */ // TODO Fix this description.
 	public void setContext(Context context) {
 	 	 PpsManager.mContext = context;
 	}
-
+	
+	/**
+	 * @return
+	 */
 	public EventManager getEventManager() {
 		return eventManager;
 	}
 
-	public void setEventManager() {
-		this.eventManager = EventManager.getInstance();
-	}
-
-	public NetworkManager getNetworkInitializer() {
-		return networkInitializer;
+	public NetworkManager getNetworkManager() {
+		return networkManager;
 	}
 	
 	public SessionManager getSessionManager() {
