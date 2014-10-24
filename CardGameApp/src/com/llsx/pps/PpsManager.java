@@ -249,7 +249,7 @@ public class PpsManager {
 	 * (A <code>Context</code> gives 'context' or more
 	 * information about the current state of the application
 	 * or object.)
-	 */ // TODO Fix this description.
+	 */
 	public static Context getContext() {
 		return mContext;
 	}
@@ -262,7 +262,7 @@ public class PpsManager {
 	 * or object.)
 	 * @param context information about the current state
 	 * of the application or object
-	 */ // TODO Fix this description.
+	 */
 	public void setContext(Context context) {
 	 	 PpsManager.mContext = context;
 	}
