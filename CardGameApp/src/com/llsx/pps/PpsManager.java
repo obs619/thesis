@@ -14,6 +14,11 @@ import com.llsx.pps.internal.chord.ChordTransportInterface;
 import com.llsx.pps.network.NetworkManager;
 import com.llsx.pps.session.SessionManager;
 
+/**
+ * Manages public and private screens.
+ * 
+ * @author Amanda
+ */
 public class PpsManager {
 
 	/* Constants */
@@ -29,8 +34,7 @@ public class PpsManager {
 	
 	/* Network / Connection Management */
 	private EventManager eventManager;
-	private NetworkManager networkInitializer; 
-	private SessionManager sessionManager;
+	private NetworkManager networkManager;
 	private static Context mContext;
 	
 	/* PpsManager */
@@ -53,16 +57,19 @@ public class PpsManager {
 	}
 	
 	/**
-	 * Constructs a new PpsManager for the given context, screen type and session mode
+	 * Constructs a new PpsManager for the given context,
+	 * screen type and session mode.
 	 * @param mContext current context of the device
-	 * @param isPrivate screen type of the device
+	 * @param screenType screen type of the device;
+	 * <code>PpsManager.PRIVATE</code> or
+	 * <code>PpsManager.PUBLIC</code>
 	 * @param sessionMode current session of the device
 	 */
-	public PpsManager(Context mContext, boolean isPrivate, boolean sessionMode) {
+	public PpsManager(Context mContext, boolean screenType, boolean sessionMode) {
 		PpsManager.mContext = mContext;
 		initializeNetworkManager();
 		initializeEventManager();
-		this.isPrivate = isPrivate;
+		this.isPrivate = screenType;
 		SessionManager.getInstance().setSessionMode(sessionMode);
 		
 		instance = this;
@@ -172,7 +179,7 @@ public class PpsManager {
 	 * @return The list of name representations
 	 * (e.g. "Player 1") for the private screen devices.
 	 */ //maybe remove
-	public List<String>getPrivateScreenNameList() {
+	public List<String> getPrivateScreenNameList() {
 		List<String> result = new ArrayList<String>();
 		for(String key: privateScreenList) {
 			String alias = SessionManager.getInstance().getDeviceName(key);
@@ -207,13 +214,8 @@ public class PpsManager {
 	}
 	
 	/**
-	 * Select which implementation you want (The default implementation is Chord).
+	 * Clears/Empties the list of sessions.
 	 */
-	public void setNetworkInitializer() {
-		this.networkInitializer = NetworkManager.getInstance();
-	}
-	
-	// TODO Should this be made private instead?
 	public void clearSessionList() {
 		privateScreenList.clear();
 		publicScreenList.clear();
@@ -227,61 +229,100 @@ public class PpsManager {
 	 
 	private void initializeNetworkManager() {
 		 NetworkManager.setDefaultFactory(new ChordNetworkManagerFactory());
-		 setNetworkInitializer();
+		 setNetworkManager();
+	}
+	
+	private void setNetworkManager() {
+		this.networkManager = NetworkManager.getInstance();
+	}
+
+	private void setEventManager() {
+		this.eventManager = EventManager.getInstance();
 	}
 	
 	/*
 	 * Getters and Setters for class variables
 	 */
 	
+	/**
+	 * @return The current <code>Context</code> of PpsManager.
+	 * (A <code>Context</code> gives 'context' or more
+	 * information about the current state of the application
+	 * or object.)
+	 */
 	public static Context getContext() {
 		return mContext;
 	}
 	
+	/**
+	 * Sets the <code>Context</code> of PpsManager as
+	 * the given <code>Context</code>.
+	 * (A <code>Context</code> gives 'context' or more
+	 * information about the current state of the application
+	 * or object.)
+	 * @param context information about the current state
+	 * of the application or object
+	 */
 	public void setContext(Context context) {
 	 	 PpsManager.mContext = context;
 	}
-
+	
+	/**
+	 * @return The <code>EventManager</code> which takes
+	 * care of which event handlers will be in effect
+	 * to catch events for that specific context.
+	 */ // TODO unused
 	public EventManager getEventManager() {
 		return eventManager;
 	}
-
-	public void setEventManager() {
-		this.eventManager = EventManager.getInstance();
-	}
-
-	public NetworkManager getNetworkInitializer() {
-		return networkInitializer;
+	
+	/**
+	 * @return The <code>NetworkManager</code> which takes
+	 * care of the link between the app and the available
+	 * network connections.
+	 */ // TODO unused
+	public NetworkManager getNetworkManager() {
+		return networkManager;
 	}
 	
-	public SessionManager getSessionManager() {
-		return sessionManager;
-	}
-
-	public void setSessionManager(SessionManager sessionManager) {
-		this.sessionManager = sessionManager;
-	}
-	
+	/**
+	 * @return <code>true</code> if the current device is
+	 * private; <false> if the current device is public.
+	 */
 	public boolean isPrivate() {
 		return isPrivate;
 	}
 	
+	/**
+	 * @return The list of public screen device
+	 * identifications (IDs).
+	 */
 	public List<String> getPublicScreenList() {
 		return publicScreenList;
 	}
 	
-	public void setPublicScreenList(List<String> publicScreenList) {
+	/*public void setPublicScreenList(List<String> publicScreenList) {
 		this.publicScreenList = publicScreenList;
-	}
+	} TODO unused */
 	
+	/**
+	 * @returnThe list of private screen device
+	 * identifications (IDs).
+	 */
 	public List<String> getPrivateScreenList() {
 		return privateScreenList;
 	}
 	
-	public void setPrivateScreenList(List<String> privateScreenList) {
+	/*public void setPrivateScreenList(List<String> privateScreenList) {
 		this.privateScreenList = privateScreenList;
-	}
+	} TODO unused */
 	
+	/**
+	 * Sets the current device as either public or private.
+	 * @param screenType screen type of the device;
+	 * <code>PpsManager.PRIVATE</code> or
+	 * <code>PpsManager.PUBLIC</code>
+	 */
 	public void setScreenType(boolean screenType) {
 		isPrivate = screenType;
 	}
