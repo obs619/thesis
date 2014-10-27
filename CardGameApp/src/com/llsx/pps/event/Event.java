@@ -102,7 +102,7 @@ public class Event {
 	
 	private String recipient;
 	private int type;
-	private boolean isApiEvent;
+	private boolean isPpsEvent;
 	private Serializable payload;
 	private String session;
 	
@@ -122,7 +122,7 @@ public class Event {
 		this.recipient = recipient;
 		this.type = type;
 		this.payload = payload;
-		this.isApiEvent = false;
+		this.isPpsEvent = false;
 		session = ChordNetworkManager.getChordManager().getName();
 		
 		if (type == T_ADD_NEW_SESSION) {
@@ -134,18 +134,18 @@ public class Event {
 	}
 	
 	/**
-	 * Constructs a new Event with the given recipient, type, payload, and origin (application-triggered or API-triggered).
+	 * Constructs a new Event with the given recipient, type, payload, and origin (application-triggered or PPS API-triggered).
 	 * 
 	 * @param recipient name of device or group of devices to be notified of the event
 	 * @param type the type of event as specified by the developer
 	 * @param payload information about the event
-	 * @param isApiEvent true if this event was triggered by the PPS API itself, false if this event was triggered from the application level
+	 * @param isPpsEvent true if this event was triggered by the PPS API itself, false if this event was triggered from the application level
 	 */
-	public Event(String recipient, int type, Serializable payload, boolean isApiEvent) {
+	public Event(String recipient, int type, Serializable payload, boolean isPpsEvent) {
 		this.recipient = recipient;
 		this.type = type;
 		this.payload = payload;
-		this.isApiEvent = isApiEvent;
+		this.isPpsEvent = isPpsEvent;
 		session = ChordNetworkManager.getChordManager().getName();
 		
 		if (type == T_ADD_NEW_SESSION) {
@@ -184,17 +184,17 @@ public class Event {
 	 * 
 	 * @return true if this event was triggered by the PPS API itself, false if this event was triggered from the application level
 	 */
-	public boolean isApiEvent() {
-		return isApiEvent;
+	public boolean isPpsEvent() {
+		return isPpsEvent;
 	}
 	
 	/**
 	 * Sets whether this Event will be handled as an application-triggered Event or a PPS API-triggered Event
 	 * 
-	 * @param isApiEvent true if this event was triggered by the PPS API itself, false if this event was triggered from the application level
+	 * @param isPpsEvent true if this event was triggered by the PPS API itself, false if this event was triggered from the application level
 	 */
-	public void setApiEvent(boolean isApiEvent) {
-		this.isApiEvent = isApiEvent;
+	public void setPpsEvent(boolean isPpsEvent) {
+		this.isPpsEvent = isPpsEvent;
 	}
 	
 	/**

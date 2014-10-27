@@ -16,13 +16,13 @@ public class ChordMessage extends com.llsx.pps.messaging.Message implements Seri
 	 * @param message the actual message being sent/received
 	 * @param recipients the intended recipient of the event
 	 * @param messageType the message type represented by an integer
-	 * @param isAPIEvent boolean indicating whether the event is for the api or user
+	 * @param isPpsEvent boolean indicating whether the event is for the PPS or user
 	 */
-	ChordMessage(Serializable message, String recipients, int messageType, boolean isAPIEvent) {
+	ChordMessage(Serializable message, String recipients, int messageType, boolean isPpsEvent) {
 		mMessage = message;
 		mRecipients = recipients;
 		mMessageType = messageType;
-		this.isAPIEvent = isAPIEvent;
+		this.isPpsEvent = isPpsEvent;
 	}
 
 	/**

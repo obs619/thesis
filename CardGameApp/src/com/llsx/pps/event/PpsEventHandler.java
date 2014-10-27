@@ -21,7 +21,7 @@ public class PpsEventHandler implements EventHandler {
 	@Override
 	public void handleEvent(Event event) {
 		
-		Log.e("APIEventHandler", event.getType() + "");
+		Log.e("PpsEventHandler", event.getType() + "");
 		String[] nodeAlias;
 		String key;
 		String alias;

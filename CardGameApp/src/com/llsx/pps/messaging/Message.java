@@ -14,7 +14,7 @@ public abstract class Message implements Serializable {
 	protected int mMessageType;
 	protected Serializable mMessage;
 	protected String mRecipients;
-	protected boolean isAPIEvent;
+	protected boolean isPpsEvent;
 
 	/**
 	 * @return The type of message corresponding
@@ -42,11 +42,11 @@ public abstract class Message implements Serializable {
 	
 	/**
 	 * @return <code>true</code> if the message
-	 * is for API Events; <code>false</code> if
+	 * is for PPS API Events; <code>false</code> if
 	 * the message is for Application Events. 
 	 */
-	public boolean isAPIEvent() {
-		return isAPIEvent;
+	public boolean isPpsEvent() {
+		return isPpsEvent;
 	}
 
 }

@@ -111,7 +111,7 @@ public class EventManager {
 	 * @param event Event to be applied
 	 */
 	public void applyEvent(Event event) {
-		if(event.isApiEvent()) {
+		if(event.isPpsEvent()) {
 			ppsEventHandler.handleEvent(event);
 		}
 		else {

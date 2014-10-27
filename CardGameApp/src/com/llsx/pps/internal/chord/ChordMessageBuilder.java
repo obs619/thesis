@@ -11,7 +11,7 @@ public class ChordMessageBuilder implements MessageBuilder {
 	 */
 	@Override
 	public Message buildMessage(Event event) {
-		return new ChordMessage(event.getPayload(), event.getRecipient(), event.getType(), event.isApiEvent());
+		return new ChordMessage(event.getPayload(), event.getRecipient(), event.getType(), event.isPpsEvent());
 	}
 
 	/**
@@ -19,7 +19,7 @@ public class ChordMessageBuilder implements MessageBuilder {
 	 */
 	@Override
 	public Event unpackEvent(Message message) {
-		return new Event(message.getRecipient(), message.getType(), message.getContents(), message.isAPIEvent());
+		return new Event(message.getRecipient(), message.getType(), message.getContents(), message.isPpsEvent());
 	}
 
 }

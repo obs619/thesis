@@ -26,7 +26,7 @@ public class ChordNetworkManager extends NetworkManager {
 		initializeChordManager();
 	}
 	/**
-	 * Initialises the chord and checks whether the device supports the API
+	 * Initialises the chord and checks whether the device supports the PPS API
 	 */
 	public void initializeChord() {
 		// Initialize Chord
