@@ -6,21 +6,29 @@ import com.llsx.pps.event.EventManager;
 import com.llsx.pps.messaging.Message;
 import com.llsx.pps.messaging.TransportInterface;
 
+/**
+ * Concrete implementation of the MessageDispatcher using the Samsung Chord API
+ * @author Andrew
+ *
+ */
 public class ChordMessageDispatcher implements com.llsx.pps.messaging.MessageDispatcher{
 	
+	/**
+	 * TransportInterface to be interacted with by the ChordMessageDispatcher
+	 */
 	private TransportInterface transportInterface;
 	
 	/**
-	 * 
-	 * @param transportInterface Chord transport interface
+	 * Construct a ChordMessageDispatcher with the given ChordTransportInterface
+	 * @param transportInterface ChordTransportInterface to be used
 	 */
 	public ChordMessageDispatcher(ChordTransportInterface transportInterface) {
 		setTransportInterface(transportInterface);
 	}
 	
 	/**
-	 * @param message the message being sent
-	 * @param isCustomChannel boolean stating whether the message being sent is to the custom channel
+	 * @param message the message to be sent
+	 * @param isCustomChannel true if the message will be sent over a custom channel, false if it will be sent over the default channel
 	 */
 	@Override
 	public void sendMessage(Message message, boolean isCustomChannel) {

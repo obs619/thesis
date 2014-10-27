@@ -13,11 +13,17 @@ import com.samsung.android.sdk.chord.SchordManager;
 
 public class ChordNetworkManager extends NetworkManager {
 
+	/**Chord class required to use Chord API
+	 * 
+	 */
 	public Schord chord;
+	/**
+	 * Chord manager provided by Chord API
+	 */
 	public static SchordManager mChordManager;
 	
 	/**
-	 * Initialises the chord and the chord manager
+	 * Initialises Chord and the SchordManager
 	 */
 	public ChordNetworkManager() {
 		initializeChord();
@@ -26,7 +32,7 @@ public class ChordNetworkManager extends NetworkManager {
 		initializeChordManager();
 	}
 	/**
-	 * Initialises the chord and checks whether the device supports the PPS API
+	 * Initialises Chord and checks whether the device supports Chord
 	 */
 	public void initializeChord() {
 		// Initialize Chord
@@ -40,7 +46,7 @@ public class ChordNetworkManager extends NetworkManager {
 	}
 	
 	/**
-	 * Initialises the chord manager and gets the first available network interface
+	 * Initialises the SchordManager on the first available interface type
 	 */
 	public static void initializeChordManager() {
 		List<Integer> infList = mChordManager.getAvailableInterfaceTypes();
@@ -56,14 +62,14 @@ public class ChordNetworkManager extends NetworkManager {
 	
 	/**
 	 * 
-	 * @return instance of the chord manager
+	 * @return the current SchordManager
 	 */
 	public static SchordManager getChordManager() {
 		return mChordManager;
 	}
 
 	/**
-	 * Initialises the listener for the chord manager
+	 * Listener for the SchordManager
 	 */
 	private final static SchordManager.StatusListener mChordManagerListener = new SchordManager.StatusListener() {
 		

@@ -4,10 +4,15 @@ import com.llsx.pps.event.Event;
 import com.llsx.pps.messaging.Message;
 import com.llsx.pps.messaging.MessageBuilder;
 
+/**
+ * Concrete implementation of MessageBuilder using the Samsung Chord API
+ * @author Andrew
+ *
+ */
 public class ChordMessageBuilder implements MessageBuilder {
 
 	/**
-	 * @return Chord Message equivalent of the event
+	 * @return ChordMessage equivalent of the Event
 	 */
 	@Override
 	public Message buildMessage(Event event) {

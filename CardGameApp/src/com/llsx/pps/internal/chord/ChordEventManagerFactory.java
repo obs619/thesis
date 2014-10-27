@@ -3,6 +3,11 @@ package com.llsx.pps.internal.chord;
 import com.llsx.pps.event.EventManager;
 import com.llsx.pps.event.EventManagerFactory;
 
+/**
+ * Concrete implementation of EventManagerFactory for Samsung Chord API
+ * @author Andrew
+ *
+ */
 public class ChordEventManagerFactory implements EventManagerFactory {
 
 	

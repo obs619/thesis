@@ -12,23 +12,53 @@ import com.llsx.pps.messaging.MessageDispatcher;
 import com.llsx.pps.messaging.TransportInterface;
 import com.llsx.pps.session.SessionManager;
 import com.samsung.android.sdk.chord.SchordChannel;
-
+/**
+ * Concrete implementation of TransportInterface using the Samsung Chord API.
+ * @author Andrew
+ *
+ */
 public class ChordTransportInterface implements TransportInterface {
 
+	/**
+	 * The MessageDispatcher to be used
+	 */
 	private static MessageDispatcher messageDispatcher;
+	
+	/**
+	 * Payload type, used to identify messages originating from the SPS API
+	 */
 	private static final String PAYLOAD_TYPE = "CHORD_SPS"; 
 	
+	/**
+	 * Currently joined custom channel/session
+	 */
 	public static SchordChannel mChannel;
+	/**
+	 * The default channel/session
+	 */
 	public static SchordChannel defaultChannel;
+	/**
+	 * Name of the default channel
+	 */
 	public static String channelName = "defaultchannel";
 	
+	/**
+	 * Status listener for the current custom session
+	 */
 	private final static SchordChannel.StatusListener mChordChannelListener = new SPSChordChannelListenerAdapter();
+	/**
+	 * Status listener for the default session
+	 */
 	private final static SchordChannel.StatusListener defaultChannelListener = new SPSChordChannelListenerAdapter();
 	
+	/**
+	 * default constructor
+	 */
+	//why is this even here
 	public ChordTransportInterface() {}
 	
 	/**
-	 * joins the default channel named "defaultchannel"
+	 * Join the default channel/session
 	 */
 	public static void joinDefaultChannel() {
 
@@ -47,7 +77,7 @@ public class ChordTransportInterface implements TransportInterface {
 	}
 	
 	/**
-	 * joins the custom channel by getting chosen session from the session manager
+	 * Gets the custom session currently chosen from the SessionManager, then joins it
 	 */
 	public static void joinCustomChannel() {
 		
@@ -64,10 +94,18 @@ public class ChordTransportInterface implements TransportInterface {
 
 	/**
 	 *
-	 * Initialises a class for the chord channel listener
+	 * Internal class for the chord channel listener
 	 *
 	 */
 	private static class SPSChordChannelListenerAdapter extends ChordChannelListenerAdapter {
+		
+		/**
+		 * Called when data is received over the network
+		 * @param fromNode device/node that sent the data
+		 * @param fromChannel the channel/session on which data was received
+		 * @param payloadType identifies the data's origin
+		 * @param payload byte array representing the data sent
+		 */
 		@Override
 		public void onDataReceived(String fromNode, String fromChannel, String payloadType,
 				byte[][] payload) {
@@ -77,7 +115,11 @@ public class ChordTransportInterface implements TransportInterface {
 			}
 		}
 		
-		//device
+		/**
+		 * Called on all devices when a device joins a channel
+		 * @param fromNode name of the newly joined device
+		 * @param fromChannel channel that was joined
+		 */
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
 			Log.e("JOINED", fromNode);
@@ -130,6 +172,11 @@ public class ChordTransportInterface implements TransportInterface {
 			
 		}
 		
+		/**
+		 * Called when a device leaves a channel/session
+		 * @param fromNode node/device that left
+		 * @param fromChannel the channel that was left
+		 */
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
 			Log.e("LEFT", fromNode);
@@ -160,7 +207,10 @@ public class ChordTransportInterface implements TransportInterface {
 			
 		}
 		
-		//get nodeName and it's alias if exist
+		/**
+		 * Get the device ID and name
+		 * @return array of Strings containing device ID and name
+		 */
 		public String[] getNodeAlias() {
 			String[] nodeAlias = new String[2]; 
 			nodeAlias[0] = ChordNetworkManager.getChordManager().getName();
@@ -190,6 +240,7 @@ public class ChordTransportInterface implements TransportInterface {
 	}
 	
 	/**
+	 * Sets the MessageDispatcher to be used
 	 * @param the message dispatcher to be used
 	 */
 	@Override
@@ -198,7 +249,7 @@ public class ChordTransportInterface implements TransportInterface {
 	}
 	
 	/**
-	 * 
+	 * Called when a message is received over the network
 	 * @param receivedMessage the message being received
 	 */
 	public static void onMessageReceived(Message receivedMessage) {

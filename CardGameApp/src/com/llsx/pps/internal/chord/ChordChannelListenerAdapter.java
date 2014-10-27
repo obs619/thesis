@@ -2,6 +2,11 @@ package com.llsx.pps.internal.chord;
 
 import com.samsung.android.sdk.chord.SchordChannel;
 
+/**
+ * An implementation of SchordChannel.StatusListener. Purpose is simply to eliminate the need to override all of these methods in the ChordTransportInterface.
+ * @author Andrew
+ *
+ */
 public class ChordChannelListenerAdapter implements SchordChannel.StatusListener {
 
 	@Override
