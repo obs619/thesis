@@ -132,13 +132,14 @@ public class ChordTransportInterface implements TransportInterface {
 				/*String sessionID = SessionManager.getInstance().getChosenSession();*/
 				
 				for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
-					if(entry.getValue().equals(false)) {
+					//if(entry.getValue().equals(false)) {
+						String[] session={entry.getKey(),entry.getValue().toString()};
 						Log.i("SENDING SESSIONS ", entry.getKey()+"fromNode: "+fromNode);
 						 e = new Event(fromNode
 								,Event.T_RESPOND_REQUEST_SESSIONS
-								,entry.getKey(),true);
+								,session,true);
 						 EventManager.getInstance().sendEventOnDefaultChannel(e);
-					}
+					//}
 				}
 			
 			}

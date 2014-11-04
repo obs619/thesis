@@ -103,8 +103,12 @@ public class PpsEventHandler implements EventHandler {
 				break;
 				
 			case Event.T_RESPOND_REQUEST_SESSIONS:
-				SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), SessionManager.UNLOCK);
-				Log.i("SESSION NAME RECEIVED","Received session name:"+event.getPayload().toString());
+				
+				String[] sessionInfo=(String [])event.getPayload();
+				SessionManager.getInstance().addAvailableSession(sessionInfo[0], Boolean.parseBoolean(sessionInfo[1]));
+				Log.i("SESSION NAME RECEIVED","Received session name:"+sessionInfo[0]);
+				Log.i("SESSION LOCK STATUS","Session locked: "+sessionInfo[1]);
+				
 				break;
 			default:
 				break;
