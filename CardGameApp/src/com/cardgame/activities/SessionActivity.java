@@ -122,23 +122,6 @@ public class SessionActivity extends Activity{
 		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
 	}
 	
-	public void selectRequestSessions(View v) {
-		SessionManager.getInstance().requestSessions();
-		
-		listChannels.clear();
-		channelsAdapter.notifyDataSetChanged();
-		
-		final Handler handler = new Handler();
-	    handler.postDelayed(new Runnable() {
-	        @Override
-	        public void run() {
-	        	listChannels.addAll(SessionManager.getInstance().getAvailableSessions());
-	    		channelsAdapter.notifyDataSetChanged();
-	        }
-	    }, 500);
-		
-	}
-	
 	public void selectCreateSession(View v) {
 		listChannels.add(SessionManager.getInstance().createSession(txtChannel.getText().toString()));
 		channelsAdapter.notifyDataSetChanged();
@@ -168,12 +151,25 @@ public class SessionActivity extends Activity{
 			Toast.makeText(this, "Please create a session!", Toast.LENGTH_LONG).show();	
 	}
 	
+	
 	public void selectLock(View v) {
-		SessionManager.getInstance().lockSession(spinChannels.getSelectedItem().toString());
+		String session = SessionManager.getInstance().getChosenSession();
+		
+		if(session.equals(SessionManager.DEFAULT_SESSION))
+			Toast.makeText(this, "You're not belong to any session!", Toast.LENGTH_LONG).show();
+		
+		else
+			SessionManager.getInstance().lockSession(session);
 	}
 	
 	public void selectUnlock(View v) {
-		SessionManager.getInstance().unlockSession(spinChannels.getSelectedItem().toString());
+		String session = SessionManager.getInstance().getChosenSession();
+		
+		if(session.equals(SessionManager.DEFAULT_SESSION))
+			Toast.makeText(this, "You're not belong to any session!", Toast.LENGTH_LONG).show();
+		
+		else
+			SessionManager.getInstance().unlockSession(session);
 	}
 
 }
