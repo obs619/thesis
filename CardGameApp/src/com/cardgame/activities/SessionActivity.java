@@ -103,7 +103,7 @@ public class SessionActivity extends Activity{
 	protected void onResume() {
 		super.onResume();
 		PpsManager.getInstance().setScreenMode(PpsManager.SESSION_MODE);
-		//PpsManager.getInstance().start();
+		PpsManager.getInstance().start();
 		
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 	}
