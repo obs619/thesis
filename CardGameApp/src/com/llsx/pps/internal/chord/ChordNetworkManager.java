@@ -53,9 +53,9 @@ public class ChordNetworkManager extends NetworkManager {
 		
 		try {
 			mChordManager.start(infList.get(0), mChordManagerListener);
-			Log.e("Starting Chord", "Success");
+			Log.e("Starting Chord", "Successfully connected to the network");
 		}catch(Exception e){
-			Log.e("Starting Chord", "Fail");
+			Log.e("Starting Chord", "Unable to connect to network");
 			e.printStackTrace();
 		}
 	}
