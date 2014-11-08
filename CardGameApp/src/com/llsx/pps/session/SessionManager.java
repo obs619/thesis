@@ -419,6 +419,8 @@ public class SessionManager {
 	 */
 
 	public void setDeviceName(String deviceName) {
+		if(deviceName.trim().equals(""))
+			Log.e("Set Device Name", "Invalid device name");
 		this.deviceName = deviceName;
 	}
 	
