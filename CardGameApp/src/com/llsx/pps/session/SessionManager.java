@@ -164,36 +164,43 @@ public class SessionManager {
 	 * and the device name.
 	 */
 	public String createSession(String sessionName) {
+		if(sessionName.trim().equals(""))
+		{
+			Log.e("Create Session", "Invalid session name");
+			return null;
+		}
+		String newSession = sessionName + "[" + deviceName + "]";
 		
-		String taggedDeviceName = "[" + deviceName + "]";
+		for(String session: SessionManager.getInstance().getAvailableSessions()){
+			if(session.equals(newSession))
+			{
+				Log.e("Create Session", "The session name already exist");
+				return null;
+			}	
+		}
 		
 		
-		addAvailableSession(sessionName + taggedDeviceName, UNLOCK);
+		addAvailableSession(newSession, UNLOCK);
 		
 		Event event1 = new Event(Event.R_ALL_SCREENS,
-				
 				Event.T_ADD_NEW_SESSION,
-				
-				sessionName + taggedDeviceName,
-				
+				newSession,		
 				Event.PPS_EVENT);
-		EventManager.getInstance().sendEventOnDefaultChannel(event1);
 		
-		Log.i("New Session","ADD_NEW_SESSION event sent: "+sessionName+" "+taggedDeviceName);
+		EventManager.getInstance().sendEventOnDefaultChannel(event1);
 		
 		/* The following code sends an event for the app side
 		 * (maybe for UI if necessary)
 		 */
 		Event event2 = new Event(Event.R_ALL_SCREENS,
-
 				Event.T_ADD_NEW_SESSION,
-
-				sessionName + taggedDeviceName,
+				newSession,
 				Event.APP_EVENT);
+		
 		EventManager.getInstance().sendEventOnDefaultChannel(event2);
 		
 
-		return sessionName + taggedDeviceName;
+		return newSession;
 	}
 	
 	/**
@@ -205,11 +212,13 @@ public class SessionManager {
 	public void setChosenSession(String sessionId) {
 		if(!isSessionLocked(sessionId) || sessionId.contains(deviceName)) {
 			Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
+			Log.e("Session", "The session is open");
 
 			this.chosenSession = sessionId;
 			this.saveSessionId();
 		}
 		else {
+			Log.e("Session", "The session is locked, you cannot join");
 			Toast.makeText(PpsManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
 			this.chosenSession = DEFAULT_SESSION;
 

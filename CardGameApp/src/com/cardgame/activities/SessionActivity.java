@@ -123,9 +123,12 @@ public class SessionActivity extends Activity{
 	}
 	
 	public void selectCreateSession(View v) {
-		listChannels.add(SessionManager.getInstance().createSession(txtChannel.getText().toString()));
-		channelsAdapter.notifyDataSetChanged();
-
+		String createdSession = SessionManager.getInstance().createSession(txtChannel.getText().toString());
+		if(createdSession != null)
+		{
+			listChannels.add(createdSession);
+			channelsAdapter.notifyDataSetChanged();
+		}
 		txtChannel.setText("");
 	}
 	
