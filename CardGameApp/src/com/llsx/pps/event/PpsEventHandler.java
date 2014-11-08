@@ -21,14 +21,13 @@ public class PpsEventHandler implements EventHandler {
 	@Override
 	public void handleEvent(Event event) {
 		
-		Log.e("PpsEventHandler", event.getType() + "");
+		Log.e("PPS event type", event.getType() + "");
 		String[] nodeAlias;
 		String key;
 		String alias;
 		
 		switch(event.getType()) {
 			case Event.T_USER_JOIN_PRIVATE:
-				Log.e("PERSONAL API", "pasok");
 				
 				nodeAlias = (String[]) event.getPayload();
 				key = nodeAlias[0];
