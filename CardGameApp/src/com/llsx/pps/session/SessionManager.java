@@ -203,7 +203,8 @@ public class SessionManager {
 	 * into the current session
 	 */
 	public void setChosenSession(String sessionId) {
-		if(!isSessionLocked(sessionId) || sessionId.contains(deviceName)) {
+		String taggedDeviceName = "[" + deviceName + "]";
+		if(!isSessionLocked(sessionId) || sessionId.contains(taggedDeviceName)) {
 			Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
 
 			this.chosenSession = sessionId;
@@ -234,7 +235,8 @@ public class SessionManager {
 	 */
 
 	public void lockSession(String sessionId) {
-		if(sessionId.contains(deviceName)) {
+		String taggedDeviceName = "[" + deviceName + "]";
+		if(sessionId.contains(taggedDeviceName)) {
 			Event event = new Event(Event.R_ALL_SCREENS,
 
 					Event.T_LOCK_SESSION,
@@ -266,7 +268,8 @@ public class SessionManager {
 	 */
 
 	public void unlockSession(String sessionId) {
-		if(sessionId.contains(deviceName)) {
+		String taggedDeviceName = "[" + deviceName + "]";
+		if(sessionId.contains(taggedDeviceName)) {
 			Event event = new Event(Event.R_ALL_SCREENS,
 
 					Event.T_UNLOCK_SESSION,
