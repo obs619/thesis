@@ -122,7 +122,7 @@ public class ChordTransportInterface implements TransportInterface {
 		 */
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
-			Log.e("JOINED", fromNode);
+			Log.e(fromNode, "New device has connected to the network");
 			
 			/*The ff. code assumes that onNodeJoined() is triggered on the device that was already in the session*/
 			if(fromChannel == channelName&& SessionManager.getInstance().getChosenSession() != channelName) {
@@ -180,7 +180,7 @@ public class ChordTransportInterface implements TransportInterface {
 		 */
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
-			Log.e("LEFT", fromNode);
+			Log.e(fromNode, "The device has disconnected to the network");
 			if(PpsManager.getInstance().getPrivateScreenList().contains(fromNode)) {
 
 				//can be remove
@@ -215,7 +215,7 @@ public class ChordTransportInterface implements TransportInterface {
 		public String[] getNodeAlias() {
 			String[] nodeAlias = new String[2]; 
 			nodeAlias[0] = ChordNetworkManager.getChordManager().getName();
-			Log.e("OnNodeJoin get Alias", SessionManager.getInstance().getOwnDeviceName());
+			//Log.e("OnNodeJoin get Alias", SessionManager.getInstance().getOwnDeviceName());
 			nodeAlias[1] = SessionManager.getInstance().getOwnDeviceName();
 			return nodeAlias;
 		}

@@ -11,7 +11,7 @@ import com.llsx.pps.PpsManager;
 import com.llsx.pps.session.SessionManager;
 
 public class LobbyActivity extends Activity {
-	public static PpsManager ppsManager;
+	public PpsManager ppsManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

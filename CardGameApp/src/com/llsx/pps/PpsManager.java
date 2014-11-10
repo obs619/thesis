@@ -70,6 +70,7 @@ public class PpsManager {
 		initializeNetworkManager();
 		initializeEventManager();
 		this.isPrivate = screenType;
+		logScreenType(isPrivate);
 		SessionManager.getInstance().setSessionMode(sessionMode);
 		
 		instance = this;
@@ -325,6 +326,14 @@ public class PpsManager {
 	 */
 	public void setScreenType(boolean screenType) {
 		isPrivate = screenType;
+		logScreenType(isPrivate);
+	}
+	
+	public void logScreenType(boolean screenType){
+		if(screenType == PpsManager.PRIVATE)
+			Log.e("Screen Type", "Device is set as private screen");
+		else if (screenType == PpsManager.PUBLIC)
+			Log.e("Screen Type", "Device is set as public screen");
 	}
 	
 }

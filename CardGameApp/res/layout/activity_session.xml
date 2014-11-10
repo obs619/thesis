@@ -41,22 +41,12 @@
     
 		<Button
 	        android:id="@+id/btn_chk_channel"
-	        android:layout_width="0dp"
+	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:text="Refresh Sessions" 
 	        style="?android:attr/buttonStyle"
 	        android:layout_weight="1"
 	        android:onClick="selectRefreshSessions" />
-	
-		<Button
-	        android:id="@+id/btn_request"
-	        android:layout_width="0dp"
-	        android:layout_height="wrap_content"
-	        android:text="Request Sessions" 
-	        style="?android:attr/buttonStyle"
-	        android:layout_weight="1"
-	        android:onClick="selectRequestSessions" />
-		
 		
    </LinearLayout>
     
