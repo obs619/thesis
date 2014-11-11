@@ -1,3 +1,5 @@
 com.llsx.pps
 com.llsx.pps.event
+com.llsx.pps.messaging
+com.llsx.pps.network
 com.llsx.pps.session
