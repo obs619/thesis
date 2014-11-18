@@ -38,7 +38,7 @@ public class PpsManager {
 	private static Context mContext;
 	
 	/* PpsManager */
-	private static PpsManagerFactory factory; // singleton attribute
+	private static PpsManagerFactory factory=new PpsManagerFactory(); // singleton attribute
 	private static PpsManager instance = null;
 
 	/*
