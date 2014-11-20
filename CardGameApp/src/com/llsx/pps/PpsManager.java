@@ -57,6 +57,25 @@ public class PpsManager {
 	}
 	
 	/**
+	 * Constructs a new PpsManager for the given context and
+	 * screen type, with session mode set to true by default.
+	 * @param mContext current context of the device
+	 * @param screenType screen type of the device;
+	 * <code>PpsManager.PRIVATE</code> or
+	 * <code>PpsManager.PUBLIC</code>
+	 */
+	public PpsManager(Context mContext, boolean screenType) {
+		PpsManager.mContext = mContext;
+		initializeNetworkManager();
+		initializeEventManager();
+		this.isPrivate = screenType;
+		logScreenType(isPrivate);
+		SessionManager.getInstance().setSessionMode(true);
+		
+		instance = this;
+	}
+	
+	/**
 	 * Constructs a new PpsManager for the given context,
 	 * screen type and session mode.
 	 * @param mContext current context of the device
@@ -75,6 +94,9 @@ public class PpsManager {
 		
 		instance = this;
 	}
+	
+	
+	
 	
 	/*
 	 * Methods
@@ -209,7 +231,7 @@ public class PpsManager {
 	 * Sets the screen mode as Session Mode or App Mode.
 	 * @param sessionMode PpsManager.SESSION_MODE or PpsManager.APP_MODE
 	 */
-	public void setScreenMode(boolean sessionMode) {
+	public void setSessionMode(boolean sessionMode) {
 		 clearSessionList();
 	 	 SessionManager.getInstance().setSessionMode(sessionMode);
 	}
