@@ -78,7 +78,7 @@ public class PpsEventHandler implements EventHandler {
 				}
 				// in case the device has its chosen session set as the "just locked session"
 				if(SessionManager.getInstance().getChosenSession().equalsIgnoreCase(event.getPayload().toString()))
-					SessionManager.getInstance().setDefaultSession();
+					SessionManager.getInstance().setDefaultCustomSession();
 				break;
 				
 			case Event.T_UNLOCK_SESSION:

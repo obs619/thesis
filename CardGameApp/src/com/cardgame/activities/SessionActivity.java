@@ -158,20 +158,13 @@ public class SessionActivity extends Activity{
 	public void selectLock(View v) {
 		String session = SessionManager.getInstance().getChosenSession();
 		
-		if(session.equals(SessionManager.DEFAULT_SESSION))
-			Toast.makeText(this, "You're not belong to any session!", Toast.LENGTH_LONG).show();
 		
-		else
 			SessionManager.getInstance().lockSession(session);
 	}
 	
 	public void selectUnlock(View v) {
 		String session = SessionManager.getInstance().getChosenSession();
 		
-		if(session.equals(SessionManager.DEFAULT_SESSION))
-			Toast.makeText(this, "You're not belong to any session!", Toast.LENGTH_LONG).show();
-		
-		else
 			SessionManager.getInstance().unlockSession(session);
 	}
 

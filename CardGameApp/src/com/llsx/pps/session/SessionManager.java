@@ -25,7 +25,8 @@ import com.llsx.pps.internal.chord.ChordNetworkManager;
 public class SessionManager {
 	
 	/* Constants */
-	public static final String DEFAULT_SESSION = "DEFAULT";
+	public static final String NETWORK_SESSION = "DEFAULT";
+	public static final String DEFAULT_CUSTOM_SESSION = "DEFAULT_SESSION";
 	public static final boolean LOCK = true;
 	public static final boolean UNLOCK = false;
 	
@@ -95,9 +96,9 @@ public class SessionManager {
 	public void loadSavedSessionId() {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());
-		String session = sharedPreferences.getString("session", DEFAULT_SESSION);
+		String session = sharedPreferences.getString("session", DEFAULT_CUSTOM_SESSION);
 		Boolean isLock = sharedPreferences.getBoolean("isLock", UNLOCK);
-		if(!session.equals(DEFAULT_SESSION))
+		if(!session.equals(NETWORK_SESSION))
 
 			availableSessionsMap.put(session, isLock);
 		chosenSession = session;
@@ -221,7 +222,7 @@ public class SessionManager {
 		else {
 			Log.e("Session", "The session is locked, you cannot join");
 			Toast.makeText(PpsManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
-			this.chosenSession = DEFAULT_SESSION;
+			this.chosenSession = DEFAULT_CUSTOM_SESSION;
 
 			this.saveDefaultSessionId();
 		}
@@ -230,8 +231,13 @@ public class SessionManager {
 	/**
 	 * Sets the default session as the current session.
 	 */
+	
+	public void setDefaultCustomSession(){
+		this.chosenSession = DEFAULT_CUSTOM_SESSION;
+	}
+	
 	public void setDefaultSession() {
-		this.chosenSession = DEFAULT_SESSION;
+		this.chosenSession = NETWORK_SESSION;
 	}
 	
 	/*
