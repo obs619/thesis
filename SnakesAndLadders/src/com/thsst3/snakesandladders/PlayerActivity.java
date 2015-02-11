@@ -1,6 +1,9 @@
 package com.thsst3.snakesandladders;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +45,26 @@ public class PlayerActivity extends Activity{
 				btnRollDice.setEnabled(true);
 				txtTurn.setText("Is it your turn? Yes");
 				break;
+			case EventConstants.NOTIFY_WINNER:
+				String winnername = (String)event.getPayload();
+				
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(PlayerActivity.this);
+				builder.setTitle("Result");
+			    builder.setCancelable(false);
+			    builder.setMessage(winnername + " wins the game!") ;
+			    builder.setPositiveButton("ok", new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						finish();
+					}
+				});
+			    
+			    AlertDialog alert = builder.create();
+                alert.show();
+				
+				break;
 			}
 		}
 	}
@@ -62,6 +85,8 @@ public class PlayerActivity extends Activity{
 		txtTurn = (TextView) findViewById(R.id.txtTurn);
 		txtPlayer = (TextView) findViewById(R.id.txtPlayer);
 		
+		btnRollDice.setEnabled(false);
+		
 		EventManager.getInstance().setEventHandler(new PlayerEventHandler());
 	}
 	
@@ -79,7 +104,7 @@ public class PlayerActivity extends Activity{
 	}
 	
 	public void clickRollDice(View v) {
-		//btnRollDice.setEnabled(false);
+		btnRollDice.setEnabled(false);
 		txtTurn.setText("Is it your turn? No");
 		Event e= new Event(Event.R_PUBLIC_SCREENS,EventConstants.PLAYER_ROLL_DICE, playerNumber);
 		EventManager.getInstance().sendEvent(e);

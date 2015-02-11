@@ -56,10 +56,16 @@ public class BoardActivity extends Activity {
 			                for(int x = 0; x < tableRow.getChildCount(); x++) {
 			                    TextView txtView = (TextView) tableRow.getChildAt(x);   
 			      
-			                    if(txtView.getText().toString().contains("*" + randomNum + "*"))
+			                    if(txtView.getText().toString().contains("*" + randomNum + "*")) {
 			                    	txtView.append("\r\n" + playerAliasName); 
-			             }             
-			        }
+			                    	
+			                    	logList.add(0, 
+				    						playerAliasName + "'s new value is now " + randomNum);
+				    				logAdapter.notifyDataSetChanged();
+				    				lstLogs.smoothScrollToPosition(0);
+			                    }
+			                }             
+			            }
 					}
 				}
 				else {
@@ -80,10 +86,31 @@ public class BoardActivity extends Activity {
 			        	            		TableRow tableRow1 = (TableRow) baseLayout.getChildAt(a);
 			        	                    for(int b = 0; b < tableRow1.getChildCount(); b++) {
 			        	                        TextView txtView1 = (TextView) tableRow1.getChildAt(b);   
+			        	                        
+			        	                        if(newValueOfPlayer > 100)
+			        	                        	newValueOfPlayer = 100;
+			        	                        
 			        	                        Log.e("new value of player",newValueOfPlayer + "!" + txtView1.getText().toString());
 			        	                        if(txtView1.getText().toString().contains("*" + newValueOfPlayer + "*")) {
 			        	                        	txtView1.append("\r\n" + playerAliasName);
-			        	                        	break fullloop;
+			        	                        	
+			        	                        	logList.add(0, 
+			        			    						playerAliasName + "'s new value is now " + newValueOfPlayer);
+			        			    				logAdapter.notifyDataSetChanged();
+			        			    				lstLogs.smoothScrollToPosition(0);
+			        			    				
+			        			    				
+			        			    				if(newValueOfPlayer >= 100) {
+			        			    					logList.add(0, 
+				        			    						playerAliasName + " wins the game!");
+				        			    				logAdapter.notifyDataSetChanged();
+				        			    				lstLogs.smoothScrollToPosition(0);
+				        			    				
+				        			    				Event e= new Event(Event.R_PERSONAL_SCREENS,EventConstants.NOTIFY_WINNER, playerAliasName);
+				        								EventManager.getInstance().sendEvent(e);
+			        			    				}
+			        			    				
+			        			    				break fullloop;
 			        	                        }
 			        	                    
 			        	                    }
@@ -96,7 +123,6 @@ public class BoardActivity extends Activity {
 				}
 				
 				
-				/*
 				if(playerNumberWhoRolled + 1 == playerMap.size()) {
 					//last player
 					Event e= new Event(playerMap.get(0),EventConstants.NOTIFY_PLAYER_TURN, true);
@@ -106,7 +132,7 @@ public class BoardActivity extends Activity {
 					Event e= new Event(playerMap.get(playerNumberWhoRolled + 1),EventConstants.NOTIFY_PLAYER_TURN, true);
 					EventManager.getInstance().sendEvent(e);
 				}
-				*/
+				
 				break;
 			}
 		}
@@ -160,7 +186,7 @@ public class BoardActivity extends Activity {
 				   TextView tv = new TextView(this);
 				   tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
 						   TableRow.LayoutParams.WRAP_CONTENT));
-				   ///tv.setText("R " + i + ", C" + j);
+
 				   tv.setBackgroundResource(R.drawable.rectangle);
 				   tv.setText("*" + (i * 10 + j + 1) + "*- ");
 				   tv.setPadding(16, 16, 16, 16);
@@ -195,7 +221,7 @@ public class BoardActivity extends Activity {
 	}
 
 	public void clickStartGame(View v) {
-		if(PpsManager.getInstance().getPrivateScreenList().size() > 0) {
+		if(PpsManager.getInstance().getPrivateScreenList().size() >= 2) {
 			
 			//get number of players
 			int numPlayers = PpsManager.getInstance().getPrivateScreenList().size();
