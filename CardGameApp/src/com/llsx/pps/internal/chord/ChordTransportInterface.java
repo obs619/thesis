@@ -67,13 +67,11 @@ public class ChordTransportInterface implements TransportInterface {
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-			Log.e("join default","error");		}
-		//mChannel = ChordNetworkManager.getChordManager().joinChannel(channelName, mChordChannelListener);//not sure if this is right or if you can attach two listeners to the same channel; this is to ensure that the send() function will not cause an NPE
-		 if (defaultChannel == null)
-			 Log.e("CHANNEL ERROR", "Failed to join default channel");
-		/*if(mChannel == null)
-			 Log.e("CHANNEL E"
-			 		+ "RROR", "Failed to set mChannel to default channel");*/
+			Log.e("Join default channel","error");
+		}
+		if (defaultChannel == null)
+			 Log.e("CHANNEL ERROR", "Default channel is null");
+		
 	}
 	
 	/**
@@ -85,6 +83,7 @@ public class ChordTransportInterface implements TransportInterface {
 			mChannel = ChordNetworkManager.getChordManager().joinChannel(SessionManager.getInstance().getChosenSession(), mChordChannelListener);
 		} catch(Exception e) {
 			e.printStackTrace();
+			Log.e("Join default channel","error");
 		}
 	
 		 if (mChannel == null)

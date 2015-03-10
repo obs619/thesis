@@ -55,7 +55,7 @@ public class ChordNetworkManager extends NetworkManager {
 			mChordManager.start(infList.get(0), mChordManagerListener);
 			Log.e("Starting Chord", "Successfully connected to the network");
 		}catch(Exception e){
-			Log.e("Starting Chord", "Unable to connect to network or already has a connected network");
+			Log.e("Starting Chord", "Unable to connect to network");
 			e.printStackTrace();
 		}
 	}
@@ -75,9 +75,7 @@ public class ChordNetworkManager extends NetworkManager {
 		
 		@Override
 		public void onStarted(String nodeName, int reason) {
-			Log.e("Schord Status Listener", "Chord start");
-			//check if the device has a session
-
+			Log.e("Chord listener started successfully", "");
 			ChordTransportInterface.joinDefaultChannel();
 			if(!SessionManager.getInstance().isSessionMode())
 				ChordTransportInterface.joinCustomChannel();
@@ -85,7 +83,7 @@ public class ChordNetworkManager extends NetworkManager {
 
 		@Override
 		public void onStopped(int reason) {
-			Log.e("Schord Status Listener", "Chord Stop");
+			Log.e("Chord listener stopped", "");
 		}
 
 	};

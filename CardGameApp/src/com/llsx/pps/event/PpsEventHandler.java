@@ -28,7 +28,7 @@ public class PpsEventHandler implements EventHandler {
 		
 		switch(event.getType()) {
 			case Event.T_USER_JOIN_PRIVATE:
-				
+				Log.e("PRIVATE USER JOIN", "");
 				nodeAlias = (String[]) event.getPayload();
 				key = nodeAlias[0];
 				alias = nodeAlias[1];
@@ -40,7 +40,7 @@ public class PpsEventHandler implements EventHandler {
 				break;
 				
 			case Event.T_USER_JOIN_PUBLIC:
-				Log.e("SHARED API", "pasok");
+				Log.e("PUBLIC USER JOIN", "");
 				
 				nodeAlias = (String[]) event.getPayload();
 				key = nodeAlias[0];
@@ -52,25 +52,26 @@ public class PpsEventHandler implements EventHandler {
 				break;
 				
 			case Event.T_USER_LEFT_PRIVATE:
-				Log.e("user left private", "pasok");
+				Log.e("PRIVATE USER LEFT", "");
 				
 				PpsManager.getInstance().removeFromPrivateScreen(event.getPayload().toString());
 				SessionManager.getInstance().removeDevice(event.getPayload().toString());
 				break;
 				
 			case Event.T_USER_LEFT_PUBLIC:
-				Log.e("user left public", "pasok");
+				Log.e("PUBLIC USER LEFT", "");
 				
 				PpsManager.getInstance().removeFromPublicScreen(event.getPayload().toString());
 				SessionManager.getInstance().removeDevice(event.getPayload().toString());
 				break;
 				
 			case Event.T_ADD_NEW_SESSION:
-				Log.e("new channel added", event.getPayload().toString());
+				Log.e("NEW SESSION ADDED", event.getPayload().toString());
 				SessionManager.getInstance().addAvailableSession(event.getPayload().toString(), SessionManager.UNLOCK);
 				break;
 				
 			case Event.T_LOCK_SESSION:
+				Log.e("LOCK SESSION", event.getPayload().toString());
 				for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 					if(event.getPayload().toString().equalsIgnoreCase(entry.getKey())) {
 						entry.setValue(SessionManager.LOCK);
@@ -82,6 +83,7 @@ public class PpsEventHandler implements EventHandler {
 				break;
 				
 			case Event.T_UNLOCK_SESSION:
+				Log.e("UNLOCK SESSION", event.getPayload().toString());
 				for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 					if(event.getPayload().toString().equalsIgnoreCase(entry.getKey())) {
 						entry.setValue(SessionManager.UNLOCK);
@@ -90,6 +92,7 @@ public class PpsEventHandler implements EventHandler {
 				break;
 				
 			case Event.T_REQUEST_SESSIONS:
+				Log.e("REQUEST SESSIONS", event.getPayload().toString());
 				for (Map.Entry<String, Boolean> entry : SessionManager.getInstance().getAvailableSessionsMap().entrySet()) {
 					if(entry.getValue().equals(SessionManager.UNLOCK)) {
 						Event e = new Event(event.getPayload().toString(),
@@ -102,7 +105,7 @@ public class PpsEventHandler implements EventHandler {
 				break;
 				
 			case Event.T_RESPOND_REQUEST_SESSIONS:
-				
+				Log.e("RESPOND REQUEST SESSIONS", event.getPayload().toString());
 				String[] sessionInfo=(String [])event.getPayload();
 				SessionManager.getInstance().addAvailableSession(sessionInfo[0], Boolean.parseBoolean(sessionInfo[1]));
 				Log.i("SESSION NAME RECEIVED","Received session name:"+sessionInfo[0]);
