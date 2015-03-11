@@ -28,6 +28,9 @@ public class LobbyActivity extends Activity {
 	
 	public void openNextPage(boolean isPrivate) {
 		Intent intent = new Intent(this, SessionActivity.class);
+		/**
+		 * instantiate PpsManager
+		 */
 		ppsManager = new PpsManager(this, isPrivate, PpsManager.SESSION_MODE);
 		
 		TextView mUserNameView;

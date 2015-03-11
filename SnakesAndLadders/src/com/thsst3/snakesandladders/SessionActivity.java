@@ -31,6 +31,9 @@ public class SessionActivity extends Activity{
 			Log.e("Handling SessionEvent", "Type: "+event.getType() + "Payload: " + event.getPayload().toString());
 			switch(event.getType())
 			{
+			/**
+			 * Event.T_ADD_NEW_SESSION - event sent by the API, allows developers to handle newly created session
+			 */
 			case Event.T_ADD_NEW_SESSION:
 				listChannels.add(event.getSession());
 				channelsAdapter.notifyDataSetChanged();
@@ -60,26 +63,32 @@ public class SessionActivity extends Activity{
 		txtSelectedSession = (TextView) findViewById(R.id.txt_selected_session);
 		txtScreenType = (TextView) findViewById(R.id.txt_screen_type);
 		
-		
-		if(PpsManager.getInstance().isPrivate()) {
+		/**
+		 * Use isPrivate() from PpsManager instance to check device screen type
+		 */
+		if(PpsManager.getInstance().isPrivate())
 			txtScreenType.setText("Screen Type: Personal");
-		}
-		else if(!PpsManager.getInstance().isPrivate()) {
+		else if(!PpsManager.getInstance().isPrivate()) 
 			txtScreenType.setText("Screen Type: Shared");
-		}
 		
+	
+		/**
+		 * Set the device's event handler
+		 */
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 	
+		
 		listChannels = new ArrayList<String>();
 		
-		channelsAdapter = new ArrayAdapter<String>(this,
-												   android.R.layout.
-												   simple_list_item_1,
-												   listChannels);
+		channelsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listChannels);
 		
 		spinChannels.setAdapter(channelsAdapter);
 		channelsAdapter.notifyDataSetChanged();
 		
+		
+		/**
+		 * load last chosen session, after device turned off
+		 */
 		SessionManager.getInstance().loadSavedSessionId();
 		String session = SessionManager.getInstance().getChosenSession();
 		listChannels.add(session);
@@ -89,11 +98,11 @@ public class SessionActivity extends Activity{
 		spinChannels.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 		    @Override
-		    public void onItemSelected(AdapterView<?> parentView,
-		    						   View selectedItemView, int position,
-		    						   long id) {
-		    	Log.e("session selected", spinChannels.getItemAtPosition(position).toString());
-		    	
+		    public void onItemSelected(AdapterView<?> parentView,View selectedItemView, int position, long id) {
+
+		    	/**
+		    	 * set the chosen session
+		    	 */
 		    	SessionManager.getInstance().setChosenSession(spinChannels.getItemAtPosition(position).toString());
 		    	txtSelectedSession.setText("Chosen Session: " + SessionManager.getInstance().getChosenSession());
 		    }
@@ -106,38 +115,35 @@ public class SessionActivity extends Activity{
 	@Override
 	protected void onPause() {
 		super.onPause();
-		try{
-			PpsManager.getInstance().stop();
-		}catch(Exception e ){
-			Log.e("PPSMANAGER", "stop failed");
-		}
+		/**
+		 * stop ppsmanager
+		 */
+		PpsManager.getInstance().stop();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		PpsManager.getInstance().setSessionMode(PpsManager.SESSION_MODE);
+		
+		/**
+		 * start ppsmanager
+		 */
 		PpsManager.getInstance().start();
 		
+		
+		/**
+		 * reset session mode and event handler - when the user presses back from the app mode
+		 */
+		PpsManager.getInstance().setSessionMode(PpsManager.SESSION_MODE);
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 	}
 	
-	public void selectRefreshSessions(View v) {
-		String nodes = "";
-		for(String node: SessionManager.getInstance().getAvailableSessions())
-			nodes += node + ",";
-		
-		listChannels.clear();
-		channelsAdapter.notifyDataSetChanged();
-		
-		listChannels.addAll(SessionManager.getInstance().getAvailableSessions());
-		channelsAdapter.notifyDataSetChanged();
-
-		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
-	}
-	
 	public void selectCreateSession(View v) {
+		/**
+		 * call createSession along with txt from txtChannel
+		 */
 		String createdSession = SessionManager.getInstance().createSession(txtChannel.getText().toString());
+		
 		if(createdSession != null)
 		{
 			listChannels.add(createdSession);
@@ -146,9 +152,32 @@ public class SessionActivity extends Activity{
 		txtChannel.setText("");
 	}
 	
+	
+	public void selectLock(View v) {
+		/**
+		 * lock chosen session
+		 */
+		String session = SessionManager.getInstance().getChosenSession();
+		SessionManager.getInstance().lockSession(session);
+	}
+	
+	public void selectUnlock(View v) {
+		/**
+		 * unlock chosen session
+		 */
+		String session = SessionManager.getInstance().getChosenSession();
+		SessionManager.getInstance().unlockSession(session);
+	}
+
+	
 	public void selectProceed(View v) {
-		if(SessionManager.getInstance().getAvailableSessions().size() != 0) {
-			if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
+		/**
+		 * check if device has a chosen session for the app
+		 * if private device, move to playeractivity and set sessionmode to app mode
+		 * if public device, move to boardactivity and set session mode to app mode
+		 */
+		if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
+			
 				if(PpsManager.getInstance().isPrivate()) {
 					Intent intent = new Intent(this, PlayerActivity.class);
 					PpsManager.getInstance().setSessionMode(PpsManager.APP_MODE);
@@ -159,24 +188,11 @@ public class SessionActivity extends Activity{
 					PpsManager.getInstance().setSessionMode(PpsManager.APP_MODE);
 					startActivity(intent);
 				}
-				Log.e("Select Proceed", "Session Name:" + SessionManager.getInstance().getChosenSession());
-			}
-			else
-				Toast.makeText(this, "Please choose a session!", Toast.LENGTH_LONG).show();	
+				
 		}
 		else
-			Toast.makeText(this, "Please create a session!", Toast.LENGTH_LONG).show();	
+			Toast.makeText(this, "Please choose a session!", Toast.LENGTH_LONG).show();	
+		
 	}
 	
-	
-	public void selectLock(View v) {
-		String session = SessionManager.getInstance().getChosenSession();
-		SessionManager.getInstance().lockSession(session);
-	}
-	
-	public void selectUnlock(View v) {
-		String session = SessionManager.getInstance().getChosenSession();
-		SessionManager.getInstance().unlockSession(session);
-	}
-
 }

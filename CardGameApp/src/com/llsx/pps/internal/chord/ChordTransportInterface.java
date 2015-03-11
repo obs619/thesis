@@ -67,10 +67,10 @@ public class ChordTransportInterface implements TransportInterface {
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-			Log.e("Join default channel","error");
+			Log.e("Join default session","error");
 		}
 		if (defaultChannel == null)
-			 Log.e("CHANNEL ERROR", "Default channel is null");
+			 Log.e("SESSION ERROR", "Default session is null");
 		
 	}
 	
@@ -83,11 +83,11 @@ public class ChordTransportInterface implements TransportInterface {
 			mChannel = ChordNetworkManager.getChordManager().joinChannel(SessionManager.getInstance().getChosenSession(), mChordChannelListener);
 		} catch(Exception e) {
 			e.printStackTrace();
-			Log.e("Join default channel","error");
+			Log.e("Join custom session","error");
 		}
 	
 		 if (mChannel == null)
-			 Log.e("CHANNEL ERROR", "Failed to join custom channel");
+			 Log.e("SESSION ERROR", "Custom session is null");
 		
 	}
 
@@ -121,7 +121,7 @@ public class ChordTransportInterface implements TransportInterface {
 		 */
 		@Override
 		public void onNodeJoined(String fromNode, String fromChannel) {
-			Log.e(fromNode, "New device has connected to the network");
+			Log.e(fromNode, "New device has connected");
 			
 			/*The ff. code assumes that onNodeJoined() is triggered on the device that was already in the session*/
 			if(fromChannel == channelName&& SessionManager.getInstance().getChosenSession() != channelName) {
@@ -179,7 +179,7 @@ public class ChordTransportInterface implements TransportInterface {
 		 */
 		@Override
 		public void onNodeLeft(String fromNode, String fromChannel) {
-			Log.e(fromNode, "The device has disconnected to the network");
+			Log.e(fromNode, "Device disconnected");
 			if(PpsManager.getInstance().getPrivateScreenList().contains(fromNode)) {
 
 				//can be remove

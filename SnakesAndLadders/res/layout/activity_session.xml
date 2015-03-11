@@ -38,15 +38,6 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="horizontal" 
 	    android:weightSum="2">
-    
-		<Button
-	        android:id="@+id/btn_chk_channel"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="Refresh Sessions" 
-	        style="?android:attr/buttonStyle"
-	        android:layout_weight="1"
-	        android:onClick="selectRefreshSessions" />
 		
    </LinearLayout>
     

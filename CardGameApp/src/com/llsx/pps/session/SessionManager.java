@@ -214,13 +214,13 @@ public class SessionManager {
 		String taggedDeviceName = "[" + deviceName + "]";
 		if(!isSessionLocked(sessionId) || sessionId.contains(taggedDeviceName)) {
 			Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
-			Log.e("Session", "The session is open");
+			Log.e("Set Session", "The session is open");
 
 			this.chosenSession = sessionId;
 			this.saveSessionId();
 		}
 		else {
-			Log.e("Session", "The session is locked, you cannot join");
+			Log.e("Set Session", "The session is locked, you cannot join");
 			Toast.makeText(PpsManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
 			this.chosenSession = DEFAULT_CUSTOM_SESSION;
 
