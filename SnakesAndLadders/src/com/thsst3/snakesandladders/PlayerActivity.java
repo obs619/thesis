@@ -25,6 +25,11 @@ public class PlayerActivity extends Activity{
 			switch(event.getType())
 			{
 			case EventConstants.NOTIFY_PLAYER_NUM:
+				/**
+				 * get player number from event payload. Assign to playerNumber
+				 * if playerNumber is 0, set turn, disable btnrolldice and change txtTurn
+				 * set txtPlayer to playernumber + own device name
+				 */
 				// board sent the event containing the player number of the device
 				playerNumber = (Integer)event.getPayload();
 				
@@ -42,16 +47,19 @@ public class PlayerActivity extends Activity{
 				txtPlayer.setText(playerNumber + "-" + SessionManager.getInstance().getOwnDeviceName());
 				break;
 			case EventConstants.NOTIFY_PLAYER_TURN:
-				// player is notified by board that it is now device's turn
+				// 
+				/**
+				 * player is notified by board that it is now device's turn, get boolean true from event payload, txtTurn to yes
+				 */
 				turn = (Boolean)event.getPayload();
-				btnRollDice.setEnabled(true);
+				btnRollDice.setEnabled(turn);
 				txtTurn.setText("Is it your turn? Yes");
 				break;
 			case EventConstants.NOTIFY_WINNER:
-				// board notifies all players of the winner (got 100)
+				// get winner name
 				String winnername = (String)event.getPayload();
 				
-				
+				// show dialog
 				AlertDialog.Builder builder = new AlertDialog.Builder(PlayerActivity.this);
 				builder.setTitle("Result");
 			    builder.setCancelable(false);
@@ -116,11 +124,14 @@ public class PlayerActivity extends Activity{
 	}
 	
 	public void clickRollDice(View v) {
+		/**
+		 * disable btn, txtTurn to no
+		 */
 		btnRollDice.setEnabled(false);
 		txtTurn.setText("Is it your turn? No");
 		
 		/**
-		 * send to all public screens(board) that you rolled along with your player number
+		 * send to all public screens(board) that you rolled along with your player number (PLAYER_ROLL_DICE)
 		 */
 		Event e= new Event(Event.R_PUBLIC_SCREENS,EventConstants.PLAYER_ROLL_DICE, playerNumber);
 		EventManager.getInstance().sendEvent(e);

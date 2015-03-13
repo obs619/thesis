@@ -87,7 +87,8 @@ public class SessionActivity extends Activity{
 		
 		
 		/**
-		 * load last chosen session, after device turned off
+		 * load last chosen session from SessionManager, after device turned off
+		 * get chosen session and add to listChannels
 		 */
 		SessionManager.getInstance().loadSavedSessionId();
 		String session = SessionManager.getInstance().getChosenSession();
@@ -102,8 +103,11 @@ public class SessionActivity extends Activity{
 
 		    	/**
 		    	 * set the chosen session
+		    	 * 
 		    	 */
 		    	SessionManager.getInstance().setChosenSession(spinChannels.getItemAtPosition(position).toString());
+		    	
+		    	
 		    	txtSelectedSession.setText("Chosen Session: " + SessionManager.getInstance().getChosenSession());
 		    }
 
@@ -141,6 +145,7 @@ public class SessionActivity extends Activity{
 	public void selectCreateSession(View v) {
 		/**
 		 * call createSession along with txt from txtChannel
+		 * If created session is not null, add to listChannels
 		 */
 		String createdSession = SessionManager.getInstance().createSession(txtChannel.getText().toString());
 		
@@ -149,6 +154,7 @@ public class SessionActivity extends Activity{
 			listChannels.add(createdSession);
 			channelsAdapter.notifyDataSetChanged();
 		}
+		
 		txtChannel.setText("");
 	}
 	

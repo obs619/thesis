@@ -62,8 +62,7 @@ public class BoardActivity extends Activity {
 			                    if(txtView.getText().toString().contains("*" + randomNum + "*")) {
 			                    	txtView.append("\r\n" + playerAliasName); 
 			                    	
-			                    	logList.add(0, 
-				    						playerAliasName + "'s new value is now " + randomNum);
+			                    	logList.add(0, playerAliasName + "'s new value is now " + randomNum);
 				    				logAdapter.notifyDataSetChanged();
 				    				lstLogs.smoothScrollToPosition(0);
 			                    }
@@ -109,13 +108,13 @@ public class BoardActivity extends Activity {
 			        			    				
 			        			    				//if new value of player >= 100, player wins
 			        			    				if(newValueOfPlayer >= 100) {
-			        			    					logList.add(0, 
-				        			    						playerAliasName + " wins the game!");
+			        			    					logList.add(0, playerAliasName + " wins the game!");
 				        			    				logAdapter.notifyDataSetChanged();
 				        			    				lstLogs.smoothScrollToPosition(0);
 				        			    				
-				        			    				
-				        			    				// notify all players of the winner's name
+				        			    				/**
+				        			    				 * send to all personal screens winner's alias name (NOTIFY_WINNER)
+				        			    				 */
 				        			    				Event e= new Event(Event.R_PERSONAL_SCREENS,EventConstants.NOTIFY_WINNER, playerAliasName);
 				        								EventManager.getInstance().sendEvent(e);
 			        			    				}
@@ -133,16 +132,18 @@ public class BoardActivity extends Activity {
 				}
 				
 				
-				// notify the next player who will roll
-				
 				
 				if(playerNumberWhoRolled + 1 == playerMap.size()) {
-					//if last player, notify player number 1 of his/her turn
+					/**
+					 * if last player, notify playerMap.get(0) of his/her turn (NOTIFY_PLAYER_TURN), boolean true message
+					 */
 					Event e= new Event(playerMap.get(0),EventConstants.NOTIFY_PLAYER_TURN, true);
 					EventManager.getInstance().sendEvent(e);
 				}
 				else {
-					//if not last player, send notification to player number + 1
+					/**
+					 * if not last player, send notification to player number who rolled + 1
+					 */
 					Event e= new Event(playerMap.get(playerNumberWhoRolled + 1),EventConstants.NOTIFY_PLAYER_TURN, true);
 					EventManager.getInstance().sendEvent(e);
 				}
@@ -219,7 +220,7 @@ public class BoardActivity extends Activity {
 			   }
 			   baseLayout.addView(row);
 
-			  }
+		  }
 		
 		
 		/**
@@ -255,7 +256,6 @@ public class BoardActivity extends Activity {
 			
 		    playerMap = new TreeMap<Integer, String>();
 		    
-		    
 		    // assign numbers to players
 		    for(int i = 0; i < numPlayers; i++)
 		    	playerMap.put(i, PpsManager.getInstance().getPrivateScreenList().get(i));
@@ -272,7 +272,9 @@ public class BoardActivity extends Activity {
 		    
 		    //send players their number
 		    for(int i = 0; i < numPlayers; i++) {
-		    	// send own player number
+		    	/**
+		    	 * send event to each in playerMap, their player number. (NOTIFY_PLAYER_NUM)
+		    	 */
 		    	Event e= new Event(playerMap.get(i),EventConstants.NOTIFY_PLAYER_NUM, i);
 				EventManager.getInstance().sendEvent(e);
 		    }
