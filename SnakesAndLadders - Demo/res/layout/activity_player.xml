@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    
+    <RelativeLayout 
+        android:id="@+id/layoutPause"
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="#AAfaebd7"
+    	android:visibility="gone">
+    	
+        <TextView
+	      	android:id="@+id/txtGamePause"
+	      	android:layout_width="wrap_content"
+	      	android:layout_height="wrap_content"
+	      	android:textSize="20sp"
+	      	android:gravity="center"
+	      	android:layout_centerInParent="true"
+	      	android:text="John left the game. Game is paused. Please wait for player to rejoin."/>
+        
+    </RelativeLayout>
+    
+    <TextView
+      	android:id="@+id/txtPlayerName"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:textSize="20sp"
+      	android:text="Hi, "/>
+    
+    <Button 
+        android:id="@+id/btnCheckSession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check Current Session"
+        android:onClick="clickCurrentSession" />
+    
+    <TextView
+      	android:id="@+id/txtPlayer"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:textSize="20sp"
+      	android:text="Game not yet started..."/>
+    
+    <TextView
+      	android:id="@+id/txtTurn"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:textSize="20sp"
+      	android:text=""/>
+    
+    <Button 
+        android:id="@+id/btnRollDice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Roll Dice!"
+        android:onClick="clickRollDice"
+        android:layout_margin="16dp"/>
+
+</LinearLayout>

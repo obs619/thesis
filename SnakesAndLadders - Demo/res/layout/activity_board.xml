@@ -1,0 +1,66 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="vertical">
+        
+        <Button 
+            android:id="@+id/btnStartGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Game!"
+            android:layout_gravity="center"
+            android:onClick="clickStartGame"
+            />
+        
+        <Button 
+	        android:id="@+id/btnCheckSession"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Check Current Session"
+	        android:layout_gravity="center"
+	        android:onClick="clickCurrentSession" />
+        
+        <Button 
+            android:id="@+id/btnPlayersSession"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Check players on session"
+            android:layout_gravity="center"
+            android:onClick="clickPlayersSession"
+            />
+        
+        <TextView 
+            android:id="@+id/txtPlayers"
+            android:padding="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:onClick="clickCheckPlayers"
+            />
+        
+        
+        <TableLayout
+	        android:id="@+id/baseLayout"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:padding="10dp"
+	        android:shrinkColumns="*"
+	        android:stretchColumns="*" >
+    	</TableLayout>
+        
+        <ListView 
+            android:id="@+id/lstLogs"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            ></ListView>
+        
+    </LinearLayout>
+    
+    
+
+</ScrollView>

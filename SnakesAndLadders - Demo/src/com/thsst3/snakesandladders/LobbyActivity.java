@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,10 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.llsx.pps.PpsManager;
 import com.llsx.pps.event.Event;
 import com.llsx.pps.event.EventHandler;
-import com.llsx.pps.event.EventManager;
 import com.llsx.pps.session.SessionManager;
 
 public class LobbyActivity extends Activity{
@@ -72,20 +69,10 @@ public class LobbyActivity extends Activity{
 		/**
 		 * Use isPrivate() from PpsManager instance to check device screen type, if private hide layout create and lock unlock
 		 */
-		if(PpsManager.getInstance().isPrivate()) {
-			layoutCreate.setVisibility(View.GONE);
-			layoutLockUnlock.setVisibility(View.GONE);
-		}
-		else if(!PpsManager.getInstance().isPrivate()) {
-			layoutCreate.setVisibility(View.VISIBLE);
-			layoutLockUnlock.setVisibility(View.VISIBLE);
-		}
-		
 	
 		/**
 		 * Set the device's event handler
 		 */
-		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 	
 		
 		txtDeviceName.setText("Hi, " + SessionManager.getInstance().getOwnDeviceName() + "!");
@@ -103,10 +90,6 @@ public class LobbyActivity extends Activity{
 		 * get chosen session and add to listChannels
 		 * set text txtSelectedSession to chosen session
 		 */
-		SessionManager.getInstance().loadSavedSessionId();
-		String session = SessionManager.getInstance().getChosenSession();
-		listChannels.add(session);
-		txtSelectedSession.setText("Chosen Session: " + session);
 		
 		
 		channelsAdapter.notifyDataSetChanged();
@@ -118,12 +101,8 @@ public class LobbyActivity extends Activity{
 
 		    	/**
 		    	 * set the chosen session
-		    	 * 
+		    	 * set txtSelectedSession text to chosen session
 		    	 */
-		    	SessionManager.getInstance().setChosenSession(spinChannels.getItemAtPosition(position).toString());
-		    	
-		    	
-		    	txtSelectedSession.setText("Chosen Session: " + SessionManager.getInstance().getChosenSession());
 		    }
 
 		    @Override
@@ -137,7 +116,6 @@ public class LobbyActivity extends Activity{
 		/**
 		 * stop ppsmanager
 		 */
-		PpsManager.getInstance().stop();
 	}
 
 	@Override
@@ -147,29 +125,20 @@ public class LobbyActivity extends Activity{
 		/**
 		 * start ppsmanager
 		 */
-		PpsManager.getInstance().start();
 		
 		
 		/**
 		 * reset event handler - when the user presses back
 		 */
-		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 	}
 	
 	public void selectCreateSession(View v) {
 		/**
 		 * call createSession along with txt from txtChannel
 		 * If created session is not null, add to listChannels
+		 * set txtChannel text to empty afterwards
 		 */
-		String createdSession = SessionManager.getInstance().createSession(txtChannel.getText().toString());
 		
-		if(createdSession != null)
-		{
-			listChannels.add(createdSession);
-			channelsAdapter.notifyDataSetChanged();
-		}
-		
-		txtChannel.setText("");
 	}
 	
 	
@@ -177,16 +146,12 @@ public class LobbyActivity extends Activity{
 		/**
 		 * lock chosen session
 		 */
-		String session = SessionManager.getInstance().getChosenSession();
-		SessionManager.getInstance().lockSession(session);
 	}
 	
 	public void selectUnlock(View v) {
 		/**
 		 * unlock chosen session
 		 */
-		String session = SessionManager.getInstance().getChosenSession();
-		SessionManager.getInstance().unlockSession(session);
 	}
 
 	
@@ -195,16 +160,6 @@ public class LobbyActivity extends Activity{
 		 * if private device, move to playeractivity and set sessionmode to app mode
 		 * if public device, move to boardactivity and set session mode to app mode
 		 */
-		if(PpsManager.getInstance().isPrivate()) {
-			Intent intent = new Intent(this, PlayerActivity.class);
-			PpsManager.getInstance().setSessionMode(PpsManager.APP_MODE);
-			startActivity(intent);
-		}
-		else if(!PpsManager.getInstance().isPrivate()) {
-			Intent intent = new Intent(this, BoardActivity.class);
-			PpsManager.getInstance().setSessionMode(PpsManager.APP_MODE);
-			startActivity(intent);
-		}
 						
 	}
 	
