@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,9 +78,28 @@ public class PlayerActivity extends Activity{
                 alert.show();
 				
 				break;
+			case EventConstants.NOTIFY_PLAYER_LEFT:
+				String nameLeft = (String) event.getPayload();
+				layoutPause.setVisibility(View.VISIBLE);
+				txtPlayerWhoLeft.setText(nameLeft + " left the game. Game is paused. Please wait for player to rejoin.");
+				break;
+			case EventConstants.NOTIFY_PLAYER_REJOIN:
+				String nameJoin = (String) event.getPayload();			
+				layoutPause.setVisibility(View.GONE);
+				break;
+			case EventConstants.NOTIFY_REMIND_PLAYERNUM:
+				playerNumber = (Integer)event.getPayload();
+				txtPlayer.setText(playerNumber + "-" + SessionManager.getInstance().getOwnDeviceName());
+				
+				turn = false;
+				btnRollDice.setEnabled(false);
+				txtTurn.setText("Is it your turn? No");
+				
+				break;
 			}
 		}
 	}
+	
 	
 	Button btnRollDice;
 	Boolean turn;
@@ -87,6 +107,9 @@ public class PlayerActivity extends Activity{
 	TextView txtPlayer;
 	int playerNumber;
 	TextView txtPlayerName;
+	
+	RelativeLayout layoutPause;
+	TextView txtPlayerWhoLeft;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +121,8 @@ public class PlayerActivity extends Activity{
 		txtTurn = (TextView) findViewById(R.id.txtTurn);
 		txtPlayer = (TextView) findViewById(R.id.txtPlayer);
 		txtPlayerName = (TextView) findViewById(R.id.txtPlayerName);
+		layoutPause = (RelativeLayout) findViewById(R.id.layoutPause);
+		txtPlayerWhoLeft = (TextView) findViewById(R.id.txtGamePause);
 		
 		btnRollDice.setEnabled(false);
 		txtPlayerName.setText("Hi, " + SessionManager.getInstance().getOwnDeviceName() + "!");

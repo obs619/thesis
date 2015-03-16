@@ -132,13 +132,17 @@ public class BoardActivity extends Activity {
 				}
 				
 				
-				
 				if(playerNumberWhoRolled + 1 == playerMap.size()) {
 					/**
 					 * if last player, notify playerMap.get(0) of his/her turn (NOTIFY_PLAYER_TURN), boolean true message
 					 */
 					Event e= new Event(playerMap.get(0),EventConstants.NOTIFY_PLAYER_TURN, true);
 					EventManager.getInstance().sendEvent(e);
+					
+					/**
+					 * set current player turn (first)
+					 */
+					currentPlayerTurn = 0;
 				}
 				else {
 					/**
@@ -146,6 +150,84 @@ public class BoardActivity extends Activity {
 					 */
 					Event e= new Event(playerMap.get(playerNumberWhoRolled + 1),EventConstants.NOTIFY_PLAYER_TURN, true);
 					EventManager.getInstance().sendEvent(e);
+					
+					/**
+					 * set current player turn (next)
+					 */
+					currentPlayerTurn = playerNumberWhoRolled + 1;
+				}
+				
+				break;
+			case Event.T_USER_LEFT_PRIVATE:
+				String nodenameLeft = (String) event.getPayload();
+				String devicenameleft = SessionManager.getInstance().getDeviceName(nodenameLeft);
+				
+				// check playerMap is null to handle only players who were part of the game
+				if(playerMap != null) {
+					for(Map.Entry<Integer,String> entry : playerMap.entrySet()) {
+				    	  Integer key = entry.getKey();
+				    	  String value = entry.getValue();
+				    	  
+				    	  //found the existing player who left
+				    	  if(value.equals(nodenameLeft)) {
+				    		    /**
+				    		     * send to all personal screens the device name who left (NOTIFY_PLAYER_LEFT)
+				    		     */
+				    		  	Event e= new Event(Event.R_PERSONAL_SCREENS,EventConstants.NOTIFY_PLAYER_LEFT, devicenameleft);
+								EventManager.getInstance().sendEvent(e);
+								
+								/**
+								 * add to playersWhoLeft the node name of who left
+								 */
+								playersWhoLeft.add(nodenameLeft);
+								
+								break;
+				    	  }
+				    }
+				}
+				
+				break;
+			case Event.T_USER_JOIN_PRIVATE:
+				String[] nameJoin = (String[]) event.getPayload();
+				
+				if(playerMap != null) {
+
+			    	//existing player who left, joined again
+					if(isExistingPlayerLeft(nameJoin[0])) {
+						for(Map.Entry<Integer,String> entry : playerMap.entrySet()) {
+					    	  Integer key = entry.getKey();
+					    	  String value = entry.getValue();
+					    	  
+					    	  // found the existing player who joined
+					    	  if(value.equals(nameJoin[0])) {
+					    		    /**
+					    		     * notify all personal screens of the player who rejoined; nameJoin[1]
+					    		     */
+					    		  	Event e= new Event(Event.R_PERSONAL_SCREENS,EventConstants.NOTIFY_PLAYER_REJOIN, nameJoin[1]);
+									EventManager.getInstance().sendEvent(e);
+									
+									/**
+									 * send to player who who rejoined (NOTIFY_REMIND_PLAYERNUM) its player number (key)
+									 */
+									Event e1= new Event(nameJoin[0],EventConstants.NOTIFY_REMIND_PLAYERNUM, key);
+									EventManager.getInstance().sendEvent(e1);
+								
+									
+									if(key == currentPlayerTurn) {
+										/**
+										 * notify player turn again since it was their turn before they left (NOTIFY_PLAYER_TURN)
+										 */
+										Event e2= new Event(nameJoin[0],EventConstants.NOTIFY_PLAYER_TURN, true);
+										EventManager.getInstance().sendEvent(e2);
+									}
+									
+									//remove the player from the list of players who left
+									removeString(nameJoin[0]);
+									break;
+					    	  }
+					    }
+					}
+					
 				}
 				
 				break;
@@ -170,6 +252,23 @@ public class BoardActivity extends Activity {
 		return true;
 	}
 	
+	private boolean isExistingPlayerLeft(String name) {
+		for(String str: playersWhoLeft) {
+		    if(str.equals(name))
+		       return true;
+		}
+		return false;
+	}
+	
+	private void removeString(String name) {
+		for ( int i = 0;  i < playersWhoLeft.size(); i++){
+            String tempName = playersWhoLeft.get(i);
+            if(tempName.equals(name)){
+            	playersWhoLeft.remove(i);
+            }
+        }
+	}
+	
 	TableLayout baseLayout;
 	Button btnStartGame;
 	TextView txtPlayers;
@@ -178,6 +277,10 @@ public class BoardActivity extends Activity {
 	Map<Integer, String> playerMap;
 	List<String> logList;
 	ArrayAdapter<String> logAdapter;
+	
+	int currentPlayerTurn = -1;
+	
+	List<String> playersWhoLeft;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -193,6 +296,8 @@ public class BoardActivity extends Activity {
 		
 		logAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, logList);
 		lstLogs.setAdapter(logAdapter);
+		
+		playersWhoLeft = new ArrayList<String>();
 		
 		for (int i = 9; i >= 0; i--) {
 			   TableRow row = new TableRow(this);
@@ -280,6 +385,7 @@ public class BoardActivity extends Activity {
 		    }
 		    
 		    btnStartGame.setEnabled(false);
+		    currentPlayerTurn = 0;
 		    Toast.makeText(this, "Game started!", Toast.LENGTH_LONG).show();
 		} else {
 			Toast.makeText(this, "Must have 2 or more players to start game!", Toast.LENGTH_LONG).show();

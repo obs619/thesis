@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.llsx.pps.PpsManager;
 import com.llsx.pps.event.Event;
@@ -102,6 +101,7 @@ public class LobbyActivity extends Activity{
 		/**
 		 * load last chosen session from SessionManager, after device turned off
 		 * get chosen session and add to listChannels
+		 * set text txtSelectedSession to chosen session
 		 */
 		SessionManager.getInstance().loadSavedSessionId();
 		String session = SessionManager.getInstance().getChosenSession();
@@ -193,27 +193,20 @@ public class LobbyActivity extends Activity{
 	
 	public void selectJoin(View v) {
 		/**
-		 * check if device has a chosen session for the app
 		 * if private device, move to playeractivity and set sessionmode to app mode
 		 * if public device, move to boardactivity and set session mode to app mode
 		 */
-		if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
-			
-				if(PpsManager.getInstance().isPrivate()) {
-					Intent intent = new Intent(this, PlayerActivity.class);
-					PpsManager.getInstance().setSessionMode(PpsManager.APP_MODE);
-					startActivity(intent);
-				}
-				else if(!PpsManager.getInstance().isPrivate()) {
-					Intent intent = new Intent(this, BoardActivity.class);
-					PpsManager.getInstance().setSessionMode(PpsManager.APP_MODE);
-					startActivity(intent);
-				}
-				
+		if(PpsManager.getInstance().isPrivate()) {
+			Intent intent = new Intent(this, PlayerActivity.class);
+			PpsManager.getInstance().setSessionMode(PpsManager.APP_MODE);
+			startActivity(intent);
 		}
-		else
-			Toast.makeText(this, "Please choose a session!", Toast.LENGTH_LONG).show();	
-		
+		else if(!PpsManager.getInstance().isPrivate()) {
+			Intent intent = new Intent(this, BoardActivity.class);
+			PpsManager.getInstance().setSessionMode(PpsManager.APP_MODE);
+			startActivity(intent);
+		}
+						
 	}
 	
 }
