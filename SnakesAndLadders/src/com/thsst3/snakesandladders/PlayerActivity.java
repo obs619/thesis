@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.llsx.pps.PpsManager;
 import com.llsx.pps.event.Event;
@@ -85,6 +86,7 @@ public class PlayerActivity extends Activity{
 	TextView txtTurn;
 	TextView txtPlayer;
 	int playerNumber;
+	TextView txtPlayerName;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +97,10 @@ public class PlayerActivity extends Activity{
 		btnRollDice = (Button) findViewById(R.id.btnRollDice);
 		txtTurn = (TextView) findViewById(R.id.txtTurn);
 		txtPlayer = (TextView) findViewById(R.id.txtPlayer);
+		txtPlayerName = (TextView) findViewById(R.id.txtPlayerName);
 		
 		btnRollDice.setEnabled(false);
-		
+		txtPlayerName.setText("Hi, " + SessionManager.getInstance().getOwnDeviceName() + "!");
 		/**
 		 * set playerevent handler
 		 */
@@ -136,6 +139,13 @@ public class PlayerActivity extends Activity{
 		Event e= new Event(Event.R_PUBLIC_SCREENS,EventConstants.PLAYER_ROLL_DICE, playerNumber);
 		EventManager.getInstance().sendEvent(e);
 		
+	}
+	
+	public void clickCurrentSession(View v) {
+		/**
+		 * toast current session name from ppsmanager
+		 */
+		Toast.makeText(this, PpsManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
 }

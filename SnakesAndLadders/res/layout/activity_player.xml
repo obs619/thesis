@@ -6,18 +6,32 @@
     android:orientation="vertical" >
     
     <TextView
+      	android:id="@+id/txtPlayerName"
+      	android:layout_width="wrap_content"
+      	android:layout_height="wrap_content"
+      	android:textSize="20sp"
+      	android:text="Hi, "/>
+    
+    <Button 
+        android:id="@+id/btnCheckSession"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check Current Session"
+        android:onClick="clickCurrentSession" />
+    
+    <TextView
       	android:id="@+id/txtPlayer"
       	android:layout_width="wrap_content"
       	android:layout_height="wrap_content"
-      	android:textSize="32sp"
-      	android:text="0 - Player"/>
+      	android:textSize="20sp"
+      	android:text="Game not yet started..."/>
     
     <TextView
       	android:id="@+id/txtTurn"
       	android:layout_width="wrap_content"
       	android:layout_height="wrap_content"
-      	android:textSize="32sp"
-      	android:text="Is it your turn? "/>
+      	android:textSize="20sp"
+      	android:text=""/>
     
     <Button 
         android:id="@+id/btnRollDice"

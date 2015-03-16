@@ -288,4 +288,18 @@ public class BoardActivity extends Activity {
 	}
 	
 	
+	public void clickPlayersSession(View v) {
+		String nodes = "";
+		for(String node: PpsManager.getInstance().getPrivateScreenNameList())
+			nodes += node + ",";
+		Toast.makeText(this, nodes, Toast.LENGTH_LONG).show();
+	}
+	
+	public void clickCurrentSession(View v) {
+		/**
+		 * toast current session name from ppsmanager
+		 */
+		Toast.makeText(this, PpsManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
+	}
+	
 }
