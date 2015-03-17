@@ -17,9 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.llsx.pps.PpsManager;
 import com.llsx.pps.event.Event;
 import com.llsx.pps.event.EventHandler;
-import com.llsx.pps.session.SessionManager;
 
 public class LobbyActivity extends Activity{
 	
@@ -66,16 +66,24 @@ public class LobbyActivity extends Activity{
 		layoutCreate = (RelativeLayout) findViewById(R.id.layoutCreate);
 		layoutLockUnlock = (LinearLayout) findViewById(R.id.layoutLockUnlock);
 		
-		/**
-		 * Use isPrivate() from PpsManager instance to check device screen type, if private hide layout create and lock unlock
-		 */
+		//Use isPrivate() from PpsManager instance to check device screen type, if private hide layout create and lock unlock
+		if(PpsManager.getInstance().isPrivate()) {
+			layoutCreate.setVisibility(View.GONE);
+			layoutLockUnlock.setVisibility(View.GONE);
+		}
+		else if(!PpsManager.getInstance().isPrivate()) {
+			layoutCreate.setVisibility(View.VISIBLE);
+			layoutLockUnlock.setVisibility(View.VISIBLE);
+		}
 	
 		/**
 		 * Set the device's event handler
 		 */
-	
 		
-		txtDeviceName.setText("Hi, " + SessionManager.getInstance().getOwnDeviceName() + "!");
+		
+		/**
+		 * set txtDeviceName to hi name
+		 */
 		
 		listChannels = new ArrayList<String>();
 		
@@ -90,7 +98,6 @@ public class LobbyActivity extends Activity{
 		 * get chosen session and add to listChannels
 		 * set text txtSelectedSession to chosen session
 		 */
-		
 		
 		channelsAdapter.notifyDataSetChanged();
 		
@@ -130,6 +137,12 @@ public class LobbyActivity extends Activity{
 		/**
 		 * reset event handler - when the user presses back
 		 */
+		
+		
+		/**
+		 * refresh list of sessions
+		 */
+		
 	}
 	
 	public void selectCreateSession(View v) {

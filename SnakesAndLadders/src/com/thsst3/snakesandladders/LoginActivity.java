@@ -57,6 +57,10 @@ public class LoginActivity extends Activity {
 		
 		TextView mUserNameView;
 		mUserNameView = (TextView) findViewById(R.id.txtUserName);
+		
+		/**
+		 * set device name through sessionmanager
+		 */
 		SessionManager.getInstance().setDeviceName(mUserNameView.getText().toString());
 		
 		startActivity(intent);

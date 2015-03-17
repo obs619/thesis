@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.llsx.pps.PpsManager;
-import com.llsx.pps.session.SessionManager;
 
 public class LoginActivity extends Activity {
 	
@@ -55,7 +54,10 @@ public class LoginActivity extends Activity {
 		
 		TextView mUserNameView;
 		mUserNameView = (TextView) findViewById(R.id.txtUserName);
-		SessionManager.getInstance().setDeviceName(mUserNameView.getText().toString());
+		
+		/**
+		 * set device name through sessionmanager
+		 */
 		
 		startActivity(intent);
 	}

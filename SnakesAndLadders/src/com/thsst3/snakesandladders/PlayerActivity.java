@@ -29,7 +29,7 @@ public class PlayerActivity extends Activity{
 			case EventConstants.NOTIFY_PLAYER_NUM:
 				/**
 				 * get player number from event payload. Assign to playerNumber
-				 * if playerNumber is 0, set turn, disable btnrolldice and change txtTurn
+				 * if playerNumber is 0, set turn, enable btnrolldice and change txtTurn else do opposite
 				 * set txtPlayer to playernumber + own device name
 				 */
 				// board sent the event containing the player number of the device

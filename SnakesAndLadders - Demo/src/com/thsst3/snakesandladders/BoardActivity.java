@@ -105,8 +105,8 @@ public class BoardActivity extends Activity {
 			        			    				lstLogs.smoothScrollToPosition(0);
 			        			    				
 			        			    				
-			        			    				//if new value of player >= 100, player wins
-			        			    				if(newValueOfPlayer >= 100) {
+			        			    				//if new value of player == 100, player wins
+			        			    				if(newValueOfPlayer == 100) {
 			        			    					logList.add(0, playerAliasName + " wins the game!");
 				        			    				logAdapter.notifyDataSetChanged();
 				        			    				lstLogs.smoothScrollToPosition(0);

@@ -69,9 +69,8 @@ public class LobbyActivity extends Activity{
 		layoutCreate = (RelativeLayout) findViewById(R.id.layoutCreate);
 		layoutLockUnlock = (LinearLayout) findViewById(R.id.layoutLockUnlock);
 		
-		/**
-		 * Use isPrivate() from PpsManager instance to check device screen type, if private hide layout create and lock unlock
-		 */
+		
+		// Use isPrivate() from PpsManager instance to check device screen type, if private hide layout create and lock unlock	
 		if(PpsManager.getInstance().isPrivate()) {
 			layoutCreate.setVisibility(View.GONE);
 			layoutLockUnlock.setVisibility(View.GONE);
@@ -87,7 +86,9 @@ public class LobbyActivity extends Activity{
 		 */
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
 	
-		
+		/**
+		 * set txtDeviceName to hi name
+		 */
 		txtDeviceName.setText("Hi, " + SessionManager.getInstance().getOwnDeviceName() + "!");
 		
 		listChannels = new ArrayList<String>();
@@ -154,6 +155,15 @@ public class LobbyActivity extends Activity{
 		 * reset event handler - when the user presses back
 		 */
 		EventManager.getInstance().setEventHandler(new SessionEventHandler());
+		
+		/**
+		 * refresh list of sessions
+		 */
+		listChannels.clear();
+		channelsAdapter.notifyDataSetChanged();
+		
+		listChannels.addAll(SessionManager.getInstance().getAvailableSessions());
+		channelsAdapter.notifyDataSetChanged();
 	}
 	
 	public void selectCreateSession(View v) {
