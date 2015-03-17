@@ -200,11 +200,20 @@ public class BoardActivity extends Activity {
 					    	  
 					    	  // found the existing player who joined
 					    	  if(value.equals(nameJoin[0])) {
+					    		  
+					    		  
+					    		    // remove player who rejoined to list of players who left
+					    		  	removeString(nameJoin[0]);
+					    		  	
 					    		    /**
-					    		     * notify all personal screens of the player who rejoined; nameJoin[1]
+					    		     * notify all personal screens of the player who rejoined when players are complete(playerswholeft == 0)
 					    		     */
-					    		  	Event e= new Event(Event.R_PERSONAL_SCREENS,EventConstants.NOTIFY_PLAYER_REJOIN, nameJoin[1]);
-									EventManager.getInstance().sendEvent(e);
+									if(playersWhoLeft.size() == 0) {
+										Event e= new Event(Event.R_PERSONAL_SCREENS,EventConstants.NOTIFY_PLAYER_REJOIN, true);
+										EventManager.getInstance().sendEvent(e);
+									}
+					    		  
+					    		  	
 									
 									/**
 									 * send to player who who rejoined (NOTIFY_REMIND_PLAYERNUM) its player number (key)
@@ -221,8 +230,8 @@ public class BoardActivity extends Activity {
 										EventManager.getInstance().sendEvent(e2);
 									}
 									
-									//remove the player from the list of players who left
-									removeString(nameJoin[0]);
+									
+									
 									break;
 					    	  }
 					    }

@@ -81,10 +81,10 @@ public class PlayerActivity extends Activity{
 			case EventConstants.NOTIFY_PLAYER_LEFT:
 				String nameLeft = (String) event.getPayload();
 				layoutPause.setVisibility(View.VISIBLE);
-				txtPlayerWhoLeft.setText(nameLeft + " left the game. Game is paused. Please wait for player to rejoin.");
+				txtPlayerWhoLeft.setText("A player left the game. Game is paused. Please wait for player to rejoin.");
 				break;
 			case EventConstants.NOTIFY_PLAYER_REJOIN:
-				String nameJoin = (String) event.getPayload();			
+				//String nameJoin = (String) event.getPayload();			
 				layoutPause.setVisibility(View.GONE);
 				break;
 			case EventConstants.NOTIFY_REMIND_PLAYERNUM:

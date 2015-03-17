@@ -191,24 +191,32 @@ public class BoardActivity extends Activity {
 					    	  
 					    	  // found the existing player who joined
 					    	  if(value.equals(nameJoin[0])) {
+
+					    		  	// remove player who rejoined to list of players who left
+					    		  	removeString(nameJoin[0]);
+					    		  	
 					    		    /**
-					    		     * notify all personal screens of the player who rejoined; nameJoin[1]
+					    		     * notify all personal screens of the player who rejoined when players are complete(playerswholeft == 0)
 					    		     */
-									
+									if(playersWhoLeft.size() == 0) {
+										
+										
+									}
+					    		  
+					    		  	
 									/**
 									 * send to player who who rejoined (NOTIFY_REMIND_PLAYERNUM) its player number (key)
 									 */
-								
+
 									
 									if(key == currentPlayerTurn) {
 										/**
 										 * notify player turn again since it was their turn before they left (NOTIFY_PLAYER_TURN)
 										 */
-										
+
 									}
-									
-									//remove the player from the list of players who left
-									removeString(nameJoin[0]);
+					    		  
+					    		  
 									break;
 					    	  }
 					    }
