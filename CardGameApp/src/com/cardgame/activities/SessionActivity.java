@@ -81,7 +81,7 @@ public class SessionActivity extends Activity{
 		    	Log.e("session selected", spinChannels.getItemAtPosition(position).toString());
 		    	
 		    	SessionManager.getInstance().joinSession(spinChannels.getItemAtPosition(position).toString());
-		    	txtSelectedSession.setText("Chosen Session: " + SessionManager.getInstance().getCurrentSessionName());
+		    	txtSelectedSession.setText("Current Session: " + SessionManager.getInstance().getCurrentSessionName());
 		    }
 
 		    @Override
