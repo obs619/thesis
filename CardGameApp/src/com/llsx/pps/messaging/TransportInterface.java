@@ -31,4 +31,5 @@ public interface TransportInterface {
 	 */
 	public void setMessageDispatcher(MessageDispatcher dispatcher);
 
+	public void joinNetworkSession();
 }

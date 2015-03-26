@@ -213,12 +213,6 @@ public class PpsManager {
 		return result;
 	}
 	
-	/**
-	 * @return The name of the current session.
-	 */
-	public String getCurrentSessionName() {
-		return ChordTransportInterface.mChannel.getName();
-	}
 	
 	/**
 	 * @return The name of the device.

@@ -14,6 +14,7 @@ import com.llsx.pps.PpsManager;
 import com.llsx.pps.event.Event;
 import com.llsx.pps.event.EventManager;
 import com.llsx.pps.internal.chord.ChordNetworkManager;
+import com.llsx.pps.internal.chord.ChordTransportInterface;
 
 /**
  * Manages the device session along with
@@ -468,4 +469,17 @@ public class SessionManager {
 		return chosenSession;
 	}
 	
+	/**
+	 * @return The name of the current session.
+	 */
+	public String getCurrentSessionName() {
+		return ChordTransportInterface.mChannel.getName();
+	}
+	
+	public void joinSession(String sessionId)
+	{
+		setChosenSession(sessionId);
+	
+		ChordTransportInterface.joinCustomChannel();
+	}
 }

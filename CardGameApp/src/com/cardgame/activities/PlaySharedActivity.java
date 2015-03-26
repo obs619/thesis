@@ -131,7 +131,7 @@ public class PlaySharedActivity extends Activity {
 	}
 	
 	public void clickCheckSession(View v) {
-		Toast.makeText(this, PpsManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, SessionManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
 	public void clickStart(View v) {

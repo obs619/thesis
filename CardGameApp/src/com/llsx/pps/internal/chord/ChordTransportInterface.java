@@ -276,4 +276,9 @@ public class ChordTransportInterface implements TransportInterface {
 		}
 	}
 
+	@Override
+	public void joinNetworkSession() {
+		joinCustomChannel();
+	}
+
 }
