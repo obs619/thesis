@@ -80,7 +80,7 @@ public class ChordTransportInterface implements TransportInterface {
 	public static void joinCustomChannel() {
 		
 		try {
-			mChannel = ChordNetworkManager.getChordManager().joinChannel(SessionManager.getInstance().getChosenSession(), mChordChannelListener);
+			mChannel = ChordNetworkManager.getChordManager().joinChannel(SessionManager.getInstance().getSessionToJoin(), mChordChannelListener);
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.e("Join custom session","error");
@@ -124,7 +124,7 @@ public class ChordTransportInterface implements TransportInterface {
 			Log.e(fromNode, "New device has connected");
 			
 			/*The ff. code assumes that onNodeJoined() is triggered on the device that was already in the session*/
-			if(fromChannel == channelName&& SessionManager.getInstance().getChosenSession() != channelName) {
+			if(fromChannel == channelName&& SessionManager.getInstance().getSessionToJoin() != channelName) {
 				
 				//may change type to Event.LATE_JOIN_RESPONSE_SESSION
 				Event e = null;

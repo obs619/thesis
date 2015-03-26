@@ -67,7 +67,7 @@ public class SessionActivity extends Activity{
 		channelsAdapter.notifyDataSetChanged();
 		
 		SessionManager.getInstance().loadSavedSessionId();
-		String session = SessionManager.getInstance().getChosenSession();
+		String session = SessionManager.getInstance().getSessionToJoin();
 		listChannels.add(session);
 		
 		channelsAdapter.notifyDataSetChanged();
@@ -134,7 +134,7 @@ public class SessionActivity extends Activity{
 	
 	public void selectProceed(View v) {
 		if(SessionManager.getInstance().getAvailableSessions().size() != 0) {
-			if(!SessionManager.getInstance().getChosenSession().isEmpty()) {
+			if(!SessionManager.getInstance().getSessionToJoin().isEmpty()) {
 				if(PpsManager.getInstance().isPrivate()) {
 					Intent intent = new Intent(this, PlayPersonalActivity.class);
 					PpsManager.getInstance().setSessionMode(PpsManager.APP_MODE);
@@ -145,7 +145,7 @@ public class SessionActivity extends Activity{
 					PpsManager.getInstance().setSessionMode(PpsManager.APP_MODE);
 					startActivity(intent);
 				}
-				Log.e("Select Proceed", "Session Name:" + SessionManager.getInstance().getChosenSession());
+				Log.e("Select Proceed", "Session Name:" + SessionManager.getInstance().getSessionToJoin());
 			}
 			else
 				Toast.makeText(this, "Please choose a session!", Toast.LENGTH_LONG).show();	
@@ -156,14 +156,14 @@ public class SessionActivity extends Activity{
 	
 	
 	public void selectLock(View v) {
-		String session = SessionManager.getInstance().getChosenSession();
+		String session = SessionManager.getInstance().getSessionToJoin();
 		
 		
 			SessionManager.getInstance().lockSession(session);
 	}
 	
 	public void selectUnlock(View v) {
-		String session = SessionManager.getInstance().getChosenSession();
+		String session = SessionManager.getInstance().getSessionToJoin();
 		
 			SessionManager.getInstance().unlockSession(session);
 	}

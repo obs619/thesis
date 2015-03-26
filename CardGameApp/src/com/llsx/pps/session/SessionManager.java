@@ -34,7 +34,7 @@ public class SessionManager {
 	/* Session Management Variables */
 	private String deviceName;
 	private boolean sessionMode = true;
-	private String chosenSession = "";
+	private String sessionToJoin = "";
 	
 	private Map<String,String> deviceMap = new HashMap<String, String>();
 	private Map<String,Boolean> availableSessionsMap = new HashMap<String,Boolean>();
@@ -69,9 +69,9 @@ public class SessionManager {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());
 		Editor editor = sharedPreferences.edit();
-		editor.putString("session", chosenSession);
+		editor.putString("session", sessionToJoin);
 		
-		editor.putBoolean("isLock", isSessionLocked(chosenSession));
+		editor.putBoolean("isLock", isSessionLocked(sessionToJoin));
 		editor.commit();
 	}
 	
@@ -83,7 +83,7 @@ public class SessionManager {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(PpsManager.getContext());
 		Editor editor = sharedPreferences.edit();
-		editor.putString("session", chosenSession);
+		editor.putString("session", sessionToJoin);
 		
 		editor.putBoolean("isLock", UNLOCK);
 		editor.commit();
@@ -102,7 +102,7 @@ public class SessionManager {
 		if(!session.equals(NETWORK_SESSION))
 
 			availableSessionsMap.put(session, isLock);
-		chosenSession = session;
+		sessionToJoin = session;
 	}
 	
 	/*
@@ -211,19 +211,19 @@ public class SessionManager {
 	 * @param sessionId the selected session to be made
 	 * into the current session
 	 */
-	public void setChosenSession(String sessionId) {
+	public void setSessionToJoin(String sessionId) {
 		String taggedDeviceName = "[" + deviceName + "]";
 		if(!isSessionLocked(sessionId) || sessionId.contains(taggedDeviceName)) {
 			Toast.makeText(PpsManager.getContext(), "Session is Open!", Toast.LENGTH_LONG).show();
 			Log.e("Set Session", "The session is open");
 
-			this.chosenSession = sessionId;
+			this.sessionToJoin = sessionId;
 			this.saveSessionId();
 		}
 		else {
 			Log.e("Set Session", "The session is locked, you cannot join");
 			Toast.makeText(PpsManager.getContext(), "Session is locked! Unable to join.", Toast.LENGTH_LONG).show();
-			this.chosenSession = DEFAULT_CUSTOM_SESSION;
+			this.sessionToJoin = DEFAULT_CUSTOM_SESSION;
 
 			this.saveDefaultSessionId();
 		}
@@ -234,11 +234,11 @@ public class SessionManager {
 	 */
 	
 	public void setDefaultCustomSession(){
-		this.chosenSession = DEFAULT_CUSTOM_SESSION;
+		this.sessionToJoin = DEFAULT_CUSTOM_SESSION;
 	}
 	
 	public void setDefaultSession() {
-		this.chosenSession = NETWORK_SESSION;
+		this.sessionToJoin = NETWORK_SESSION;
 	}
 	
 	/*
@@ -465,8 +465,8 @@ public class SessionManager {
 	/**
 	 * @return The current session.
 	 */
-	public String getChosenSession() {
-		return chosenSession;
+	public String getSessionToJoin() {
+		return sessionToJoin;
 	}
 	
 	/**
@@ -478,8 +478,8 @@ public class SessionManager {
 	
 	public void joinSession(String sessionId)
 	{
-		setChosenSession(sessionId);
-	
-		ChordTransportInterface.joinCustomChannel();
+		setSessionToJoin(sessionId);
+		if(!isSessionLocked(sessionId))
+			ChordTransportInterface.joinCustomChannel();
 	}
 }
