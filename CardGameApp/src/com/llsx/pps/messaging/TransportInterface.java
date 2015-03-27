@@ -32,7 +32,7 @@ public interface TransportInterface {
 	public void setMessageDispatcher(MessageDispatcher dispatcher);
 
 	/**
-	 * Join to the network session. In this case, is the SChordChannel.
+	 * Join the device to the network session. In this case, is the SchordChannel.
 	 */
 	public void joinNetworkSession();
 }

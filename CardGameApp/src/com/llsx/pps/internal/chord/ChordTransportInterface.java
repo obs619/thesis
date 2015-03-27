@@ -277,7 +277,7 @@ public class ChordTransportInterface implements TransportInterface {
 	}
 	
 	/**
-	 * Joins to the custom channel.
+	 * Joins the device to the custom channel.
 	 * 
 	 */
 	@Override

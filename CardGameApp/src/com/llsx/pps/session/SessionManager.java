@@ -477,7 +477,7 @@ public class SessionManager {
 	}
 	
 	/**
-	 * Joins the devices to the specified session name
+	 * Joins the device to the specified session name
 	 * (e.g. "Room1") as the given string.
 	 * @param Session name you want to join
 	 */
