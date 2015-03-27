@@ -476,10 +476,16 @@ public class SessionManager {
 		return ChordTransportInterface.mChannel.getName();
 	}
 	
-	public void joinSession(String sessionId)
+	/**
+	 * Joins the devices to the specified session name
+	 * (e.g. "Room1") as the given string.
+	 * @param Session name you want to join
+	 */
+	
+	public void joinSession(String sessionName)
 	{
-		setSessionToJoin(sessionId);
-		if(!isSessionLocked(sessionId))
+		setSessionToJoin(sessionName);
+		if(!isSessionLocked(sessionName))
 			ChordTransportInterface.joinCustomChannel();
 	}
 }
