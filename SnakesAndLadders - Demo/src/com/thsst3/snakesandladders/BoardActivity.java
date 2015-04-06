@@ -394,7 +394,7 @@ public class BoardActivity extends Activity {
 	
 	public void clickCurrentSession(View v) {
 		/**
-		 * toast current session name from ppsmanager
+		 * toast current session name from session manager
 		 */
 		
 	}

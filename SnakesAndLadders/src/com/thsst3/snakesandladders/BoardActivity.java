@@ -412,9 +412,9 @@ public class BoardActivity extends Activity {
 	
 	public void clickCurrentSession(View v) {
 		/**
-		 * toast current session name from ppsmanager
+		 * toast current session name from session manager
 		 */
-		Toast.makeText(this, PpsManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
+		Toast.makeText(this, SessionManager.getInstance().getCurrentSessionName(), Toast.LENGTH_LONG).show();
 	}
 	
 }

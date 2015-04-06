@@ -101,11 +101,11 @@ public class LobbyActivity extends Activity{
 		
 		/**
 		 * load last chosen session from SessionManager, after device turned off
-		 * get chosen session and add to listChannels
+		 * get session to join and add to listChannels
 		 * set text txtSelectedSession to chosen session
 		 */
 		SessionManager.getInstance().loadSavedSessionId();
-		String session = SessionManager.getInstance().getChosenSession();
+		String session = SessionManager.getInstance().getSessionToJoin();
 		listChannels.add(session);
 		txtSelectedSession.setText("Chosen Session: " + session);
 		
@@ -118,13 +118,13 @@ public class LobbyActivity extends Activity{
 		    public void onItemSelected(AdapterView<?> parentView,View selectedItemView, int position, long id) {
 
 		    	/**
-		    	 * set the chosen session
+		    	 * join session
 		    	 * 
 		    	 */
-		    	SessionManager.getInstance().setChosenSession(spinChannels.getItemAtPosition(position).toString());
+		    	SessionManager.getInstance().joinSession(spinChannels.getItemAtPosition(position).toString());
 		    	
 		    	
-		    	txtSelectedSession.setText("Chosen Session: " + SessionManager.getInstance().getChosenSession());
+		    	txtSelectedSession.setText("Chosen Session: " + SessionManager.getInstance().getSessionToJoin());
 		    }
 
 		    @Override
@@ -187,7 +187,7 @@ public class LobbyActivity extends Activity{
 		/**
 		 * lock chosen session
 		 */
-		String session = SessionManager.getInstance().getChosenSession();
+		String session = SessionManager.getInstance().getSessionToJoin();
 		SessionManager.getInstance().lockSession(session);
 	}
 	
@@ -195,7 +195,7 @@ public class LobbyActivity extends Activity{
 		/**
 		 * unlock chosen session
 		 */
-		String session = SessionManager.getInstance().getChosenSession();
+		String session = SessionManager.getInstance().getSessionToJoin();
 		SessionManager.getInstance().unlockSession(session);
 	}
 

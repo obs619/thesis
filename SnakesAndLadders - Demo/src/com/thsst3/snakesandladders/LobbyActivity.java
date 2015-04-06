@@ -95,7 +95,7 @@ public class LobbyActivity extends Activity{
 		
 		/**
 		 * load last chosen session from SessionManager, after device turned off
-		 * get chosen session and add to listChannels
+		 * get session to join and add to listChannels
 		 * set text txtSelectedSession to chosen session
 		 */
 		
@@ -107,8 +107,8 @@ public class LobbyActivity extends Activity{
 		    public void onItemSelected(AdapterView<?> parentView,View selectedItemView, int position, long id) {
 
 		    	/**
-		    	 * set the chosen session
-		    	 * set txtSelectedSession text to chosen session
+		    	 * join session
+		    	 * set txtSelectedSession text to session to join
 		    	 */
 		    }
 
@@ -157,13 +157,13 @@ public class LobbyActivity extends Activity{
 	
 	public void selectLock(View v) {
 		/**
-		 * lock chosen session
+		 * lock chosen session(session to join)
 		 */
 	}
 	
 	public void selectUnlock(View v) {
 		/**
-		 * unlock chosen session
+		 * unlock chosen session(session to join)
 		 */
 	}
 
