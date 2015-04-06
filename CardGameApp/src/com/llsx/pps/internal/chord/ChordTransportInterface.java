@@ -275,7 +275,11 @@ public class ChordTransportInterface implements TransportInterface {
 			return;
 		}
 	}
-
+	
+	/**
+	 * Joins the device to the custom channel.
+	 * 
+	 */
 	@Override
 	public void joinNetworkSession() {
 		joinCustomChannel();
