@@ -92,15 +92,6 @@ public class LobbyActivity extends Activity{
 		spinChannels.setAdapter(channelsAdapter);
 		channelsAdapter.notifyDataSetChanged();
 		
-		
-		/**
-		 * load last chosen session from SessionManager, after device turned off
-		 * get session to join and add to listChannels
-		 * set text txtSelectedSession to chosen session
-		 */
-		
-		channelsAdapter.notifyDataSetChanged();
-		
 		spinChannels.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 		    @Override

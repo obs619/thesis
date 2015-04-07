@@ -59,24 +59,6 @@ public class PlayerActivity extends Activity{
                 alert.show();
 				
 				break;
-			case EventConstants.NOTIFY_PLAYER_LEFT:
-				String nameLeft = (String) event.getPayload();
-				layoutPause.setVisibility(View.VISIBLE);
-				txtPlayerWhoLeft.setText(nameLeft + " left the game. Game is paused. Please wait for player to rejoin.");
-				break;
-			case EventConstants.NOTIFY_PLAYER_REJOIN:
-				String nameJoin = (String) event.getPayload();			
-				layoutPause.setVisibility(View.GONE);
-				break;
-			case EventConstants.NOTIFY_REMIND_PLAYERNUM:
-				playerNumber = (Integer)event.getPayload();
-				txtPlayer.setText(playerNumber + "-" + SessionManager.getInstance().getOwnDeviceName());
-				
-				turn = false;
-				btnRollDice.setEnabled(false);
-				txtTurn.setText("Is it your turn? No");
-				
-				break;
 			}
 		}
 	}
